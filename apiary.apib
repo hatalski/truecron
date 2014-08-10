@@ -1,0 +1,252 @@
+FORMAT: 1A
+HOST: http://www.cloudcron.com/api/v1
+
+# CloudCron API
+CloudCron API is an *enterprise strength cloud based cron service*. test123
+
+# Group Jobs
+Jobs related resources of the **CloudCron API**
+
+## Jobs Collection [/jobs{?archived,active,tags,name}]
+
++ Parameters
+    + archived (optional, boolean, `true`) ... Archived filter of jobs collection. Has example value.
+    + active (optional, boolean, `true`) ... Active filter of jobs collection. Has example value.
+    + tags (optional, boolean, `edi,production`) ... Tags filter of jobs collection. Has example value.
+    + name (optional, boolean, `American`) ... Name filter of jobs collection. Has example value.
+
+### List all Jobs [GET]
++ Response 200 (application/json)
+
+        [{
+            "id": 1,
+            "name": "Push Notifications", 
+            "tags": ["production"],
+            "rrule": "FREQ=WEEKLY;INTERVAL=1;BYDAY=MO;BYHOUR=6;BYMINUTE=0;BYSECOND=0",
+            "active": true,
+            "archived": false,
+            "links": {
+                "self": "/jobs/{job-id}",
+                "tasks": "/jobs/{job-id}/tasks",
+                "viewers": "/jobs/{job-id}/viewers"
+            }
+        }, {
+            "id": 2,
+            "name": "American Signature", 
+            "tags": ["edi", "production"],
+            "rrule": "FREQ=DAILY;INTERVAL=1;BYDAY=MO;BYHOUR=12;BYMINUTE=0;BYSECOND=0",
+            "active": true,
+            "archived": false,
+            "links": {
+                "self": "/jobs/{job-id}",
+                "tasks": "/jobs/{job-id}/tasks",
+                "viewers": "/jobs/{job-id}/viewers"
+            }
+        }]
+
+### Create a Job [POST]
++ Request (application/json)
+
+        {
+            "name": "American Signature", 
+            "tags": ["edi", "production"],
+            "rrule": "FREQ=DAILY;INTERVAL=1;BYDAY=MO;BYHOUR=12;BYMINUTE=0;BYSECOND=0",
+            "active": true,
+            "archived": false
+        }
+
++ Response 201 (application/json)
+
+        { "id": 2 }
+
+## Job [/jobs/{job-id}]
+A single Job object with all its details
+
++ Parameters
+    + job-id (required, number, `1`) ... Numeric `job-id` of the Job to perform action with. Has example value.
+
+### Retrieve a Job [GET]
++ Response 200 (application/json)
+
+        {
+            "id": 2,
+            "name": "American Signature", 
+            "tags": ["edi", "production"],
+            "rrule": "FREQ=DAILY;INTERVAL=1;BYDAY=MO;BYHOUR=12;BYMINUTE=0;BYSECOND=0",
+            "active": true,
+            "archived": false,
+            "links": {
+                "self": "/jobs/{job-id}",
+                "tasks": "/jobs/{job-id}/tasks",
+                "viewers": "/jobs/{job-id}/viewers"
+            }
+        }
+
+### Update a Job [PUT]
+
++ Request (application/json)
+
+        {
+            "name": "American Signature",
+            "tags": ["easypay"],
+            "rrule": "FREQ=DAILY;INTERVAL=1;BYDAY=MO;BYHOUR=12;BYMINUTE=0;BYSECOND=0",
+            "active": true,
+            "archived": false
+        }
+        
++ Response 200 (application/json)
+
+        {
+            "id": 2,
+            "name": "American Signature", 
+            "tags": ["edi", "production", "easypay"],
+            "rrule": "FREQ=DAILY;INTERVAL=1;BYDAY=MO;BYHOUR=12;BYMINUTE=0;BYSECOND=0",
+            "active": true,
+            "archived": false
+        }
+
+# Group Collaborators
+
+## Job Collaborators Collection [/jobs/{job-id}/collaborators]
+Job Collaborators related resources of the *CloudCron API*.
+
++ Parameters
+    + job-id (required, number, `1`) ... Numeric `job-id` of the Job to perform action with. Has example value.
+
+### List all Job Collaborators [GET]
+
++ Response 200 (application/json)
+
+        [{
+            "id": 1,
+            "name": "John Smith", 
+            "email": "jsmith@company.com"
+        },{
+            "id": 2,
+            "name": "Peter Mayer", 
+            "email": "pmayer@company.com"
+        }]
+
+### Add a Job Collaborators [PUT]
+
++ Request (application/json)
+
+        {
+            "name": "John Smith", 
+            "email": "jsmith@company.com"
+        }
+
++ Response 200 (application/json)
+
+        { "id": 1 }
+        
+## Job Collaborator [/jobs/{job-id}/collaborators/{collaborator-id}]
+A single Job Collaborator object that describes a client who has access to a Job.
+
++ Parameters
+    + job-id (required, number, `1`) ... Numeric `job-id` of the Job to perform action with. Has example value.
+    + collaborator-id (required, number, `1`) ... Numeric `collaborator-id` of the Job Collaborator.
+
+### Retrieve a Job Collaborator [GET]
+
++ Response 200 (application/json)
+
+        {
+            "id": 1,
+            "name": "John Smith", 
+            "email": "jsmith@company.com"
+        }
+
+### Remove a Job Collaborator [DELETE]
++ Response 204
+
+# Group Audit Log
+History of changes.
+
+## Job Audit Logs Collection [/jobs/{job-id}/logs]
+
++ Parameters
+    + job-id (required, number, `1`) ... Numeric `job-id` of the Job to perform action with. Has example value.
+    
+### List of Job Log Entries [GET]
+
++ Response 200 (application/json)
+
+        [{
+            "id": "BHJ84BU8233BUUSKKS",
+            "author": "John Smith", 
+            "change": "added task 'clean folder'"
+        },{
+            "id": "BHJ84BU8233BUUSKK4",
+            "author": "John Smith", 
+            "change": "added task 'zip'"
+        }]
+        
+### Create a new Job Log Entry [POST]
+
++ Request (application/json)
+
+        {
+            "author": "John Smith", 
+            "change": "added task 'clean folder'"
+        }
+        
++ Response 201 (application/json)
+
+        { "id": "BHJ84BU8233BUUSKKS" }
+
+# Group Tasks
+Tasks related resources of *CloudCron API*.
+
+## Tasks Collection [/jobs/{job-id}/tasks]
+
++ Parameters
+    + job-id (required, number, `1`) ... Numeric `job-id` of the Job to perform action with. Has example value.
+
+### List of Tasks [GET]
+
++ Response 200 (application/json)
+
+        [{
+            "id": 1,
+            "name": "John Smith", 
+            "email": "jsmith@company.com"
+        },{
+            "id": 2,
+            "name": "Peter Mayer", 
+            "email": "pmayer@company.com"
+        }]
+        
+### Create a Task [POST]
+
++ Request (application/json)
+
+        {
+            "name": "clean folder", 
+            "type": "delete"
+        }
+
++ Response 201 (application/json)
+
+        { "id": 1 }
+
+## Task [/jobs/{job-id}/tasks/{task-id}]
+A single Task object with all its details
+
++ Parameters
+    + job-id (required, number, `1`) ... Numeric `job-id` of the Job to perform action with. Has example value.
+    + task-id (required, number, `1`) ... Numeric `task-id` of the Task to perform action with. Has example value.
+
+### Retrieve a Task [GET]
+
++ Response 200 (application/json)
+
+        {
+            "id": 1,
+            "name": "clean folder",
+            "type": "delete",
+            "status": "active"
+        }
+
+### Remove a Task [DELETE]
++ Response 204
