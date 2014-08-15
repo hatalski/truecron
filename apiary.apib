@@ -1,7 +1,7 @@
 FORMAT: 1A
 HOST: http://www.cloudcron.com/api/v1
 
-# CloudCron API
+# TrueCron API
 CloudCron API is an *enterprise strength cloud based cron service*. test123
 
 # Group Jobs
@@ -59,11 +59,11 @@ Jobs related resources of the **CloudCron API**
 
         { "id": 2 }
 
-## Job [/jobs/{job-id}]
+## Job [/jobs/{job_id}]
 A single Job object with all its details
 
 + Parameters
-    + job-id (required, number, `1`) ... Numeric `job-id` of the Job to perform action with. Has example value.
+    + job_id (required, number, `1`) ... Numeric `job_id` of the Job to perform action with. Has example value.
 
 ### Retrieve a Job [GET]
 + Response 200 (application/json)
@@ -76,9 +76,9 @@ A single Job object with all its details
             "active": true,
             "archived": false,
             "links": {
-                "self": "/jobs/{job-id}",
-                "tasks": "/jobs/{job-id}/tasks",
-                "viewers": "/jobs/{job-id}/viewers"
+                "self": "/jobs/{job_id}",
+                "tasks": "/jobs/{job_id}/tasks",
+                "viewers": "/jobs/{job_id}/viewers"
             }
         }
 
@@ -107,11 +107,11 @@ A single Job object with all its details
 
 # Group Collaborators
 
-## Job Collaborators Collection [/jobs/{job-id}/collaborators]
-Job Collaborators related resources of the *CloudCron API*.
+## Job Collaborators Collection [/jobs/{job_id}/collaborators]
+Job Collaborators related resources of the *TrueCron API*.
 
 + Parameters
-    + job-id (required, number, `1`) ... Numeric `job-id` of the Job to perform action with. Has example value.
+    + job_id (required, number, `1`) ... Numeric `job_id` of the Job to perform action with. Has example value.
 
 ### List all Job Collaborators [GET]
 
@@ -140,12 +140,12 @@ Job Collaborators related resources of the *CloudCron API*.
 
         { "id": 1 }
         
-## Job Collaborator [/jobs/{job-id}/collaborators/{collaborator-id}]
+## Job Collaborator [/jobs/{job_id}/collaborators/{collaborator_id}]
 A single Job Collaborator object that describes a client who has access to a Job.
 
 + Parameters
-    + job-id (required, number, `1`) ... Numeric `job-id` of the Job to perform action with. Has example value.
-    + collaborator-id (required, number, `1`) ... Numeric `collaborator-id` of the Job Collaborator.
+    + job_id (required, number, `1`) ... Numeric `job_id` of the Job to perform action with. Has example value.
+    + collaborator_id (required, number, `1`) ... Numeric `collaborator_id` of the Job Collaborator.
 
 ### Retrieve a Job Collaborator [GET]
 
@@ -163,10 +163,10 @@ A single Job Collaborator object that describes a client who has access to a Job
 # Group Audit Log
 History of changes.
 
-## Job Audit Logs Collection [/jobs/{job-id}/logs]
+## Job Audit Logs Collection [/jobs/{job_id}/logs]
 
 + Parameters
-    + job-id (required, number, `1`) ... Numeric `job-id` of the Job to perform action with. Has example value.
+    + job_id (required, number, `1`) ... Numeric `job_id` of the Job to perform action with. Has example value.
     
 ### List of Job Log Entries [GET]
 
@@ -198,10 +198,10 @@ History of changes.
 # Group Tasks
 Tasks related resources of *CloudCron API*.
 
-## Tasks Collection [/jobs/{job-id}/tasks]
+## Tasks Collection [/jobs/{job_id}/tasks]
 
 + Parameters
-    + job-id (required, number, `1`) ... Numeric `job-id` of the Job to perform action with. Has example value.
+    + job_id (required, number, `1`) ... Numeric `job-id` of the Job to perform action with. Has example value.
 
 ### List of Tasks [GET]
 
@@ -230,12 +230,12 @@ Tasks related resources of *CloudCron API*.
 
         { "id": 1 }
 
-## Task [/jobs/{job-id}/tasks/{task-id}]
+## Task [/jobs/{job_id}/tasks/{task_id}]
 A single Task object with all its details
 
 + Parameters
-    + job-id (required, number, `1`) ... Numeric `job-id` of the Job to perform action with. Has example value.
-    + task-id (required, number, `1`) ... Numeric `task-id` of the Task to perform action with. Has example value.
+    + job_id (required, number, `1`) ... Numeric `job-id` of the Job to perform action with. Has example value.
+    + task_id (required, number, `1`) ... Numeric `task-id` of the Task to perform action with. Has example value.
 
 ### Retrieve a Task [GET]
 
