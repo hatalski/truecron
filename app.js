@@ -8,11 +8,14 @@ var bodyParser = require('body-parser');
 var routes = require('./routes/index');
 var users = require('./routes/users');
 
+var exphbs  = require('express-handlebars');
+
 var app = express();
 
 // view engine setup
-app.set('views', path.join(__dirname, 'views'));
-app.set('view engine', 'jade');
+var hbs = exphbs.create({defaultLayout: 'default'});
+app.engine('handlebars', hbs.engine);
+app.set('view engine', 'handlebars');
 
 app.use(favicon(__dirname + '/public/favicon.ico'));
 app.use(logger('dev'));
