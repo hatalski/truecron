@@ -1,0 +1,30 @@
+{
+  "name": "truecron",
+  "version": "0.0.0",
+  "homepage": "https://github.com/PerksLab/TrueCron",
+  "authors": [
+    "TrueCron Team"
+  ],
+  "description": "scalable work automation service",
+  "main": "server.js",
+  "moduleType": [
+    "node"
+  ],
+  "keywords": [
+    "job",
+    "automation"
+  ],
+  "license": "MIT",
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "ember-data": "~0.0.14",
+    "ember": "~1.6.1"
+  }
+}
