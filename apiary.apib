@@ -1,113 +1,686 @@
 FORMAT: 1A
-HOST: http://www.cloudcron.com/api/v1
+HOST: https://api.truecron.com/v1
 
 # TrueCron API
-CloudCron API is an *enterprise strength cloud based cron service*. test123
+TrueCron is an *enterprise strength cloud based cron service*. 
+
+
+TrueCron provides a REST-style API with defined resources URIs, HTTP verbs and response codes. The API is accessible 
+via `https://api.truecron.com/v1`. HTTPS is the only supported transport.
+
+## API versions
+Current version is `v1` and it is encoded as a part of URI: https://api.truecron.com/v1. 
+This endpoint is guaranteed to be compatible with all `v1` clients. New endpoints will be introduced 
+(`v2`, `v3`, etc.) for breacking changes.
+
+## Data Encoding
+The API returns resources and collection of resources in JSON format, 
+with a ContentType `application/json` and UTF-8 encoding. 
+There are two ways to pass parameters to API:
+
+- For `GET` requests parameters are passed as part of a query string: `/v1/jobs?archived`.
+- For `POST`, `PATCH`, and `PUT` requests parameters are passed as JSON objects.
+
+    ```
+    POST /jobs
+    ContentType: `application/json` 
+
+    {
+        "name": "My test job",
+        "active": false,
+        ...
+    }
+    ```
+    
+## Actions
+The API maps resource actions to HTTP verbs, when possible. 
+
+- `GET` - Return a resource of a resource collection.
+- `POST` - Create a new resource.
+- `PUT` - Replace a resource.
+- `PATCH` - Update certain fields of the resource.
+- `DELETE` - Delete a resource.
+
+
+## Return codes and errors
+The API uses HTTP response codes to indicate success or failures. Generally, 2xx codes indicate success, 
+4xx - API errors, 5xx - server errors.
+
+Code | Description
+-----|-------------
+200  | Request succeeded
+201  | A resource was created, a typical response to a `POST` request
+204  | Request succeeded, no content returned, typical for `DELETE` requests
+400  | Invalid parameters
+401  | User is not authenticated
+403  | Access is denied
+404  | Resource not found
+5xx  | Server failure. The client should retry the request later.
+
+For 4xx codes an error object may be returned with additional error details.
+
+    {
+        "message": "Human-readable error description"
+    }
+
+There could be an `errors` field with an array of detailed errors. These are used to report validation errors
+in specific fields.
+
+    {
+        "message": "Human-readable error description",
+        "errors": [
+            {
+                "message": "Job name cannot be empty.",
+                "type": "required",
+                "field": "job_name"
+            },
+            {
+                "message": "Cannot edit Last Run time.",
+                "type": "invalid",
+                "field": "last_run"
+            }
+        ]
+    }
+
+Possible values for the `type` field are `required` (a field value is required) and `invalid` 
+(invalid value, read-only field, non-unique value, etc.). New types can be added later, the client 
+should ignore unknown types.
+
+
+## Authentication
+TBD
+
+## Time handling
+All timestamps accepted or returned from the API must be in UTC in `YYYY-MM-DDTHH:MM:SSZ` format.
+
+## Partial results
+When you query a resource collection, in many cases the API returns "partial" objects, 
+i.e. with a subset of fields. The API excludes only the most expensive fields in terms of CPU and data size.
+To get a "full" object, follow the `self` link.
+
+## I18N
+The API returns human-readable strings, like error messages, change log messages, etc. 
+Use the `Accept-Language` HTTP header to specify your preferred language. 
+The API falls back to US English if the specified language is not supported.
+ 
+
+## Common collection parameters
+There are several common parameters that can be used with `GET` requests returning collections:
+
+Name     | Description                      | Details
+---------|----------------------------------|---------
+page     | Page to retrieve.                | number, optional, default: 1
+per_page | Page size.                       | number, optional, default: 30
+q        | Search query.                    | string, optional
+sort     | A field name to sort by.         | string, optional
+direction| Sort direction: `asc` or `desc`. | string, optional
+
+For example, `GET /jobs?page=10&q=ping&sort=updated_at&direction=desc`.
+
 
 # Group Jobs
-Jobs related resources of the **CloudCron API**
+The *Job* resource represents a unit-of-work that can be scheduled for execution.
+To make *TrueCron* execute anything, one needs to create a *Job* object, fill it 
+with *Tasks*, set the schedule and activate the *Job*.
 
-## Jobs Collection [/jobs{?archived,active,tags,name}]
+## Job [/jobs/{id}]
+A single *Job* object. The Job has the following fields:
+
+Name         | Type   |Description
+-------------|--------|---
+id           | string | Unique ID of the Job. Generated automaticaly when a job is created. Read-only, not null.
+name         | string | Job name. Cannot be empty.
+tags         | array  | A list of string tags attached to the job. Used for searching, grouping.
+active       | boolean| Gets or sets wheither the job is enabled, i.e. is scheduled for execution. Default: `false`.
+archived     | boolean| `true` for jobs moved to the archive, i.e. are not used anymore. Default: `false`.
+created_at   | string | Creation timestamp (UTC). Read-only. Set automatically when a job is created.
+created_by   | [User][]| A user created the job. Read-only. Set automatically when a job is created.
+updated_at   | string | Modification timestamp (UTC). Read-only. Updated automatically when a job is modified.
+updated_by   | [User][]| The last user updated the job. Read-only. Set automatically when a job is modified.
+starts_at    | string | A timestamp (UTC) when a job should run for the first time. See a note below.
+rrule        | string | A recurrence rule that defines times the job should run. See a note below.
+last_run     | [Result][]| An object with information about the last job execution. Read-only, nullable.
+next_run_at  | string | A timestamp (UTC) when a job is executing next time. Read-only, nullable.
+_links       | links  | The job provides links to self, a task collection, results collection.
+
+### Execution schedule
+Job execution schedule is defined by two fields: `starts_at` and `rrule`. 
+TrueCron uses a Recurrence Rule format as defined in iCalendar [RFC 2445](http://www.ietf.org/rfc/rfc2445.txt).
+(refer to section 4.3.10). The `starts_at` field plays the same role as the `DTSTART` field in iCalendar.
+
+### Execution result 
+The `last_run` field of the *Job* object provides information about last execution of the job.
+The embedded objects has only a subset of the fields: `started_at`, `status`, `elapsed_msec`. 
+To get a full object follow the `self` link.
+
 
 + Parameters
-    + archived (optional, boolean, `true`) ... Archived filter of jobs collection. Has example value.
-    + active (optional, boolean, `true`) ... Active filter of jobs collection. Has example value.
-    + tags (optional, boolean, `edi,production`) ... Tags filter of jobs collection. Has example value.
-    + name (optional, boolean, `American`) ... Name filter of jobs collection. Has example value.
+    + id (string) ... ID of the *Job* object.
+    
++ Model (application/json)
+    
+    + Body
+    
+            {
+                "id": "1",
+                "name": "My first job", 
+                "tags": ["test", "tag1"],
+                "starts_at": "2014-08-21T10:00:11Z",
+                "rrule": "FREQ=WEEKLY;INTERVAL=1;BYDAY=MO;BYHOUR=6;BYMINUTE=0;BYSECOND=0",
+                "active": true,
+                "archived": false,
+                "created_at": "2014-08-21T10:00:11Z",
+                "created_by": {
+                        "login": "alice@example.com",
+                        "id": "123",
+                        "name": "Alice",
+                        "avatar_url": "https://static.truecron.com/i/ASjdwfh3.png",
+                        "_links": {
+                            "self": "https://api.truecron.com/v1/users/123"
+                        }
+                    },
+                "updated_at": "2014-08-21T11:20:34Z",            
+                "updated_by": {
+                        "login": "bob@example.com",
+                        "id": "124",
+                        "name": "Bob",
+                        "_links": {
+                            "self": "https://api.truecron.com/v1/users/124"
+                        }
+                    },
+                "last_run": {
+                    "id": "865D765S654236457Fhjgjg",
+                    "started_at": "2014-08-25T06:00:00Z",
+                    "status": "succeeded",
+                    "elapsed_msec": 7000,
+                    "_links": {
+                        "self": "https://api/truecron.com/v1/job/1/results/865D765S654236457Fhjgjg"
+                    }
+                }
+                "next_run_at": "2014-09-01T06:00:00Z",
+                "_links": {
+                    "self": "https://api.truecron.com/v1/jobs/1",
+                    "tasks": "https://api.truecron.com/v1/jobs/1/tasks",
+                    "history": "https://api.truecron.com/v1/jobs/1/history",
+                    "results": "https://api.truecron.com/v1/jobs/1/results"
+                }
+            }
 
-### List all Jobs [GET]
+
+### Retrieve a Job [GET]
 + Response 200 (application/json)
+    [Job][]
 
-        [{
-            "id": 1,
-            "name": "Push Notifications", 
-            "tags": ["production"],
-            "rrule": "FREQ=WEEKLY;INTERVAL=1;BYDAY=MO;BYHOUR=6;BYMINUTE=0;BYSECOND=0",
-            "active": true,
-            "archived": false,
-            "links": {
-                "self": "/jobs/{job-id}",
-                "tasks": "/jobs/{job-id}/tasks",
-                "viewers": "/jobs/{job-id}/viewers"
-            }
-        }, {
-            "id": 2,
-            "name": "American Signature", 
-            "tags": ["edi", "production"],
-            "rrule": "FREQ=DAILY;INTERVAL=1;BYDAY=MO;BYHOUR=12;BYMINUTE=0;BYSECOND=0",
-            "active": true,
-            "archived": false,
-            "links": {
-                "self": "/jobs/{job-id}",
-                "tasks": "/jobs/{job-id}/tasks",
-                "viewers": "/jobs/{job-id}/viewers"
-            }
-        }]
-
-### Create a Job [POST]
+### Update a Job [PATCH]
 + Request (application/json)
 
         {
-            "name": "American Signature", 
+            "starts_at": "2015-01-01T00:00:00Z",
+            "rrule": "FREQ=WEEKLY;INTERVAL=1;BYDAY=MO;BYHOUR=12;BYMINUTE=0;BYSECOND=0"
+        }
+
++ Response 200 (application/json)
+    [Job][]
+
+
+### Delete a Job [DELETE]
++ Response 204
+
+
+## Jobs Collection [/jobs{?archived,active,tags,page,per_page,q,sort,direction}]
+
+### Create a Job [POST]
+Only the `name` field is required to create a new *Job*.
++ Request (application/json)
+
+        {
+            "name": "My first job", 
             "tags": ["edi", "production"],
-            "rrule": "FREQ=DAILY;INTERVAL=1;BYDAY=MO;BYHOUR=12;BYMINUTE=0;BYSECOND=0",
+            "start_time": "2014-08-21T10:00:11Z",
+            "rrule": "FREQ=DAILY;INTERVAL=1;BYDAY=MO;BYHOUR=12;BYMINUTE=0;BYSECOND=0"
+        }
+
++ Response 201 (application/json)
+    [Job][]
+
+
+### List all Jobs visible to the authenticated user [GET]
++ Parameters
+    + archived = `false` (optional, boolean) ... Show archived jobs. 
+    + active = `true` (optional, boolean) ... Active filter of jobs collection. 
+    + tags (optional, string, `edi,production`) ... Tags filter of jobs collection. 
+    + page = `1` (optional, number) ... Page to retrieve. 
+    + per_page = `30` (optional, number) ... Page size.
+    + q (optional, string, `American`) ... Search query.
+    + sort = `name` (optional, string, `updated_at`) ... A field name to sort by.
+    + direction = `asc` (optional, string) ... Sort direction: `asc` or `desc`.
+
++ Response 200 (application/json)
+
+    + Headers
+    
+            Link: <https://api.truecron.com/v1/jobs?page=2>; rel="next", 
+                  <https://api.truecron.com/v1/jobs?page=4>; rel="last"
+
+    + Body
+    
+            [{
+                "id": "1",
+                "name": "My first job", 
+                "tags": ["production"],
+                "active": true,
+                "archived": false,
+                "updated_at": "2014-08-21T11:20:34Z",            
+                "updated_by": {
+                        "login": "bob@example.com",
+                        "id": "124",
+                        "name": "Bob",
+                        "_links": {
+                            "self": "https://api.truecron.com/v1/users/124"
+                        }
+                    },
+                "last_run": {
+                    "id": "865D765S654236457Fhjgjg",
+                    "started_at": "2014-08-25T06:00:00Z",
+                    "status": "succeeded",
+                    "elapsed_msec": 7000,
+                    "_links": {
+                        "self": "https://api/truecron.com/v1/jobs/1/results/865D765S654236457Fhjgjg"
+                    }
+                }
+                "next_run_at": "2014-09-01T06:00:00Z",
+                "_links": {
+                    "self": "https://api.truecron.com/v1/jobs/1"
+                }
+            }, 
+            [{
+                "id": "2",
+                "name": "My second job", 
+                "tags": [],
+                "active": true,
+                "archived": false,
+                "updated_at": "2014-08-22T11:22:00Z",            
+                "updated_by": {
+                        "login": "alice@example.com",
+                        "id": "123",
+                        "name": "Alice",
+                        "_links": {
+                            "self": "https://api.truecron.com/v1/users/123"
+                        }
+                    },
+                "last_run": {
+                    "id": "5346456534535345",
+                    "started_at": "2014-08-26T10:00:00Z",
+                    "status": "failed",
+                    "elapsed_msec": 3500,
+                    "_links": {
+                        "self": "https://api/truecron.com/v1/jobs/2/results/5346456534535345"
+                    }
+                }
+                "next_run_at": "2014-09-01T06:00:00Z",
+                "_links": {
+                    "self": "https://api.truecron.com/v1/jobs/2"
+                }
+            }, 
+            }]
+
+
+
+# Group Tasks
+*Tasks* define execution steps of *Job* objects, like copy files, execute an application, ping a host, etc.
+
+## Task [/jobs/{job_id}/tasks/{id}]
+A *Task* object has the following fields:
+
+Name         | Type   |Description
+-------------|--------|---
+id           | string | Unique ID of the Task within a Job. Generated automaticaly when a task is created. Read-only, not null.
+name         | string | Name of the task. Required.
+active       | boolean| Gets or sets wheither the task is enabled. If disabled it will be skipped during execution. Default: `true`.
+position     | number | Position of the task in the list of job's task. Change position to reorder the tasks. If not specified, set to MAX(position within tasks)+1.
+type         | string | Type of the task. See *Task Types* section for a list of supported types. Required.
+settings     | object | Task-type specific settings.
+timeout_sec  | number | Abort task execution if it takes more than the value specified. Valid range: 1 to 86400 (one day). Default: 1800 (30 minutes).
+_links       | links  | Links to self and a parent job. Read-only.
+
++ Model  (application/json)
+    + Body
+    
+            {
+                "id": "1",
+                "name": "Ping mycompany.com",
+                "active": true,
+                "position": 1,
+                "type": "network_ping",
+                "settings": {
+                    "target": "mycompany.com",
+                    "connection": null,
+                    "count": 5,
+                    "ttl": null,
+                    "timeout": null,
+                    "size": null
+                },
+                "timeout_sec": "10",
+                "_links": {
+                    "self": "https://api.truecron.com/v1/jobs/1/tasks/1",
+                    "job": "https://api.truecron.com/v1/jobs/1"
+                }
+            }
+
+
++ Parameters
+    + job_id (required, string) ... ID of the *Job* object the task is a member of.
+    + id (required, string) ... ID of the *Task* object.
+
+### Retrieve a Task [GET]
++ Response 200 (application/json)
+    [Task][]
+
+### Modify a Task [PATCH]
++ Request
+
+        {
+            "position": 1
+        }
+        
++ Response 200 (application/json)
+    [Task][]
+        
+
+### Replace a Task [PUT]
++ Request
+
+        {
+            "name": "Ping mycompany.com",
             "active": true,
-            "archived": false
+            "position": 1,
+            "type": "network_ping",
+            "settings": {
+                "target": "mycompany.com",
+                "connection": null,
+                "count": 5,
+                "ttl": null,
+                "timeout": null,
+                "size": null
+            },
+            "timeout_sec": "10",
+            }
+        }
+
++ Response 200 (application/json)
+    [Task][]
+
+### Remove a Task [DELETE]
++ Response 204
+
+## Tasks Collection [/jobs/{job_id}/tasks]
+
++ Parameters
+    + job_id (required, string) ... ID of a *Job*.
+
+### List of Tasks [GET]
+
++ Response 200 (application/json)
+
+        [{
+            "id": "1",
+            "name": "Ping mycompany.com",
+            "active": true,
+            "position": 1,
+            "type": "network_ping",
+            "settings": {
+                "target": "mycompany.com",
+                "connection": null,
+                "count": 5,
+                "ttl": null,
+                "timeout": null,
+                "size": null
+            },
+            "timeout_sec": "10",
+            "_links": {
+                "self": "https://api.truecron.com/v1/jobs/1/tasks/1",
+                "job": "https://api.truecron.com/v1/jobs/1"
+            }
+        },
+        {
+            "id": "2",
+            "name": "Copy files to FTP",
+            "active": true,
+            "position": 2,
+            "type": "ftp_copy",
+            "settings": {
+                "source-connection": {
+                    "id": "999",
+                    "name": "Local",
+                    "_links": {
+                        "self": "https://api.truecron.com/v1/connections/999"
+                    }
+                },
+                "target_connection": {
+                    "id": "888",
+                    "name": "MyCompany sFTP",
+                    "_links": {
+                        "self": "https://api.truecron.com/v1/connections/888"
+                    }
+                },
+                "source_directory": "D:\data\export",
+                "target_directory": "",
+                "file-mask": "*.csv",
+                "overwrite": false
+            },
+            "timeout_sec": "600",
+            "_links": {
+                "self": "https://api.truecron.com/v1/jobs/1/tasks/2",
+                "job": "https://api.truecron.com/v1/jobs/1"
+            }
+        }]
+        
+### Create a Task [POST]
+Only `name` and `type` are required to create a new task. If `position` is not specified, 
+the task will be added to the end of the task lisk.
+
++ Request (application/json)
+
+        {
+            "name": "Ping mycompany.com",
+            "active": true,
+            "position": 1,
+            "type": "network_ping",
+            "settings": {
+                "target": "mycompany.com",
+                "connection": null,
+                "count": 5,
+                "ttl": null,
+                "timeout": null,
+                "size": null
+            },
+            "timeout_sec": "10",
+            }
         }
 
 + Response 201 (application/json)
 
-        { "id": 2 }
+        [Task][]
 
-## Job [/jobs/{job_id}]
-A single Job object with all its details
+
+
+
+
+# Group Result
+Job execution results.
+
+## Result [/jobs/{job_id}/results/{id}]
+Information about execution of the job.
+
+Name         | Type   |Description
+-------------|--------|-------
+id           | string | Execution ID. 
+started_at   | string | A timestamp (UTC) when a job was started. 
+status       | string | Status of execution: `succeeded`, `failed`, `in-progress`. 
+elapsed_msec | number | Duration of job execution in milliseconds. 
+message      | string | Error message. Nullable.
+tasks        | TaskResult | An array of task execution results
+_links       | links  | Provides links to self, the job.
 
 + Parameters
-    + job_id (required, number, `1`) ... Numeric `job_id` of the Job to perform action with. Has example value.
-
-### Retrieve a Job [GET]
-+ Response 200 (application/json)
-
-        {
-            "id": 2,
-            "name": "American Signature", 
-            "tags": ["edi", "production"],
-            "rrule": "FREQ=DAILY;INTERVAL=1;BYDAY=MO;BYHOUR=12;BYMINUTE=0;BYSECOND=0",
-            "active": true,
-            "archived": false,
-            "links": {
-                "self": "/jobs/{job_id}",
-                "tasks": "/jobs/{job_id}/tasks",
-                "viewers": "/jobs/{job_id}/viewers"
+    + id (string) ... ID of the *Result* object.
+    
++ Model (application/json)
+    
+    + Body
+    
+            {
+                "id": "10",
+                "started_at": "2015-0101T00:00:00Z",
+                "status": "failed",
+                "elapsed_msec": 7500,
+                "message": "Task 'Copy files to FTP' failed",
+                "tasks": [
+                    {
+                        "id": "1",
+                        "name": "Execute SQL",
+                        "type": "sql_execute",
+                        "elapsed_msec": 7000,
+                        "status": "succeeded",
+                        "message": "",
+                        "log_id": "84576656576235gdghasfd653",
+                        "_links": {
+                            "log": "https://api.truecron/v1/logs/84576656576235gdghasfd653"
+                        }
+                    },
+                    {
+                        "id": "2",
+                        "name": "Copy files to FTP",
+                        "type": "ftp_copy",
+                        "elapsed_msec": 500,
+                        "status": "failed",
+                        "message": "Cannot connect to FTP server ftp.example.com. Unknown host.",
+                        "log_id": "22232335555555544",
+                        "_links": {
+                            "log": "https://api.truecron/v1/logs/22232335555555544"
+                        }
+                    }
+                ]
+                "_links": {
+                    "self": "https://api.truecron.com/v1/jobs/1/results/10"
+                }
             }
-        }
+    
+### Retrieve a Result [GET]
++ Parameters
+    + job_id (string) ... ID of the *Job* object.
+    + id (string) ... ID of the *Result* object.
++ Response 200 (application/json)
+    [Result][]
 
-### Update a Job [PUT]
+## Result Collection [/jobs/{job_id}/results{?page,per_page,q,sort,direction}]
++ Parameters
+    + job_id (required, string) ... ID of the *Job*.
+    + page = `1` (optional, number) ... Page to retrieve. 
+    + per_page = `30` (optional, number) ... Page size.
+    + q (optional, string, `FTP`) ... Search query.
+    + sort = `started_at` (optional, string, `updated_at`) ... A field name to sort by.
+    + direction = `desc` (optional, string) ... Sort direction: `asc` or `desc`.
 
-+ Request (application/json)
-
-        {
-            "name": "American Signature",
-            "tags": ["easypay"],
-            "rrule": "FREQ=DAILY;INTERVAL=1;BYDAY=MO;BYHOUR=12;BYMINUTE=0;BYSECOND=0",
-            "active": true,
-            "archived": false
-        }
-        
+### Get recent results of the job [GET]
 + Response 200 (application/json)
 
-        {
-            "id": 2,
-            "name": "American Signature", 
-            "tags": ["edi", "production", "easypay"],
-            "rrule": "FREQ=DAILY;INTERVAL=1;BYDAY=MO;BYHOUR=12;BYMINUTE=0;BYSECOND=0",
-            "active": true,
-            "archived": false
-        }
+    + Headers
+    
+            Link: <https://api.truecron.com/v1/jobs/1/results?page=2>; rel="next", 
+                  <https://api.truecron.com/v1/jobs/1/results?page=10>; rel="last"
 
-# Group Collaborators
+    + Body
+    
+            [
+            {
+                "id": "10",
+                "started_at": "2015-01-01T00:00:00Z",
+                "status": "failed",
+                "elapsed_msec": 7500,
+                "message": "Task 'Copy files to FTP' failed",
+                "_links": {
+                    "self": "https://api.truecron.com/v1/jobs/1/results/10"
+                }
+            },
+            {
+                "id": "9",
+                "started_at": "2014-12-31T00:00:00Z",
+                "status": "succeeded",
+                "elapsed_msec": 10000,
+                "message": "",
+                "_links": {
+                    "self": "https://api.truecron.com/v1/jobs/1/results/9"
+                }
+            }
+            ]
 
-## Job Collaborators Collection [/jobs/{job_id}/collaborators]
+
+# Group History
+An audit journal of *Job* changes. The journal is populated automatically when a user changes the job. 
+A record has the following fields:
+
+Name         | Type    |Description
+-------------|---------|---
+at           | string  | Change timestamp (UTC). 
+author       | [User][]| A user made the change.
+change       | string  | A human-readable change description.
+
+
+## History Collection [/jobs/{job_id}/history{page,per_page,q,sort,direction}]
+
++ Parameters
+    + job_id (required, string) ... ID of the *Job* object to retrieve history for.
+    + page = `1` (optional, number) ... Page to retrieve. 
+    + per_page = `30` (optional, number) ... Page size.
+    + q (optional, string, `American`) ... Search query.
+    + sort = `at` (optional, string, `updated_at`) ... A field name to sort by.
+    + direction = `desc` (optional, string) ... Sort direction: `asc` or `desc`.
+    
+### List journal entries [GET]
+
++ Response 200 (application/json)
+    + Headers
+    
+            Link: <https://api.truecron.com/v1/jobs/1/history?page=2>; rel="next", 
+                  <https://api.truecron.com/v1/jobs/1/history?page=10>; rel="last"
+
+    + Body
+    
+
+            [{
+                "at": "2015-01-01T00:10:00Z",
+                "author": {
+                        "login": "alice@example.com",
+                        "id": "123",
+                        "name": "Alice",
+                        "_links": {
+                            "self": "https://api.truecron.com/v1/users/123"
+                        }
+                    }, 
+                "change": "Modified task 'Ping mycompany.com'. Changed 'Count' to '5'."
+            },
+            {
+                "at": "2015-01-01T00:00:00Z",
+                "author": {
+                        "login": "alice@example.com",
+                        "id": "123",
+                        "name": "Alice",
+                        "_links": {
+                            "self": "https://api.truecron.com/v1/users/123"
+                        }
+                    }, 
+                "change": "Created task 'Ping mycompany.com'. Changed 'Target' to 'mycompany.com', 'Count' to '1'."
+            }]
+            
+
+
+
+
+
+# Group Ignore me! Collaborators
+
+## Ignore me! Job Collaborators Collection [/jobs/{job_id}/collaborators]
 Job Collaborators related resources of the *TrueCron API*.
 
 + Parameters
@@ -140,7 +713,7 @@ Job Collaborators related resources of the *TrueCron API*.
 
         { "id": 1 }
         
-## Job Collaborator [/jobs/{job_id}/collaborators/{collaborator_id}]
+## Ignore me! Job Collaborator [/jobs/{job_id}/collaborators/{collaborator_id}]
 A single Job Collaborator object that describes a client who has access to a Job.
 
 + Parameters
@@ -160,93 +733,3 @@ A single Job Collaborator object that describes a client who has access to a Job
 ### Remove a Job Collaborator [DELETE]
 + Response 204
 
-# Group Audit Log
-History of changes.
-
-## Job Audit Logs Collection [/jobs/{job_id}/logs]
-
-+ Parameters
-    + job_id (required, number, `1`) ... Numeric `job_id` of the Job to perform action with. Has example value.
-    
-### List of Job Log Entries [GET]
-
-+ Response 200 (application/json)
-
-        [{
-            "id": "BHJ84BU8233BUUSKKS",
-            "author": "John Smith", 
-            "change": "added task 'clean folder'"
-        },{
-            "id": "BHJ84BU8233BUUSKK4",
-            "author": "John Smith", 
-            "change": "added task 'zip'"
-        }]
-        
-### Create a new Job Log Entry [POST]
-
-+ Request (application/json)
-
-        {
-            "author": "John Smith", 
-            "change": "added task 'clean folder'"
-        }
-        
-+ Response 201 (application/json)
-
-        { "id": "BHJ84BU8233BUUSKKS" }
-
-# Group Tasks
-Tasks related resources of *CloudCron API*.
-
-## Tasks Collection [/jobs/{job_id}/tasks]
-
-+ Parameters
-    + job_id (required, number, `1`) ... Numeric `job-id` of the Job to perform action with. Has example value.
-
-### List of Tasks [GET]
-
-+ Response 200 (application/json)
-
-        [{
-            "id": 1,
-            "name": "John Smith", 
-            "email": "jsmith@company.com"
-        },{
-            "id": 2,
-            "name": "Peter Mayer", 
-            "email": "pmayer@company.com"
-        }]
-        
-### Create a Task [POST]
-
-+ Request (application/json)
-
-        {
-            "name": "clean folder", 
-            "type": "delete"
-        }
-
-+ Response 201 (application/json)
-
-        { "id": 1 }
-
-## Task [/jobs/{job_id}/tasks/{task_id}]
-A single Task object with all its details
-
-+ Parameters
-    + job_id (required, number, `1`) ... Numeric `job-id` of the Job to perform action with. Has example value.
-    + task_id (required, number, `1`) ... Numeric `task-id` of the Task to perform action with. Has example value.
-
-### Retrieve a Task [GET]
-
-+ Response 200 (application/json)
-
-        {
-            "id": 1,
-            "name": "clean folder",
-            "type": "delete",
-            "status": "active"
-        }
-
-### Remove a Task [DELETE]
-+ Response 204
