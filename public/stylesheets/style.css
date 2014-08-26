@@ -122,3 +122,25 @@ body {
     color: #ff9934;
     padding-left: 5px;
 }
+
+.borderless tbody tr td, .borderless thead tr th {
+    border: none;
+    vertical-align: middle;
+}
+
+.first_row {
+    font-size: 30px;
+}
+
+.blue_row {
+    color:#08a5ce;
+    text-decoration: underline;
+}
+
+.red_row {
+    color: #ff0000
+}
+
+.underline {
+    text-decoration: underline;
+}
