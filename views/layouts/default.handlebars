@@ -16,6 +16,11 @@
         <script type="text/javascript" src="/js/libs/handlebars-v1.3.0.js"></script>
         <script type="text/javascript" src="/js/libs/ember-1.6.1.js"></script>
         <script type="text/javascript" src="/js/app.js"></script>
+
+        {{!-- components --}}
+        <script type="text/javascript" src="/js/components/active-li.js"></script>
+        {{!-- /components --}}
+
     </head>
     <body>
     <script type="text/x-handlebars">
@@ -29,7 +34,7 @@
                         <span class="icon-bar"></span>
                         <span class="icon-bar"></span>
                     </button>
-                    <a class="navbar-brand" href="#"></a>
+                    <a class="navbar-brand" href="/"></a>
                 </div>
                 <div class="navbar-collapse collapse">
                     <ul class="nav navbar-nav navbar-right">
@@ -43,21 +48,23 @@
             <div class="row">
                 <div class="col-sm-3 col-md-2 sidebar">
                     <ul class="nav nav-sidebar">
-                        <li class="active">\{{#link-to 'dashboard'}}Dashboard\{{/link-to}}</li>
+                        \{{#active-li currentWhen="index"}}
+                            \{{#link-to 'index'}}Index\{{/link-to}}
+                        \{{/active-li}}
+                        \{{#active-li currentWhen="dashboard"}}
+                            \{{#link-to 'dashboard'}}Overview\{{/link-to}}
+                        \{{/active-li}}
+                        <li><a href="#">Reports</a></li>
                         <li><a href="#">Analytics</a></li>
                         <li><a href="#">Export</a></li>
                     </ul>
                     <ul class="nav nav-sidebar">
-                        <li><a href="">Nav item</a></li>
-                        <li><a href="">Nav item again</a></li>
-                        <li><a href="">One more nav</a></li>
-                        <li><a href="">Another nav item</a></li>
-                        <li><a href="">More navigation</a></li>
-                    </ul>
-                    <ul class="nav nav-sidebar">
-                        <li><a href="">Nav item again</a></li>
-                        <li><a href="">One more nav</a></li>
-                        <li><a href="">Another nav item</a></li>
+                        \{{#active-li currentWhen="signin"}}
+                            \{{#link-to 'signin'}}Sign in\{{/link-to}}
+                        \{{/active-li}}
+                        \{{#active-li currentWhen="signup"}}
+                            \{{#link-to 'signup'}}Sign up\{{/link-to}}
+                        \{{/active-li}}
                     </ul>
                 </div>
             </div>
