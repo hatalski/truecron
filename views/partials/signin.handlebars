@@ -1,24 +1,40 @@
 <script type="text/x-handlebars" data-template-name="signin">
-     <div class="row">
-         <div class="span3">
-             <form class="form-signin" role="form">
-                 <h2 class="form-signin-heading">Please sign in</h2>
-                 <input type="email" class="form-control" placeholder="Email address" required="" autofocus="">
-                 <p></p>
-                 <input type="password" class="form-control" placeholder="Password" required="">
-                 <div class="checkbox">
-                     <label>
-                         <input type="checkbox" value="remember-me"> Remember me
-                     </label>
-                 </div>
-                 <button class="btn btn-lg btn-primary btn-block">Sign in</button>
-             </form>
-             <a class="link" href="#">forgot password?</a>
-             <br>
-         </div> <!--end 1 part container-->
-         <br><br>
-         <div class="span4"> <!-- batton "Sign in with Google account"-->
-             <a href="#" class="btn btn-primary btn-large">Sign in with Google account</a>
-         </div> <!--end 2 part container-->
+    <!-- Button trigger modal -->
+    <button class="btn btn-primary btn-lg" data-toggle="modal" data-target="#myModal">
+        Sign in
+    </button>
+
+    <!-- Modal -->
+    <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                    <h4 class="modal-title" id="myModalLabel">Sign in</h4>
+                </div>
+                <div class="modal-body">
+                    <form class="form-signin" role="form">
+                        <input type="email" class="form-control" placeholder="Email address" required="" autofocus="">
+                        <p></p>
+                        <input type="password" class="form-control" placeholder="Password" required="">
+                        <div class="checkbox">
+                            <label>
+                                <input type="checkbox" value="remember-me"> Remember me
+                            </label>
+                        </div>
+                        <button class="btn btn-lg btn-primary btn-block">Sign in</button>
+                    </form>
+                    <a class="link" href="#">forgot password?</a>
+                    <br>
+                    <br><br>
+                    <div class="span4"> <!-- batton "Sign in with Google account"-->
+                        <a href="#" class="btn btn-primary btn-large">Sign in with Google account</a>
+                    </div>
+                </div>
+                <!--<div class="modal-footer"></div>-->
+            </div>
+        </div>
     </div>
+
+
 </script>
