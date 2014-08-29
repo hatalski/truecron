@@ -23,6 +23,10 @@ App.Router.map(function() {
 });
 
 App.Router.map(function() {
+    this.route('ftptask');
+});
+
+App.Router.map(function() {
     this.route('dashboard');
 });
 
