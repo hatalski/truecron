@@ -197,7 +197,7 @@ body {
 }
 
 
-table {
+.table-ftp {
     border-collapse: separate;
     border-spacing: 20px;
     width: 400px;
