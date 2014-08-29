@@ -151,7 +151,6 @@ body {
     text-decoration: underline;
     font-size: 20px;
     border: solid 6px #c9c9cb;
-    width: 144px;
     text-align: center;
 }
 .sidebar .nav-tabs > li > a {
@@ -194,4 +193,24 @@ body {
 
 .sidebar .btn-default {
     background-image: none;
+}
+
+.col-md-2 {
+    width: 13.8%;
+}
+.sidebar .btn-group {
+    border-bottom: solid 5px #c9c9cb;
+}
+.menu-tabs {
+    background: linear-gradient(#f9f9f9, #efefef);
+    border-bottom: solid 5px #c9c9cb;
+}
+
+.menu-tabs .col-xs-9 {
+    color: #484848;
+    padding: 5px;
+}
+
+.menu-tabs .col-xs-9 .title {
+    font-weight: bold;
 }
