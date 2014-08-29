@@ -195,3 +195,13 @@ body {
 .sidebar .btn-default {
     background-image: none;
 }
+
+
+table {
+    border-collapse: separate;
+    border-spacing: 20px;
+    width: 400px;
+    class: responsiv;
+    width : 265px;
+    width: 534px;
+}
