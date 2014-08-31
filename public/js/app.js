@@ -4,39 +4,97 @@ App = Ember.Application.create({
     }*/
 });
 
-App.Router.map(function() {
-    this.route('hello');
+App.AuthenticatedRoute = Ember.Route.extend({
+    beforeModel: function(transition) {
+        if (!this.controllerFor('signin').get('token')) {
+            this.redirectToSignin(transition);
+        }
+    },
+    redirectToSignin: function(transition) {
+        // alert('You must sign in!');
+        var signinController = this.controllerFor('signin');
+        signinController.set('attemptedTransition', transition);
+        this.transitionTo('signin');
+    },
+    getJsonWithToken: function(url) {
+        var token = this.controllerFor('signin').get('token');
+        return $.getJSON(url, { token: token });
+    },
+    events: {
+        error: function(reason, transition) {
+            if (reason.status === 401) {
+                this.redirectToSignin(transition);
+            } else {
+                alert('Something went wrong');
+            }
+        }
+    }
 });
 
-App.IndexRoute = Ember.Route.extend({
-  model: function() {
-    return [];
-  }
+// Controllers
+App.SigninController = Ember.Controller.extend({
+    reset: function() {
+        this.setProperties({
+            login: "",
+            password: "",
+            errorMessage: "",
+            isSignedIn: this.get('token') ? true : false
+        });
+    },
+    token: sessionStorage.token,
+    tokenChanged: function() {
+        sessionStorage.token = this.get('token');
+    }.observes('token'),
+
+    signin: function() {
+        var self = this, data = this.getProperties('login', 'password');
+
+        // Clear out any error messages.
+        this.set('errorMessage', null);
+        $.post('/auth/simple.json', data).then(function(response) {
+            self.set('errorMessage', response.message);
+            self.set('isSignedIn', response.success ? true : false);
+            if (response.success) {
+                self.set('token', response.token);
+
+                var attemptedTransition = self.get('attemptedTransition');
+                if (attemptedTransition) {
+                    attemptedTransition.retry();
+                    self.set('attemptedTransition', null);
+                } else {
+                    // Redirect to 'index' by default.
+                    self.transitionToRoute('index');
+                }
+            } else {
+                self.set('token', "");
+            }
+        });
+    }
 });
+
 // add route "signin" "signup"
 App.Router.map(function() {
     this.route('signin');
+    this.route('signup');
 });
 
-App.Router.map(function() {
-    this.route('signup');
+App.SigninRoute = Ember.Route.extend({
+    setupController: function(controller, context) {
+        controller.reset();
+    }
 });
 
 App.Router.map(function() {
     this.route('dashboard');
 });
 
-App.HelloRoute = Ember.Route.extend({
-  model: function() {
-    return [
-        'Hello from Paul',
-        'Hello from Natallia',
-        'Hello from Dmitry',
-        'Hello From Viny',
-        'Hello world from Andrei!',
-        'Hi from Lev!',
-        'Hello from Vitalik!',
-        'Hello from Vitali!'
-    ];
-  }
+// dv: hello available only for signed in user
+App.Router.map(function() {
+    this.route('hello');
+});
+
+App.HelloRoute = App.AuthenticatedRoute.extend({
+    model: function() {
+        return this.getJsonWithToken('/hello.json');
+    }
 });
