@@ -1,7 +1,7 @@
 <!doctype html>
 <html lang="en">
     <head>
-        <title>= title</title>
+        <title>{{title}}</title>
         <link rel="icon" href=/favicon.ico"/>
 
         <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css"/>
@@ -16,8 +16,85 @@
         <script type="text/javascript" src="/js/libs/handlebars-v1.3.0.js"></script>
         <script type="text/javascript" src="/js/libs/ember-1.6.1.js"></script>
         <script type="text/javascript" src="/js/app.js"></script>
+
+        {{!-- components --}}
+        <script type="text/javascript" src="/js/components/active-li.js"></script>
+        {{!-- /components --}}
+
     </head>
     <body>
-        {{{body}}}
+    <script type="text/x-handlebars">
+
+        <div class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+            <div class="container-fluid">
+                <div class="navbar-header">
+                    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                        <span class="sr-only">Toggle navigation</span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                    <a class="navbar-brand" href="/"></a>
+                </div>
+                <div class="navbar-collapse collapse">
+                    <ul class="nav navbar-nav navbar-right">
+                        <li><h4>SC Staging</h4></li>
+                        <li><h4><span class="glyphicon glyphicon-align-justify"></span></h4></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-sm-3 col-md-2 sidebar">
+                    <ul class="nav nav-tabs" role="tablist">
+                        <li class="active"><a href="#"><span>Jobs</span></a></li>
+                        <li><a href="#"><span>Connections</span></a></li>
+                    </ul>
+                    <div class="btn-group">
+                        <button type="button" class="btn btn-default"><span class="glyphicon glyphicon-plus"></span>Add Job</button>
+                        <button type="button" class="btn btn-default"><span class="glyphicon glyphicon-search"></span></button>
+                        <button type="button" class="btn btn-default"><span class="glyphicon glyphicon-filter"></span></button>
+                    </div>
+                    <ul class="nav nav-sidebar">
+                        \{{#active-li currentWhen="index"}}
+                            \{{#link-to 'index'}}Index\{{/link-to}}
+                        \{{/active-li}}
+                        \{{#active-li currentWhen="dashboard"}}
+                            \{{#link-to 'dashboard'}}Overview\{{/link-to}}
+                        \{{/active-li}}
+                        <li><a href="#">Reports</a></li>
+                        <li><a href="#">Analytics</a></li>
+                        <li><a href="#">Export</a></li>
+                    </ul>
+                    <ul class="nav nav-sidebar">
+                        \{{#active-li currentWhen="signin"}}
+                            \{{#link-to 'signin'}}Sign in\{{/link-to}}
+                        \{{/active-li}}
+                        \{{#active-li currentWhen="signup"}}
+                            \{{#link-to 'signup'}}Sign up\{{/link-to}}
+                        \{{/active-li}}
+                        \{{#active-li currentWhen="ftptask"}}
+                        \{{#link-to 'ftptask'}}FTP task\{{/link-to}}
+                        \{{/active-li}}
+                    </ul>
+                </div>
+            </div>
+        </div>
+            <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
+                {{{body}}}{{!-- dv: server-side template --}}
+                \{{outlet}}{{!-- dv: place for client-side partials --}}
+            </div>
+    </script>
+
+    {{!-- dv: register your client-side partials here. In alphabetical order!!! --}}
+    {{> dashboard}}
+    {{> hello}}
+    {{> index}}
+    {{> signin}}
+    {{> signup}}
+    {{> ftptask}}
+    {{!-- dv: end of place for client-side partials --}}
+
     </body>
 </html>

@@ -22,6 +22,14 @@ App.Router.map(function() {
     this.route('signup');
 });
 
+App.Router.map(function() {
+    this.route('ftptask');
+});
+
+App.Router.map(function() {
+    this.route('dashboard');
+});
+
 App.HelloRoute = Ember.Route.extend({
   model: function() {
     return [

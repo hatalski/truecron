@@ -6,3 +6,202 @@ body {
 a {
   color: #00B7FF;
 }
+
+.navbar-inverse {
+    background-color: #465f7d;
+    background-image: none;
+    color:#fff;
+    border-color: #ff9934;
+}
+
+.navbar-fixed-top {
+    border-width: 0 0 2px;
+}
+
+.navbar-brand {
+    background:url(../img/logo.png) no-repeat center;
+    width: 168px;
+}
+/* Move down content because we have a fixed navbar that is 50px tall */
+body {
+    padding-top: 50px;
+}
+
+
+/*
+ * Global add-ons
+ */
+
+.sub-header {
+    padding-bottom: 10px;
+}
+
+/*
+ * Sidebar
+ */
+
+/* Hide for mobile, show later */
+.sidebar {
+    display: none;
+}
+@media (min-width: 768px) {
+    .sidebar {
+        position: fixed;
+        top: 51px;
+        bottom: 0;
+        left: 0;
+        z-index: 1000;
+        display: block;
+        overflow-x: hidden;
+        overflow-y: auto; /* Scrollable contents if viewport is shorter than content. */
+        background-color: #d9d9db;
+        border-right: 6px solid #d8d8da;
+        border-top: 6px solid #d8d8da;
+    }
+}
+
+/* Sidebar navigation */
+.nav-sidebar {
+    margin-bottom: 20px; /* 20px padding + 1px border
+    margin-right: -20px;
+    margin-left: -20px;*/
+}
+.nav-sidebar > li > a {
+    padding-right: 20px;
+    padding-left: 20px;
+}
+.nav-sidebar > .active > a,
+.nav-sidebar > .active > a:hover,
+.nav-sidebar > .active > a:focus {
+    color: #fff;
+    background-color: #428bca;
+}
+
+
+/*
+ * Main content
+ */
+
+.main {
+    padding: 20px;
+}
+@media (min-width: 768px) {
+    .main {
+        padding-right: 40px;
+        padding-left: 40px;
+    }
+}
+.main .page-header {
+    margin-top: 0;
+}
+
+
+/*
+ * Placeholder dashboard ideas
+ */
+
+.placeholders {
+    margin-bottom: 30px;
+    text-align: center;
+}
+.placeholders h4 {
+    margin-bottom: 0;
+}
+.placeholder {
+    margin-bottom: 20px;
+}
+.placeholder img {
+    display: inline-block;
+    border-radius: 50%;
+}
+.navbar-nav.navbar-right:last-child {
+    margin: 5px 0;
+}
+
+.glyphicon-align-justify {
+    padding-left: 5px;
+}
+
+.borderless tbody tr td, .borderless thead tr th {
+    border: none;
+    vertical-align: middle;
+}
+
+.first_row {
+    font-size: 30px;
+}
+
+.blue_row {
+    color:#08a5ce;
+    text-decoration: underline;
+}
+
+.red_row {
+    color: #ff0000
+}
+
+.underline {
+    text-decoration: underline;
+}
+
+.sidebar .nav-tabs > li.active > a, .nav-tabs > li.active > a:hover, .nav-tabs > li.active > a:focus {
+    background-color: #f4f4f4;
+    color: #ff9e40;
+    font-weight: bold;
+    text-decoration: underline;
+    font-size: 20px;
+    border: solid 6px #c9c9cb;
+    width: 144px;
+    text-align: center;
+}
+.sidebar .nav-tabs > li > a {
+    border-radius: 0;
+    color: #bcbcbe;
+    font-size: 20px;
+    font-weight: bold;
+    border: solid 6px #c9c9cb;
+    border-top: solid 6px #d8d8da;
+    margin-right: 0;
+}
+.sidebar .active span {
+    color:#474747
+}
+
+.col-sm-3 {
+    padding-left: 6px;
+    padding-right: 0;
+}
+.sidebar .btn-group, .btn-group-vertical{
+    padding: 10px 6px;
+    background-color: #fff;
+    width: 100%;
+}
+
+.glyphicon {
+    color: #ff982f;
+}
+
+.sidebar .glyphicon-plus:before {
+     padding-right: 5px;
+}
+
+.sidebar .btn-group > .btn {
+    background-color: #fff;
+    border-radius: 0;
+    border: solid 1px #13afc8;
+    margin-right: 5px;
+}
+
+.sidebar .btn-default {
+    background-image: none;
+}
+
+
+.table-ftp {
+    border-collapse: separate;
+    border-spacing: 20px;
+    width: 400px;
+    class: responsiv;
+    width : 265px;
+    width: 534px;
+}

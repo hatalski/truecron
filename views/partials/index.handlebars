@@ -1,20 +1,15 @@
 <script type="text/x-handlebars" data-template-name="index">
-    <div>
-        <a href="/hello/">
-            <i class="fa fa-wrench"></i>  Hello World (old school)
-        </a>
-    </div>
-    <div>
-        \{{#link-to 'hello'}}
-            <i class="fa fa-heart"></i>  Hello World (super cool)
-        \{{/link-to}}
+    <h1>TrueCron</h1>
+    <p>Welcome to TrueCron</p>
 
-        \{{#link-to 'signin'}}
-        <i class="fa fa-heart"></i>  Sign in
-        \{{/link-to}}
+    <p class="bg-primary">Please see left menu!</p>
 
-        \{{#link-to 'signup'}}
-        <i class="fa fa-heart"></i>  Sign up
-        \{{/link-to}}
-    </div>
+    <ul>
+        <li>
+            \{{#link-to 'hello'}}
+                <i class="fa fa-heart"></i>  Hello World (super cool)
+            \{{/link-to}}
+
+        </li>
+    </ul>
 </script>
