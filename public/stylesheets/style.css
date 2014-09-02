@@ -180,7 +180,7 @@ body {
     color: #ff982f;
 }
 
-.sidebar .glyphicon-plus:before {
+.glyphicon-plus:before {
      padding-right: 5px;
 }
 
@@ -195,9 +195,6 @@ body {
     background-image: none;
 }
 
-.col-md-2 {
-    width: 13.8%;
-}
 .sidebar .btn-group {
     border-bottom: solid 5px #c9c9cb;
 }
@@ -213,4 +210,16 @@ body {
 
 .menu-tabs .col-xs-9 .title {
     font-weight: bold;
+}
+
+.sharelink {
+    float: right;
+}
+
+#jobinput {
+    width: 100%;
+}
+
+.row {
+    margin: 0;
 }

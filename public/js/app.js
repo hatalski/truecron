@@ -26,6 +26,10 @@ App.Router.map(function() {
     this.route('dashboard');
 });
 
+App.Router.map(function() {
+    this.route('addjob');
+});
+
 App.HelloRoute = Ember.Route.extend({
   model: function() {
     return [
