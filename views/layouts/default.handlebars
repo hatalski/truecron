@@ -63,12 +63,16 @@
                         <li><a href="#">Export</a></li>
                     </ul>
                     <ul class="nav nav-sidebar">
-                        \{{#active-li currentWhen="signin"}}
-                            \{{#link-to 'signin'}}Sign in\{{/link-to}}
-                        \{{/active-li}}
-                        \{{#active-li currentWhen="signup"}}
-                            \{{#link-to 'signup'}}Sign up\{{/link-to}}
-                        \{{/active-li}}
+                        \{{#if controllers.signin.isSignedIn}}
+                            <li><a \{{action "signout" target="controllers.signin"}} href="#">Sign out</a></li>
+                        \{{else}}
+                            \{{#active-li currentWhen="signin"}}
+                                \{{#link-to 'signin'}}Sign in\{{/link-to}}
+                            \{{/active-li}}
+                            \{{#active-li currentWhen="signup"}}
+                                \{{#link-to 'signup'}}Sign up\{{/link-to}}
+                            \{{/active-li}}
+                        \{{/if}}
                     </ul>
                 </div>
             </div>

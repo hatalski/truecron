@@ -31,15 +31,26 @@ App.AuthenticatedRoute = Ember.Route.extend({
     }
 });
 
+App.ApplicationController = Ember.Controller.extend({
+    needs: ['signin']
+});
+
+App.IndexController = Ember.Controller.extend({
+    needs: ['signin']
+});
+
 // Controllers
 App.SigninController = Ember.Controller.extend({
     reset: function() {
         this.setProperties({
             login: "",
             password: "",
-            errorMessage: "",
-            isSignedIn: this.get('token') ? true : false
+            errorMessage: ""
         });
+    },
+    init: function () {
+        this._super();
+        this.set('isSignedIn', this.get('token') ? true : false);
     },
     token: sessionStorage.token,
     tokenChanged: function() {
@@ -69,6 +80,12 @@ App.SigninController = Ember.Controller.extend({
                 self.set('token', "");
             }
         });
+    },
+    signout: function() {
+        var self = this;
+
+        self.set('isSignedIn', false);
+        self.set('token', "");
     }
 });
 
