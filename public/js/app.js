@@ -13,6 +13,11 @@ App.IndexRoute = Ember.Route.extend({
     return [];
   }
 });
+
+App.Router.map(function() {
+    this.route('home_page');
+});
+
 // add route "signin" "signup"
 App.Router.map(function() {
     this.route('signin');
