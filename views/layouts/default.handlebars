@@ -13,8 +13,12 @@
         <script type="text/javascript" src="//code.jquery.com/jquery-1.11.1.min.js"></script>
         <script type="text/javascript" src="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
 
-        <script type="text/javascript" src="/js/libs/handlebars-v1.3.0.js"></script>
-        <script type="text/javascript" src="/js/libs/ember-1.6.1.js"></script>
+        <script type="text/javascript" src="/bower_components/handlebars/handlebars.min.js"></script>
+        <script type="text/javascript" src="/bower_components/ember/ember.min.js"></script>
+
+        <script type="text/javascript" src="/bower_components/ember-addons.bs_for_ember/dist/js/bs-core.min.js"></script>
+        <script type="text/javascript" src="/bower_components/ember-addons.bs_for_ember/dist/js/bs-modal.min.js"></script>
+
         <script type="text/javascript" src="/js/app.js"></script>
 
         {{!-- components --}}
@@ -100,6 +104,16 @@
                         \{{#active-li currentWhen="addjob"}}
                         \{{#link-to 'addjob'}}Add Job\{{/link-to}}
                         \{{/active-li}}
+                        \{{#if controllers.signin.isSignedIn}}
+                            <li><a \{{action "signout" target="controllers.signin"}} href="#">Sign out</a></li>
+                        \{{else}}
+                            \{{#active-li currentWhen="signin"}}
+                                \{{#link-to 'signin'}}Sign in\{{/link-to}}
+                            \{{/active-li}}
+                            \{{#active-li currentWhen="signup"}}
+                                \{{#link-to 'signup'}}Sign up\{{/link-to}}
+                            \{{/active-li}}
+                        \{{/if}}
                     </ul>
                 </div>
             </div>
