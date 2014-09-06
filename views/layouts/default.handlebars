@@ -42,7 +42,7 @@
                 <div class="navbar-collapse collapse">
                     <ul class="nav navbar-nav navbar-right">
                         <li><h4>SC Staging</h4></li>
-                        <li><h4><span class="glyphicon glyphicon-align-justify"></span></h4></li>
+                        <li><h4><i class="fa fa-bars"></i></h4></li>
                     </ul>
                 </div>
             </div>
@@ -55,9 +55,9 @@
                         <li><a href="#"><span>Connections</span></a></li>
                     </ul>
                     <div class="btn-group">
-                        <button \{{action "addJob"}} type="button" class="btn btn-default"><span class="glyphicon glyphicon-plus"></span>Add Job</button>
-                        <button type="button" class="btn btn-default"><span class="glyphicon glyphicon-search"></span></button>
-                        <button type="button" class="btn btn-default"><span class="glyphicon glyphicon-filter"></span></button>
+                        <button \{{action "addJob"}} type="button" class="btn btn-default"><i class="fa fa-plus"></i>Add Job</button>
+                        <button type="button" class="btn btn-default"><i class="fa fa-search"></i></button>
+                        <button type="button" class="btn btn-default"><i class="fa fa-filter"></i></button>
                     </div>
                     <div class="menu-tabs">
                         <div class="row">
@@ -72,12 +72,24 @@
                         </div>
                     </div>
                     <div class="menu-tabs">
+                    <div class="row">
+                        <div class="col-xs-2">
+                            <span></span>
+                        </div>
+                        <div class="col-xs-9">
+                            <p class="title">Gap</p>
+                            <p>Last run: 07/07/14 11:02 pm</p>
+                            <p>Next run: 08/08/14 11:02 pm</p>
+                        </div>
+                    </div>
+                </div>
+                    <div class="menu-tabs">
                         <div class="row">
                             <div class="col-xs-2">
-                                <span></span>
+                                <i class="fa fa-exclamation-circle fa-5"></i>
                             </div>
                             <div class="col-xs-9">
-                                <p class="title">Gap</p>
+                                <p class="title">American Signature</p>
                                 <p>Last run: 07/07/14 11:02 pm</p>
                                 <p>Next run: 08/08/14 11:02 pm</p>
                             </div>
@@ -90,9 +102,6 @@
                         \{{#active-li currentWhen="dashboard"}}
                             \{{#link-to 'dashboard'}}Overview\{{/link-to}}
                         \{{/active-li}}
-                        <li><a href="#">Reports</a></li>
-                        <li><a href="#">Analytics</a></li>
-                        <li><a href="#">Export</a></li>
                     </ul>
                     <ul class="nav nav-sidebar">
                         \{{#active-li currentWhen="signin"}}
