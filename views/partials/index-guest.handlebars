@@ -1,0 +1,50 @@
+<script type="text/x-handlebars" data-template-name="index-guest">
+
+    <div class="backglp">{{backgraund image}}
+        <div class="container-fluid">
+            <div class="formlp">{{form block content}}
+                <div> {{form with content}}
+                    <div class="heightblock"></div>
+                    <div class="hdfm"> {{head block}}
+                        <h3 class="h3sign">
+                            Sign in using your e-mail </h3>
+                    </div> {{end head block}}
+                    <div class="blcautr" align="center">{{block e-mail end password}}
+                        <form class="form-signin1">
+                            <input type="text" class="inpblchp" placeholder="Email">
+                            <input type="password" class="inpblchp" placeholder="Password">
+                            <table class="tablechc">
+                                <tr>
+                                    <td align="left" style="padding-bottom: 7px;">
+                                        <div class="checkboxhpg">
+                                            <h5> <input type="checkbox" class="chkbxlendp"  value="remember-me">
+                                                Remember me &nbsp </h5>
+                                        </div>
+                                    </td>
+                                    <td align="right"> <a href="#"><u> forgot your password?</u></a> </td>
+                                </tr>
+                            </table><br>
+                            <a href="#" class="btnsgnlpg" type="submit">SIGN IN
+                            </a>
+                        </form>
+                    </div> {{block e-mail end password}}
+                    <div>
+                        <div class="orblk">
+                            <img src="img/orblok.png" alt="OR" />
+                        </div> {{end block OR image}}
+                        <div class="ftrform" align="center">
+                            <div>
+                                <br><br>
+                                <a href="#"><img src="img/signgoogle.png" alt="sign in with Google"/></a>
+                            </div>
+                            <div >
+                                <br><br><br>
+                                <a href="#"> <p><u>Do not have an account? Sign Up here!</u></p></a>
+                            </div>
+                        </div>{{end ftrform}}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</script>

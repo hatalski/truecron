@@ -93,6 +93,8 @@ App.SigninController = Ember.Controller.extend({
 App.Router.map(function() {
     this.route('signin');
     this.route('signup');
+    this.route('index-guest');
+    this.route('connection-ftp');
 });
 
 App.SigninRoute = Ember.Route.extend({

@@ -144,3 +144,87 @@ body {
 .underline {
     text-decoration: underline;
 }
+
+.table-ftp {
+    border-collapse: separate;
+    border-spacing: 20px;
+    width: 400px;
+    class: responsiv;
+    width : 265px;
+    width: 534px;
+}
+
+/* start style partial autentification*/
+.backglp {   /* background image; */
+    width: 100%;
+    height: 100%;
+    background-size : cover ;
+    background-image : url(../img/bgr.jpg) ;
+    moz-background-size: cover;  /* Firefox 3.6 */
+    background-position: center;  /* Internet Explorer 7/8 */
+    font-family: Trebuchet MS;
+}
+
+.formlp {
+    width: 518px;
+    height: 557px;
+    background-color: #ffffff;
+    margin:auto auto 5px;
+    margin-top: 20%;
+}
+
+.heightblock {
+    height: 35px;
+}
+
+.hdfm {   /*block "Sign in using your e-mail" */
+    height: 50px;
+    background-color: #f4f4f4;
+    text-align: center ;
+    color-text: 5a5a5a;
+    font-family: Trebuchet MS;
+    margin-bottom:25px;
+}
+
+.h3sign {
+    height: 36px;
+    margin-top: 10px;
+    padding-top: 10px;
+}
+
+.inpblchp {  /* style input login end password*/
+    width: 324px;
+    height: 40px;
+    margin-bottom:15px;
+    border-color: #10accc;
+    border-style: solid;
+    padding: 15px;
+    border-top-width: 1px;
+    border-bottom-width: 1px;
+    border-left-width: 1px;
+    border-right-width: 1px;
+}
+
+.checkboxhpg {
+    border-color:#10accc;
+    width:165px;
+}
+
+.chkbxlendp {
+    width: 20px;
+    height: 20px;
+}
+
+.btnsgnlpg {
+    weight: 110px;
+    height: 40px;
+    align: left;
+    margin-left: 41%;
+    border-color:#10accc;
+    border-radius: 0px;
+    padding: 15px 30px 15px 30px;
+    text-size: 14pt;
+    text-decoration: none;
+    border: 1px solid;
+}
+/* end style partial autentification*/
