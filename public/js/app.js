@@ -32,7 +32,12 @@ App.AuthenticatedRoute = Ember.Route.extend({
 });
 
 App.ApplicationController = Ember.Controller.extend({
-    needs: ['signin']
+    needs: ['signin'],
+    actions: {
+        addJob: function() {
+            this.transitionTo('addjob');
+        }
+    }
 });
 
 App.IndexController = Ember.Controller.extend({
