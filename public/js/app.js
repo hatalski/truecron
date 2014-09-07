@@ -31,6 +31,27 @@ App.AuthenticatedRoute = Ember.Route.extend({
     }
 });
 
+App.ApplicationRoute = Ember.Route.extend({
+    model: function () {
+        if (!sessionStorage.token) {
+            return $.get("/auth/check").then(function (response) {
+                if (response.token) {
+                    sessionStorage.token = response.token;
+                }
+                return null;
+                //return {user: response.user};
+            })
+        }
+    },
+    afterModel: function(data, transition) {
+        // dv: dirty hack, will fix it
+        if (sessionStorage.token) {
+            this.controllerFor('signin').set('token', sessionStorage.token);
+            this.controllerFor('signin').set('isSignedIn', true);
+        }
+    }
+});
+
 App.ApplicationController = Ember.Controller.extend({
     needs: ['signin']
 });
@@ -47,10 +68,6 @@ App.SigninController = Ember.Controller.extend({
             password: "",
             errorMessage: ""
         });
-    },
-    init: function () {
-        this._super();
-        this.set('isSignedIn', this.get('token') ? true : false);
     },
     token: sessionStorage.token,
     tokenChanged: function() {
