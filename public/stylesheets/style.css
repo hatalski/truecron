@@ -52,19 +52,19 @@ body {
         left: 0;
         z-index: 1000;
         display: block;
-        padding: 20px;
         overflow-x: hidden;
         overflow-y: auto; /* Scrollable contents if viewport is shorter than content. */
-        background-color: #c9c9cb;
-        border-right: 2px solid #d8d8da;
+        background-color: #d9d9db;
+        border-right: 6px solid #d8d8da;
+        border-top: 6px solid #d8d8da;
     }
 }
 
 /* Sidebar navigation */
 .nav-sidebar {
-    margin-right: -21px; /* 20px padding + 1px border */
-    margin-bottom: 20px;
-    margin-left: -20px;
+    margin-bottom: 20px; /* 20px padding + 1px border
+    margin-right: -20px;
+    margin-left: -20px;*/
 }
 .nav-sidebar > li > a {
     padding-right: 20px;
@@ -119,7 +119,6 @@ body {
 }
 
 .glyphicon-align-justify {
-    color: #ff9934;
     padding-left: 5px;
 }
 
@@ -143,4 +142,66 @@ body {
 
 .underline {
     text-decoration: underline;
+}
+
+.sidebar .nav-tabs > li.active > a, .nav-tabs > li.active > a:hover, .nav-tabs > li.active > a:focus {
+    background-color: #f4f4f4;
+    color: #ff9e40;
+    font-weight: bold;
+    text-decoration: underline;
+    font-size: 20px;
+    border: solid 6px #c9c9cb;
+    width: 144px;
+    text-align: center;
+}
+.sidebar .nav-tabs > li > a {
+    border-radius: 0;
+    color: #bcbcbe;
+    font-size: 20px;
+    font-weight: bold;
+    border: solid 6px #c9c9cb;
+    border-top: solid 6px #d8d8da;
+    margin-right: 0;
+}
+.sidebar .active span {
+    color:#474747
+}
+
+.col-sm-3 {
+    padding-left: 6px;
+    padding-right: 0;
+}
+.sidebar .btn-group, .btn-group-vertical{
+    padding: 10px 6px;
+    background-color: #fff;
+    width: 100%;
+}
+
+.glyphicon {
+    color: #ff982f;
+}
+
+.sidebar .glyphicon-plus:before {
+     padding-right: 5px;
+}
+
+.sidebar .btn-group > .btn {
+    background-color: #fff;
+    border-radius: 0;
+    border: solid 1px #13afc8;
+    margin-right: 5px;
+}
+
+.sidebar .btn-default {
+    background-image: none;
+}
+
+
+.table-ftp {
+    border-collapse: separate;
+    border-spacing: 20px;
+    width: 400px;
+    class: responsiv;
+    width : 265px;
+    width: 534px;
 }

@@ -51,12 +51,24 @@
         <div class="container-fluid">
             <div class="row">
                 <div class="col-sm-3 col-md-2 sidebar">
+                    <ul class="nav nav-tabs" role="tablist">
+                        <li class="active"><a href="#"><span>Jobs</span></a></li>
+                        <li><a href="#"><span>Connections</span></a></li>
+                    </ul>
+                    <div class="btn-group">
+                        <button type="button" class="btn btn-default"><span class="glyphicon glyphicon-plus"></span>Add Job</button>
+                        <button type="button" class="btn btn-default"><span class="glyphicon glyphicon-search"></span></button>
+                        <button type="button" class="btn btn-default"><span class="glyphicon glyphicon-filter"></span></button>
+                    </div>
                     <ul class="nav nav-sidebar">
                         \{{#active-li currentWhen="index"}}
                             \{{#link-to 'index'}}Index\{{/link-to}}
                         \{{/active-li}}
                         \{{#active-li currentWhen="dashboard"}}
                             \{{#link-to 'dashboard'}}Overview\{{/link-to}}
+                        \{{/active-li}}
+                        \{{#active-li currentWhen="ftptask"}}
+                            \{{#link-to 'ftptask'}}FTP task\{{/link-to}}
                         \{{/active-li}}
                         <li><a href="#">Reports</a></li>
                         <li><a href="#">Analytics</a></li>
@@ -89,6 +101,7 @@
     {{> index}}
     {{> signin}}
     {{> signup}}
+    {{> ftptask}}
     {{!-- dv: end of place for client-side partials --}}
 
     </body>
