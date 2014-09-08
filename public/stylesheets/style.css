@@ -145,14 +145,7 @@ body {
     text-decoration: underline;
 }
 
-.table-ftp {
-    border-collapse: separate;
-    border-spacing: 20px;
-    width: 400px;
-    class: responsiv;
-    width : 265px;
-    width: 534px;
-}
+
 
 /* start style partial autentification*/
 .backglp {   /* background image; */

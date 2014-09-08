@@ -3,12 +3,12 @@
     \{{#if isSignedIn}}
         <div class="alert alert-warning" role="alert">You are already signed in!</div>
     \{{else}}
-        {{Button trigger modal}}
+        {{!--Button trigger modal--}}
     <a href="#" class="btnsgnlpg" type="submit" data-toggle="modal" data-target="#myModal">
         SIGN IN
     </a>
 
-        {{Modal block}}
+        {{!--Modal block--}}
         <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
             <div class="modal-dialog">
                 <div class="modal-content">
@@ -34,7 +34,7 @@
                         <a class="link" href="#"><u>forgot password?</u></a>
                         <br>
                         <br><br>
-                        <div class="span4"> {{ batton "Sign in with Google account"}}
+                        <div class="span4"> {{!-- batton "Sign in with Google account"--}}
                             <a href="#" class="btn btn-primary btn-large"><img src="img/signgoogle.png" alt="sign in with Google"/></a>
                         </div>
                     </div>
