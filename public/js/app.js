@@ -114,6 +114,10 @@ App.Router.map(function() {
     this.route('addjob');
 });
 
+App.Router.map(function() {
+    this.route('connection-agent');
+});
+
 // dv: hello available only for signed in user
 App.Router.map(function() {
     this.route('hello');
