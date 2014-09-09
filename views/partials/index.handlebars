@@ -4,6 +4,10 @@
 
     <p class="bg-primary">Please see left menu!</p>
 
+    \{{#if controllers.signin.isSignedIn}}
+        <div class="alert alert-warning" role="alert">You are already signed in!</div>
+    \{{/if}}
+
     <ul>
         <li>
             \{{#link-to 'hello'}}
