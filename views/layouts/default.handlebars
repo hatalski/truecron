@@ -49,7 +49,7 @@
         </div>
         <div class="container-fluid">
             <div class="row">
-                <div class="col-sm-3 col-md-2 sidebar">
+                <div class="sidebar">
                     <ul class="nav nav-tabs" role="tablist">
                         <li class="active"><a href="#"><span>Jobs</span></a></li>
                         <li><a href="#"><span>Connections</span></a></li>
@@ -107,6 +107,9 @@
                         \{{#active-li currentWhen="signin"}}
                             \{{#link-to 'signin'}}Sign in\{{/link-to}}
                         \{{/active-li}}
+                        \{{#active-li currentWhen="connection-agent"}}
+                        \{{#link-to 'connection-agent'}}connection-agent\{{/link-to}}
+                        \{{/active-li}}
                         \{{#active-li currentWhen="signup"}}
                             \{{#link-to 'signup'}}Sign up\{{/link-to}}
                         \{{/active-li}}
@@ -132,6 +135,7 @@
 
     {{!-- dv: register your client-side partials here. In alphabetical order!!! --}}
     {{> dashboard}}
+    {{> connection-agent}}
     {{> hello}}
     {{> index}}
     {{> signin}}
