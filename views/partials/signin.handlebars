@@ -1,46 +1,50 @@
 <script type="text/x-handlebars" data-template-name="signin">
-
     \{{#if isSignedIn}}
         <div class="alert alert-warning" role="alert">You are already signed in!</div>
     \{{else}}
-        {{!--Button trigger modal--}}
-    <a href="#" class="btnsgnlpg" type="submit" data-toggle="modal" data-target="#myModal">
-        SIGN IN
-    </a>
 
-        {{!--Modal block--}}
-        <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-            <div class="modal-dialog">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
-                        <h4 class="modal-title" id="myModalLabel">Sign in</h4>
-                    </div>
-                    <div class="modal-body">
-                        \{{#if errorMessage}}
-                            <div class="alert alert-danger" role="alert">\{{errorMessage}}</div>
-                        \{{/if}}
-
-                        <form class="form-signin" role="form" \{{action signin on="submit"}}>
-                            \{{input class="form-control" value="login" valueBinding="login" type="text" placeholder="Email address" required="required"}}
-                            <p></p>
-                            \{{input class="form-control" value="password" valueBinding="password" type="password" placeholder="Password" required="required"}}
-                                <div class="checkboxhpg">
-                                    <h5> <input type="checkbox" class="chkbxlendp"  value="remember-me">
-                                        Remember me &nbsp </h5>
-                                </div>
-                            \{{input class="btn btn-lg btn-primary btn-block" type="submit" value="Sign in"}}
-                        </form>
-                        <a class="link" href="#"><u>forgot password?</u></a>
-                        <br>
-                        <br><br>
-                        <div class="span4"> {{!-- batton "Sign in with Google account"--}}
-                            <a href="#" class="btn btn-primary btn-large"><img src="img/signgoogle.png" alt="sign in with Google"/></a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
+    <div class="hdfm"> {{!--head block--}}
+        <h3 class="h3sign">
+            Sign in using your e-mail </h3>
+    </div> {{!--end head block--}}
+    \{{#if errorMessage}}
+        <div class="alert alert-danger" role="alert">\{{errorMessage}}</div>
     \{{/if}}
 
+    <div class="blcautr" align="center">{{!--block e-mail end password--}}
+        <form class="form-signin1" role="form" \{{action signin on="submit"}}>
+            \{{input class="inpblchp" value="login" valueBinding="login" type="text" placeholder="Email address" required="required"}}
+            \{{input class="inpblchp" value="password" valueBinding="password" type="password" placeholder="Password" required="required"}}
+            <table class="tablechc">
+                <tr>
+                    <td align="left" style="padding-bottom: 7px;">
+                        <div class="checkboxhpg">
+                            <h5> <input type="checkbox" class="chkbxlendp"  value="remember-me">
+                                Remember me &nbsp </h5>
+                        </div>
+                    </td>
+                    <td align="right"> <a href="#"><u> forgot your password?</u></a> </td>
+                </tr>
+            </table><br>
+            \{{input class="btnsgnlpg" type="submit" value="Sign in"}}
+        </form>
+    </div> {{!--block e-mail end password--}}
+    <div>
+        <div class="orblk">
+            <img src="img/orblok.png" alt="OR" />
+        </div> {{!--end block OR image--}}
+        <div class="ftrform" align="center">
+            <div>
+                <br><br>
+                <a href="/auth/google/"><img src="img/signgoogle.png" alt="sign in with Google"/></a>
+            </div>
+            <div >
+                <br><br><br>
+                <a href="#" data-toggle="modal" data-target="#myModal"> <p><u>Do not have an account? Sign Up here!</u></p></a>
+            </div>
+        </div>{{!--end ftrform--}}
+    </div>
+    \{{render "signup-modal"}}
+
+    \{{/if}}
 </script>

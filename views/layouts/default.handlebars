@@ -27,7 +27,10 @@
 
     </head>
     <body>
+
+    {{!-- dv: TODO: move this to application.handlebars --}}
     <script type="text/x-handlebars">
+        \{{#if controllers.signin.isSignedIn}}
 
         <div class="navbar navbar-inverse navbar-fixed-top" role="navigation">
             <div class="container-fluid">
@@ -81,6 +84,19 @@
                 {{{body}}}{{!-- dv: server-side template --}}
                 \{{outlet}}{{!-- dv: place for client-side partials --}}
             </div>
+        \{{else}}
+            <div class="backglp">{{!--background image--}}
+                <div class="container-fluid">
+                    <div class="formlp">{{!--form block content--}}
+                        <div> {{!--form with content--}}
+                            <div class="heightblock"></div>
+                            {{{body}}}{{!-- dv: server-side template --}}
+                            \{{outlet}}{{!-- dv: place for client-side partials --}}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        \{{/if}}
     </script>
 
     {{!-- dv: register your client-side partials here. In alphabetical order!!! --}}
@@ -90,7 +106,6 @@
     {{> signin}}
     {{> signup}}
     {{> connection-ftp}}
-    {{> index-guest}}
     {{!-- dv: end of place for client-side partials --}}
 
     </body>

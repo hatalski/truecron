@@ -39,6 +39,9 @@ App.IndexController = Ember.Controller.extend({
     needs: ['signin']
 });
 
+App.IndexRoute = App.AuthenticatedRoute.extend({
+});
+
 // Controllers
 App.SigninController = Ember.Controller.extend({
     reset: function() {
@@ -86,8 +89,35 @@ App.SigninController = Ember.Controller.extend({
 
         self.set('isSignedIn', false);
         self.set('token', "");
+
+        self.transitionToRoute('index');
     }
 });
+
+// Controllers
+App.SignupController = Ember.Controller.extend({
+    reset: function() {
+        this.setProperties({
+            email: "",
+            password: "",
+            errorMessage: ""
+        });
+    },
+
+    signup: function() {
+        var self = this, data = this.getProperties('email', 'password');
+
+        // Clear out any error messages.
+        this.set('errorMessage', null);
+        $.post('/registration/', data).then(function(response) {
+            self.set('errorMessage', response.message);
+            if (response.success) {
+                self.transitionToRoute('index');
+            }
+        });
+    }
+});
+
 
 // add route "signin" "signup"
 App.Router.map(function() {
@@ -102,6 +132,13 @@ App.SigninRoute = Ember.Route.extend({
         controller.reset();
     }
 });
+
+App.SignupRoute = Ember.Route.extend({
+    setupController: function(controller, context) {
+        controller.reset();
+    }
+});
+
 
 App.Router.map(function() {
     this.route('dashboard');

@@ -209,15 +209,15 @@ body {
 }
 
 .btnsgnlpg {
+    text-transform: uppercase;
     weight: 110px;
     height: 40px;
     align: left;
     margin-left: 41%;
-    border-color:#10accc;
     border-radius: 0px;
-    padding: 15px 30px 15px 30px;
+    padding: 0px 30px 0px 30px;
     text-size: 14pt;
     text-decoration: none;
-    border: 1px solid;
+    border: 1px solid #10accc;
 }
 /* end style partial autentification*/
