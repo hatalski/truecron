@@ -16,6 +16,6 @@
     "serve-favicon": "^2.0.1",
     "passport": "~0.2.1",
     "passport-oauth": "~1.0.0",
-    "passport-google-oauth" : "~0.1.15"
+    "passport-google-oauth" : "~0.1.5"
   }
 }
