@@ -5,6 +5,7 @@ var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var session = require('express-session');
+var RedisStore = require('connect-redis')(session);
 
 var passport = require('passport'),
     GoogleStrategy = require('passport-google-oauth').OAuth2Strategy;
@@ -31,6 +32,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use('/bower_components',  express.static(__dirname + '/bower_components'));
 
 app.use(session({
+    store: new RedisStore({}),
     secret: 'TrueCron',
     resave: true,
     saveUninitialized: true
