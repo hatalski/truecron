@@ -28,7 +28,6 @@
     </head>
     <body>
     <script type="text/x-handlebars">
-
         <div class="navbar navbar-inverse navbar-fixed-top" role="navigation">
             <div class="container-fluid">
                 <div class="navbar-header">
@@ -43,22 +42,58 @@
                 <div class="navbar-collapse collapse">
                     <ul class="nav navbar-nav navbar-right">
                         <li><h4>SC Staging</h4></li>
-                        <li><h4><span class="glyphicon glyphicon-align-justify"></span></h4></li>
+                        <li><h4><i class="fa fa-bars"></i></h4></li>
                     </ul>
                 </div>
             </div>
         </div>
         <div class="container-fluid">
             <div class="row">
-                <div class="col-sm-3 col-md-2 sidebar">
+                <div class="sidebar">
                     <ul class="nav nav-tabs" role="tablist">
                         <li class="active"><a href="#"><span>Jobs</span></a></li>
                         <li><a href="#"><span>Connections</span></a></li>
                     </ul>
                     <div class="btn-group">
-                        <button type="button" class="btn btn-default"><span class="glyphicon glyphicon-plus"></span>Add Job</button>
-                        <button type="button" class="btn btn-default"><span class="glyphicon glyphicon-search"></span></button>
-                        <button type="button" class="btn btn-default"><span class="glyphicon glyphicon-filter"></span></button>
+                        <button \{{action "addJob"}} type="button" class="btn btn-default"><i class="fa fa-plus"></i>Add Job</button>
+                        <button type="button" class="btn btn-default"><i class="fa fa-search"></i></button>
+                        <button type="button" class="btn btn-default"><i class="fa fa-filter"></i></button>
+                    </div>
+                    <div class="menu-tabs">
+                        <div class="row">
+                            <div class="col-xs-2">
+                                <span></span>
+                            </div>
+                            <div class="col-xs-9">
+                                <p class="title">Versace</p>
+                                <p>Last run: 07/07/14 11:02 pm</p>
+                                <p>Next run: now</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="menu-tabs">
+                    <div class="row">
+                        <div class="col-xs-2">
+                            <span></span>
+                        </div>
+                        <div class="col-xs-9">
+                            <p class="title">Gap</p>
+                            <p>Last run: 07/07/14 11:02 pm</p>
+                            <p>Next run: 08/08/14 11:02 pm</p>
+                        </div>
+                    </div>
+                </div>
+                    <div class="menu-tabs">
+                        <div class="row">
+                            <div class="col-xs-2">
+                                <i class="fa fa-exclamation-circle fa-5"></i>
+                            </div>
+                            <div class="col-xs-9">
+                                <p class="title">American Signature</p>
+                                <p>Last run: 07/07/14 11:02 pm</p>
+                                <p>Next run: 08/08/14 11:02 pm</p>
+                            </div>
+                        </div>
                     </div>
                     <ul class="nav nav-sidebar">
                         \{{#active-li currentWhen="index"}}
@@ -75,6 +110,18 @@
                         <li><a href="#">Export</a></li>
                     </ul>
                     <ul class="nav nav-sidebar">
+                        \{{#active-li currentWhen="signin"}}
+                            \{{#link-to 'signin'}}Sign in\{{/link-to}}
+                        \{{/active-li}}
+                        \{{#active-li currentWhen="connection-agent"}}
+                        \{{#link-to 'connection-agent'}}connection-agent\{{/link-to}}
+                        \{{/active-li}}
+                        \{{#active-li currentWhen="execute-bar"}}
+                        \{{#link-to 'execute-bar'}}execute-bar\{{/link-to}}
+                        \{{/active-li}}
+                        \{{#active-li currentWhen="signup"}}
+                            \{{#link-to 'signup'}}Sign up\{{/link-to}}
+                        \{{/active-li}}
                         \{{#if controllers.signin.isSignedIn}}
                             \{{#active-li currentWhen="ftptask"}}
                                 \{{#link-to 'ftptask'}}FTP task\{{/link-to}}
@@ -103,11 +150,14 @@
 
     {{!-- dv: register your client-side partials here. In alphabetical order!!! --}}
     {{> dashboard}}
+    {{> connection-agent}}
+    {{> execute-bar}}
     {{> home_page}}
     {{> hello}}
     {{> index}}
     {{> signin}}
     {{> signup}}
+    {{> addjob}}
     {{> ftptask}}
     {{!-- dv: end of place for client-side partials --}}
 

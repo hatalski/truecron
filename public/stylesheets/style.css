@@ -47,6 +47,7 @@ body {
 @media (min-width: 768px) {
     .sidebar {
         position: fixed;
+        min-width: 275px;
         top: 51px;
         bottom: 0;
         left: 0;
@@ -118,7 +119,7 @@ body {
     margin: 5px 0;
 }
 
-.glyphicon-align-justify {
+.nav .fa-bars {
     padding-left: 5px;
 }
 
@@ -151,7 +152,6 @@ body {
     text-decoration: underline;
     font-size: 20px;
     border: solid 6px #c9c9cb;
-    width: 144px;
     text-align: center;
 }
 .sidebar .nav-tabs > li > a {
@@ -177,11 +177,11 @@ body {
     width: 100%;
 }
 
-.glyphicon {
+.fa {
     color: #ff982f;
 }
 
-.sidebar .glyphicon-plus:before {
+.fa-plus:before {
      padding-right: 5px;
 }
 
@@ -196,6 +196,107 @@ body {
     background-image: none;
 }
 
+.sidebar .btn-group {
+    border-bottom: solid 5px #c9c9cb;
+}
+.menu-tabs {
+    background: linear-gradient(#f9f9f9, #efefef);
+    border-bottom: solid 5px #c9c9cb;
+}
+
+.menu-tabs .col-xs-9 {
+    color: #484848;
+    padding: 5px;
+}
+
+.menu-tabs .col-xs-9 .title {
+    font-weight: bold;
+}
+
+.sharelink {
+    float: right;
+}
+
+#jobinput {
+    width: 100%;
+}
+
+.row {
+    margin: 0;
+}
+
+.sidebar .fa-exclamation-circle {
+    color: #fe0000;
+    font-size: 23px;
+    line-height: 3.5em;
+}
+
+.sidebar .col-xs-2 {
+    padding-left: 10px;
+    padding-right: 5px;
+}
+
+.first_row .fa {
+    padding-left: 10px;
+}
+
+.fa-chevron-down {
+    color: #00aecf;
+    padding-right: 10px;
+}
+
+.btn-cron {
+    background-image: none;
+    background-color: #fff;
+    border: solid 1px #00aecf;
+    border-radius: 0;
+    width: auto;
+    min-width: 200px;
+    text-align: left;
+}
+
+.caret-cron {
+    width:auto;
+    background-image: none;
+    background-color: #fff;
+    border: solid 1px #00aecf;
+    border-radius: 0;
+}
+
+.cron-drop .dropdown-menu {
+    width: 100%;
+    border: solid 1px #00aecf;
+    border-radius: 0;
+    box-shadow: none;
+}
+
+.label-br {
+    display: block;
+}
+
+.input-section {
+    padding-top: 20px;
+}
+
+.form-control {
+    border: solid 1px #00aecf;
+    border-radius: 0;
+}
+
+.check-cron {
+    background-color: #fff;
+    border-radius: 0;
+    border: solid 1px #00aecf;
+}
+
+.input-section .col-lg-3 {
+    padding-left: 0px;
+}
+
+.fa-chevron-right {
+    color: #00aecf;
+    padding-right: 10px;
+}
 
 table {
     border-collapse: separate;
