@@ -76,9 +76,14 @@
                     </ul>
                     <ul class="nav nav-sidebar">
                         \{{#if controllers.signin.isSignedIn}}
+                            \{{#active-li currentWhen="ftptask"}}
+                                \{{#link-to 'ftptask'}}FTP task\{{/link-to}}
+                            \{{/active-li}}
                             <li><a \{{action "signout" target="controllers.signin"}} href="#">Sign out</a></li>
                         \{{else}}
-                            \{{#active-li currentWhen="signin"}}
+                            \{{#active-li currentWhen="home_page"}}
+                                \{{#link-to 'signin'}}Home page\{{/link-to}}
+                            \{{#active-li currentWhen="home_page"}}
                                 \{{#link-to 'signin'}}Sign in\{{/link-to}}
                             \{{/active-li}}
                             \{{#active-li currentWhen="signup"}}
@@ -97,6 +102,7 @@
 
     {{!-- dv: register your client-side partials here. In alphabetical order!!! --}}
     {{> dashboard}}
+    {{> home_page}}
     {{> hello}}
     {{> index}}
     {{> signin}}
