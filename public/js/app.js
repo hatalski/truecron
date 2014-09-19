@@ -31,6 +31,27 @@ App.AuthenticatedRoute = Ember.Route.extend({
     }
 });
 
+App.ApplicationRoute = Ember.Route.extend({
+    model: function () {
+        if (!sessionStorage.token) {
+            return $.get("/auth/check").then(function (response) {
+                if (response.token) {
+                    sessionStorage.token = response.token;
+                }
+                return null;
+                //return {user: response.user};
+            })
+        }
+    },
+    afterModel: function(data, transition) {
+        // dv: dirty hack, will fix it
+        if (sessionStorage.token) {
+            this.controllerFor('signin').set('token', sessionStorage.token);
+            this.controllerFor('signin').set('isSignedIn', true);
+        }
+    }
+});
+
 App.ApplicationController = Ember.Controller.extend({
     needs: ['signin'],
     actions: {
@@ -52,10 +73,6 @@ App.SigninController = Ember.Controller.extend({
             password: "",
             errorMessage: ""
         });
-    },
-    init: function () {
-        this._super();
-        this.set('isSignedIn', this.get('token') ? true : false);
     },
     token: sessionStorage.token,
     tokenChanged: function() {
@@ -98,12 +115,17 @@ App.SigninController = Ember.Controller.extend({
 App.Router.map(function() {
     this.route('signin');
     this.route('signup');
+    this.route('home_page');
 });
 
 App.SigninRoute = Ember.Route.extend({
     setupController: function(controller, context) {
         controller.reset();
     }
+});
+
+App.Router.map(function() {
+    this.route('ftptask');
 });
 
 App.Router.map(function() {

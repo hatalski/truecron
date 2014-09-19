@@ -1,7 +1,7 @@
 <!doctype html>
 <html lang="en">
     <head>
-        <title>{{title}}</title>
+        <title>{{title}}:{{user}}</title>
         <link rel="icon" href=/favicon.ico"/>
 
         <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css"/>
@@ -102,6 +102,12 @@
                         \{{#active-li currentWhen="dashboard"}}
                             \{{#link-to 'dashboard'}}Overview\{{/link-to}}
                         \{{/active-li}}
+                        \{{#active-li currentWhen="ftptask"}}
+                            \{{#link-to 'ftptask'}}FTP task\{{/link-to}}
+                        \{{/active-li}}
+                        <li><a href="#">Reports</a></li>
+                        <li><a href="#">Analytics</a></li>
+                        <li><a href="#">Export</a></li>
                     </ul>
                     <ul class="nav nav-sidebar">
                         \{{#active-li currentWhen="signin"}}
@@ -117,9 +123,15 @@
                             \{{#link-to 'signup'}}Sign up\{{/link-to}}
                         \{{/active-li}}
                         \{{#if controllers.signin.isSignedIn}}
+                            \{{#active-li currentWhen="ftptask"}}
+                                \{{#link-to 'ftptask'}}FTP task\{{/link-to}}
+                            \{{/active-li}}
                             <li><a \{{action "signout" target="controllers.signin"}} href="#">Sign out</a></li>
                         \{{else}}
-                            \{{#active-li currentWhen="signin"}}
+                            \{{#active-li currentWhen="home_page"}}
+                                \{{#link-to 'home_page'}}Home page\{{/link-to}}
+                            \{{/active-li}}
+                            \{{#active-li currentWhen="home_page"}}
                                 \{{#link-to 'signin'}}Sign in\{{/link-to}}
                             \{{/active-li}}
                             \{{#active-li currentWhen="signup"}}
@@ -140,11 +152,13 @@
     {{> dashboard}}
     {{> connection-agent}}
     {{> execute-bar}}
+    {{> home_page}}
     {{> hello}}
     {{> index}}
     {{> signin}}
     {{> signup}}
     {{> addjob}}
+    {{> ftptask}}
     {{!-- dv: end of place for client-side partials --}}
 
     </body>

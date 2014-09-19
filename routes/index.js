@@ -4,10 +4,15 @@ var router = express.Router();
 
 /* GET home page. */
 router.get('/', function(req, res) {
-    res.render('index', { title: 'TrueCron' });
+    res.render('index', { title: 'TrueCron', user: req.user });
 });
 
 function validTokenProvided(req, res) {
+    // dv: support for session
+    if (req.isAuthenticated()) {
+        return true;
+    }
+
     // Check POST, GET, and headers for supplied token.
     var userToken = req.body.token || req.param('token') || req.headers.token;
     if (!userToken) {

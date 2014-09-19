@@ -297,3 +297,111 @@ body {
     color: #00aecf;
     padding-right: 10px;
 }
+
+table {
+    border-collapse: separate;
+    border-spacing: 20px;
+    width: 400px;
+    class: responsiv;
+    width : 265px;
+    width: 534px;
+}
+
+
+/* home page style */
+
+div.backglp {   /* background */
+
+    width: 100%;
+    height: 100%;
+    background-size : cover ;
+    background-image : url(../img/bgr.jpg) ;
+    moz-background-size: cover;  /* Firefox 3.6 */
+    background-position: center;  /* Internet Explorer 7/8 */
+    font-family: Trebuchet MS;
+}
+
+div.formlp {  /* form landing page */
+    width: 518px;
+    height: 557px;
+    background-color: #ffffff;
+    margin:50px;
+    margin-top:12%;
+}
+
+div.contlp {
+    /* content landing page */
+    align-content: center;
+}
+
+div.heightblock {
+    height: 35px;
+}
+
+div.hdfm {   /* "Sign in using your e-mail" */
+    height: 50px;
+
+    background-color: #f4f4f4;
+    text-align: center ;
+    color-text: 5a5a5a;
+    align-content : center;
+    font-family: Trebuchet MS;
+    text-padding: 1 0;
+    text-line-height: 2.1;
+    margin-bottom:25px;
+    font-style: normal;
+}
+
+
+.input-block-level {  /* block sign in / up */
+    width: 324px;
+    height: 40px;
+    margin-bottom:15px;
+    border-color: #10accc;
+    padding: 15px;
+    color-text: #666666;
+}
+.tablechc {
+    size-text: 12pt;
+    width: 320px;
+    height: 40px;
+
+}
+
+.btnhfree {
+    width: 110px;
+    height: 40px;
+    border-size: 2px;
+    border-radius: 0;
+    border-color: #10accc;
+}
+
+.chkbxlendp {
+    width: 20px;
+    height: 20px;
+    border-radius: 0;
+    border-color: #10accc;
+}
+
+div.contlp {
+    width: 518px;
+    min-width: 400px;
+    height: 557px;
+    background-color: #ffffff;
+    align-content: center;
+
+}
+
+
+.sngl {
+    align: center;
+    width: 320px;
+    height: 40px;
+    border: 1px;
+    border-color: #10accc;
+}
+
+.dnth {
+    color-text: #10accc;
+}
+/* end home page style*/
