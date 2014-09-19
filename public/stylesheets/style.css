@@ -209,18 +209,18 @@ table {
 
 /* home page style */
 
-div.backglp {   /* контейнер фона */
+div.backglp {   /* background */
 
     width: 100%;
     height: 100%;
     background-size : cover ;
-    background-image : url(../images1/bgr.jpg) ;
+    background-image : url(../img/bgr.jpg) ;
     moz-background-size: cover;  /* Firefox 3.6 */
     background-position: center;  /* Internet Explorer 7/8 */
     font-family: Trebuchet MS;
 }
 
-div.formlp {  /* формы */
+div.formlp {  /* form landing page */
     width: 518px;
     height: 557px;
     background-color: #ffffff;
@@ -229,7 +229,7 @@ div.formlp {  /* формы */
 }
 
 div.contlp {
-    /* контента формы*/
+    /* content landing page */
     align-content: center;
 }
 
@@ -237,7 +237,7 @@ div.heightblock {
     height: 35px;
 }
 
-div.hdfm {   /* блока с текстом "Sign in using your e-mail" */
+div.hdfm {   /* "Sign in using your e-mail" */
     height: 50px;
 
     background-color: #f4f4f4;
@@ -252,7 +252,7 @@ div.hdfm {   /* блока с текстом "Sign in using your e-mail" */
 }
 
 
-.input-block-level {  /* стили полей ввода пароля и логина*/
+.input-block-level {  /* block sign in / up */
     width: 324px;
     height: 40px;
     margin-bottom:15px;
