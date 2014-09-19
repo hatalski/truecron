@@ -53,7 +53,12 @@ App.ApplicationRoute = Ember.Route.extend({
 });
 
 App.ApplicationController = Ember.Controller.extend({
-    needs: ['signin']
+    needs: ['signin'],
+    actions: {
+        addJob: function() {
+            this.transitionTo('addjob');
+        }
+    }
 });
 
 App.IndexController = Ember.Controller.extend({
@@ -125,6 +130,18 @@ App.Router.map(function() {
 
 App.Router.map(function() {
     this.route('dashboard');
+});
+
+App.Router.map(function() {
+    this.route('addjob');
+});
+
+App.Router.map(function() {
+    this.route('connection-agent');
+});
+
+App.Router.map(function() {
+    this.route('execute-bar');
 });
 
 // dv: hello available only for signed in user
