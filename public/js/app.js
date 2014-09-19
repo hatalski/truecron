@@ -118,6 +118,10 @@ App.Router.map(function() {
     this.route('connection-agent');
 });
 
+App.Router.map(function() {
+    this.route('execute-bar');
+});
+
 // dv: hello available only for signed in user
 App.Router.map(function() {
     this.route('hello');

@@ -235,3 +235,65 @@ body {
     padding-left: 10px;
     padding-right: 5px;
 }
+
+.first_row .fa {
+    padding-left: 10px;
+}
+
+.fa-chevron-down {
+    color: #00aecf;
+    padding-right: 10px;
+}
+
+.btn-cron {
+    background-image: none;
+    background-color: #fff;
+    border: solid 1px #00aecf;
+    border-radius: 0;
+    width: auto;
+    min-width: 200px;
+    text-align: left;
+}
+
+.caret-cron {
+    width:auto;
+    background-image: none;
+    background-color: #fff;
+    border: solid 1px #00aecf;
+    border-radius: 0;
+}
+
+.cron-drop .dropdown-menu {
+    width: 100%;
+    border: solid 1px #00aecf;
+    border-radius: 0;
+    box-shadow: none;
+}
+
+.label-br {
+    display: block;
+}
+
+.input-section {
+    padding-top: 20px;
+}
+
+.form-control {
+    border: solid 1px #00aecf;
+    border-radius: 0;
+}
+
+.check-cron {
+    background-color: #fff;
+    border-radius: 0;
+    border: solid 1px #00aecf;
+}
+
+.input-section .col-lg-3 {
+    padding-left: 0px;
+}
+
+.fa-chevron-right {
+    color: #00aecf;
+    padding-right: 10px;
+}

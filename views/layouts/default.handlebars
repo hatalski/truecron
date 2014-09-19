@@ -110,6 +110,9 @@
                         \{{#active-li currentWhen="connection-agent"}}
                         \{{#link-to 'connection-agent'}}connection-agent\{{/link-to}}
                         \{{/active-li}}
+                        \{{#active-li currentWhen="execute-bar"}}
+                        \{{#link-to 'execute-bar'}}execute-bar\{{/link-to}}
+                        \{{/active-li}}
                         \{{#active-li currentWhen="signup"}}
                             \{{#link-to 'signup'}}Sign up\{{/link-to}}
                         \{{/active-li}}
@@ -136,6 +139,7 @@
     {{!-- dv: register your client-side partials here. In alphabetical order!!! --}}
     {{> dashboard}}
     {{> connection-agent}}
+    {{> execute-bar}}
     {{> hello}}
     {{> index}}
     {{> signin}}
