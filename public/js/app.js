@@ -110,6 +110,7 @@ App.SigninController = Ember.Controller.extend({
 App.Router.map(function() {
     this.route('signin');
     this.route('signup');
+    this.route('home_page');
 });
 
 App.SigninRoute = Ember.Route.extend({
