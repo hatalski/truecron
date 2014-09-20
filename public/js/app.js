@@ -31,8 +31,34 @@ App.AuthenticatedRoute = Ember.Route.extend({
     }
 });
 
+App.ApplicationRoute = Ember.Route.extend({
+    model: function () {
+        if (!sessionStorage.token) {
+            return $.get("/auth/check").then(function (response) {
+                if (response.token) {
+                    sessionStorage.token = response.token;
+                }
+                return null;
+                //return {user: response.user};
+            })
+        }
+    },
+    afterModel: function(data, transition) {
+        // dv: dirty hack, will fix it
+        if (sessionStorage.token) {
+            this.controllerFor('signin').set('token', sessionStorage.token);
+            this.controllerFor('signin').set('isSignedIn', true);
+        }
+    }
+});
+
 App.ApplicationController = Ember.Controller.extend({
-    needs: ['signin']
+    needs: ['signin'],
+    actions: {
+        addJob: function() {
+            this.transitionTo('addjob');
+        }
+    }
 });
 
 App.IndexController = Ember.Controller.extend({
@@ -50,10 +76,6 @@ App.SigninController = Ember.Controller.extend({
             password: "",
             errorMessage: ""
         });
-    },
-    init: function () {
-        this._super();
-        this.set('isSignedIn', this.get('token') ? true : false);
     },
     token: sessionStorage.token,
     tokenChanged: function() {
@@ -125,6 +147,7 @@ App.Router.map(function() {
     this.route('signup');
     this.route('index-guest');
     this.route('connection-ftp');
+    this.route('home_page');
 });
 
 App.SigninRoute = Ember.Route.extend({
@@ -141,7 +164,23 @@ App.SignupRoute = Ember.Route.extend({
 
 
 App.Router.map(function() {
+    this.route('ftptask');
+});
+
+App.Router.map(function() {
     this.route('dashboard');
+});
+
+App.Router.map(function() {
+    this.route('addjob');
+});
+
+App.Router.map(function() {
+    this.route('connection-agent');
+});
+
+App.Router.map(function() {
+    this.route('execute-bar');
 });
 
 // dv: hello available only for signed in user
