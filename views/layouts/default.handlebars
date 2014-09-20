@@ -96,17 +96,11 @@
                         <li><a href="#">Export</a></li>
                     </ul>
                     <ul class="nav nav-sidebar">
-                        \{{#active-li currentWhen="signin"}}
-                            \{{#link-to 'signin'}}Sign in\{{/link-to}}
-                        \{{/active-li}}
                         \{{#active-li currentWhen="connection-agent"}}
                         \{{#link-to 'connection-agent'}}connection-agent\{{/link-to}}
                         \{{/active-li}}
                         \{{#active-li currentWhen="execute-bar"}}
                         \{{#link-to 'execute-bar'}}execute-bar\{{/link-to}}
-                        \{{/active-li}}
-                        \{{#active-li currentWhen="signup"}}
-                            \{{#link-to 'signup'}}Sign up\{{/link-to}}
                         \{{/active-li}}
                         \{{#if controllers.signin.isSignedIn}}
                             \{{#active-li currentWhen="ftptask"}}
