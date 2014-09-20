@@ -1,0 +1,257 @@
+<script type="text/x-handlebars" data-template-name="item-email">
+
+<biv class="bodysmtp">
+<div class="container">
+<div class="row">
+<div class="col-md-6">{{!--start left block--}}
+    <table>
+        <tr>
+            <td colspan="4">
+                <label>
+                    American Signature<img src="img/pen.png">
+                </label>
+            </td>
+            <td>
+                <a class= "stllink" href="#"><u>LAST RUN:</u></a>
+            </td>
+            <td>
+                NEXT RUN:
+            </td>
+            <td>
+                <a class= "stllink" href="#"><u>ACTIVE</u></a>
+            </td>
+        </tr>
+        <tr>
+            <td rowspan="3">
+                <a href="#"><img src="img/btn1.png"></a>
+            </td>
+            <td colspan="3">
+                <a class= "stllink" href="#"><u>Weekly on Monday at 6 AM</u></a> &nbsp &nbsp &nbsp &nbsp
+            </td>
+            <td style="color: red">07/07/14</td>
+            <td>07/07/14</td>
+            <td></td>
+        </tr>
+        <tr>
+            <td colspan="3" rowspan="2">
+                Ends after 5 runs <br>
+                <h3>Tasks</h3>
+            </td>
+            <td style="color: red">6:00 am</td>
+            <td>6:00 am</td>
+            <td></td>
+        </tr>
+        <tr>
+            <td></td>
+            <td></td>
+            <td>
+                <input type="button" href="#" class="chOk"  value="Add Task">
+            </td>
+        </tr>
+    </table>
+    <br>
+    <table class="table table-striped">{{!--table#2 task--}}
+        <tr>
+            <td></td>
+            <td><a href="#tab1">delete</a></td>
+            <td>clean folder</td>
+            <td><u>0.68s</u></td>
+        </tr>
+        <tr>
+            <td></td>
+            <td>execute</td>
+            <td>EDI process execution</td>
+            <td><u>13.10s</u></td>
+        </tr>
+        <tr>
+            <td></td>
+            <td>archive</td>
+            <td>zip</td>
+            <td><u>0.03s</u></td>
+        </tr>
+        <tr>
+            <td></td>
+            <td>copy</td>
+            <td>copy files to FTP</td>
+            <td><u>3.01s</u></td>
+        </tr>
+        <tr>
+            <td background="img/important.png"></td>
+            <td><a href="#tab4">email</a></td>
+            <td>send notifikation</td>
+            <td style="color: red"><u>30.04s</u></td>
+        </tr>
+        <tr>
+            <td></td>
+            <td>delete</td>
+            <td>clean folder</td>
+            <td><u>0.68s</u></td>
+        </tr>
+    </table>{{!--end table#2 task--}}
+    <br><br>
+    <table class="table">
+        <tr></tr>
+        <tr>
+            <td>
+                <label>
+                    <img src="img/5.png">
+                    Recent Changes
+                </label>
+            </td>
+        </tr>
+        <tr><td colspan="2" align="right">
+            <a class= "stllink" href="#"><u>ARCHIVE</u></a>
+        </td></tr>
+    </table>
+</div>{{!--end left block--}}
+
+<div class="col-md-6">{{!--start right block--}}
+    <div id="tab4">
+        <table class="table">
+            <tr>
+                <td align="left">
+                    <label>
+                        Send Notification <img src="img/pen.png">
+                    </label>
+                </td>
+                <td align="right">
+                    <a class= "stllink" href="#"><u>ACTIVE</u></a>
+                </td>
+            </tr>
+        </table>
+        <hr>
+        <table>
+            <tr>
+                <td>
+                    <label>
+                        <img src="img/6.png">
+                        Task Properties
+                    </label>
+                </td>
+            </tr>
+            <tr>
+                <td><br>Type:</td>
+            </tr>
+            <tr>
+                <td>
+                    <select class="selectsmtp">
+                        <option>Email</option>
+                        <option>type#2</option>
+                        <option>type#3</option>
+                    </select>
+                </td>
+            </tr>
+        </table>
+        <hr>
+        <table>
+            <tr>
+                <td>
+                    Connection:
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <select class="selectsmtp">
+                        <option>AWS SES</option>
+                        <option>type#2</option>
+                        <option>type#3</option>
+                    </select>
+                </td>
+            </tr>
+            <tr>
+                <td>Recipients:</td>
+            </tr>
+            <tr>
+                <td>
+                    <img src="img/eml.png" alt="mrvisto@gmail.com x  mmog@truecron.com x"/>
+                </td>
+            </tr>
+            <tr>
+                <td><br>From:</td>
+            </tr>
+            <tr>
+                <td>
+                    <div class="input-group">
+                        <input type="text" class="form-control" size="74" placeholder="client.notifications@ccron.com">
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <td><br>Subject:</td>
+            </tr>
+            <tr>
+                <td>
+                    <div class="input-group">
+                        <input type="text" class="form-control" size="74" placeholder="American Signature Invoce is Available - {DATE(MM/DD/YYYY)">
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <td><br>Body:</td>
+            </tr>
+            <tr>
+                <td>
+                    <li class="list-group-item">
+                        Invoice file is available for processing<br>
+                        &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp Summary:<br>
+                        &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp Number Of Invoices: Total number of invoices<br>
+                        &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp Total Vendor Amount: Total invoice amount<br><br><br><br>
+                    </li>
+                </td>
+            </tr>
+        </table>
+        <br>
+
+        <table>
+            <tr>
+                <h4>Attachements:</h4>
+            </tr>
+            <tr>
+                <td><br>
+                    <div class="drag"><img src="img/dndform.png"></div>
+                </td>
+                <td>
+                    <p>&nbsp Attachment1.txt <img src="img/eml1.png"></p>
+                    <p>&nbsp Attachment2.txt  <img src="img/eml1.png"></p>
+                    <input type="button" class="chOk" value="Choose file" title="Choose file">
+                </td>
+            </tr>
+        </table>
+        <hr>
+        <table>
+            <tr>
+                <td align="left">
+                    Failure conditions:
+                </td>
+            </tr>
+            <tr>
+                <td >
+                    <div class="checkbox">
+                        <label class="contentforms" style="border:1px;">
+                            <form class="contentforms">
+                                <input type="checkbox"> timeout &nbsp
+                                <select class="selectsmtp">
+                                    <option>1 minute</option>
+                                    <option>2 minute</option>
+                                    <option>10 minute</option>
+                                </select>
+                            </form>
+                        </label>
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <hr><label><img src="img/5.png"> Output</label>
+                    <hr>
+                </td>
+            </tr>
+
+        </table>
+    </div>{{!--end right block--}}
+</div>
+</div>
+</div>
+</biv>
+
+</script>
