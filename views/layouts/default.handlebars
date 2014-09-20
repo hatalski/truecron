@@ -9,7 +9,11 @@
         <link rel="stylesheet" href="/stylesheets/style.css"/>
     </head>
     <body>
+
+    {{!-- dv: TODO: move this to application.handlebars --}}
     <script type="text/x-handlebars">
+        \{{#if controllers.signin.isSignedIn}}
+
         <div class="navbar navbar-inverse navbar-fixed-top" role="navigation">
             <div class="container-fluid">
                 <div class="navbar-header">
@@ -92,17 +96,11 @@
                         <li><a href="#">Export</a></li>
                     </ul>
                     <ul class="nav nav-sidebar">
-                        \{{#active-li currentWhen="signin"}}
-                            \{{#link-to 'signin'}}Sign in\{{/link-to}}
-                        \{{/active-li}}
                         \{{#active-li currentWhen="connection-agent"}}
                         \{{#link-to 'connection-agent'}}connection-agent\{{/link-to}}
                         \{{/active-li}}
                         \{{#active-li currentWhen="execute-bar"}}
                         \{{#link-to 'execute-bar'}}execute-bar\{{/link-to}}
-                        \{{/active-li}}
-                        \{{#active-li currentWhen="signup"}}
-                            \{{#link-to 'signup'}}Sign up\{{/link-to}}
                         \{{/active-li}}
                         \{{#if controllers.signin.isSignedIn}}
                             \{{#active-li currentWhen="ftptask"}}
@@ -128,6 +126,19 @@
                 {{{body}}}{{!-- dv: server-side template --}}
                 \{{outlet}}{{!-- dv: place for client-side partials --}}
             </div>
+        \{{else}}
+            <div class="backglp">{{!--background image--}}
+                <div class="container-fluid">
+                    <div class="formlp">{{!--form block content--}}
+                        <div> {{!--form with content--}}
+                            <div class="heightblock"></div>
+                            {{{body}}}{{!-- dv: server-side template --}}
+                            \{{outlet}}{{!-- dv: place for client-side partials --}}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        \{{/if}}
     </script>
 
     {{!-- dv: register your client-side partials here. In alphabetical order!!! --}}
@@ -141,6 +152,7 @@
     {{> signup}}
     {{> addjob}}
     {{> ftptask}}
+    {{> connection-ftp}}
     {{!-- dv: end of place for client-side partials --}}
 
     {{!-- vh: best practice is to place js scripts at the bottom of the page
