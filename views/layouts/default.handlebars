@@ -3,28 +3,10 @@
     <head>
         <title>{{title}}:{{user}}</title>
         <link rel="icon" href=/favicon.ico"/>
-
         <link rel="stylesheet" href="/bower_components/bootstrap/dist/css/bootstrap.min.css"/>
         <link rel="stylesheet" href="/bower_components/bootstrap/dist/css/bootstrap-theme.min.css"/>
         <link rel="stylesheet" href="/bower_components/font-awesome/css/font-awesome.min.css"/>
-
         <link rel="stylesheet" href="/stylesheets/style.css"/>
-
-        <script type="text/javascript" src="/bower_components/jquery/dist/jquery.min.js"></script>
-        <script type="text/javascript" src="/bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
-
-        <script type="text/javascript" src="/bower_components/handlebars/handlebars.min.js"></script>
-        <script type="text/javascript" src="/bower_components/ember/ember.min.js"></script>
-
-        <script type="text/javascript" src="/bower_components/ember-addons.bs_for_ember/dist/js/bs-core.min.js"></script>
-        <script type="text/javascript" src="/bower_components/ember-addons.bs_for_ember/dist/js/bs-modal.min.js"></script>
-
-        <script type="text/javascript" src="/js/app.js"></script>
-
-        {{!-- components --}}
-        <script type="text/javascript" src="/js/components/active-li.js"></script>
-        {{!-- /components --}}
-
     </head>
     <body>
     <script type="text/x-handlebars">
@@ -161,5 +143,18 @@
     {{> ftptask}}
     {{!-- dv: end of place for client-side partials --}}
 
+    {{!-- vh: best practice is to place js scripts at the bottom of the page
+     read more : https://developer.yahoo.com/blogs/ydnfiveblog/high-performance-sites-rule-6-move-scripts-bottom-7200.html
+     --}}
+    <script type="text/javascript" src="/bower_components/jquery/dist/jquery.min.js"></script>
+    <script type="text/javascript" src="/bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="/bower_components/handlebars/handlebars.min.js"></script>
+    <script type="text/javascript" src="/bower_components/ember/ember.min.js"></script>
+    <script type="text/javascript" src="/bower_components/ember-addons.bs_for_ember/dist/js/bs-core.min.js"></script>
+    <script type="text/javascript" src="/bower_components/ember-addons.bs_for_ember/dist/js/bs-modal.min.js"></script>
+    <script type="text/javascript" src="/js/app.js"></script>
+    {{!-- components --}}
+    <script type="text/javascript" src="/js/components/active-li.js"></script>
+    {{!-- /components --}}
     </body>
 </html>
