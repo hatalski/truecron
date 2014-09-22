@@ -58,6 +58,20 @@ App.ApplicationRoute = Ember.Route.extend({
             this.controllerFor('signin').set('token', sessionStorage.token);
             this.controllerFor('signin').set('isSignedIn', true);
         }
+    },
+    actions: {
+        showJobs: function() {
+            this.render('interface-tab-jobs', {
+                into: 'application',
+                outlet: 'navigation'
+            });
+        },
+        showConnections: function() {
+            this.render('interface-tab-connections', {
+                into: 'application',
+                outlet: 'navigation'
+            });
+        }
     }
 });
 
@@ -66,6 +80,17 @@ App.ApplicationController = Ember.Controller.extend({
     actions: {
         addJob: function() {
             this.transitionTo('addjob');
+        },
+        showJobs: function() {
+            this.setProperties({'activeTab': 'jobs'});
+            return true; // vdm: to pass event handling to parent
+        },
+        addConnection: function() {
+            this.transitionTo('connections');
+        },
+        showConnections: function() {
+            this.setProperties({'activeTab': 'connections'});
+            return true; // vdm: to pass event handling to parent
         }
     }
 });
@@ -197,7 +222,21 @@ App.SignupRoute = App.GuestOnlyRoute.extend({
 
 // dv: this is section is for all other pages (auth protected pages)
 App.Router.map(function() {
-    this.route('connection-ftp');
+    this.route('connections');
+});
+
+App.ConnectionsRoute = App.AuthenticatedRoute.extend({
+    model: function() {
+        return this.getJsonWithToken('/connections.json');
+    },
+    actions: {
+        addConnectionFtp: function () {
+            this.render('connection-ftp');
+        },
+        addConnectionAgent: function () {
+            this.render('connection-agent');
+        }
+    }
 });
 
 
@@ -213,9 +252,6 @@ App.Router.map(function() {
     this.route('addjob');
 });
 
-App.Router.map(function() {
-    this.route('connection-agent');
-});
 
 App.Router.map(function() {
     this.route('execute-bar');
