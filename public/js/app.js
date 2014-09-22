@@ -140,14 +140,26 @@ App.SignupController = Ember.Controller.extend({
     }
 });
 
+// dv: this section is for guest available pages only
+App.Router.map(function() {
+    this.route('about');
+    this.route('terms');
+    this.route('plans'); // pricing
+    this.route('status'); // service health
+});
+
+
+// dv: 2vm: remove this block please when you complete task https://app.asana.com/0/14979377239417/16371187339761
+App.Router.map(function() {
+    this.route('home_page');
+});
+
+// dv: this section is for signin/signup pages only
 
 // add route "signin" "signup"
 App.Router.map(function() {
     this.route('signin');
     this.route('signup');
-    this.route('index-guest');
-    this.route('connection-ftp');
-    this.route('home_page');
 });
 
 App.SigninRoute = Ember.Route.extend({
@@ -160,6 +172,11 @@ App.SignupRoute = Ember.Route.extend({
     setupController: function(controller, context) {
         controller.reset();
     }
+});
+
+// dv: this is section is for all other pages (auth protected pages)
+App.Router.map(function() {
+    this.route('connection-ftp');
 });
 
 

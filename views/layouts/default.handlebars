@@ -115,6 +115,7 @@
                 \{{outlet}}{{!-- dv: place for client-side partials --}}
             </div>
         \{{else}}
+            \{{partial "interface-menu-top"}}
             <div class="backglp">{{!--background image--}}
                 <div class="container-fluid">
                     <div class="formlp">{{!--form block content--}}
@@ -130,6 +131,7 @@
     </script>
 
     {{!-- dv: register your client-side partials here. In alphabetical order!!! --}}
+    {{> about}}
     {{> addjob}}
     {{> connection-agent}}
     {{> connection-ftp}}
@@ -139,8 +141,12 @@
     {{> home_page}}
     {{> hello}}
     {{> index}}
+    {{> interface/menu-top}}
+    {{> plans}}
     {{> signin}}
     {{> signup}}
+    {{> status}}
+    {{> terms}}
     {{!-- dv: end of place for client-side partials --}}
 
     {{!-- vh: best practice is to place js scripts at the bottom of the page
