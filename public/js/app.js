@@ -66,8 +66,10 @@ App.IndexController = Ember.Controller.extend({
 });
 
 App.IndexRoute = App.AuthenticatedRoute.extend({
-    afterModel: function(data, transition) {
-        this.transitionTo('dashboard');
+    beforeModel: function() {
+        if (this.controllerFor('signin').get('token')) {
+            this.transitionTo('dashboard');
+        }
     }
 });
 
