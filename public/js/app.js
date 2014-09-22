@@ -31,6 +31,15 @@ App.AuthenticatedRoute = Ember.Route.extend({
     }
 });
 
+App.GuestOnlyRoute = Ember.Route.extend({
+    beforeModel: function (transition) {
+        if (this.controllerFor('signin').get('token')) {
+           this.transitionTo('index')
+        }
+    }
+});
+
+
 App.ApplicationRoute = Ember.Route.extend({
     model: function () {
         if (!sessionStorage.token) {
@@ -67,6 +76,7 @@ App.IndexController = Ember.Controller.extend({
 
 App.IndexRoute = App.AuthenticatedRoute.extend({
     beforeModel: function() {
+        this._super();
         if (this.controllerFor('signin').get('token')) {
             this.transitionTo('dashboard');
         }
@@ -123,6 +133,7 @@ App.SigninController = Ember.Controller.extend({
 
 // Controllers
 App.SignupController = Ember.Controller.extend({
+    needs: ['signin'],
     reset: function() {
         this.setProperties({
             email: "",
@@ -144,6 +155,11 @@ App.SignupController = Ember.Controller.extend({
         });
     }
 });
+
+App.SignupModalController = App.SignupController.extend({
+
+});
+
 
 // dv: this section is for guest available pages only
 App.Router.map(function() {
@@ -167,13 +183,13 @@ App.Router.map(function() {
     this.route('signup');
 });
 
-App.SigninRoute = Ember.Route.extend({
+App.SigninRoute = App.GuestOnlyRoute.extend({
     setupController: function(controller, context) {
         controller.reset();
     }
 });
 
-App.SignupRoute = Ember.Route.extend({
+App.SignupRoute = App.GuestOnlyRoute.extend({
     setupController: function(controller, context) {
         controller.reset();
     }
