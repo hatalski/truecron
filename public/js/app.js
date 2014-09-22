@@ -208,6 +208,7 @@ App.Router.map(function() {
     this.route('hello');
 });
 
+// dv: this is just an example how to get data from server for route, countroller, view
 App.HelloRoute = App.AuthenticatedRoute.extend({
     model: function() {
         return this.getJsonWithToken('/hello.json');
