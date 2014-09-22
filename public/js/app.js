@@ -66,6 +66,9 @@ App.IndexController = Ember.Controller.extend({
 });
 
 App.IndexRoute = App.AuthenticatedRoute.extend({
+    afterModel: function(data, transition) {
+        this.transitionTo('dashboard');
+    }
 });
 
 // Controllers
