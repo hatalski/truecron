@@ -145,8 +145,8 @@ if not HasSchemaVersion(3) then
         constraint      HistoryUserFK foreign key (userId) references "User" (id)
     );
 
-    create index HistoryResourceUrlIndex on History (resourceUrl asc, at desc);
-    create index HistoryUserIndex on History (userId asc, at desc);
+    create index HistoryResourceUrlIndex on History (resourceUrl asc, createdAt desc);
+    create index HistoryUserIndex on History (userId asc, createdAt desc);
 
 
     create table Workspace
@@ -233,7 +233,7 @@ if not HasSchemaVersion(3) then
         constraint      TaskPK primary key(id),
         constraint      TaskJobFK foreign key (jobId) references Job (id)
                         on delete cascade,
-        constraint      TaskTypeFK foreign key (typeId) references TaskType (id)
+        constraint      TaskTypeFK foreign key (taskTypeId) references TaskType (id)
     );
 
 
