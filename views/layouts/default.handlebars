@@ -40,7 +40,7 @@
 
                     <ul class="nav nav-tabs" role="tablist">
                         <li class="active">
-                            <a \{{action "showJobs"}}><span>Jobs</span></a>
+                            <a </a>\{{action "showJobs"}}><span>Jobs</span></a>
                         </li>
                         <li class="active">
                             <a \{{action "showConnections"}}><span>Connections</span></a>
@@ -55,6 +55,9 @@
                         \{{/active-li}}
                         \{{#active-li currentWhen="ftptask"}}
                             \{{#link-to 'ftptask'}}FTP task\{{/link-to}}
+                        \{{/active-li}}
+                        \{{#active-li currentWhen="item-email"}}
+                        \{{#link-to 'ftptask'}}Task item email\{{/link-to}}
                         \{{/active-li}}
                     </ul>
                     <ul class="nav nav-sidebar">
@@ -102,6 +105,7 @@
     {{> hello}}
     {{> index}}
     {{> interface/menu-top}}
+    {{> item-email}}
     {{> plans}}
     {{> signin}}
     {{> signup}}
