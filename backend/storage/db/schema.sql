@@ -1,4 +1,4 @@
---
+﻿--
 -- TrueCron database schema. Run this script to upgrade the schema to the latest version.
 --
 -- psql -d YOUR-DB-NAME -f schema.sql -v ON_ERROR_STOP=1 -x -q
@@ -56,141 +56,219 @@ $$ language plpgsql;
 
 do $$
 begin
-if not HasSchemaVersion(1) then
-    create table Users
+if HasSchemaVersion(2) or HasSchemaVersion(1) then
+    -- Removing leftovers from the first schema version entirely
+    drop view if exists UserOrgs cascade;
+    drop view if exists UserJobs cascade;
+    drop view if exists UserTags cascade;
+    drop table if exists Tasks cascade;
+    drop table if exists TaskTypes cascade;
+    drop table if exists JobTags cascade;
+    drop table if exists Runs cascade;
+    drop table if exists Jobs cascade;
+    drop table if exists History cascade;
+    drop table if exists OrgMembers cascade;
+    drop table if exists Orgs cascade;
+    drop table if exists Users cascade;
+    drop type if exists OrgRole cascade;
+    delete from SchemaVersion where version = 1;
+    delete from SchemaVersion where version = 2;
+end if;
+end $$;
+
+
+do $$
+begin
+if not HasSchemaVersion(3) then
+
+    create table "User"
     (
-        id          bigint not null,
-        login       varchar(128) not null,
-        name        varchar(128) not null,
-        passwordSalt bytea not null,
-        passwordHash bytea not null,
-        emails      varchar(128)[],
-        avatarUrl   varchar(1024),
-        googleData  json,
-        lastLoginAt timestamp(0) with time zone not null default 'now',
-        createdAt   timestamp(0) with time zone not null default 'now',
-        updatedAt   timestamp(0) with time zone not null default 'now',
-        updatedById bigint,
-        constraint  UsersPK primary key (id),
-        constraint  UsersUpdatedByFK foreign key (updatedById) references Users (id)
+        id              bigserial,
+        login           varchar(128) not null,
+        name            varchar(128) not null,
+        passwordSalt    bytea not null,
+        passwordHash    bytea not null,
+        emails          varchar(128)[],
+        avatarUrl       varchar(1024),
+        googleData      json,
+        lastLoginAt     timestamp(0) with time zone,
+        createdAt       timestamp(0) with time zone not null default 'now',
+        updatedAt       timestamp(0) with time zone not null default 'now',
+        updatedByUserId bigint,
+        constraint      UserPK primary key (id),
+        constraint      UserUpdatedByUserFK foreign key (updatedByUserId) references "User" (id)
     );
 
-    create unique index UsersLoginIndex on Users (lower(login));
+    create unique index UserLoginIndex on "User" (lower(login));
 
-    create table Orgs
+
+    create table Organization
     (
-        id          bigserial,
-        name        varchar(256),
-        email       varchar(128),
-        plan        json,
-        createdAt   timestamp(0) with time zone not null default 'now',
-        updatedAt   timestamp(0) with time zone not null default 'now',
-        updatedById bigint not null,
-        constraint  OrgsPK primary key (id),
-        constraint  OrgsUpdatedByFK foreign key (updatedById) references Users (id)
+        id              bigserial,
+        name            varchar(256) not null,
+        email           varchar(128),
+        plan            json,
+        createdAt       timestamp(0) with time zone not null default 'now',
+        updatedAt       timestamp(0) with time zone not null default 'now',
+        updatedByUserId bigint not null,
+        constraint      OrganizationPK primary key (id),
+        constraint      OrganizationUpdatedByUserFK foreign key (updatedByUserId) references "User" (id)
+    );
+    
+
+    create type OrganizationRole as enum ('admin', 'member');
+
+    create table OrganizationMember
+    (
+        organizationId  bigint not null,
+        userId          bigint not null,
+        role            OrganizationRole not null,
+        createdAt       timestamp(0) with time zone not null default 'now',
+        updatedAt       timestamp(0) with time zone not null default 'now',
+        updatedByUserId bigint not null,
+        constraint      OrganizationMemberPK primary key (organizationId, userId),
+        constraint      OrganizationMemberOrganizationFK foreign key (organizationId) references Organization (id),
+        constraint      OrganizationMemberUserFK foreign key (userId) references "User" (id),
+        constraint      OrganizationMemberUpdatedByUserFK foreign key (updatedByUserId) references "User" (id)
     );
 
-    create table OrgMembers
-    (
-        orgId       bigint not null,
-        userId      bigint not null,
-        role        int not null,
-        constraint  OrgMembersPK primary key (orgId, userId)
-    );
 
     create table History
     (
-        id          bigserial,
-        at          timestamp(0) with time zone not null default 'now',
-        resourceUrl varchar(256) not null,
-        userId      bigint not null,
-        change      text not null,
-        oldValue    text,
-        constraint  HistoryPK primary key (id),
-        constraint  HistoryUserFK foreign key (userId) references Users (id)
+        id              bigserial,
+        createdAt       timestamp(0) with time zone not null default 'now',
+        resourceUrl     varchar(256) not null,
+        userId          bigint not null,
+        change          text not null,
+        oldValue        text,
+        constraint      HistoryPK primary key (id),
+        constraint      HistoryUserFK foreign key (userId) references "User" (id)
     );
 
     create index HistoryResourceUrlIndex on History (resourceUrl asc, at desc);
     create index HistoryUserIndex on History (userId asc, at desc);
 
-    perform CommitSchemaVersion(1, 'Added Users and History tables.');
+
+    create table Workspace
+    (
+        id              bigserial,
+        organizationId  bigint not null,
+        name            varchar(255) not null,
+        createdAt       timestamp(0) with time zone not null default 'now',
+        updatedAt       timestamp(0) with time zone not null default 'now',
+        updatedByUserId bigint not null,
+        constraint      WorkspacePK primary key(id),
+        constraint      WorkspaceOrganizationFK foreign key (organizationId) references Organization (id)
+                        on delete cascade,
+        constraint      WorkspaceUpdatedByUserFK foreign key (updatedByUserId) references "User" (id)
+    );
+    
+
+    create type WorkspaceRole as enum ('editor', 'viewer');
+
+    create table WorkspaceMember
+    (
+        workspaceId     bigint not null,
+        userId          bigint not null,
+        role            WorkspaceRole not null,
+        createdAt       timestamp(0) with time zone not null default 'now',
+        updatedAt       timestamp(0) with time zone not null default 'now',
+        updatedByUserId bigint not null,
+        constraint      WorkspaceMemberPK primary key (workspaceId, userId),
+        constraint      WorkspaceMemberWorkspaceFK foreign key (workspaceId) references Workspace (id),
+        constraint      WorkspaceMemberUserFK foreign key (userId) references "User" (id),
+        constraint      WorkspaceMemberUpdatedByUserFK foreign key (updatedByUserId) references "User" (id)
+    );
+
+
+    create table Job
+    (
+        id              bigserial,
+        workspaceId     bigint not null,
+        name            varchar(255) not null,
+        active          smallint not null default 0,
+        archived        smallint not null default 0,
+        createdAt       timestamp(0) with time zone not null default 'now',
+        updatedAt       timestamp(0) with time zone not null default 'now',
+        updatedByUserId bigint not null,
+        startsAt        timestamp(2) with time zone,
+        rrule           text,
+        constraint      JobPK primary key (id),
+        constraint      JobWorkspaceFK foreign key (workspaceId) references Workspace (id)
+                        on delete cascade,
+        constraint      JobsUpdatedByFK foreign key (updatedByUserId) references "User" (id)
+    );
+
+    create table JobTag
+    (
+        jobId           bigint not null,
+        tag             varchar(32) not null,
+        constraint      JobTagPK primary key (jobId, tag),
+        constraint      JobTagJobFK foreign key (jobId) references Job (id)
+                        on delete cascade
+    );
+
+    create table TaskType
+    (
+        id              bigserial,
+        name            varchar(128) not null,
+        constraint      TaskTypePK primary key (id)
+    );
+
+    create unique index TaskTypeNameIndex on TaskType (lower(name));
+
+    create table Task
+    (
+        id              bigserial,
+        jobId           bigint not null,
+        name            varchar(255) not null,
+        active          smallint not null default 1,
+        position        integer not null,
+        taskTypeId      bigint not null,
+        settings        json not null,
+        timeout         interval not null,
+        createdAt       timestamp(0) with time zone not null default 'now',
+        updatedAt       timestamp(0) with time zone not null default 'now',
+        updatedByUserId bigint not null,
+        constraint      TaskPK primary key(id),
+        constraint      TaskJobFK foreign key (jobId) references Job (id)
+                        on delete cascade,
+        constraint      TaskTypeFK foreign key (typeId) references TaskType (id)
+    );
+
+
+    create table Run
+    (
+        id              bigserial,
+        jobId           bigint not null,
+        startedAt       timestamp(2) with time zone not null default 'now',
+        startedByUserId bigint,
+        status          smallint not null,
+        elapsed         interval not null,
+        message         text,
+        constraint      RunPK primary key (id),
+        constraint      RunJobFK foreign key (jobId) references Job (id)
+                        on delete cascade,
+        constraint      RunStartedByUserFK foreign key (startedByUserId) references "User" (id)
+    );
+        
+
+    create table JobConters
+    (
+        jobId           bigint not null,
+        nextRunAt       timestamp(2) with time zone,
+        lastRunId       bigint,
+        constraint      JobContersPK primary key (jobId),
+        constraint      JobContersJobFK foreign key (jobId) references Job (id)
+                        on delete cascade,
+        constraint      JobContersRunFK foreign key (lastRunId) references Run (id)
+                        on delete set null
+    );
+    
+    perform CommitSchemaVersion(3, 'Initial schema.');
 end if;
 end $$;
 
-do $$
-begin
-if not HasSchemaVersion(2) then
-    create table Jobs
-    (
-        id          bigserial,
-        orgId       bigint,
-        name        varchar(255) not null,
-        active      boolean not null default false,
-        archived    boolean not null default false,
-        createdAt   timestamp(0) with time zone not null default 'now',
-        updatedAt   timestamp(0) with time zone not null default 'now',
-        updatedById bigint not null,
-        startsAt    timestamp(2) with time zone,
-        rrule       text,
-        nextRunAt   timestamp(2) with time zone,
-        constraint  JobsPK primary key (id),
-        constraint  JobsOrgIdFK foreign key (orgId) references Orgs (id)
-                    on delete cascade,
-        constraint  JobsUpdatedByFK foreign key (updatedById) references Users (id)
-    );
-
-    create table JobTags
-    (
-        jobId       bigint not null,
-        tag         varchar(32) not null,
-        constraint  JobTagsPK primary key (jobId, tag),
-        constraint  JobTagsJobsFK foreign key (jobId) references Jobs (id)
-                    on delete cascade
-    );
-
-    create table Runs
-    (
-        id          bigserial,
-        jobId       bigint not null,
-        startedAt   timestamp(2) with time zone not null default 'now',
-        status      integer not null,
-        elapsed     interval not null,
-        message     text,
-        constraint  RunsPK primary key (id),
-        constraint  RunsJobsFK foreign key (jobId) references Jobs (id)
-                    on delete cascade
-    );
-
-    create table TaskTypes
-    (
-        id          bigserial,
-        name        varchar(128) not null,
-        constraint  TaskTypesPK primary key (id)
-    );
-
-    create unique index TaskTypesNameIndex on TaskTypes (lower(name));
-
-    create table Tasks
-    (
-        id          bigserial,
-        jobId       bigint not null,
-        name        varchar(255) not null,
-        active      boolean not null default true,
-        position    integer not null,
-        typeId      bigint not null,
-        settings    json not null,
-        timeout     interval not null,
-        updatedAt   timestamp(0) with time zone not null default 'now',
-        updatedById bigint not null,
-        constraint  TasksPK primary key(id),
-        constraint  TasksJobsFK foreign key (jobId) references Jobs (id)
-                    on delete cascade,
-        constraint  TasksTypeFK foreign key (typeId) references TaskTypes (id)
-    );
-
-    perform CommitSchemaVersion(2, 'Added jobs, tasks, runs tables.');
-end if;
-end $$;
 
 -- Use the snippet as a template:
 --
@@ -205,19 +283,4 @@ end $$;
 
 
 -- Recreate views here
-
-create or replace view UserOrgs as
-    select o.*, m.userId, m.role
-    from OrgMembers m join Orgs o on m.orgId = o.id;
-
-create or replace view UserJobs as
-    select j.*, m.userId, m.role
-    from Jobs j join OrgMembers m on j.orgId = m.orgId;
-
-create or replace view UserTags as
-    select t.tag, m.userId, count(*) as jobCount
-    from JobTags t join Jobs j on t.jobId = j.id
-                   join OrgMembers m on j.orgId = m.orgId
-    group by t.tag, m.userId;
-
 
