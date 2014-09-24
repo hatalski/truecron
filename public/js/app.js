@@ -255,6 +255,23 @@ App.JobsRoute = App.AuthenticatedRoute.extend({
 
 
 App.Router.map(function() {
+    this.route('jobs-item');
+});
+
+App.JobsItemRoute = App.AuthenticatedRoute.extend({
+    actions: {
+        showTasksItemEmail: function () {
+            this.render('tasks-item-email', {
+                into: 'jobs-item',
+                outlet: 'tasks-item'
+            });
+            return true;
+        }
+    }
+});
+
+
+App.Router.map(function() {
     this.route('jobs-add');
 });
 
@@ -281,14 +298,6 @@ App.Router.map(function() {
 });
 
 App.TaskFtpRoute = App.AuthenticatedRoute.extend({
-});
-
-
-App.Router.map(function() {
-    this.route('task-email');
-});
-
-App.TaskEmailRoute = App.AuthenticatedRoute.extend({
 });
 
 
