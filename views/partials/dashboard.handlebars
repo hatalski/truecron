@@ -30,5 +30,18 @@
 
         <h2 class="sub-header">Workspaces</h2>
         \{{render "workspaces"}}
+
+        <h2 class="sub-header">Users</h2>
+        \{{render "users"}}
     </div>
 </script>
+
+{{!-- dv: register your client-side partials here. In alphabetical order!!! --}}
+{{> connections}}
+{{> execute-bar}}
+{{> interface/menu-top}}
+{{> interface/tab-connections}}
+{{> interface/tab-jobs}}
+{{> jobs}}
+{{> users}}
+{{> workspaces}}

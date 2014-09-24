@@ -337,6 +337,29 @@ App.WorkspacesItemRoute = App.AuthenticatedRoute.extend({
 });
 
 
+App.Router.map(function() {
+    this.route('users');
+});
+
+App.UsersRoute = App.AuthenticatedRoute.extend({
+});
+
+
+App.Router.map(function() {
+    this.route('users-add');
+});
+
+App.UsersAddRoute = App.AuthenticatedRoute.extend({
+});
+
+
+App.Router.map(function() {
+    this.route('users-item');
+});
+
+App.UsersItemRoute = App.AuthenticatedRoute.extend({
+});
+
 
 App.Router.map(function() {
     this.route('execute-bar');
