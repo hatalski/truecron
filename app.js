@@ -1,10 +1,15 @@
 var express = require('express');
 var path = require('path');
 var favicon = require('serve-favicon');
+
+var config = require('./lib/config');
+
 var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var session = require('express-session');
+// vh: first redis should be running on vagrant instance
+//var redisClient = require('./lib/redis');
 var RedisStore = require('connect-redis')(session);
 
 var passport = require('passport'),
@@ -32,8 +37,8 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use('/bower_components',  express.static(__dirname + '/bower_components'));
 
 app.use(session({
-    store: new RedisStore({}),
-    secret: 'TrueCron',
+    store: new RedisStore({}), //client: redisClient
+    secret: config.get('SESSION_SECRET'),
     resave: true,
     saveUninitialized: true
 }));
@@ -55,10 +60,9 @@ passport.deserializeUser(function(user, done) {
 });
 
 passport.use('google', new GoogleStrategy({
-        // dv: TODO: move this code to config
-        clientID: '120337618420-mnnrjk2734k1btjmu50h92a6kuj0juq8.apps.googleusercontent.com',
-        clientSecret: 'kM946eyWgYNSz-I9tqU5tDtn',
-        callbackURL: 'http://dev.truecron.com:3000/auth/google/callback'
+        clientID: config.get('GOOGLE_SSO_CLIENT_ID'),
+        clientSecret: config.get('GOOGLE_SSO_CLIENT_SECRET'),
+        callbackURL: config.get('GOOGLE_SSO_CALLBACK_URL')
     },
     function(accessToken, refreshToken, profile, done) {
         // asynchronous verification, for effect...
