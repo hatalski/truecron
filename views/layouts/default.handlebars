@@ -53,12 +53,6 @@
                         \{{#active-li currentWhen="dashboard"}}
                             \{{#link-to 'dashboard'}}Overview\{{/link-to}}
                         \{{/active-li}}
-                        \{{#active-li currentWhen="ftptask"}}
-                            \{{#link-to 'ftptask'}}FTP task\{{/link-to}}
-                        \{{/active-li}}
-                        \{{#active-li currentWhen="item-email"}}
-                        \{{#link-to 'ftptask'}}Task item email\{{/link-to}}
-                        \{{/active-li}}
                     </ul>
                     <ul class="nav nav-sidebar">
                         \{{#active-li currentWhen="connections"}}
@@ -94,18 +88,16 @@
 
     {{!-- dv: register your client-side partials here. In alphabetical order!!! --}}
     {{> about}}
-    {{> addjob}}
     {{> connections}}
     {{> interface/tab-connections}}
     {{> interface/tab-jobs}}
     {{> dashboard}}
     {{> execute-bar}}
-    {{> ftptask}}
     {{> home_page}}
     {{> hello}}
     {{> index}}
     {{> interface/menu-top}}
-    {{> item-email}}
+    {{> jobs}}
     {{> plans}}
     {{> signin}}
     {{> signup}}

@@ -65,12 +65,16 @@ App.ApplicationRoute = Ember.Route.extend({
                 into: 'application',
                 outlet: 'navigation'
             });
+            this.transitionTo('dashboard')
+            return true;
         },
         showConnections: function() {
             this.render('interface-tab-connections', {
                 into: 'application',
                 outlet: 'navigation'
             });
+            this.transitionTo('dashboard')
+            return true;
         }
     }
 });
@@ -79,7 +83,7 @@ App.ApplicationController = Ember.Controller.extend({
     needs: ['signin'],
     actions: {
         addJob: function() {
-            this.transitionTo('addjob');
+            this.transitionTo('jobs-add');
         },
         showJobs: function() {
             this.setProperties({'activeTab': 'jobs'});
@@ -232,25 +236,67 @@ App.ConnectionsRoute = App.AuthenticatedRoute.extend({
     actions: {
         addConnectionFtp: function () {
             this.render('connection-ftp');
+            return true;
         },
         addConnectionAgent: function () {
             this.render('connection-agent');
+            return true;
         }
     }
 });
 
 
 App.Router.map(function() {
-    this.route('ftptask');
+    this.route('jobs');
 });
+
+App.JobsRoute = App.AuthenticatedRoute.extend({
+});
+
+
+App.Router.map(function() {
+    this.route('jobs-add');
+});
+
+App.JobsAddRoute = App.AuthenticatedRoute.extend({
+    actions: {
+        addTask: function () {
+            this.transitionTo('tasks-add');
+            return true;
+        }
+    }
+});
+
+
+App.Router.map(function() {
+    this.route('tasks-add');
+});
+
+App.TasksAddRoute = App.AuthenticatedRoute.extend({
+});
+
+
+App.Router.map(function() {
+    this.route('task-ftp');
+});
+
+App.TaskFtpRoute = App.AuthenticatedRoute.extend({
+});
+
+
+App.Router.map(function() {
+    this.route('task-email');
+});
+
+App.TaskEmailRoute = App.AuthenticatedRoute.extend({
+});
+
+
 
 App.Router.map(function() {
     this.route('dashboard');
 });
 
-App.Router.map(function() {
-    this.route('addjob');
-});
 
 
 App.Router.map(function() {
