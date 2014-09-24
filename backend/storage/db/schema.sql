@@ -76,112 +76,154 @@ if HasSchemaVersion(2) or HasSchemaVersion(1) then
 end if;
 end $$;
 
+do $$
+begin
+if HasSchemaVersion(3) then
+    -- Removing leftovers from the second schema version 
+    drop table if exists JobConters cascade;
+    drop table if exists Task cascade;
+    drop table if exists TaskType cascade;
+    drop table if exists JobTag cascade;
+    drop table if exists Run cascade;
+    drop table if exists Job cascade;
+    drop table if exists WorkspaceMember cascade;
+    drop table if exists Workspace cascade;
+    drop table if exists History cascade;
+    drop table if exists OrganizationMember cascade;
+    drop table if exists Organization cascade;
+    drop table if exists "User" cascade;
+    drop type if exists OrganizationRole cascade;
+    drop type if exists WorkspaceRole cascade;
+    delete from SchemaVersion where version = 3;
+end if;
+end $$;
+
 
 do $$
 begin
-if not HasSchemaVersion(3) then
+if not HasSchemaVersion(4) then
 
-    create table "User"
+    create schema tc;
+    
+    create table tc.Person
     (
         id              bigserial,
-        login           varchar(128) not null,
+        login           varchar(256) not null,
         name            varchar(128) not null,
         passwordSalt    bytea not null,
         passwordHash    bytea not null,
-        emails          varchar(128)[],
         avatarUrl       varchar(1024),
-        googleData      json,
+        extensionData   json,
         lastLoginAt     timestamp(0) with time zone,
         createdAt       timestamp(0) with time zone not null default 'now',
         updatedAt       timestamp(0) with time zone not null default 'now',
-        updatedByUserId bigint,
-        constraint      UserPK primary key (id),
-        constraint      UserUpdatedByUserFK foreign key (updatedByUserId) references "User" (id)
+        updatedByPersonId bigint,
+        constraint      Person_Pk primary key (id),
+        constraint      Person_UpdatedBy_Person_Fk foreign key (updatedByPersonId) references tc.Person (id)
     );
 
-    create unique index UserLoginIndex on "User" (lower(login));
+    create unique index Person_UniqueLogin_Index on tc.Person (lower(login));
 
 
-    create table Organization
+    create type tc.EmailStatus as enum ('pending', 'active');
+    
+    create table tc.PersonEmail
+    (
+        id              bigserial,
+        personId        bigint not null,
+        email           varchar(256) not null,
+        status          tc.EmailStatus not null default 'pending',
+        constraint      PersonEmail_Pk primary key (id),
+        constraint      PersonEmail_Person_Fk foreign key (personId) references tc.Person (id) 
+                        on delete cascade
+    );
+
+    create unique index PersonEmail_UniqueEmail_Index on tc.PersonEmail (lower(email));
+
+
+    create table tc.Organization
     (
         id              bigserial,
         name            varchar(256) not null,
-        email           varchar(128),
+        email           varchar(256),
         plan            json,
         createdAt       timestamp(0) with time zone not null default 'now',
         updatedAt       timestamp(0) with time zone not null default 'now',
-        updatedByUserId bigint not null,
-        constraint      OrganizationPK primary key (id),
-        constraint      OrganizationUpdatedByUserFK foreign key (updatedByUserId) references "User" (id)
+        updatedByPersonId bigint not null,
+        constraint      Organization_Pk primary key (id),
+        constraint      Organization_UpdatedBy_Person_Fk foreign key (updatedByPersonId) references tc.Person (id)
     );
     
 
-    create type OrganizationRole as enum ('admin', 'member');
+    create type tc.OrganizationRole as enum ('admin', 'member');
 
-    create table OrganizationMember
+    create table tc.OrganizationToPerson 
     (
         organizationId  bigint not null,
-        userId          bigint not null,
-        role            OrganizationRole not null,
+        personId        bigint not null,
+        role            tc.OrganizationRole not null,
         createdAt       timestamp(0) with time zone not null default 'now',
         updatedAt       timestamp(0) with time zone not null default 'now',
-        updatedByUserId bigint not null,
-        constraint      OrganizationMemberPK primary key (organizationId, userId),
-        constraint      OrganizationMemberOrganizationFK foreign key (organizationId) references Organization (id),
-        constraint      OrganizationMemberUserFK foreign key (userId) references "User" (id),
-        constraint      OrganizationMemberUpdatedByUserFK foreign key (updatedByUserId) references "User" (id)
+        updatedByPersonId bigint not null,
+        constraint      OrganizationToPerson_Pk primary key (organizationId, personId),
+        constraint      OrganizationToPerson_Organization_Fk foreign key (organizationId) references tc.Organization (id)
+                        on delete cascade,
+        constraint      OrganizationToPerson_Person_Fk foreign key (personId) references tc.Person (id)
+                        on delete cascade,
+        constraint      OrganizationToPerson_UpdatedBy_Person_Fk foreign key (updatedByPersonId) references tc.Person (id)
     );
 
 
-    create table History
+    create table tc.History
     (
         id              bigserial,
         createdAt       timestamp(0) with time zone not null default 'now',
-        resourceUrl     varchar(256) not null,
-        userId          bigint not null,
+        resourceUrl     text not null,
+        personId        bigint not null,
         change          text not null,
-        oldValue        text,
-        constraint      HistoryPK primary key (id),
-        constraint      HistoryUserFK foreign key (userId) references "User" (id)
+        oldValue        json,
+        constraint      History_Pk primary key (id),
+        constraint      History_Person_Fk foreign key (personId) references tc.Person (id)
     );
 
-    create index HistoryResourceUrlIndex on History (resourceUrl asc, createdAt desc);
-    create index HistoryUserIndex on History (userId asc, createdAt desc);
+    create index History_ResourceUrl_Index on tc.History (resourceUrl asc, createdAt desc);
+    create index History_Person_Index on tc.History (personId asc, createdAt desc);
 
 
-    create table Workspace
+    create table tc.Workspace
     (
         id              bigserial,
         organizationId  bigint not null,
         name            varchar(255) not null,
         createdAt       timestamp(0) with time zone not null default 'now',
         updatedAt       timestamp(0) with time zone not null default 'now',
-        updatedByUserId bigint not null,
-        constraint      WorkspacePK primary key(id),
-        constraint      WorkspaceOrganizationFK foreign key (organizationId) references Organization (id)
-                        on delete cascade,
-        constraint      WorkspaceUpdatedByUserFK foreign key (updatedByUserId) references "User" (id)
+        updatedByPersonId bigint not null,
+        constraint      Workspace_Pk primary key(id),
+        constraint      Workspace_Organization_Fk foreign key (organizationId) references tc.Organization (id),
+        constraint      Workspace_UpdatedBy_Person_Fk foreign key (updatedByPersonId) references tc.Person (id)
     );
     
 
-    create type WorkspaceRole as enum ('editor', 'viewer');
+    create type tc.WorkspaceRole as enum ('editor', 'viewer');
 
-    create table WorkspaceMember
+    create table tc.WorkspaceToPerson
     (
         workspaceId     bigint not null,
-        userId          bigint not null,
-        role            WorkspaceRole not null,
+        personId        bigint not null,
+        role            tc.WorkspaceRole not null,
         createdAt       timestamp(0) with time zone not null default 'now',
         updatedAt       timestamp(0) with time zone not null default 'now',
-        updatedByUserId bigint not null,
-        constraint      WorkspaceMemberPK primary key (workspaceId, userId),
-        constraint      WorkspaceMemberWorkspaceFK foreign key (workspaceId) references Workspace (id),
-        constraint      WorkspaceMemberUserFK foreign key (userId) references "User" (id),
-        constraint      WorkspaceMemberUpdatedByUserFK foreign key (updatedByUserId) references "User" (id)
+        updatedByPersonId bigint not null,
+        constraint      WorkspaceToPerson_Pk primary key (workspaceId, personId),
+        constraint      WorkspaceToPerson_Workspace_Fk foreign key (workspaceId) references tc.Workspace (id)
+                        on delete cascade,
+        constraint      WorkspaceToPerson_Person_Fk foreign key (personId) references tc.Person (id)
+                        on delete cascade,
+        constraint      WorkspaceToPerson_UpdatedBy_Person_Fk foreign key (updatedByPersonId) references tc.Person (id)
     );
 
 
-    create table Job
+    create table tc.Job
     (
         id              bigserial,
         workspaceId     bigint not null,
@@ -190,34 +232,35 @@ if not HasSchemaVersion(3) then
         archived        smallint not null default 0,
         createdAt       timestamp(0) with time zone not null default 'now',
         updatedAt       timestamp(0) with time zone not null default 'now',
-        updatedByUserId bigint not null,
+        updatedByPersonId bigint not null,
         startsAt        timestamp(2) with time zone,
-        rrule           text,
-        constraint      JobPK primary key (id),
-        constraint      JobWorkspaceFK foreign key (workspaceId) references Workspace (id)
-                        on delete cascade,
-        constraint      JobsUpdatedByFK foreign key (updatedByUserId) references "User" (id)
+        rrule           text not null,
+        constraint      Job_Pk primary key (id),
+        constraint      Job_Workspace_Fk foreign key (workspaceId) references tc.Workspace (id),
+        constraint      Job_UpdatedBy_Person_Fk foreign key (updatedByPersonId) references tc.Person (id)
     );
 
-    create table JobTag
+    create table tc.JobTag
     (
+        id              bigserial,
         jobId           bigint not null,
-        tag             varchar(32) not null,
-        constraint      JobTagPK primary key (jobId, tag),
-        constraint      JobTagJobFK foreign key (jobId) references Job (id)
+        tag             varchar(128) not null,
+        constraint      JobTag_Pk primary key (id),
+        constraint      JobTag_Ak unique (jobId, tag),
+        constraint      JobTag_Job_Fk foreign key (jobId) references tc.Job (id)
                         on delete cascade
     );
 
-    create table TaskType
+    create table tc.TaskType
     (
         id              bigserial,
         name            varchar(128) not null,
-        constraint      TaskTypePK primary key (id)
+        constraint      TaskType_Pk primary key (id)
     );
 
-    create unique index TaskTypeNameIndex on TaskType (lower(name));
+    create unique index TaskType_UniqueName_Index on tc.TaskType (lower(name));
 
-    create table Task
+    create table tc.Task
     (
         id              bigserial,
         jobId           bigint not null,
@@ -229,43 +272,44 @@ if not HasSchemaVersion(3) then
         timeout         interval not null,
         createdAt       timestamp(0) with time zone not null default 'now',
         updatedAt       timestamp(0) with time zone not null default 'now',
-        updatedByUserId bigint not null,
-        constraint      TaskPK primary key(id),
-        constraint      TaskJobFK foreign key (jobId) references Job (id)
+        updatedByPersonId bigint not null,
+        constraint      Task_Pk primary key(id),
+        constraint      Task_Job_Fk foreign key (jobId) references tc.Job (id)
                         on delete cascade,
-        constraint      TaskTypeFK foreign key (taskTypeId) references TaskType (id)
+        constraint      Task_TaskType_Fk foreign key (taskTypeId) references tc.TaskType (id),
+        constraint      Task_UpdatedBy_Person_Fk foreign key (updatedByPersonId) references tc.Person (id)
     );
 
 
-    create table Run
+    create table tc.Run
     (
         id              bigserial,
         jobId           bigint not null,
         startedAt       timestamp(2) with time zone not null default 'now',
-        startedByUserId bigint,
+        startedByPersonId bigint,
         status          smallint not null,
         elapsed         interval not null,
         message         text,
-        constraint      RunPK primary key (id),
-        constraint      RunJobFK foreign key (jobId) references Job (id)
+        constraint      Run_Pk primary key (id),
+        constraint      Run_Job_Fk foreign key (jobId) references tc.Job (id)
                         on delete cascade,
-        constraint      RunStartedByUserFK foreign key (startedByUserId) references "User" (id)
+        constraint      Run_StartedBy_Person_Fk foreign key (startedByPersonId) references tc.Person (id)
     );
         
 
-    create table JobConters
+    create table tc.JobConters
     (
         jobId           bigint not null,
         nextRunAt       timestamp(2) with time zone,
         lastRunId       bigint,
-        constraint      JobContersPK primary key (jobId),
-        constraint      JobContersJobFK foreign key (jobId) references Job (id)
+        constraint      JobConters_Pk primary key (jobId),
+        constraint      JobConters_Job_Fk foreign key (jobId) references tc.Job (id)
                         on delete cascade,
-        constraint      JobContersRunFK foreign key (lastRunId) references Run (id)
+        constraint      JobConters_Run_Fk foreign key (lastRunId) references tc.Run (id)
                         on delete set null
     );
     
-    perform CommitSchemaVersion(3, 'Initial schema.');
+    perform CommitSchemaVersion(4, 'Initial schema.');
 end if;
 end $$;
 
