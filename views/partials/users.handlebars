@@ -1,0 +1,12 @@
+<script type="text/x-handlebars" data-template-name="users">
+    \{{#link-to "users-add"}}Add user\{{/link-to}}
+
+    <li>\{{#link-to "users-item"}}User A\{{/link-to}}</li>
+    <li>\{{#link-to "users-item"}}User B\{{/link-to}}</li>
+    <li>User c</li>
+</script>
+
+{{!-- dv: register your client-side partials here. In alphabetical order!!! --}}
+{{> users-add}}
+{{> users-item}}
+

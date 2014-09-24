@@ -31,6 +31,15 @@ App.AuthenticatedRoute = Ember.Route.extend({
     }
 });
 
+App.GuestOnlyRoute = Ember.Route.extend({
+    beforeModel: function (transition) {
+        if (this.controllerFor('signin').get('token')) {
+           this.transitionTo('index')
+        }
+    }
+});
+
+
 App.ApplicationRoute = Ember.Route.extend({
     model: function () {
         if (!sessionStorage.token) {
@@ -49,6 +58,24 @@ App.ApplicationRoute = Ember.Route.extend({
             this.controllerFor('signin').set('token', sessionStorage.token);
             this.controllerFor('signin').set('isSignedIn', true);
         }
+    },
+    actions: {
+        showJobs: function() {
+            this.render('interface-tab-jobs', {
+                into: 'application',
+                outlet: 'navigation'
+            });
+            this.transitionTo('dashboard')
+            return true;
+        },
+        showConnections: function() {
+            this.render('interface-tab-connections', {
+                into: 'application',
+                outlet: 'navigation'
+            });
+            this.transitionTo('dashboard')
+            return true;
+        }
     }
 });
 
@@ -56,7 +83,18 @@ App.ApplicationController = Ember.Controller.extend({
     needs: ['signin'],
     actions: {
         addJob: function() {
-            this.transitionTo('addjob');
+            this.transitionTo('jobs-add');
+        },
+        showJobs: function() {
+            this.setProperties({'activeTab': 'jobs'});
+            return true; // vdm: to pass event handling to parent
+        },
+        addConnection: function() {
+            this.transitionTo('connections');
+        },
+        showConnections: function() {
+            this.setProperties({'activeTab': 'connections'});
+            return true; // vdm: to pass event handling to parent
         }
     }
 });
@@ -66,6 +104,12 @@ App.IndexController = Ember.Controller.extend({
 });
 
 App.IndexRoute = App.AuthenticatedRoute.extend({
+    beforeModel: function() {
+        this._super();
+        if (this.controllerFor('signin').get('token')) {
+            this.transitionTo('dashboard');
+        }
+    }
 });
 
 // Controllers
@@ -118,6 +162,7 @@ App.SigninController = Ember.Controller.extend({
 
 // Controllers
 App.SignupController = Ember.Controller.extend({
+    needs: ['signin'],
     reset: function() {
         this.setProperties({
             email: "",
@@ -140,44 +185,189 @@ App.SignupController = Ember.Controller.extend({
     }
 });
 
+App.SignupModalController = App.SignupController.extend({
+
+});
+
+
+// dv: this section is for guest available pages only
+App.Router.map(function() {
+    this.route('about');
+    this.route('terms');
+    this.route('plans'); // pricing
+    this.route('status'); // service health
+});
+
+
+// dv: 2vm: remove this block please when you complete task https://app.asana.com/0/14979377239417/16371187339761
+App.Router.map(function() {
+    this.route('home_page');
+});
+
+// dv: this section is for signin/signup pages only
 
 // add route "signin" "signup"
 App.Router.map(function() {
     this.route('signin');
     this.route('signup');
-    this.route('index-guest');
-    this.route('connection-ftp');
-    this.route('home_page');
 });
 
-App.SigninRoute = Ember.Route.extend({
+App.SigninRoute = App.GuestOnlyRoute.extend({
     setupController: function(controller, context) {
         controller.reset();
     }
 });
 
-App.SignupRoute = Ember.Route.extend({
+App.SignupRoute = App.GuestOnlyRoute.extend({
     setupController: function(controller, context) {
         controller.reset();
+    }
+});
+
+// dv: this is section is for all other pages (auth protected pages)
+App.Router.map(function() {
+    this.route('connections');
+});
+
+App.ConnectionsRoute = App.AuthenticatedRoute.extend({
+    model: function() {
+        return this.getJsonWithToken('/connections.json');
+    },
+    actions: {
+        addConnectionFtp: function () {
+            this.render('connection-ftp');
+            return true;
+        },
+        addConnectionAgent: function () {
+            this.render('connection-agent');
+            return true;
+        }
     }
 });
 
 
 App.Router.map(function() {
-    this.route('ftptask');
+    this.route('connections-item');
 });
+
+App.ConnectionsItemRoute = App.AuthenticatedRoute.extend({
+});
+
+
+App.Router.map(function() {
+    this.route('jobs');
+});
+
+App.JobsRoute = App.AuthenticatedRoute.extend({
+});
+
+
+App.Router.map(function() {
+    this.route('jobs-item');
+});
+
+App.JobsItemRoute = App.AuthenticatedRoute.extend({
+    actions: {
+        addTask: function () {
+            this.transitionTo('tasks-add');
+            return true;
+        },
+        showTasksItemEmail: function () {
+            this.render('tasks-item-email', {
+                into: 'jobs-item',
+                outlet: 'tasks-item'
+            });
+            return true;
+        }
+    }
+});
+
+
+App.Router.map(function() {
+    this.route('jobs-add');
+});
+
+App.JobsAddRoute = App.AuthenticatedRoute.extend({
+    actions: {
+        addTask: function () {
+            this.transitionTo('tasks-add');
+            return true;
+        }
+    }
+});
+
+
+App.Router.map(function() {
+    this.route('tasks-add');
+});
+
+App.TasksAddRoute = App.AuthenticatedRoute.extend({
+});
+
+
+App.Router.map(function() {
+    this.route('task-ftp');
+});
+
+App.TaskFtpRoute = App.AuthenticatedRoute.extend({
+});
+
 
 App.Router.map(function() {
     this.route('dashboard');
 });
 
-App.Router.map(function() {
-    this.route('addjob');
+App.DashboardRoute = App.AuthenticatedRoute.extend({
 });
 
+
 App.Router.map(function() {
-    this.route('connection-agent');
+    this.route('workspaces');
 });
+
+App.WorkspacesRoute = App.AuthenticatedRoute.extend({
+});
+
+
+App.Router.map(function() {
+    this.route('workspaces-add');
+});
+
+App.WorkspacesAddRoute = App.AuthenticatedRoute.extend({
+});
+
+
+App.Router.map(function() {
+    this.route('workspaces-item');
+});
+
+App.WorkspacesItemRoute = App.AuthenticatedRoute.extend({
+});
+
+
+App.Router.map(function() {
+    this.route('users');
+});
+
+App.UsersRoute = App.AuthenticatedRoute.extend({
+});
+
+
+App.Router.map(function() {
+    this.route('users-add');
+});
+
+App.UsersAddRoute = App.AuthenticatedRoute.extend({
+});
+
+
+App.Router.map(function() {
+    this.route('users-item');
+});
+
+App.UsersItemRoute = App.AuthenticatedRoute.extend({
+});
+
 
 App.Router.map(function() {
     this.route('execute-bar');
@@ -188,6 +378,7 @@ App.Router.map(function() {
     this.route('hello');
 });
 
+// dv: this is just an example how to get data from server for route, countroller, view
 App.HelloRoute = App.AuthenticatedRoute.extend({
     model: function() {
         return this.getJsonWithToken('/hello.json');

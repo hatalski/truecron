@@ -1,0 +1,117 @@
+<link href="public/stylesheets/signin.css" rel="stylesheet">
+<script type="text/x-handlebars" data-template-name="jobs-item">
+<biv class="bodysmtp">
+<div class="container">
+<div class="row">
+<div class="col-md-6"> {{!--start left block--}}
+    <table>
+        <tr>
+            <td colspan="4">
+                <label>
+                    American Signature<img src="img/pencil.png">
+                </label>
+            </td>
+            <td>
+                <a class= "stllink" href="#"><u>LAST RUN:</u></a>
+            </td>
+            <td>
+                NEXT RUN:
+            </td>
+            <td>
+                <a class= "stllink" href="#"><u>ACTIVE</u></a>
+            </td>
+        </tr>
+        <tr>
+            <td rowspan="3">
+                <a href="#"><img src="img/btn1.png"></a>
+            </td>
+            <td colspan="3">
+                <a class= "stllink" href="#"><u>Weekly on Monday at 6 AM</u></a> &nbsp &nbsp &nbsp &nbsp
+            </td>
+            <td style="color: red">07/07/14</td>
+            <td>07/07/14</td>
+            <td></td>
+        </tr>
+        <tr>
+            <td colspan="3" rowspan="2">
+                Ends after 5 runs <br>
+                <h3>Tasks</h3>
+            </td>
+            <td style="color: red">6:00 am</td>
+            <td>6:00 am</td>
+            <td></td>
+        </tr>
+        <tr>
+            <td></td>
+            <td></td>
+            <td>
+                <input \{{action "addTask"}} type="button" class="chOk"  value="Add Task">
+            </td>
+        </tr>
+    </table>
+    <br>
+    <table class="table table-striped">{{!--table#2 task--}}
+        <tr>
+            <td></td>
+            <td><a href="#tab1">delete</a></td>
+            <td>clean folder</td>
+            <td><u>0.68s</u></td>
+        </tr>
+        <tr>
+            <td></td>
+            <td>execute</td>
+            <td>EDI process execution</td>
+            <td><u>13.10s</u></td>
+        </tr>
+        <tr>
+            <td></td>
+            <td>archive</td>
+            <td>zip</td>
+            <td><u>0.03s</u></td>
+        </tr>
+        <tr>
+            <td></td>
+            <td>copy</td>
+            <td>copy files to FTP</td>
+            <td><u>3.01s</u></td>
+        </tr>
+        <tr>
+            <td background="img/important.png"></td>
+            <td><a \{{action "showTasksItemEmail"}}>email</a></td>
+            <td>send notifikation</td>
+            <td style="color: red"><u>30.04s</u></td>
+        </tr>
+        <tr>
+            <td></td>
+            <td>delete</td>
+            <td>clean folder</td>
+            <td><u>0.68s</u></td>
+        </tr>
+    </table>{{!--end table#2 task--}}
+    <br><br>
+    <table class="table">
+        <tr></tr>
+        <tr>
+            <td>
+                <label>
+                    <img src="img/pointer-right.png" alt=">">
+                    Recent Changes
+                </label>
+            </td>
+        </tr>
+        <tr><td colspan="2" align="right">
+            <a class= "stllink" href="#"><u>ARCHIVE</u></a>
+        </td></tr>
+    </table>
+</div>{{!--end left block--}}
+
+<div class="col-md-6">{{!--start right block--}}
+    <div id="tab4">
+        \{{outlet "tasks-item"}}
+    </div>{{!--end right block--}}
+</div>
+</div>
+</div>
+</biv>
+
+</script>

@@ -1,4 +1,4 @@
-<script type="text/x-handlebars" data-template-name="addjob" xmlns="http://www.w3.org/1999/html">
+<script type="text/x-handlebars" data-template-name="jobs-add">
 	<div class="container-fluid">
         <form class="form-inline" role="form">
             <div class="col-sm-6">
@@ -23,13 +23,14 @@
                 <tbody>
                 <tr>
                     <td><h3>Tasks</h3></td>
-                    <td><button type="button" class="btn btn-default">
+                    <td><button type="button" class="btn btn-default" \{{action "addTask"}}>
                         <i class="fa fa-plus"></i>Add Task</button>
                     </td>
                     <td>Never</td>
                 </tr>
                 </tbody>
             </table>
+            \{{render "tasks"}}
         </div>
         <div class="row">
             <div class="col-sm-3">
