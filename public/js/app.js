@@ -247,6 +247,14 @@ App.ConnectionsRoute = App.AuthenticatedRoute.extend({
 
 
 App.Router.map(function() {
+    this.route('connections-item');
+});
+
+App.ConnectionsItemRoute = App.AuthenticatedRoute.extend({
+});
+
+
+App.Router.map(function() {
     this.route('jobs');
 });
 
