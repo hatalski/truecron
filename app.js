@@ -89,6 +89,31 @@ app.get('/auth/google/callback',
         res.redirect('/');
 });
 
+app.get('/configs', function(req,res) {
+   res.json(
+       {
+           'NODE_ENV': config.get('NODE_ENV'),
+           'IP': config.get('IP'),
+           'PORT': config.get('PORT'),
+           'SESSION_SECRET': config.get('SESSION_SECRET'),
+           'POSTGRE_HOST': config.get('POSTGRE_HOST'),
+           'POSTGRE_PORT': config.get('POSTGRE_PORT'),
+           'POSTGRE_DATABASE': config.get('POSTGRE_DATABASE'),
+           'POSTGRE_USERNAME': config.get('POSTGRE_USERNAME'),
+           'POSTGRE_PASSWORD': config.get('POSTGRE_PASSWORD'),
+           'REDIS_HOST': config.get('REDIS_HOST'),
+           'REDIS_PORT': config.get('REDIS_PORT'),
+           'REDIS_PASSWORD': config.get('REDIS_PASSWORD'),
+           'AWS_ACCESS_KEY_ID': config.get('AWS_ACCESS_KEY_ID'),
+           'AWS_SECRET_ACCESS_KEY': config.get('AWS_SECRET_ACCESS_KEY'),
+           'GOOGLE_SSO_CLIENT_ID': config.get('GOOGLE_SSO_CLIENT_ID'),
+           'GOOGLE_SSO_CLIENT_SECRET': config.get('GOOGLE_SSO_CLIENT_SECRET'),
+           'GOOGLE_SSO_CALLBACK_URL': config.get('GOOGLE_SSO_CALLBACK_URL'),
+           'GOOGLE_ANALYTICS_TRACKING_ID': config.get('GOOGLE_ANALYTICS_TRACKING_ID')
+       }
+   );
+});
+
 app.use('/', routes);
 app.use('/auth', auth);
 app.use('/users', users);
