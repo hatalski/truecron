@@ -260,6 +260,10 @@ App.Router.map(function() {
 
 App.JobsItemRoute = App.AuthenticatedRoute.extend({
     actions: {
+        addTask: function () {
+            this.transitionTo('tasks-add');
+            return true;
+        },
         showTasksItemEmail: function () {
             this.render('tasks-item-email', {
                 into: 'jobs-item',
