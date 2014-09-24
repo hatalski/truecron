@@ -1,0 +1,19 @@
+<script type="text/x-handlebars" data-template-name="interface-menu-top">
+    <ul class="nav navbar-nav">
+        \{{#active-li currentWhen="about"}}
+            \{{#link-to 'about'}}About\{{/link-to}}
+        \{{/active-li}}
+        \{{#active-li currentWhen="terms"}}
+            \{{#link-to 'terms'}}Terms\{{/link-to}}
+        \{{/active-li}}
+        \{{#active-li currentWhen="plans"}}
+            \{{#link-to 'plans'}}Pricing\{{/link-to}}
+        \{{/active-li}}
+        \{{#active-li currentWhen="status"}}
+            \{{#link-to 'status'}}Service Health\{{/link-to}}
+        \{{/active-li}}
+        \{{#active-li currentWhen="signin"}}
+            \{{#link-to 'signin'}}Sign in\{{/link-to}}
+        \{{/active-li}}
+    </ul>
+</script>

@@ -36,88 +36,29 @@
         <div class="container-fluid">
             <div class="row">
                 <div class="sidebar">
+                    {{!-- dv: todo: use activeTab --}}
+
                     <ul class="nav nav-tabs" role="tablist">
-                        <li class="active"><a href="#"><span>Jobs</span></a></li>
-                        <li><a href="#"><span>Connections</span></a></li>
+                        <li class="active">
+                            <a \{{action "showJobs"}}><span>Jobs</span></a>
+                        </li>
+                        <li class="active">
+                            <a \{{action "showConnections"}}><span>Connections</span></a>
+                        </li>
                     </ul>
-                    <div class="btn-group">
-                        <button \{{action "addJob"}} type="button" class="btn btn-default"><i class="fa fa-plus"></i>Add Job</button>
-                        <button type="button" class="btn btn-default"><i class="fa fa-search"></i></button>
-                        <button type="button" class="btn btn-default"><i class="fa fa-filter"></i></button>
-                    </div>
-                    <div class="menu-tabs">
-                        <div class="row">
-                            <div class="col-xs-2">
-                                <span></span>
-                            </div>
-                            <div class="col-xs-9">
-                                <p class="title">Versace</p>
-                                <p>Last run: 07/07/14 11:02 pm</p>
-                                <p>Next run: now</p>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="menu-tabs">
-                    <div class="row">
-                        <div class="col-xs-2">
-                            <span></span>
-                        </div>
-                        <div class="col-xs-9">
-                            <p class="title">Gap</p>
-                            <p>Last run: 07/07/14 11:02 pm</p>
-                            <p>Next run: 08/08/14 11:02 pm</p>
-                        </div>
-                    </div>
-                </div>
-                    <div class="menu-tabs">
-                        <div class="row">
-                            <div class="col-xs-2">
-                                <i class="fa fa-exclamation-circle fa-5"></i>
-                            </div>
-                            <div class="col-xs-9">
-                                <p class="title">American Signature</p>
-                                <p>Last run: 07/07/14 11:02 pm</p>
-                                <p>Next run: 08/08/14 11:02 pm</p>
-                            </div>
-                        </div>
-                    </div>
+
+                    \{{outlet "navigation"}}
+
                     <ul class="nav nav-sidebar">
-                        \{{#active-li currentWhen="index"}}
-                            \{{#link-to 'index'}}Index\{{/link-to}}
-                        \{{/active-li}}
                         \{{#active-li currentWhen="dashboard"}}
                             \{{#link-to 'dashboard'}}Overview\{{/link-to}}
                         \{{/active-li}}
-                        \{{#active-li currentWhen="ftptask"}}
-                            \{{#link-to 'ftptask'}}FTP task\{{/link-to}}
-                        \{{/active-li}}
-                        <li><a href="#">Reports</a></li>
-                        <li><a href="#">Analytics</a></li>
-                        <li><a href="#">Export</a></li>
                     </ul>
                     <ul class="nav nav-sidebar">
-                        \{{#active-li currentWhen="connection-agent"}}
-                        \{{#link-to 'connection-agent'}}connection-agent\{{/link-to}}
-                        \{{/active-li}}
                         \{{#active-li currentWhen="execute-bar"}}
-                        \{{#link-to 'execute-bar'}}execute-bar\{{/link-to}}
+                            \{{#link-to 'execute-bar'}}execute-bar\{{/link-to}}
                         \{{/active-li}}
-                        \{{#if controllers.signin.isSignedIn}}
-                            \{{#active-li currentWhen="ftptask"}}
-                                \{{#link-to 'ftptask'}}FTP task\{{/link-to}}
-                            \{{/active-li}}
-                            <li><a \{{action "signout" target="controllers.signin"}} href="#">Sign out</a></li>
-                        \{{else}}
-                            \{{#active-li currentWhen="home_page"}}
-                                \{{#link-to 'home_page'}}Home page\{{/link-to}}
-                            \{{/active-li}}
-                            \{{#active-li currentWhen="home_page"}}
-                                \{{#link-to 'signin'}}Sign in\{{/link-to}}
-                            \{{/active-li}}
-                            \{{#active-li currentWhen="signup"}}
-                                \{{#link-to 'signup'}}Sign up\{{/link-to}}
-                            \{{/active-li}}
-                        \{{/if}}
+                        <li><a \{{action "signout" target="controllers.signin"}} href="#">Sign out</a></li>
                     </ul>
                 </div>
             </div>
@@ -127,6 +68,7 @@
                 \{{outlet}}{{!-- dv: place for client-side partials --}}
             </div>
         \{{else}}
+            \{{partial "interface-menu-top"}}
             <div class="backglp">{{!--background image--}}
                 <div class="container-fluid">
                     <div class="formlp">{{!--form block content--}}
@@ -142,17 +84,16 @@
     </script>
 
     {{!-- dv: register your client-side partials here. In alphabetical order!!! --}}
+    {{> about}}
     {{> dashboard}}
-    {{> connection-agent}}
-    {{> execute-bar}}
     {{> home_page}}
     {{> hello}}
     {{> index}}
+    {{> plans}}
     {{> signin}}
     {{> signup}}
-    {{> addjob}}
-    {{> ftptask}}
-    {{> connection-ftp}}
+    {{> status}}
+    {{> terms}}
     {{!-- dv: end of place for client-side partials --}}
 
     {{!-- vh: best practice is to place js scripts at the bottom of the page

@@ -1,0 +1,11 @@
+<script type="text/x-handlebars" data-template-name="workspaces">
+    \{{#link-to "workspaces-add"}}Add workspace\{{/link-to}}
+
+    <li>\{{#link-to "workspaces-item"}}Workspace 1\{{/link-to}}</li>
+    <li>Workspace 2</li>
+</script>
+
+{{!-- dv: register your client-side partials here. In alphabetical order!!! --}}
+{{> workspaces-add}}
+{{> workspaces-item}}
+
