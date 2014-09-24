@@ -305,9 +305,35 @@ App.TaskFtpRoute = App.AuthenticatedRoute.extend({
 });
 
 
-
 App.Router.map(function() {
     this.route('dashboard');
+});
+
+App.DashboardRoute = App.AuthenticatedRoute.extend({
+});
+
+
+App.Router.map(function() {
+    this.route('workspaces');
+});
+
+App.WorkspacesRoute = App.AuthenticatedRoute.extend({
+});
+
+
+App.Router.map(function() {
+    this.route('workspaces-add');
+});
+
+App.WorkspacesAddRoute = App.AuthenticatedRoute.extend({
+});
+
+
+App.Router.map(function() {
+    this.route('workspaces-item');
+});
+
+App.WorkspacesItemRoute = App.AuthenticatedRoute.extend({
 });
 
 
