@@ -324,8 +324,7 @@ div.formlp {  /* form landing page */
     width: 518px;
     height: 557px;
     background-color: #ffffff;
-    /*  margin:50px;
-      margin-top:12%; */
+    margin-bottom: 50px;
 }
 
 div.contlp {
