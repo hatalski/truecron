@@ -314,6 +314,18 @@ end if;
 end $$;
 
 
+do $$
+begin
+if not HasSchemaVersion(5) then
+
+    -- A user can log in with any active email from the PersonEmail table.
+    drop index tc.Person_UniqueLogin_Index;
+    alter table tc.Person drop column login;
+    
+    perform CommitSchemaVersion(5, 'Removed Person.login');
+end if;
+end $$;
+
 -- Use the snippet as a template:
 --
 -- do $$
