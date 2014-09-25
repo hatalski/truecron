@@ -1,10 +1,10 @@
-/* body {
+body {
   padding: 50px;
   font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
-} */
+}
 
 a {
-    color: #00B7FF;
+  color: #00B7FF;
 }
 
 .navbar-inverse {
@@ -22,11 +22,11 @@ a {
     background:url(../img/logo.png) no-repeat center;
     width: 168px;
 }
-/* Move down content because we have a fixed navbar that is 50px tall
+/* Move down content because we have a fixed navbar that is 50px tall */
 body {
     padding-top: 50px;
 }
-*/
+
 
 /*
  * Global add-ons
@@ -78,6 +78,7 @@ body {
     background-color: #428bca;
 }
 
+
 /*
  * Main content
  */
@@ -94,6 +95,7 @@ body {
 .main .page-header {
     margin-top: 0;
 }
+
 
 /*
  * Placeholder dashboard ideas
@@ -180,7 +182,7 @@ body {
 }
 
 .fa-plus:before {
-    padding-right: 5px;
+     padding-right: 5px;
 }
 
 .sidebar .btn-group > .btn {
@@ -309,12 +311,11 @@ table {
 /* home page style */
 
 div.backglp {   /* background */
-    background-image : url(../img/bgr.jpg) ;
+
     width: 100%;
-    background-attachment: fixed;
-    background-position: top right;
-    background-repeat: no-repeat;
-    background-size: cover;
+    height: 100%;
+    background-size : cover ;
+    background-image : url(../img/bgr.jpg) ;
     moz-background-size: cover;  /* Firefox 3.6 */
     background-position: center;  /* Internet Explorer 7/8 */
     font-family: Trebuchet MS;
@@ -324,8 +325,8 @@ div.formlp {  /* form landing page */
     width: 518px;
     height: 557px;
     background-color: #ffffff;
-    /*  margin:50px;
-      margin-top:12%; */
+    margin:50px;
+    margin-top:12%;
 }
 
 div.contlp {
@@ -339,6 +340,7 @@ div.heightblock {
 
 div.hdfm {   /* "Sign in using your e-mail" */
     height: 50px;
+
     background-color: #f4f4f4;
     text-align: center ;
     color-text: 5a5a5a;
@@ -363,7 +365,7 @@ div.hdfm {   /* "Sign in using your e-mail" */
     size-text: 12pt;
     width: 320px;
     height: 40px;
-    border-spacing: 0;
+
 }
 
 .btnhfree {
@@ -412,8 +414,7 @@ div.contlp {
     width: 100%;
     height: 100%;
     background-size : cover ;
-    background-image : url(../img/bgr.jpg);
-    padding: 0 0 0 0;
+    background-image : url(../img/bgr.jpg) ;
     moz-background-size: cover;  /* Firefox 3.6 */
     background-position: center;  /* Internet Explorer 7/8 */
     font-family: Trebuchet MS;
@@ -482,17 +483,3 @@ div.contlp {
     border: 1px solid #10accc;
 }
 /* end style partial autentification*/
-
-/* start signin style */
-.chok {
-    background-color: #fff;
-    padding: 12px 30px 12px 30px;
-    border: 1px solid rgb(16, 172, 204);
-}
-.orblk {
-    margin-left: 10px;
-}
-.buttonsignin {
-    margin-left: 213px;
-}
-/* end signin style */

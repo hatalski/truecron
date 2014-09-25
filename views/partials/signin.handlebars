@@ -17,16 +17,18 @@
             \{{input class="inpblchp" value="password" valueBinding="password" type="password" placeholder="Password" required="required"}}
             <table class="tablechc">
                 <tr>
-                    <td align="left" style="padding-bottom: 7px;">
+                    <td>
                         <div class="checkboxhpg">
                             <h5> <input type="checkbox" class="chkbxlendp"  value="remember-me">
                                 Remember me &nbsp </h5>
                         </div>
                     </td>
-                    <td align="right"> <a href="#"><u> forgot your password?</u></a> </td>
+                    <td> <a href="#"><u> forgot your password?</u></a> </td>
                 </tr>
-            </table><br>
-            \{{input class="btnsgnlpg" type="submit" value="Sign in"}}
+            </table>
+        <label class="buttonsignin">
+            \{{input class="chok" type="submit" value="SIGN IN"}}
+        </label>
         </form>
     </div> {{!--block e-mail end password--}}
     <div>
@@ -39,7 +41,7 @@
                 <a href="/auth/google/"><img src="img/signgoogle.png" alt="sign in with Google"/></a>
             </div>
             <div >
-                <br><br><br>
+                <br><br>
                 <a href="#" data-toggle="modal" data-target="#myModal"> <p><u>Do not have an account? Sign Up here!</u></p></a>
             </div>
         </div>{{!--end ftrform--}}
