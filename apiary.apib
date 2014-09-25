@@ -57,6 +57,8 @@ Code | Description
 404  | Resource not found
 5xx  | Server failure. The client should retry the request later.
 
+The API ignores unknown parameters. Invalid values result in the error code 400.
+
 For 4xx codes an error object may be returned with additional error details.
 
     {
@@ -103,17 +105,16 @@ The API returns human-readable strings, like error messages, change log messages
 Use the `Accept-Language` HTTP header to specify your preferred language. 
 The API falls back to US English if the specified language is not supported.
  
-
 ## Common collection parameters
 There are several common parameters that can be used with `GET` requests returning collections:
 
 Name     | Description                      | Details
 ---------|----------------------------------|---------
-page     | Page to retrieve.                | number, optional, default: 1
-per_page | Page size.                       | number, optional, default: 30
-q        | Search query.                    | string, optional
-sort     | A field name to sort by.         | string, optional
-direction| Sort direction: `asc` or `desc`. | string, optional
+page     | Page to retrieve.                | number, optional, default: 1. Valid range: [1;1000]
+per_page | Page size.                       | number, optional, default: 30. Valid range: [10;100]
+q        | Search query.                    | string, optional. Maximum length: 100.
+sort     | A field name to sort by.         | string, optional. Check API documentation for valid field names.
+direction| Sort direction: `asc` or `desc`. | string, optional. Valid values: `asc` or `desc`
 
 For example, `GET /jobs?page=10&q=ping&sort=updated_at&direction=desc`.
 
