@@ -1,36 +1,17 @@
-/* body {
-  padding: 50px;
-  font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
-} */
+/*
+ *
+ * dv: here must be only non twitter bootstrap rules. Please place twitter bootstrap rules in theme-truecron.css
+ *
+ */
 
-a {
-    color: #00B7FF;
-}
-
-.navbar-inverse {
-    background-color: #465f7d;
-    background-image: none;
-    color:#fff;
-    border-color: #ff9934;
-}
-
-.navbar-fixed-top {
-    border-width: 0 0 2px;
-}
-
-.navbar-brand {
-    background:url(../img/logo.png) no-repeat center;
-    width: 168px;
-}
-/* Move down content because we have a fixed navbar that is 50px tall
-body {
-    padding-top: 50px;
-}
-*/
 
 /*
  * Global add-ons
  */
+
+a {
+    color: #00B7FF;
+}
 
 .sub-header {
     padding-bottom: 10px;
@@ -83,12 +64,13 @@ body {
  */
 
 .main {
+    margin-top: 51px;
     padding: 20px;
 }
 @media (min-width: 768px) {
     .main {
         padding-right: 40px;
-        padding-left: 40px;
+        padding-left: 60px;
     }
 }
 .main .page-header {
@@ -112,13 +94,6 @@ body {
 .placeholder img {
     display: inline-block;
     border-radius: 50%;
-}
-.navbar-nav.navbar-right:last-child {
-    margin: 5px 0;
-}
-
-.nav .fa-bars {
-    padding-left: 5px;
 }
 
 .borderless tbody tr td, .borderless thead tr th {
@@ -173,14 +148,6 @@ body {
     padding: 10px 6px;
     background-color: #fff;
     width: 100%;
-}
-
-.fa {
-    color: #ff982f;
-}
-
-.fa-plus:before {
-    padding-right: 5px;
 }
 
 .sidebar .btn-group > .btn {
