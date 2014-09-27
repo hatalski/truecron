@@ -42,7 +42,7 @@ app.use(session({
     secret: config.get('SESSION_SECRET'),
     cookie : {
         expires: false,
-        domain: 'dev.truecron.com' // dv: TODO: move to config
+        domain: config.get('COOKIE_DOMAIN')
     },
     store: new RedisStore({}), //client: redisClient
     secret: config.get('SESSION_SECRET'),

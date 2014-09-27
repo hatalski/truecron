@@ -7,6 +7,7 @@
     "POSTGRE_DATABASE": "vagrant",
     "REDIS_HOST": "localhost",
     "REDIS_PORT": 6379,
+    "COOKIE_DOMAIN": "dev.truecron.com",
     "GOOGLE_SSO_CLIENT_ID": "120337618420-mnnrjk2734k1btjmu50h92a6kuj0juq8.apps.googleusercontent.com",
     "GOOGLE_SSO_CLIENT_SECRET": "kM946eyWgYNSz-I9tqU5tDtn",
     "GOOGLE_SSO_CALLBACK_URL": "http://dev.truecron.com:3000/auth/google/callback",

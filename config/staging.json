@@ -7,6 +7,7 @@
     "POSTGRE_DATABASE": "truecron",
     "REDIS_HOST": "stcache.vago4d.0001.use1.cache.amazonaws.com",
     "REDIS_PORT": 6379,
+    "COOKIE_DOMAIN": "staging.truecron.com",
     "GOOGLE_SSO_CLIENT_ID": "",
     "GOOGLE_SSO_CLIENT_SECRET": "",
     "GOOGLE_SSO_CALLBACK_URL": "http://staging.truecron.com/auth/google/callback",
