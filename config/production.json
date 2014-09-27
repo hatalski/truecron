@@ -1,0 +1,14 @@
+{
+    "IP": "127.0.0.1",
+    "PORT": 3000,
+    "SESSION_SECRET": "production-truecron-Hhe34Jls0J04",
+    "POSTGRE_HOST": "prdb.truecron.com",
+    "POSTGRE_PORT": 5432,
+    "POSTGRE_DATABASE": "truecron",
+    "REDIS_HOST": "localhost",
+    "REDIS_PORT": 6379,
+    "GOOGLE_SSO_CLIENT_ID": "",
+    "GOOGLE_SSO_CLIENT_SECRET": "",
+    "GOOGLE_SSO_CALLBACK_URL": "http://www.truecron.com/auth/google/callback",
+    "GOOGLE_ANALYTICS_TRACKING_ID": ""
+}

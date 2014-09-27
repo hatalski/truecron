@@ -1,10 +1,15 @@
 var express = require('express');
 var path = require('path');
 var favicon = require('serve-favicon');
+
+var config = require('./lib/config');
+
 var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var session = require('express-session');
+// vh: first redis should be running on vagrant instance
+//var redisClient = require('./lib/redis');
 var RedisStore = require('connect-redis')(session);
 
 var passport = require('passport'),
@@ -33,12 +38,14 @@ app.use('/bower_components',  express.static(__dirname + '/bower_components'));
 
 app.use(cookieParser('TrueCron')); // dv: hack to fix problem with passport and redis session. @see https://github.com/jaredhanson/passport/issues/244
 app.use(session({
-    store: new RedisStore({}),
-    secret: 'TrueCron',
+    store: new RedisStore({}), //client: redisClient
+    secret: config.get('SESSION_SECRET'),
     cookie : {
         expires: false,
         domain: 'dev.truecron.com' // dv: TODO: move to config
     },
+    store: new RedisStore({}), //client: redisClient
+    secret: config.get('SESSION_SECRET'),
     resave: true,
     saveUninitialized: true
 }));
@@ -60,10 +67,9 @@ passport.deserializeUser(function(user, done) {
 });
 
 passport.use('google', new GoogleStrategy({
-        // dv: TODO: move this code to config
-        clientID: '120337618420-mnnrjk2734k1btjmu50h92a6kuj0juq8.apps.googleusercontent.com',
-        clientSecret: 'kM946eyWgYNSz-I9tqU5tDtn',
-        callbackURL: 'http://dev.truecron.com:3000/auth/google/callback'
+        clientID: config.get('GOOGLE_SSO_CLIENT_ID'),
+        clientSecret: config.get('GOOGLE_SSO_CLIENT_SECRET'),
+        callbackURL: config.get('GOOGLE_SSO_CALLBACK_URL')
     },
     function(accessToken, refreshToken, profile, done) {
         // asynchronous verification, for effect...
@@ -88,6 +94,31 @@ app.get('/auth/google/callback',
 
         // Successful authentication, redirect home.
         res.redirect('/');
+});
+
+app.get('/configs', function(req,res) {
+   res.json(
+       {
+           'NODE_ENV': config.get('NODE_ENV'),
+           'IP': config.get('IP'),
+           'PORT': config.get('PORT'),
+           'SESSION_SECRET': config.get('SESSION_SECRET'),
+           'POSTGRE_HOST': config.get('POSTGRE_HOST'),
+           'POSTGRE_PORT': config.get('POSTGRE_PORT'),
+           'POSTGRE_DATABASE': config.get('POSTGRE_DATABASE'),
+           'POSTGRE_USERNAME': config.get('POSTGRE_USERNAME'),
+           'POSTGRE_PASSWORD': config.get('POSTGRE_PASSWORD'),
+           'REDIS_HOST': config.get('REDIS_HOST'),
+           'REDIS_PORT': config.get('REDIS_PORT'),
+           'REDIS_PASSWORD': config.get('REDIS_PASSWORD'),
+           'AWS_ACCESS_KEY_ID': config.get('AWS_ACCESS_KEY_ID'),
+           'AWS_SECRET_ACCESS_KEY': config.get('AWS_SECRET_ACCESS_KEY'),
+           'GOOGLE_SSO_CLIENT_ID': config.get('GOOGLE_SSO_CLIENT_ID'),
+           'GOOGLE_SSO_CLIENT_SECRET': config.get('GOOGLE_SSO_CLIENT_SECRET'),
+           'GOOGLE_SSO_CALLBACK_URL': config.get('GOOGLE_SSO_CALLBACK_URL'),
+           'GOOGLE_ANALYTICS_TRACKING_ID': config.get('GOOGLE_ANALYTICS_TRACKING_ID')
+       }
+   );
 });
 
 app.use('/', routes);
