@@ -1,9 +1,9 @@
 #!/usr/bin/env node
-var debug = require('debug')('TrueCron');
+var log = require('./lib/logger');
 var app = require('./app');
 
 app.set('port', process.env.PORT || 3000);
 
 var server = app.listen(app.get('port'), function() {
-  debug('Express server listening on port ' + server.address().port);
+  log.info('Express server listening on port ' + server.address().port);
 });
