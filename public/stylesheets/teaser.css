@@ -4,8 +4,17 @@
 
 /* Move down content because we have a fixed navbar that is 50px tall */
 body {
+    font-family: "Trebuchet MS";
+    font-size: 16pt;
 }
 
+h2.problem-definition-header, h3.problem-definition-header {
+    color: #ff9933;
+}
+
+div.row-gray {
+    background-color: #e3e3e3;
+}
 
 /*
  * Global add-ons
