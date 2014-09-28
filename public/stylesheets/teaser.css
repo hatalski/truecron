@@ -6,8 +6,20 @@
 body {
     font-family: "Trebuchet MS";
     font-size: 16pt;
-    background-image: url('../img/bg-apple.jpg');
+    background-image: url('../img/bg-apple-with-logo.jpg');
     background-repeat: no-repeat;
+}
+
+h2.pitch {
+    text-align: center;
+    font-size: 34pt;
+    /*font-weight: bolder;
+    text-shadow: -1px 0 #e3e3e3, 0 1px #e3e3e3, 1px 0 #e3e3e3, 0 -1px #e3e3e3;*/
+}
+
+h2.pitch-ext {
+    text-align: center;
+    /*text-shadow: -1px 0 #e3e3e3, 0 1px #e3e3e3, 1px 0 #e3e3e3, 0 -1px #e3e3e3;*/
 }
 
 h2 {
@@ -58,4 +70,8 @@ div.row-gray {
  */
 .navbar-fixed-top {
     border: 0;
+}
+
+.navbar-border {
+    background-color: rgba(0, 0, 0, 0.2); padding: 12px;margin-top: 0
 }
