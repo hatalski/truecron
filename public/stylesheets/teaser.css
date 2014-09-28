@@ -31,6 +31,11 @@ h2.problem-definition-header, h3.problem-definition-header {
     color: #ff9933;
 }
 
+.reason-list-item {
+    margin-bottom: 5px;
+    margin-left:40px
+}
+
 .form-control {
     border-color: #10accc;
     border-radius: 0px;
