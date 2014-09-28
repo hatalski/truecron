@@ -7,6 +7,7 @@
     "POSTGRE_DATABASE": "truecron",
     "REDIS_HOST": "localhost",
     "REDIS_PORT": 6379,
+    "COOKIE_DOMAIN": "truecron.com",
     "GOOGLE_SSO_CLIENT_ID": "",
     "GOOGLE_SSO_CLIENT_SECRET": "",
     "GOOGLE_SSO_CALLBACK_URL": "http://www.truecron.com/auth/google/callback",

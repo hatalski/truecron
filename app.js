@@ -36,7 +36,14 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 app.use('/bower_components',  express.static(__dirname + '/bower_components'));
 
+app.use(cookieParser('TrueCron')); // dv: hack to fix problem with passport and redis session. @see https://github.com/jaredhanson/passport/issues/244
 app.use(session({
+    store: new RedisStore({}), //client: redisClient
+    secret: config.get('SESSION_SECRET'),
+    cookie : {
+        expires: false,
+        domain: config.get('COOKIE_DOMAIN')
+    },
     store: new RedisStore({}), //client: redisClient
     secret: config.get('SESSION_SECRET'),
     resave: true,
