@@ -25,6 +25,12 @@ var app = express();
 
 // view engine setup
 var hbs = exphbs.create({defaultLayout: 'default'});
+// dv: adding new helper "rawinclude" to handlebars
+require('handlebars-helper-rawinclude').register(hbs.handlebars, {}, {assemble: null});
+/*hbs.handlebars.registerHelper('rawinclude', function(options) {
+  return 'HELP';
+});*/
+
 app.engine('handlebars', hbs.engine);
 app.set('view engine', 'handlebars');
 
