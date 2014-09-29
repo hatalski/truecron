@@ -8,8 +8,8 @@
     "REDIS_HOST": "stcache.vago4d.0001.use1.cache.amazonaws.com",
     "REDIS_PORT": 6379,
     "COOKIE_DOMAIN": "staging.truecron.com",
-    "GOOGLE_SSO_CLIENT_ID": "",
-    "GOOGLE_SSO_CLIENT_SECRET": "",
+    "GOOGLE_SSO_CLIENT_ID": "640877791996-juctck3aimf9f2i99vf3aa3lo9597dbq.apps.googleusercontent.com",
+    "GOOGLE_SSO_CLIENT_SECRET": "bDkjQsNY_7xoSeEF7tI97mq2",
     "GOOGLE_SSO_CALLBACK_URL": "http://staging.truecron.com/auth/google/callback",
     "GOOGLE_ANALYTICS_TRACKING_ID": ""
 }
