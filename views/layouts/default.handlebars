@@ -36,7 +36,7 @@
                         <li class="dropdown">
                             <a href="#" class="dropdown-toggle" data-toggle="dropdown">Organizations <span class="caret"></span></a>
                             <ul class="dropdown-menu" role="menu">
-                                <li>\{{#link-to "organizations-item"}}Organization 1\{{/link-to}}</li>
+                                <li>\{{#link-to "organizations"}}All organizations\{{/link-to}}</li>
                                 <li class="divider"></li>
                                 <li>\{{#link-to "organizations-add"}} Add organization\{{/link-to}}</li>
                             </ul>
@@ -129,9 +129,13 @@
     <script type="text/javascript" src="/bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
     <script type="text/javascript" src="/bower_components/handlebars/handlebars.min.js"></script>
     <script type="text/javascript" src="/bower_components/ember/ember.min.js"></script>
+    <script type="text/javascript" src="/bower_components/ember-data/ember-data.min.js"></script>
     <script type="text/javascript" src="/bower_components/ember-addons.bs_for_ember/dist/js/bs-core.min.js"></script>
     <script type="text/javascript" src="/bower_components/ember-addons.bs_for_ember/dist/js/bs-modal.min.js"></script>
+    {{!-- application --}}
     <script type="text/javascript" src="/js/app.js"></script>
+    {{!-- dv: alphabetical order for modules --}}
+    <script type="text/javascript" src="/js/organizations.js"></script>
     {{!-- components --}}
     <script type="text/javascript" src="/js/components/active-li.js"></script>
     <script type="text/javascript" src="/js/lib/handlebars-helpers.js"></script>

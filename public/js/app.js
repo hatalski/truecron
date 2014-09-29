@@ -4,6 +4,8 @@ App = Ember.Application.create({
     }*/
 });
 
+App.ApplicationAdapter = DS.FixtureAdapter.extend();
+
 App.AuthenticatedRoute = Ember.Route.extend({
     beforeModel: function(transition) {
         if (!this.controllerFor('signin').get('token')) {
@@ -25,7 +27,7 @@ App.AuthenticatedRoute = Ember.Route.extend({
             if (reason.status === 401) {
                 this.redirectToSignin(transition);
             } else {
-                alert('Something went wrong');
+                alert('Something went wrong: ' + reason);
             }
         }
     }
@@ -318,30 +320,6 @@ App.Router.map(function() {
 });
 
 App.DashboardRoute = App.AuthenticatedRoute.extend({
-});
-
-
-App.Router.map(function() {
-    this.route('organizations');
-});
-
-App.OrganizationsRoute = App.AuthenticatedRoute.extend({
-});
-
-
-App.Router.map(function() {
-    this.route('organizations-add');
-});
-
-App.OrganizationsAddRoute = App.AuthenticatedRoute.extend({
-});
-
-
-App.Router.map(function() {
-    this.route('organizations-item');
-});
-
-App.OrganizationsItemRoute = App.AuthenticatedRoute.extend({
 });
 
 
