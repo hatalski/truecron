@@ -1,0 +1,83 @@
+/*
+ * Base structure
+ */
+
+/* Move down content because we have a fixed navbar that is 50px tall */
+body {
+    font-family: "Trebuchet MS";
+    font-size: 16pt;
+    background-image: url('../img/bg-apple-with-logo.jpg');
+    background-size: 100% auto;
+    background-repeat: no-repeat;
+}
+
+h2.pitch {
+    text-align: center;
+    font-size: 34pt;
+    /*font-weight: bolder;
+    text-shadow: -1px 0 #e3e3e3, 0 1px #e3e3e3, 1px 0 #e3e3e3, 0 -1px #e3e3e3;*/
+}
+
+h2.pitch-ext {
+    text-align: center;
+    /*text-shadow: -1px 0 #e3e3e3, 0 1px #e3e3e3, 1px 0 #e3e3e3, 0 -1px #e3e3e3;*/
+}
+
+h2 {
+    font-size: 30pt;
+    padding-bottom: 20px;
+}
+
+h2.problem-definition-header, h3.problem-definition-header {
+    color: #ff9933;
+}
+
+.reason-list-item {
+    margin-bottom: 5px;
+    margin-left:40px
+}
+
+.form-control {
+    border-color: #10accc;
+    border-radius: 0px;
+}
+
+.problem-definition-row {
+    padding-top: 40px;
+    padding-bottom: 40px
+}
+
+.btn {
+    border-radius: 0px;
+}
+
+.btn-signin {
+    text-shadow: 0px 1px 0px #ffffff;
+    background-image: linear-gradient(to bottom, #ffffff 0px, #ffffff 100%);
+    background-repeat: repeat-x;
+    border-color: #ff9933;
+}
+
+.btn-signup {
+    text-shadow: 0px 1px 0px #ff9933;
+    background-image: linear-gradient(to bottom, #F93 0px, #F93 100%);
+    background-repeat: repeat-x;
+    border-color: #ff9933;
+    color: #ffffff;
+}
+
+div.row-gray {
+    background-color: #e3e3e3;
+}
+
+/*
+ * Top navigation
+ * Hide default border to remove 1px line.
+ */
+.navbar-fixed-top {
+    border: 0;
+}
+
+.navbar-border {
+    background-color: rgba(0, 0, 0, 0.2); padding: 12px;margin-top: 0
+}
