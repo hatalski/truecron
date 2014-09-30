@@ -18,6 +18,7 @@ var passport = require('passport'),
 var routes = require('./routes/index');
 var users = require('./routes/users');
 var auth = require('./routes/auth');
+var api = require('./routes/api');
 
 var exphbs  = require('express-handlebars');
 
@@ -122,6 +123,7 @@ app.get('/configs', function(req,res) {
 app.use('/', routes);
 app.use('/auth', auth);
 app.use('/users', users);
+app.use('/api/v1', api);
 
 app.get('/teaser', function (req, res) {
     res.sendfile('teaser.html');
