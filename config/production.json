@@ -1,6 +1,4 @@
 {
-    "IP": "127.0.0.1",
-    "PORT": 3000,
     "SESSION_SECRET": "production-truecron-Hhe34Jls0J04",
     "POSTGRE_HOST": "prdb.truecron.com",
     "POSTGRE_PORT": 5432,
@@ -11,5 +9,7 @@
     "GOOGLE_SSO_CLIENT_ID": "584720647348-sfa16c6nriakjntd90qh05togeigs6co.apps.googleusercontent.com",
     "GOOGLE_SSO_CLIENT_SECRET": "1knEKUzLSqEot7pElvyxA84i",
     "GOOGLE_SSO_CALLBACK_URL": "https://www.truecron.com/auth/google/callback",
-    "GOOGLE_ANALYTICS_TRACKING_ID": ""
+    "GOOGLE_ANALYTICS_TRACKING_ID": "",
+    "AWS_ACCESS_KEY_ID": "",
+    "AWS_SECRET_ACCESS_KEY": ""
 }
