@@ -39,13 +39,11 @@ app.use('/bower_components',  express.static(__dirname + '/bower_components'));
 app.use(cookieParser('TrueCron')); // dv: hack to fix problem with passport and redis session. @see https://github.com/jaredhanson/passport/issues/244
 app.use(session({
     store: new RedisStore({}), //client: redisClient
-    secret: config.get('SESSION_SECRET'),
+    secret: config.get('SESSION_SECRET') || '3rrr',
     cookie : {
         expires: false,
-        domain: config.get('COOKIE_DOMAIN')
+        domain: config.get('COOKIE_DOMAIN') || 'dev.truecron.com'
     },
-    store: new RedisStore({}), //client: redisClient
-    secret: config.get('SESSION_SECRET'),
     resave: true,
     saveUninitialized: true
 }));
@@ -67,9 +65,9 @@ passport.deserializeUser(function(user, done) {
 });
 
 passport.use('google', new GoogleStrategy({
-        clientID: config.get('GOOGLE_SSO_CLIENT_ID'),
-        clientSecret: config.get('GOOGLE_SSO_CLIENT_SECRET'),
-        callbackURL: config.get('GOOGLE_SSO_CALLBACK_URL')
+        clientID: config.get('GOOGLE_SSO_CLIENT_ID') || '182911798819-t360tlk839gij3m46pgo4noticrqi4s3.apps.googleusercontent.com',
+        clientSecret: config.get('GOOGLE_SSO_CLIENT_SECRET') || '1gcqd1YRgD-Ui3vYyYu7z926',
+        callbackURL: config.get('GOOGLE_SSO_CALLBACK_URL') || 'http://dev.truecron.com/auth/google/callback'
     },
     function(accessToken, refreshToken, profile, done) {
         // asynchronous verification, for effect...
