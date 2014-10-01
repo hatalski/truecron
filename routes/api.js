@@ -16,8 +16,6 @@ var conString = "postgres://" +
     ":" + config.get('POSTGRE_PORT')
     + "/" + config.get('POSTGRE_DATABASE');
 
-log.info(conString);
-
 router.get('/organizations/:org_id/workspaces/:workspace_id/jobs', function(req, res) {
     var organization_id = req.param('org_id');
     var workspace_id = req.param('workspace_id');
