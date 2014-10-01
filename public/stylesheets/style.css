@@ -265,7 +265,6 @@ a {
 
 table {
     border-collapse: separate;
-    border-spacing: 20px;
     width: 400px;
     class: responsiv;
     width : 265px;
@@ -296,7 +295,7 @@ table {
     size-text: 12pt;
     width: 320px;
     height: 40px;
-    border-spacing: 0;
+    border-spacing: 0px;
 }
 
 .chkbxlendp {
