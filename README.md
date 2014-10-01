@@ -3,6 +3,7 @@ TrueCron
 
 Scalable Cloud Scheduler
 
+[ ![Codeship Status for PerksLab/truecron](https://www.codeship.io/projects/842a54c0-2bb3-0132-355f-3e0c7cea2035/status)](https://www.codeship.io/projects/38645)
 
 Configuration
 --------
