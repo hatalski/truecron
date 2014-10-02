@@ -4,20 +4,20 @@
                 <tbody>
                 <tr>
                     <td class="first_row">American Signature<span style="font-size:22px; font-style:normal"><i class="fa fa-pencil"></i></span></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td class="blue_row">Weekly on Monday at 6 AM</td>
                     <td class="blue_row">LAST RUN</td>
                     <td>NEXT RUN</td>
                     <td class="blue_row">ACTIVE</td>
                 </tr>
                 <tr>
-                    <td class="blue_row">Weekly on Monday at 6 AM</td>
-                    <td class="red_row">07/07/14</td>
-                    <td>07/07/14</td>
-                    <td></td>
-                </tr>
-                <tr>
                     <td>Ends after 5 runs</td>
-                    <td class="red_row">6:00 am</td>
-                    <td>6:00 am</td>
+                    <td class="red_row">07/07/14 &nbsp; 6:00 am</td>
+                    <td>07/07/14 &nbsp; 6:00 am</td>
                     <td></td>
                 </tr>
                 </tbody>
@@ -27,12 +27,15 @@
     <table style="width: 100%">
         <tbody>
         <tr>
-            <td><h2 class="sub-header">Tasks</h2></td>
-            <td align="right">  \{{input class="chok" type="submit" value="Add Task"}}
-            </td></tr>
+            <td align="right">  \{{input class="chok" type="submit" value="Add Task"}}</td>
+            </tr>
+        <tr><td>&nbsp</td></tr>
         </tbody>
     </table>
-        \{{render "tasks"}}
+
+    \{{render "tasks"}}
+
+   
 </script>
 
 {{!-- dv: register your client-side partials here. In alphabetical order!!! --}}
