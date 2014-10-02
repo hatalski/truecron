@@ -6,13 +6,13 @@
                     <td class="first_row">American Signature<span style="font-size:22px; font-style:normal"><i class="fa fa-pencil"></i></span></td>
                     <td></td>
                     <td></td>
-                    <td></td>
+                    <td class="blue_row" align="right">ACTIVE</td>
                 </tr>
                 <tr>
                     <td class="blue_row">Weekly on Monday at 6 AM</td>
                     <td class="blue_row">LAST RUN</td>
                     <td>NEXT RUN</td>
-                    <td class="blue_row">ACTIVE</td>
+                    <td></td>
                 </tr>
                 <tr>
                     <td>Ends after 5 runs</td>
@@ -34,8 +34,44 @@
     </table>
 
     \{{render "tasks"}}
-
-   
+    <hr>
+    <h4><button class="activeline" data-toggle="collapse" data-target="#changes1"
+                style="height: 25px;
+                background-color: white;
+                border: 0px;">
+        <span class="glyphicon glyphicon-chevron-right"></span>
+        Recent Changes
+    </button></h4>
+    <div id="changes1" class="collapse in">
+        <label class="checkbox inline">
+            &nbsp; by: &nbsp; &nbsp;&nbsp;&nbsp;&nbsp;
+            <input type="checkbox" id="inlineCheckbox2" value="option2"> me &nbsp; &nbsp; &nbsp;
+            <input type="checkbox" id="inlineCheckbox3" value="option3"> others &nbsp; &nbsp; &nbsp;
+        </label>
+        <div class="table-responsive">
+            <table class="table table-striped">
+                <tr>
+                    <td>07/07/14 12:32 pm</td>
+                    <td>Lev Kurts</td>
+                    <td>added "copy files to FTP"</td>
+                </tr>
+                <tr>
+                    <td>07/07/14  1:02 pm</td>
+                    <td>Vitali Hatalski</td>
+                    <td>added "send notification"</td>
+                </tr>
+                <tr>
+                    <td>07/07/14 11:35 pm</td>
+                    <td>Lev Kurts</td>
+                    <td>added "copy files to FTP"</td>
+                </tr>
+            </table>
+        </div>
+        <br><hr><br><hr>
+        <table class="table borderless">
+            <tr><td></td><td align="right"><a href="#"><u>ARCHIVE</u></a></td></tr>
+        </table>
+    </div>
 </script>
 
 {{!-- dv: register your client-side partials here. In alphabetical order!!! --}}
