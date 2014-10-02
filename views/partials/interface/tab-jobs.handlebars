@@ -1,8 +1,8 @@
 <script type="text/x-handlebars" data-template-name="interface-tab-jobs">
     <div class="btn-group">
         <button \{{action "addJob"}} type="button" class="btn btn-default"><i class="fa fa-plus"></i>Add Job</button>
-        <button type="button" class="btn btn-default"><i class="fa fa-search"></i></button>
         <button type="button" class="btn btn-default"><i class="fa fa-filter"></i></button>
+        <button type="button" class="btn btn-default"><i class="fa fa-search"></i></button>
     </div>
     <div class="menu-tabs">
         <div class="row">
@@ -17,7 +17,7 @@
         </div>
     </div>
     <div class="menu-tabs">
-        <div class="row">
+        <div class="row running-job">
             <div class="col-xs-2">
                 <span></span>
             </div>
@@ -29,12 +29,24 @@
         </div>
     </div>
     <div class="menu-tabs">
-        <div class="row">
+        <div class="row active-job">
             <div class="col-xs-2">
                 <i class="fa fa-exclamation-circle fa-5"></i>
             </div>
             <div class="col-xs-9">
                 <p class="title">\{{#link-to "jobs-item"}}American Signature\{{/link-to}}</p>
+                <p>Last run: 07/07/14 11:02 pm</p>
+                <p>Next run: 08/08/14 11:02 pm</p>
+            </div>
+        </div>
+    </div>
+    <div class="menu-tabs">
+        <div class="row archived-job">
+            <div class="col-xs-2">
+                <span></span>
+            </div>
+            <div class="col-xs-9">
+                <p class="title">\{{#link-to "jobs-item"}}DKNY\{{/link-to}}</p>
                 <p>Last run: 07/07/14 11:02 pm</p>
                 <p>Next run: 08/08/14 11:02 pm</p>
             </div>
