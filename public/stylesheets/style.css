@@ -263,14 +263,18 @@ a {
     padding-right: 10px;
 }
 
-table {
-    border-collapse: separate;
-    width: 400px;
-    class: responsiv;
-    width : 265px;
-    width: 534px;
+.title-icon {
+    font-size:22px;
 }
 
+.alert-icon .fa-exclamation-circle{
+    text-align: center;
+    color:#fe0000;
+}
+
+.icon-row {
+    text-align: center;
+}
 
 /* home page style */
 
