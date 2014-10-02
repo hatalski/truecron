@@ -303,6 +303,10 @@ App.Router.map(function() {
     this.route('tasks-add');
 });
 
+App.Router.map(function() {
+    this.route('task-details');
+});
+
 App.TasksAddRoute = App.AuthenticatedRoute.extend({
 });
 
