@@ -1,3 +1,5 @@
+'use strict';
+
 App.Organization = DS.Model.extend({
     id: DS.attr('int'),
     name: DS.attr('string'),
@@ -19,19 +21,17 @@ App.Router.map(function() {
 
 App.OrganizationsIndexRoute = App.AuthenticatedRoute.extend({
     model: function () {
-        return App.Organization.FIXTURES;
+        return App.Organization.FIXTURES; // dv: HACK: next line didn't work for me. so have to return data
+        return this.store.findAll('organization');
     }
 });
 
 App.OrganizationsAddRoute = App.AuthenticatedRoute.extend({
 });
 
-App.OrganizationsItemController = Ember.ObjectController.extend({
-
-});
-
 App.OrganizationsItemRoute = App.AuthenticatedRoute.extend({
     model: function(params) {
-        return App.Organization.FIXTURES[params.id - 1]; // dv: TODO: HACK: replace to correct code with search in DS
+        return App.Organization.FIXTURES[params.id - 1]; // dv: HACK: next line didn't work for me. so have to return data
+        return this.store.find('organization', params.id);
     }
 });
