@@ -25,7 +25,13 @@ var exphbs  = require('express-handlebars');
 var app = express();
 
 // view engine setup
-var hbs = exphbs.create({defaultLayout: 'default'});
+var hbs = exphbs.create({
+    defaultLayout: 'default',
+    helpers: require("./public/js/lib/handlebars-helpers.js").helpers
+});
+// dv: adding new helper "rawinclude" to handlebars
+require('handlebars-helper-rawinclude').register(hbs.handlebars, {}, {assemble: null});
+
 app.engine('handlebars', hbs.engine);
 app.set('view engine', 'handlebars');
 
