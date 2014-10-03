@@ -28,6 +28,7 @@ App.AuthenticatedRoute = Ember.Route.extend({
         return $.getJSON(url, { token: token });
     },
     events: {
+        // dv: TODO: remove this block to other way to analyze response from server
         error: function(reason, transition) {
             if (reason.status === 401) {
                 this.redirectToSignin(transition);
