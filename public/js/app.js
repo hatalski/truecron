@@ -1,10 +1,15 @@
 App = Ember.Application.create({
+// dv: debugging
+/*    LOG_VIEW_LOOKUPS: true,
+    LOG_TRANSITIONS: true,
+    LOG_TRANSITIONS_INTERNAL: true,
+    LOG_ACTIVE_GENERATION: true*/
     /*ready: function() {
         alert('Yes!');
     }*/
 });
 
-App.ApplicationAdapter = DS.FixtureAdapter.extend();
+App.ApplicationAdapter = DS.FixtureAdapter;
 
 App.AuthenticatedRoute = Ember.Route.extend({
     beforeModel: function(transition) {
