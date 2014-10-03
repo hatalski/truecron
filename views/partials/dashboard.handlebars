@@ -35,42 +35,64 @@
 
     \{{render "tasks"}}
     <hr>
-    <h4><button class="activeline" data-toggle="collapse" data-target="#changes1"
-                style="height: 25px;
+    <br><hr>
+    <div class="accordion" id="accordion2">
+        <div class="accordion-group">{{!--dummy need to open on the page could not see the contents of the tab--}}
+            <div class="accordion-heading">
+                <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion2" href="#collapseOne">
+                    &nbsp;
+                </a>
+            </div>
+            <div id="collapseOne" class="accordion-body collapse in">
+                <div class="accordion-inner">
+                    &nbsp;
+                </div>
+            </div>
+        </div>{{!--end dummy--}}
+        <div class="accordion-group">
+            <div class="accordion-heading">
+                <h4><button class="accordion-toggle" data-toggle="collapse" data-parent="#accordion2" href="#collapseTwo"
+                            style="height: 25px;
                 background-color: white;
                 border: 0px;">
-        <span class="glyphicon glyphicon-chevron-right"></span>
-        &nbsp; Recent Changes
-    </button></h4>
-    <div id="changes1" class="collapse in">
-        <label class="checkbox inline">
-            &nbsp; by: &nbsp; &nbsp;&nbsp;&nbsp;&nbsp;
-            <input type="checkbox" id="inlineCheckbox2" value="option2"> me &nbsp; &nbsp; &nbsp;
-            <input type="checkbox" id="inlineCheckbox3" value="option3"> others &nbsp; &nbsp; &nbsp;
-        </label>
-        <div class="table-responsive">
-            <table class="table table-striped">
-                <tr>
-                    <td>07/07/14 12:32 pm</td>
-                    <td>Lev Kurts</td>
-                    <td>added "copy files to FTP"</td>
-                </tr>
-                <tr>
-                    <td>07/07/14  1:02 pm</td>
-                    <td>Vitali Hatalski</td>
-                    <td>added "send notification"</td>
-                </tr>
-                <tr>
-                    <td>07/07/14 11:35 pm</td>
-                    <td>Lev Kurts</td>
-                    <td>added "copy files to FTP"</td>
-                </tr>
-            </table>
+                    <span class="glyphicon glyphicon-chevron-right"></span>
+                    Recent Changes
+                </button></h4>
+            </div>
+            <div id="collapseTwo" class="accordion-body collapse">
+                <div class="accordion-inner">
+                        <label class="checkbox inline">
+                            &nbsp; by: &nbsp; &nbsp;&nbsp;&nbsp;&nbsp;
+                            <input type="checkbox" id="inlineCheckbox2" value="option2"> me &nbsp; &nbsp; &nbsp;
+                            <input type="checkbox" id="inlineCheckbox3" value="option3"> others &nbsp; &nbsp; &nbsp;
+                        </label>
+                        <div class="table-responsive">
+                            <table class="table table-striped">
+                                <tr>
+                                    <td>07/07/14 12:32 pm</td>
+                                    <td>Lev Kurts</td>
+                                    <td>added "copy files to FTP"</td>
+                                </tr>
+                                <tr>
+                                    <td>07/07/14  1:02 pm</td>
+                                    <td>Vitali Hatalski</td>
+                                    <td>added "send notification"</td>
+                                </tr>
+                                <tr>
+                                    <td>07/07/14 11:35 pm</td>
+                                    <td>Lev Kurts</td>
+                                    <td>added "copy files to FTP"</td>
+                                </tr>
+                            </table>
+                        </div>
+                        <br><hr><br><hr>
+                        <table class="table borderless">
+                            <tr><td></td><td align="right"><a href="#"><u>ARCHIVE</u></a></td></tr>
+                        </table>
+                    </div>
+                </div>
+            </div>
         </div>
-        <br><hr><br><hr>
-        <table class="table borderless">
-            <tr><td></td><td align="right"><a href="#"><u>ARCHIVE</u></a></td></tr>
-        </table>
     </div>
 </script>
 
