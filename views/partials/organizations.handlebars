@@ -1,6 +1,10 @@
 <script type="text/x-handlebars" data-template-name="organizations">
-    {{#link-to "organizations-add"}}Add organization{{/link-to}}
+    <div>
+        {{outlet}}
+    </div>
+
+    {{#link-to "organizations.add"}}Add organization{{/link-to}}
     {{#each model}}
-        <li>{{#link-to "organizations-item" this}}{{name}}{{/link-to}}</li>
+        <li>{{#link-to "organizations.item" this}}{{name}}{{/link-to}}</li>
     {{/each}}
 </script>
