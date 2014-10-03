@@ -1,6 +1,12 @@
-var organizations = [
-    { id: 1, name: "Personal organization", email: "example@truecron.com"},
-    { id: 2, name: "Test organization", email: "example@truecron.com"}
+App.Organization = DS.Model.extend({
+    id: DS.attr('int'),
+    name: DS.attr('string'),
+    email: DS.attr('string')
+});
+
+App.Organization.FIXTURES = [
+    { id: 1, name: "Personal organization", email: "example@truecron.com" },
+    { id: 2, name: "Test organization", email: "example@truecron.com" }
 ];
 
 
@@ -11,9 +17,9 @@ App.Router.map(function() {
     });
 });
 
-App.OrganizationsRoute = App.AuthenticatedRoute.extend({
+App.OrganizationsIndexRoute = App.AuthenticatedRoute.extend({
     model: function () {
-        return organizations;
+        return App.Organization.FIXTURES;
     }
 });
 
@@ -26,6 +32,6 @@ App.OrganizationsItemController = Ember.ObjectController.extend({
 
 App.OrganizationsItemRoute = App.AuthenticatedRoute.extend({
     model: function(params) {
-        return organizations[params.id - 1]; // dv: TODO: HACK: replace to correct code with search in DS
+        return App.Organization.FIXTURES[params.id - 1]; // dv: TODO: HACK: replace to correct code with search in DS
     }
 });
