@@ -7,7 +7,7 @@ var path = require('path');
 var router = express.Router();
 var log = require('../lib/logger');
 var config = require('../lib/config');
-var pg = require('pg');
+var pg = require('pg.js');
 
 var conString = "postgres://" +
     config.get('POSTGRE_USERNAME') +
@@ -64,13 +64,11 @@ router.get('/organizations/:org_id/workspaces/:workspace_id/jobs', function(req,
     });
 });
 
-module.exports = router;
-
 /*post*/
-var workspaceId, name, archived, updatedByPersonId, rrule;
-router.use(express.bodyParser());
 router.post('/organizations/:org_id/workspaces/:workspace_id/jobs', function(req, res) {
+    var workspaceId, name, archived, updatedByPersonId, rrule;
     workspace_id = req.param('workspace_id');
+
     pg.connect(conString, function(err, client, done) {
         if(err) {
             return console.error('could not connect to postgres', err);
@@ -81,15 +79,12 @@ router.post('/organizations/:org_id/workspaces/:workspace_id/jobs', function(req
                     return console.error('error running query', err);
                 }
 
-                console.log(req.body);
+                req.json(result);
 
                 client.end();
             });
-
     });
-
-
 });
 
-/*put*/
+module.exports = router;
 
