@@ -67,3 +67,31 @@ router.get('/organizations/:org_id/workspaces/:workspace_id/jobs', function(req,
 });
 
 module.exports = router;
+
+/*post*/
+var workspaceId, name, archived, updatedByPersonId, rrule;
+router.use(express.bodyParser());
+router.post('/organizations/:org_id/workspaces/:workspace_id/jobs', function(req, res) {
+    workspace_id = req.param('workspace_id');
+    pg.connect(conString, function(err, client, done) {
+        if(err) {
+            return console.error('could not connect to postgres', err);
+        }
+        client.query('insert into tc.Job (workspaceId, name, archived, updatedByPersonId, rrule) values ($1, $2, $3, $4, $5);', [workspaceId, name, archived, updatedByPersonId, rrule], /*add parse json*/
+            function (err, result) {
+                if (err) {
+                    return console.error('error running query', err);
+                }
+
+                console.log(req.body);
+
+                client.end();
+            });
+
+    });
+
+
+});
+
+/*put*/
+
