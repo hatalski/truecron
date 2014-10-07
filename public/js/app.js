@@ -1,8 +1,15 @@
 App = Ember.Application.create({
+// dv: debugging
+/*    LOG_VIEW_LOOKUPS: true,
+    LOG_TRANSITIONS: true,
+    LOG_TRANSITIONS_INTERNAL: true,
+    LOG_ACTIVE_GENERATION: true*/
     /*ready: function() {
         alert('Yes!');
     }*/
 });
+
+App.ApplicationAdapter = DS.FixtureAdapter;
 
 App.AuthenticatedRoute = Ember.Route.extend({
     beforeModel: function(transition) {
@@ -21,11 +28,12 @@ App.AuthenticatedRoute = Ember.Route.extend({
         return $.getJSON(url, { token: token });
     },
     events: {
+        // dv: TODO: remove this block to other way to analyze response from server
         error: function(reason, transition) {
             if (reason.status === 401) {
                 this.redirectToSignin(transition);
             } else {
-                alert('Something went wrong');
+                alert('Something went wrong: ' + reason);
             }
         }
     }
@@ -299,6 +307,10 @@ App.JobsAddRoute = App.AuthenticatedRoute.extend({
 
 App.Router.map(function() {
     this.route('tasks-add');
+});
+
+App.Router.map(function() {
+    this.route('task-details');
 });
 
 App.TasksAddRoute = App.AuthenticatedRoute.extend({
