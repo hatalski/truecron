@@ -7,6 +7,11 @@ router.get('/', function(req, res) {
     res.render('index', { title: 'TrueCron', user: req.user });
 });
 
+// vh+dv: teaser page
+router.get('/teaser', function(req, res) {
+    res.render('pages/teaser', { pages: true, title: 'TrueCron', user: req.user });
+});
+
 function validTokenProvided(req, res) {
     // dv: support for session
     if (req.isAuthenticated()) {
