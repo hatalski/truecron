@@ -64,23 +64,20 @@ router.get('/organizations/:org_id/workspaces/:workspace_id/jobs', function(req,
     });
 });
 
-/*post*/
+/*post job create*/
 router.post('/organizations/:org_id/workspaces/:workspace_id/jobs', function(req, res) {
-    var workspaceId, name, archived, updatedByPersonId, rrule;
-    workspace_id = req.param('workspace_id');
+    var workspace_id = req.param('workspace_id');
+    var input = JSON.parse(JSON.stringify(req.body));
 
     pg.connect(conString, function(err, client, done) {
         if(err) {
             return console.error('could not connect to postgres', err);
         }
-        client.query('insert into tc.Job (workspaceId, name, archived, updatedByPersonId, rrule) values ($1, $2, $3, $4, $5);', [workspaceId, name, archived, updatedByPersonId, rrule], /*add parse json*/
+        client.query('insert into tc.Job (workspaceId, name, active, archived, updatedByPersonId, rrule) values ($1, $2, $3, $4, $5, $6);', [workspace_id, input.name, input.active, input.archived, input.updatedByPersonId, input.rrule],
             function (err, result) {
                 if (err) {
                     return console.error('error running query', err);
                 }
-
-                req.json(result);
-
                 client.end();
             });
     });
