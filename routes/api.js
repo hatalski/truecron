@@ -78,10 +78,33 @@ router.post('/organizations/:org_id/workspaces/:workspace_id/jobs', function(req
                 if (err) {
                     return console.error('error running query', err);
                 }
+                res.json({ "job": result.rows });
+                client.end();
+            });
+    });
+});
+
+/*patch Job (update)*/
+
+
+router.patch('/organizations/:org_id/workspaces/:workspace_id/jobs/:jobId', function(req, res) {
+    var workspace_id = req.param('workspace_id');
+    var job_id = req.param('jobId');
+    var input = JSON.parse(JSON.stringify(req.body));
+
+    pg.connect(conString, function(err, client, done) {
+        if(err) {
+            return console.error('could not connect to postgres', err);
+        }
+        client.query('update tc.Job set workspaceId=$1, name=$2, active=$3, archived=$4, updatedByPersonId=$5, rrule=$6 where tc.Job.id = job_id);', [workspace_id, input.name, input.active, input.archived, input.updatedByPersonId, input.rrule],
+            function (err, result) {
+                if (err) {
+                    return console.error('error running query', err);
+                }
+                res.json({ "job": result.rows });
                 client.end();
             });
     });
 });
 
 module.exports = router;
-
