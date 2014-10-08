@@ -9,6 +9,7 @@ describe('JOBS API',
                 .send()
                 .end(function (e, res) {
                     expect(e).to.eql(null);
+                    expect(res.header['content-type']).to.eql('application/json; charset=utf-8');
                     expect(res.status).to.eql(200);
                     done();
                 });
@@ -23,8 +24,22 @@ describe('JOBS API',
                 })
                 .end(function (e, res) {
                     expect(e).to.eql(null);
-                    //console.dir(res);
+                    expect(res.header['content-type'].to.eql('application/json; charset=utf-8'));
                     expect(res.status).to.eql(201);
+                    expect(res.body.id).to.be.a('number');
+                    done();
+                });
+        });
+        it('create a job with name only', function (done) {
+            superagent.post('http://dev.truecron.com:3000/api/v1/organizations/1/workspaces/1/jobs')
+                .send({
+                    "name": "My first job"
+                })
+                .end(function (e, res) {
+                    expect(e).to.eql(null);
+                    expect(res.header['content-type'].to.eql('application/json; charset=utf-8'));
+                    expect(res.status).to.eql(201);
+                    expect(res.body.id).to.be.a('number');
                     done();
                 });
         });
