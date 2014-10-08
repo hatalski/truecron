@@ -5,7 +5,7 @@ describe('JOBS API',
     function() {
         var id;
         it('get all jobs', function(done) {
-            superagent.get('http://dev.truecron.com:3000/api/v1/workspaces/1/1/jobs')
+            superagent.get('http://dev.truecron.com:3000/api/v1/organizations/1/workspaces/1/jobs')
                 .send()
                 .end(function (e, res) {
                     expect(e).to.eql(null);
@@ -14,7 +14,7 @@ describe('JOBS API',
                 });
         });
         it('create a job', function (done) {
-            superagent.post('http://dev.truecron.com:3000/api/v1/workspaces/1/1/jobs')
+            superagent.post('http://dev.truecron.com:3000/api/v1/organizations/1/workspaces/1/jobs')
                 .send({
                     "name": "My first job",
                     "tags": ["edi", "production"],
@@ -23,7 +23,7 @@ describe('JOBS API',
                 })
                 .end(function (e, res) {
                     expect(e).to.eql(null);
-                    console.dir(res);
+                    //console.dir(res);
                     expect(res.status).to.eql(201);
                     done();
                 });
