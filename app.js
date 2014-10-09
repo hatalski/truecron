@@ -135,6 +135,10 @@ app.get('/teaser', function (req, res) {
     res.sendfile('teaser.html');
 });
 
+app.get('/taskdetails', function (req, res) {
+    res.sendfile('taskdetails.html');
+});
+
 /// catch 404 and forward to error handler
 app.use(function(req, res, next) {
     var err = new Error('Not Found');
