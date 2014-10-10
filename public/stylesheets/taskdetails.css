@@ -1,0 +1,36 @@
+/*
+ taskdetails.html page - style
+ */
+.fa-bars,
+.fa-plus,
+.fa-pencil,
+.fa-sign-out {
+    color: #ff982f;
+}
+
+.navbar-inverse {
+    background-color: #465f7d;
+    background-image: none;
+    color:#fff;
+    border-bottom: 2px Solid #ff9934;
+}
+
+.navbar-brand {
+    background:url(../img/logo.png) no-repeat center;
+    width: 168px;
+}
+
+.navbar-inverse .navbar-nav > li > a {
+    color: White;
+}
+.navbar-right {
+    color: White;
+}
+
+.btn-default {
+    border-radius: 0;
+    border-color: #00aecf;
+    background-color: #ffffff;
+    background-image: none;
+    padding: 6px 12px;
+}
