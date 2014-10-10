@@ -131,10 +131,6 @@ app.use('/auth', auth);
 app.use('/users', users);
 app.use('/api/v1', api);
 
-app.get('/teaser', function (req, res) {
-    res.sendfile('teaser.html');
-});
-
 app.get('/taskdetails', function (req, res) {
     res.sendfile('taskdetails.html');
 });
