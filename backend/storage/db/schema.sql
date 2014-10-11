@@ -1,4 +1,4 @@
-﻿--
+--
 -- TrueCron database schema. Run this script to upgrade the schema to the latest version.
 --
 -- psql -d YOUR-DB-NAME -f schema.sql -v ON_ERROR_STOP=1 -x -q
@@ -326,6 +326,38 @@ if not HasSchemaVersion(5) then
 end if;
 end $$;
 
+do $$
+begin
+if not HasSchemaVersion(6) then
+    -- Bcrypt library we use to hash passwords appends a salt to a hash value. So no need to store it separately.
+    alter table tc.Person drop column passwordSalt;
+    perform CommitSchemaVersion(6, 'Removed Person.passwordSalt');
+end if;
+end $$;
+
+
+do $$
+begin
+if not HasSchemaVersion(7) then
+    alter table tc.Person alter column passwordHash type text;
+
+    -- SYSTEM user for system-wide changes
+    insert into tc.Person (id, name, passwordHash, createdAt, updatedAt) values (-1, 'SYSTEM', '$2a$10$jdwZd64L4ORUc5h7MoPvAOTOfBgnq8MgSYCsMbeJKd/hjfX67pnSO', 'now', 'now');
+    update tc.Person set updatedByPersonId = -1 where id = -1;
+
+    alter table tc.Organization add column secretHash text;
+    create unique index Organization_UniqueSecretHash_Index on tc.Organization (secretHash) where secretHash is not null;
+
+    insert into tc.Organization (id, name, email, secretHash, createdAt, updatedAt, updatedByPersonId)
+        values (-2, 'TrueCron', 'admins@truecron.com',  '$2a$05$wYu.3JoaAGbl.hAyQsM8OOe/QZ7rCj157nnhorcFBHAyXZrOl5GqK', 'now', 'now', -1);
+
+    insert into tc.OrganizationToPerson (organizationId, personId, role, createdAt, updatedAt, updatedByPersonId)
+        values (-2, -1, 'admin', 'now', 'now', -1);
+
+    perform CommitSchemaVersion(7, 'Added SYSTEM person, Organization.secretHash.');
+end if;
+end $$;
+
 -- Use the snippet as a template:
 --
 -- do $$
@@ -339,4 +371,3 @@ end $$;
 
 
 -- Recreate views here
-
