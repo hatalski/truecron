@@ -1,4 +1,5 @@
 {
+    "BASE_URL": "http://www.truecron.com",
     "SESSION_SECRET": "production-truecron-Hhe34Jls0J04",
     "POSTGRE_HOST": "prdb.truecron.com",
     "POSTGRE_PORT": 5432,

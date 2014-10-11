@@ -1,4 +1,5 @@
 {
+    "BASE_URL": "http://staging.truecron.com",
     "SESSION_SECRET": "staging-truecron-Hhe34Jls0J04",
     "POSTGRE_HOST": "stdb.truecron.com",
     "POSTGRE_PORT": 5432,
