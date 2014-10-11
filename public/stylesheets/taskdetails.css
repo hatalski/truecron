@@ -34,3 +34,19 @@
     background-image: none;
     padding: 6px 12px;
 }
+
+.activejobfirstbox {
+    border-left: solid 3px #ff9e2f;
+}
+
+.activejoblastbox {
+    background: url("../img/arrow.png") no-repeat right center;
+}
+
+.pulltab {
+    background-image: url("../img/btn1.png");
+    position: absolute;
+    left: 0px;
+    top: 130px;
+    z-index: 2;
+}
