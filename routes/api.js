@@ -16,6 +16,7 @@ var conString = "postgres://" +
     ":" + config.get('POSTGRE_PORT')
     + "/" + config.get('POSTGRE_DATABASE');
 
+
 router.get('/organizations/:org_id/workspaces/:workspace_id/jobs', function(req, res) {
     var organization_id = req.param('org_id');
     var workspace_id = req.param('workspace_id');
@@ -56,36 +57,58 @@ router.get('/organizations/:org_id/workspaces/:workspace_id/jobs', function(req,
                     return console.error('error running query', err);
                 }
 
-                res.json({ "jobs": result.rows });
+                res.status(200).json({ "jobs": result.rows });
 
                 client.end();
             });
 
     });
 });
+function addJobtags(jobsId, tags){
+    query("insert into tc.JobTag (jobId, tag) values ($1, $2);", [jobsId, tags]);
+    console.log('in addJobsTag jobId + tag='+jobsId);
 
+}
 /*post job create*/
 router.post('/organizations/:org_id/workspaces/:workspace_id/jobs', function(req, res) {
     var workspace_id = req.param('workspace_id');
     var input = JSON.parse(JSON.stringify(req.body));
+    var updatedByPersonId=1;
+    var rrule;
+    if(!input.rrule){
+        rrule=' ';
+    }
+    else {rrule=input.rrule;}
+    if (input.name.replace(/\s/g, '') == '') {
+        res.status(400).send('Invalid parameter - name');
+        console.log('Invalid parameter - name');
+    }
+else {
+        pg.connect(conString, function (err, client, done) {
+            if (err) {
+                return console.error('could not connect to postgres', err);
+            }
+            client.query('insert into tc.Job (workspaceId, name, active, archived, updatedByPersonId, startsAt, rrule) values ($1, $2, $3, $4, $5, $6, $7) returning id;', [workspace_id, input.name, 0, 0, updatedByPersonId, input.startsAt, rrule],
+                function (err, result) {
+                    if (err) {
+                        return console.error('error running query', err);
+                    }
+                    console.log('tags='+input.tags);
+                    /*if(input.tags){
+                        console.log('in if');
+                        addJobtags(Number(result.rows[0].id), input.tags);
+                    }
+                    console.log('id='+Number(result.rows[0].id));*/
+                    res.status(201).json({ "job": {'id': Number(result.rows[0].id)}});
 
-    pg.connect(conString, function(err, client, done) {
-        if(err) {
-            return console.error('could not connect to postgres', err);
-        }
-        client.query('insert into tc.Job (workspaceId, name, active, archived, updatedByPersonId, rrule) values ($1, $2, $3, $4, $5, $6);', [workspace_id, input.name, input.active, input.archived, input.updatedByPersonId, input.rrule],
-            function (err, result) {
-                if (err) {
-                    return console.error('error running query', err);
-                }
-                res.json({ "job": result.rows });
-                client.end();
-            });
-    });
+                    client.end();
+                });
+        });
+    }
 });
 
-/*patch Job (update)*/
 
+/*patch Job (update)
 
 router.patch('/organizations/:org_id/workspaces/:workspace_id/jobs/:jobId', function(req, res) {
     var workspace_id = req.param('workspace_id');
@@ -106,5 +129,5 @@ router.patch('/organizations/:org_id/workspaces/:workspace_id/jobs/:jobId', func
             });
     });
 });
-
+*/
 module.exports = router;
