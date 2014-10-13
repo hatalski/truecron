@@ -130,4 +130,25 @@ router.patch('/organizations/:org_id/workspaces/:workspace_id/jobs/:jobId', func
     });
 });
 
+/*delete job*/
+
+router.delete('/organizations/:org_id/workspaces/:workspace_id/jobs/:jobId', function(req, res) {
+    var job_id = req.param('jobId');
+
+    pg.connect(conString, function(err, client, done) {
+        if(err) {
+            return console.error('could not connect to postgres', err);
+        }
+        client.query('delete from tc.Job where tc.Job.id = job_id);',
+            function (err, result) {
+                if (err) {
+                    return console.error('error running query', err);
+                }
+                res.status(204);
+                client.end();
+            });
+    });
+});
+
+
 module.exports = router;
