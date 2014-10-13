@@ -3,10 +3,12 @@ var path = require('path');
 var favicon = require('serve-favicon');
 
 var config = require('./lib/config');
+var logger = require('./lib/logger');
+var validator = require('./lib/validator');
 
-var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
+
 var session = require('express-session');
 // vh: first redis should be running on vagrant instance
 //var redisClient = require('./lib/redis');
@@ -18,7 +20,10 @@ var passport = require('passport'),
 var routes = require('./routes/index');
 var users = require('./routes/users');
 var auth = require('./routes/auth');
-var api = require('./routes/api');
+//var api = require('./routes/api');
+
+var api = require('./backend/api/api');
+var storage = require('./backend/storage');
 
 var exphbs  = require('express-handlebars');
 
@@ -35,10 +40,11 @@ require('handlebars-helper-rawinclude').register(hbs.handlebars, {}, {assemble: 
 app.engine('handlebars', hbs.engine);
 app.set('view engine', 'handlebars');
 
+app.use(logger.requestLogger);
 app.use(favicon(__dirname + '/public/favicon.ico'));
-app.use(logger('dev'));
-app.use(bodyParser.json());
+app.use(bodyParser.json({ type: 'application/json' }));
 app.use(bodyParser.urlencoded({ extended: true }));
+app.use(validator.expressValidator());
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 app.use('/bower_components',  express.static(__dirname + '/bower_components'));
@@ -131,6 +137,8 @@ app.use('/auth', auth);
 app.use('/users', users);
 app.use('/api/v1', api);
 
+app.use(logger.errorLogger);
+
 /// catch 404 and forward to error handler
 app.use(function(req, res, next) {
     var err = new Error('Not Found');
@@ -140,9 +148,12 @@ app.use(function(req, res, next) {
 
 /// error handlers
 
-// development error handler
-// will print stacktrace
 if (app.get('env') === 'development') {
+    // Pretty print JSON responses
+    app.set('json spaces', '  ');
+
+    // development error handler
+    // will print stacktrace
     app.use(function(err, req, res, next) {
         res.status(err.status || 500);
         res.render('error', {
@@ -162,5 +173,15 @@ app.use(function(err, req, res, next) {
     });
 });
 
+//
+// Initialize storage
+//
+storage.initialize()
+    .error (function (e) {
+        logger.error('Could not initialize storage.');
+        throw e;
+    });
+
+app.storage = storage;
 
 module.exports = app;
