@@ -150,5 +150,44 @@ router.delete('/organizations/:org_id/workspaces/:workspace_id/jobs/:jobId', fun
     });
 });
 
+/*inactivate job*/
+router.patch('/organizations/:org_id/workspaces/:workspace_id/jobs/:jobId/activate/:active', function(req, res) {
+    var job_id = req.param('jobId');
+    var activeFlag= req.param('active');
+    
+    pg.connect(conString, function(err, client, done) {
+        if(err) {
+            return console.error('could not connect to postgres', err);
+        }
+        client.query('update tc.Job set active=$1, where tc.Job.id = job_id);', [activeFlag],
+            function (err, result) {
+                if (err) {
+                    return console.error('error running query', err);
+                }
+                res.status(201);
+                client.end();
+            });
+    });
+});
 
+/*archived job*/
+
+router.patch('/organizations/:org_id/workspaces/:workspace_id/jobs/:jobId/archived/:archive', function(req, res) {
+    var job_id = req.param('jobId');
+    var archivedFlag= req.param('archive');
+
+    pg.connect(conString, function(err, client, done) {
+        if(err) {
+            return console.error('could not connect to postgres', err);
+        }
+        client.query('update tc.Job set archived=$1, where tc.Job.id = job_id);', [archivedFlag],
+            function (err, result) {
+                if (err) {
+                    return console.error('error running query', err);
+                }
+                res.status(201);
+                client.end();
+            });
+    });
+});
 module.exports = router;
