@@ -37,7 +37,7 @@ router.get('/organizations/:org_id/workspaces/:workspace_id/jobs', function(req,
         wherefordb='WHERE active='+active+' AND archived='+archived+' AND workspaceId='+workspace_id+' AND organizationId='+organization_id+' AND tag='+tags_job+'  ORDER BY '+sort+' '+direction+';';
     }
 
-    pg.connect(conString, function(err, client, done) {
+    pg.connect(conString, function(err, client, d) {
         if(err) {
             log.info('could not connect to postgres: ' + err);
         }
@@ -80,7 +80,7 @@ router.post('/organizations/:org_id/workspaces/:workspace_id/jobs', function(req
         console.log('Invalid parameter - name');
     }
     else {
-        pg.connect(conString, function (err, client, done) {
+        pg.connect(conString, function (err, client, d) {
             if (err) {
                 log.info('could not connect to postgres: ' + err);
             }
@@ -111,7 +111,7 @@ router.patch('/organizations/:org_id/workspaces/:workspace_id/jobs/:jobId', func
     var job_id = req.param('jobId');
     var input = JSON.parse(JSON.stringify(req.body));
 
-    pg.connect(conString, function(err, client, done) {
+    pg.connect(conString, function(err, client, d) {
         if(err) {
             log.info('could not connect to postgres: ' + err);
         }
@@ -131,7 +131,7 @@ router.patch('/organizations/:org_id/workspaces/:workspace_id/jobs/:jobId', func
 router.delete('/organizations/:org_id/workspaces/:workspace_id/jobs/:jobId', function(req, res) {
     var job_id = req.param('jobId');
 
-    pg.connect(conString, function(err, client, done) {
+    pg.connect(conString, function(err, client, d) {
         if(err) {
             log.info('could not connect to postgres: ' + err);
         }
@@ -151,7 +151,7 @@ router.patch('/organizations/:org_id/workspaces/:workspace_id/jobs/:jobId/activa
     var job_id = req.param('jobId');
     var activeFlag= req.param('active');
     
-    pg.connect(conString, function(err, client, done) {
+    pg.connect(conString, function(err, client, d) {
         if(err) {
             log.info('could not connect to postgres: ' + err);
         }
@@ -172,7 +172,7 @@ router.patch('/organizations/:org_id/workspaces/:workspace_id/jobs/:jobId/archiv
     var job_id = req.param('jobId');
     var archivedFlag= req.param('archive');
 
-    pg.connect(conString, function(err, client, done) {
+    pg.connect(conString, function(err, client, d) {
         if(err) {
             log.info('could not connect to postgres: ' + err);
         }
