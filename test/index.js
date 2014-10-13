@@ -1,11 +1,16 @@
 var superagent = require('superagent');
-var expect = require('expect.js');
+var expect     = require('expect.js');
+var config     = require('../lib/config.js');
+var prefix     = config.get('API_HOST') || 'http://localhost:3000/api/v1';
+var log        = require('../lib/logger.js');
+
+log.info('API tests prefix: ' + prefix);
 
 describe('JOBS API',
     function() {
         var id;
         it('get all jobs', function(done) {
-            superagent.get('http://dev.truecron.com:3000/api/v1/organizations/1/workspaces/1/jobs')
+            superagent.get(prefix + '/organizations/1/workspaces/1/jobs')
                 .send()
                 .end(function (e, res) {
                     expect(e).to.eql(null);
@@ -16,7 +21,7 @@ describe('JOBS API',
         });
 
         it('create a job', function (done) {
-            superagent.post('http://dev.truecron.com:3000/api/v1/organizations/1/workspaces/1/jobs')
+            superagent.post(prefix + '/organizations/1/workspaces/1/jobs')
                 .send({
                     "name": "My first job",
                     "tags": ["edi", "production"],
@@ -33,7 +38,7 @@ describe('JOBS API',
         });
 
         it('create a job with name only', function (done) {
-            superagent.post('http://dev.truecron.com:3000/api/v1/organizations/1/workspaces/1/jobs')
+            superagent.post(prefix + '/organizations/1/workspaces/1/jobs')
                 .send({
                     "name": "My first job"
                 })

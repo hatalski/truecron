@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "start": "supervisor --force-watch -i public server.js",
-    "test":  "mocha test -R spec --timeout 2000"
+    "test": "mocha test -R spec --timeout 2000"
   },
   "dependencies": {
     "body-parser": "~1.5.2",
