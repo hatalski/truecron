@@ -358,6 +358,14 @@ if not HasSchemaVersion(7) then
 end if;
 end $$;
 
+do $$
+begin
+if not HasSchemaVersion(8) then
+    alter table tc.History add column operation text not null;
+    perform CommitSchemaVersion(8, 'Added a History.operation column.');
+end if;
+end $$;
+
 -- Use the snippet as a template:
 --
 -- do $$
