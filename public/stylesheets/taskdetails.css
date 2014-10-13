@@ -45,8 +45,17 @@
 
 .pulltab {
     background-image: url("../img/btn1.png");
-    position: absolute;
-    left: 0px;
-    top: 130px;
-    z-index: 2;
+
+}
+
+.rightborder {
+    border-right-style:solid;
+    border-right-width:8px;
+    border-right-color:#d9d9db;
+    padding-right: 0px;
+    padding-left: 0px;
+}
+
+.tabletaskdetails {
+    width: 100%;
 }
