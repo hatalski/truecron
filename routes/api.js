@@ -108,7 +108,7 @@ else {
 });
 
 
-/*patch Job (update)
+/*patch Job (update)*/
 
 router.patch('/organizations/:org_id/workspaces/:workspace_id/jobs/:jobId', function(req, res) {
     var workspace_id = req.param('workspace_id');
@@ -119,15 +119,15 @@ router.patch('/organizations/:org_id/workspaces/:workspace_id/jobs/:jobId', func
         if(err) {
             return console.error('could not connect to postgres', err);
         }
-        client.query('update tc.Job set workspaceId=$1, name=$2, active=$3, archived=$4, updatedByPersonId=$5, rrule=$6 where tc.Job.id = job_id);', [workspace_id, input.name, input.active, input.archived, input.updatedByPersonId, input.rrule],
+        client.query('update tc.Job set startsAt=$1, rrule=$2 where tc.Job.id = job_id);', [input.startsAt, input.rrule],
             function (err, result) {
                 if (err) {
                     return console.error('error running query', err);
                 }
-                res.json({ "job": result.rows });
+                res.status(200).json({ "job": result });
                 client.end();
             });
     });
 });
-*/
+
 module.exports = router;
