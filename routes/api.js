@@ -20,9 +20,6 @@ var conString = "postgres://" +
 router.get('/organizations/:org_id/workspaces/:workspace_id/jobs', function(req, res) {
     var organization_id = req.param('org_id');
     var workspace_id = req.param('workspace_id');
-
-
-    debugger;
     var archived = req.param('archived', 0); // default: 0
     var active = req.param('active', 1); // default: 1
     var tags_job = req.param('tags');
@@ -37,17 +34,9 @@ router.get('/organizations/:org_id/workspaces/:workspace_id/jobs', function(req,
         wherefordb='WHERE active='+active+' AND archived='+archived+' AND workspaceId='+workspace_id+' AND organizationId='+organization_id+' AND tag='+tags_job+'  ORDER BY '+sort+' '+direction+';';
     }
 
-    log.info('org id: ' + organization_id);
-    log.info('workspace id: ' + workspace_id);
-    log.info('archived: ' + archived);
-    log.info('active: ' + active);
-    log.info('tags: ' + tags_job);
-    log.info('sort: ' + sort);
-    log.info('direction: ' + direction);
-
     pg.connect(conString, function(err, client, done) {
         if(err) {
-            return console.error('could not connect to postgres', err);
+            log.error('could not connect to postgres', err);
         }
         client.query('SELECT tc.Job.id, tc.Job.workspaceId, tc.Job.name, tc.Job.active, tc.Job.archived, tc.Job.createdAt, ' +
                 'tc.Job.updatedAt, tc.Job.updatedByPersonId, tc.Job.startsAt, tc.Job.rrule FROM tc.Job, ' +
@@ -86,7 +75,7 @@ router.post('/organizations/:org_id/workspaces/:workspace_id/jobs', function(req
 else {
         pg.connect(conString, function (err, client, done) {
             if (err) {
-                return console.error('could not connect to postgres', err);
+                log.error('could not connect to postgres', err);
             }
             client.query('insert into tc.Job (workspaceId, name, active, archived, updatedByPersonId, startsAt, rrule) values ($1, $2, $3, $4, $5, $6, $7) returning id;', [workspace_id, input.name, 0, 0, updatedByPersonId, input.startsAt, rrule],
                 function (err, result) {
@@ -117,7 +106,7 @@ router.patch('/organizations/:org_id/workspaces/:workspace_id/jobs/:jobId', func
 
     pg.connect(conString, function(err, client, done) {
         if(err) {
-            return console.error('could not connect to postgres', err);
+            log.error('could not connect to postgres', err);
         }
         client.query('update tc.Job set startsAt=$1, rrule=$2 where tc.Job.id = job_id);', [input.startsAt, input.rrule],
             function (err, result) {
@@ -137,7 +126,7 @@ router.delete('/organizations/:org_id/workspaces/:workspace_id/jobs/:jobId', fun
 
     pg.connect(conString, function(err, client, done) {
         if(err) {
-            return console.error('could not connect to postgres', err);
+            log.error('could not connect to postgres', err);
         }
         client.query('delete from tc.Job where tc.Job.id = job_id);',
             function (err, result) {
@@ -157,7 +146,7 @@ router.patch('/organizations/:org_id/workspaces/:workspace_id/jobs/:jobId/activa
     
     pg.connect(conString, function(err, client, done) {
         if(err) {
-            return console.error('could not connect to postgres', err);
+            log.error('could not connect to postgres', err);
         }
         client.query('update tc.Job set active=$1, where tc.Job.id = job_id);', [activeFlag],
             function (err, result) {
@@ -178,7 +167,7 @@ router.patch('/organizations/:org_id/workspaces/:workspace_id/jobs/:jobId/archiv
 
     pg.connect(conString, function(err, client, done) {
         if(err) {
-            return console.error('could not connect to postgres', err);
+            log.error('could not connect to postgres', err);
         }
         client.query('update tc.Job set archived=$1, where tc.Job.id = job_id);', [archivedFlag],
             function (err, result) {
