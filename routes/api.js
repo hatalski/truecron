@@ -16,6 +16,9 @@ var conString = "postgres://" +
     ":" + config.get('POSTGRE_PORT')
     + "/" + config.get('POSTGRE_DATABASE');
 
+router.get('/echo', function(req, res) {
+   res.json({ message: 'OK' });
+});
 
 router.get('/organizations/:org_id/workspaces/:workspace_id/jobs', function(req, res) {
     var organization_id = req.param('org_id');
@@ -64,7 +67,7 @@ router.post('/organizations/:org_id/workspaces/:workspace_id/jobs', function(req
     var input = JSON.parse(JSON.stringify(req.body));
     var updatedByPersonId=1;
     var rrule;
-    
+
     if(!input.rrule){
         rrule=' ';
     }

@@ -6,6 +6,21 @@ var log        = require('../lib/logger.js');
 
 log.info('API tests prefix: ' + prefix);
 
+describe('TEST API',
+    function() {
+        it('test', function(done) {
+            superagent.get(prefix + '/echo')
+                .send()
+                .end(function (e, res) {
+                    expect(e).to.eql(null);
+                    expect(res.status).to.eql(200);
+                    expect(res.body.message).to.eql('OK');
+                    done();
+                });
+        });
+    }
+)
+
 describe('JOBS API',
     function() {
         var id;
