@@ -1,0 +1,18 @@
+{
+    "PORT": 3000,
+    "SESSION_SECRET": "staging-truecron-Hhe34Jls0J04",
+    "POSTGRE_HOST": "localhost",
+    "POSTGRE_PORT": 5433,
+    "POSTGRE_DATABASE": "truecron",
+    "REDIS_HOST": "stcache.vago4d.0001.use1.cache.amazonaws.com",
+    "REDIS_PORT": 6379,
+    "COOKIE_DOMAIN": "staging.truecron.com",
+    "GOOGLE_SSO_CLIENT_ID": "640877791996-juctck3aimf9f2i99vf3aa3lo9597dbq.apps.googleusercontent.com",
+    "GOOGLE_SSO_CLIENT_SECRET": "bDkjQsNY_7xoSeEF7tI97mq2",
+    "GOOGLE_SSO_CALLBACK_URL": "http://staging.truecron.com/auth/google/callback",
+    "GOOGLE_ANALYTICS_TRACKING_ID": "",
+    "API_HOST": "http://localhost:3000/api/v1",
+    "AWS_ACCESS_KEY_ID": "",
+    "AWS_SECRET_ACCESS_KEY": "",
+    "LOGENTRIES_TOKEN": "54025f13-1a10-4bc8-b00a-5ba6271be949"
+}

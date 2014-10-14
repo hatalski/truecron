@@ -1,11 +1,51 @@
 var superagent = require('superagent');
-var expect = require('expect.js');
+var expect     = require('expect.js');
+var config     = require('../lib/config.js');
+var prefix     = config.get('API_HOST') || 'http://localhost:3000/api/v1';
+var log        = require('../lib/logger.js');
+log.info('API tests prefix: ' + prefix);
+var pg = require('pg.js');
+
+var conString = "postgres://" +
+    config.get('POSTGRE_USERNAME') +
+    ":" + config.get('POSTGRE_PASSWORD') + "@" +
+    config.get('POSTGRE_HOST') +
+    ":" + config.get('POSTGRE_PORT')
+    + "/" + config.get('POSTGRE_DATABASE');
+log.info('PG connection string: ' + conString);
+
+describe('TEST API',
+    function() {
+        it('test', function(done) {
+            superagent.get(prefix + '/echo')
+                .send()
+                .end(function (e, res) {
+                    expect(e).to.eql(null);
+                    expect(res.status).to.eql(200);
+                    expect(res.body.message).to.eql('OK');
+                    done();
+                });
+        });
+    }
+);
+
+describe('DB CONNECTION TEST',
+    function() {
+        it('can connect', function(done) {
+            pg.connect(conString, function(err, client, d) {
+                expect(err).to.eql(null);
+                expect(client).to.be.an('object');
+                done();
+            });
+        });
+    }
+);
 
 describe('JOBS API',
     function() {
         var id;
         it('get all jobs', function(done) {
-            superagent.get('http://dev.truecron.com:3000/api/v1/organizations/1/workspaces/1/jobs')
+            superagent.get(prefix + '/organizations/1/workspaces/1/jobs')
                 .send()
                 .end(function (e, res) {
                     expect(e).to.eql(null);
@@ -16,7 +56,7 @@ describe('JOBS API',
         });
 
         it('create a job', function (done) {
-            superagent.post('http://dev.truecron.com:3000/api/v1/organizations/1/workspaces/1/jobs')
+            superagent.post(prefix + '/organizations/1/workspaces/1/jobs')
                 .send({
                     "name": "My first job",
                     "tags": ["edi", "production"],
@@ -33,7 +73,7 @@ describe('JOBS API',
         });
 
         it('create a job with name only', function (done) {
-            superagent.post('http://dev.truecron.com:3000/api/v1/organizations/1/workspaces/1/jobs')
+            superagent.post(prefix + '/organizations/1/workspaces/1/jobs')
                 .send({
                     "name": "My first job"
                 })
