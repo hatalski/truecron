@@ -77,7 +77,7 @@ router.post('/organizations/:org_id/workspaces/:workspace_id/jobs', function(req
 
     if (input.name.replace(/\s/g, '') == '') {
         res.status(400).send('Invalid parameter - name');
-        console.log('Invalid parameter - name');
+        log.info('Invalid parameter - name');
     }
     else {
         pg.connect(conString, function (err, client, d) {
