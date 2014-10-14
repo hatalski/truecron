@@ -36,7 +36,7 @@
 }
 
 .activejobfirstbox {
-    border-left: solid 3px #ff9e2f;
+    border-left: solid 4px #ff9e2f;
 }
 
 .activejoblastbox {
@@ -45,17 +45,45 @@
 
 .pulltab {
     background-image: url("../img/btn1.png");
-
 }
 
-.rightborder {
+.divborderleft {
     border-right-style:solid;
-    border-right-width:8px;
-    border-right-color:#d9d9db;
+    border-right-width:4px;
+    border-color:#d9d9db;
     padding-right: 0px;
     padding-left: 0px;
+    border-left-style:solid;
+    border-left-width:8px;
+    background-color: #ffffff;
+    height: 100%;
+}
+
+.divborderright {
+    border-right-style:solid;
+    border-right-width:8px;
+    border-color:#d9d9db;
+    padding-right: 10px;
+    padding-left: 10px;
+    border-left-style:solid;
+    border-left-width:2px;
+    background-color: #ffffff;
+    height: 100%;
 }
 
 .tabletaskdetails {
     width: 100%;
 }
+
+body {
+    background-color: #dbdbdb;
+}
+
+.col-md-6 {
+    height: 880px;
+}
+
+.lastrowborder>tbody>tr>td {
+    border-bottom: 1px solid #ddd;
+}
+
