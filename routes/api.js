@@ -85,11 +85,11 @@ router.post('/organizations/:org_id/workspaces/:workspace_id/jobs', function(req
                 log.info('could not connect to postgres: ' + err);
             }
             client.query('insert into tc.Job (workspaceId, name, active, archived, updatedByPersonId, startsAt, rrule) values ($1, $2, $3, $4, $5, $6, $7) returning id;', [workspace_id, input.name, 0, 0, updatedByPersonId, input.startsAt, rrule],
-                function (err, result) {
-                    if (err) {
-                        return console.error('error running query', err);
+                function (e, result) {
+                    if (e) {
+                        log.info('error running query: ' + e);
                     }
-                    console.log('tags='+input.tags);
+                    log.info('tags='+input.tags);
                     /*if(input.tags){
                         console.log('in if');
                         addJobtags(Number(result.rows[0].id), input.tags);
