@@ -15,15 +15,18 @@ body {
 }
 
 .topper {
-    background:#000 url("../img/teaser_bg.png") no-repeat center top;
+    background:#000 url("../img/teaser_bg.jpg") no-repeat center top;
 }
 .teaser .navbar {
     background-color: rgba(0, 0, 0, 0.6);
 }
 .teaser .jumbotron {
     background-color:transparent;
-    padding-bottom: 0;
     margin-bottom: 0;
+}
+
+.teaser .topper .jumbotron {
+    padding-bottom: 0;
 }
 .teaser .middle .jumbotron {
     padding-top: 0;
@@ -90,6 +93,34 @@ h2.pitch {
     text-align: center;
     font-size: 58px;
     font-weight: bold;
+}
+
+.middle {
+    background: url("../img/teaser_border.png") repeat-x top;
+}
+
+.middle_grey {
+    background-color: #d7d7d7;
+}
+.middle_white {
+    background-color: #fff;
+}
+.words {
+    background: url("../img/teaser_words.png") no-repeat;
+    height: 337px;
+}
+.middle_grey .jumbotron p {
+    text-align: center;
+    font-size: 28px;
+}
+
+.teaser ul {
+    margin-top: 30px;
+    list-style-image: url("../img/li.png");
+}
+
+.teaser li {
+    padding-bottom: 15px;
 }
 
 .reason-list-item {
