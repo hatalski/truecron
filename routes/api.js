@@ -154,7 +154,7 @@ router.delete('/organizations/:org_id/workspaces/:workspace_id/jobs/:jobId', fun
 router.patch('/organizations/:org_id/workspaces/:workspace_id/jobs/:jobId/activate/:active', function(req, res) {
     var job_id = req.param('jobId');
     var activeFlag= req.param('active');
-    
+
     pg.connect(conString, function(err, client, done) {
         if(err) {
             return console.error('could not connect to postgres', err);
@@ -190,4 +190,7 @@ router.patch('/organizations/:org_id/workspaces/:workspace_id/jobs/:jobId/archiv
             });
     });
 });
+
+/*run job*/
+
 module.exports = router;
