@@ -6,30 +6,90 @@
 body {
     font-family: "Trebuchet MS";
     font-size: 16pt;
-    background-image: url('../img/bg-apple-with-logo.jpg');
+    /*background-image: url('../img/bg-apple-with-logo.jpg');
     background-size: 100% auto;
-    background-repeat: no-repeat;
+    background-repeat: no-repeat;*/
+}
+.container-fluid {
+    max-width: 1200px;
 }
 
+.topper {
+    background:#000 url("../img/teaser_bg.png") no-repeat center top;
+}
+.teaser .navbar {
+    background-color: rgba(0, 0, 0, 0.6);
+}
+.teaser .jumbotron {
+    background-color:transparent;
+    padding-bottom: 0;
+    margin-bottom: 0;
+}
+.teaser .middle .jumbotron {
+    padding-top: 0;
+}
+.teaser .navbar-brand {
+    background: url("../img/white-logo.png") no-repeat center;
+    width: 270px;
+}
 h2.pitch {
     text-align: center;
-    font-size: 34pt;
-    /*font-weight: bolder;
-    text-shadow: -1px 0 #e3e3e3, 0 1px #e3e3e3, 1px 0 #e3e3e3, 0 -1px #e3e3e3;*/
-}
-
-h2.pitch-ext {
-    text-align: center;
+    font-size: 32pt;
+    color: #fff;
+    padding: 20px 0 15px;
     /*text-shadow: -1px 0 #e3e3e3, 0 1px #e3e3e3, 1px 0 #e3e3e3, 0 -1px #e3e3e3;*/
 }
-
-h2 {
-    font-size: 30pt;
-    padding-bottom: 20px;
+.teaser .col-xs-3 {
+    width: 30%;
+}
+.teaser .col-xs-9 {
+    width: 70%;
+}
+.pitch-ext {
+    text-align: left;
+    color: #fff;
+    font-size: 24px;
+    padding-top: 20px;
+}
+.teaser .pitch-ext p {
+    margin: 3px 0;
+    font-size: 25px;
+}
+.interested_box p {
+    font-size: 16px;
 }
 
-h2.problem-definition-header, h3.problem-definition-header {
-    color: #ff9933;
+.interested_box .btn-signup {
+    background-image: none;
+    background-color: #fff;
+    color: #ff9719;
+    text-shadow: none;
+}
+.interested_box .btn:hover, .btn:focus {
+    color:#333;
+}
+.interested_box .form-control {
+    border: none;
+}
+.top_mac {
+    background: url("../img/top_mac.png") no-repeat top right;
+    height: 336px;
+}
+.bottom_mac {
+    background: url("../img/bottom_mac.png") no-repeat top right;
+    height: 301px;
+}
+
+.interested_box {
+    background-color: #ff9719;
+    color: #fff;
+    margin-top: 20px;
+}
+.problem-definition-header {
+    color: #ff9719;
+    text-align: center;
+    font-size: 58px;
+    font-weight: bold;
 }
 
 .reason-list-item {
@@ -40,11 +100,6 @@ h2.problem-definition-header, h3.problem-definition-header {
 .form-control {
     border-color: #10accc;
     border-radius: 0px;
-}
-
-.problem-definition-row {
-    padding-top: 40px;
-    padding-bottom: 40px
 }
 
 .btn {
@@ -64,10 +119,6 @@ h2.problem-definition-header, h3.problem-definition-header {
     background-repeat: repeat-x;
     border-color: #ff9933;
     color: #ffffff;
-}
-
-div.row-gray {
-    background-color: #e3e3e3;
 }
 
 /*
