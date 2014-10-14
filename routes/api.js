@@ -7,7 +7,7 @@ var path = require('path');
 var router = express.Router();
 var log = require('../lib/logger');
 var config = require('../lib/config');
-var pg = require('pg.js');
+var pg = require('pg');
 
 var conString = "postgres://" +
     config.get('POSTGRE_USERNAME') +
