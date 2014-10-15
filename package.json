@@ -28,7 +28,6 @@
     "passport-google-oauth": "~0.1.5",
     "passport-oauth": "~1.0.0",
     "pg": "^3.5.0",
-    "nconf": "^0.6.9",
     "redis": "~0.12.1",
     "sequelize": "^2.0.0-rc1",
     "serve-favicon": "^2.0.1",
