@@ -32,5 +32,10 @@
     "sequelize": "^2.0.0-rc1",
     "serve-favicon": "^2.0.1",
     "winston": "~0.8.0"
-  }
+  },
+    "devDependencies": {
+        "mocha": "1.21.4",
+        "superagent": "0.20.0",
+        "expect.js": "0.3.1"
+    }
 }
