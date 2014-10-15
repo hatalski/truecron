@@ -75,15 +75,22 @@
     width: 100%;
 }
 
-body {
+.backgroundcolor {
     background-color: #dbdbdb;
 }
 
 .col-md-6 {
-    height: 880px;
+    height: 875px;
 }
 
 .lastrowborder>tbody>tr>td {
     border-bottom: 1px solid #ddd;
 }
 
+.buttonaccordion {
+    width: 100%;
+    height: 32px;
+    text-align: left;
+    background-color: white;
+    border: 0px;
+}
