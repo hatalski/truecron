@@ -95,10 +95,54 @@ h2.pitch {
     font-weight: bold;
 }
 
+.airbag {
+    background: url("../img/airbag.jpg")no-repeat left top;
+    height: 569px;
+}
+.footer_white {
+    background-color: #fff;
+}
+.footer_grey {
+    background-color: #e3e3e3;
+}
+
+.footer_white .problem-definition-header,
+.footer_grey .problem-definition-header{
+    font-size: 24px;
+    text-align: left;
+    padding-top: 30px;
+}
+.footer_white .jumbotron,
+.footer_grey .jumbotron {
+    padding-top: 0;
+    padding-bottom: 0;
+}
+
+.footer_white p {
+    line-height: 35px;
+}
 .middle {
     background: url("../img/teaser_border.png") repeat-x top;
 }
+.library {
+    background: url("../img/library.jpg")no-repeat top left;
+    height: 466px;
+}
 
+.ballet {
+    background: url("../img/teaser_ballet.jpg")no-repeat top;
+    height: 477px;
+}
+
+.hands {
+    background: url("../img/teaser_hands.jpg")no-repeat;
+    height: 286px;
+}
+
+.grow {
+    background: url("../img/teaser_grow.jpg")no-repeat;
+    height: 320px;
+}
 .middle_grey {
     background-color: #d7d7d7;
 }
