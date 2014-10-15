@@ -200,6 +200,32 @@ App.SignupModalController = App.SignupController.extend({
 
 });
 
+App.TeaserController = Ember.Controller.extend({
+    needs: ['signin'],
+    reset: function() {
+        this.setProperties({
+            email: "",
+            password: "",
+            errorMessage: ""
+        });
+    },
+
+    signin: function() {
+        var signinController = this.controllerFor('signin');
+        signinController.set('login', this.get('login'));
+        signinController.set('password', this.get('password'));
+        signinController.signin();
+        return true;
+    }
+
+});
+
+App.TeaserRoute = App.GuestOnlyRoute.extend({
+    setupController: function(controller, context) {
+        controller.reset();
+    }
+});
+
 
 // dv: this section is for guest available pages only
 App.Router.map(function() {
