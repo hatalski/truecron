@@ -116,7 +116,10 @@ App.IndexRoute = App.AuthenticatedRoute.extend({
         this._super();
         if (this.controllerFor('signin').get('token')) {
             this.transitionTo('dashboard');
+        } else {
+            this.transitionTo('teaser');
         }
+        return true;
     }
 });
 
@@ -201,9 +204,10 @@ App.SignupModalController = App.SignupController.extend({
 // dv: this section is for guest available pages only
 App.Router.map(function() {
     this.route('about');
-    this.route('terms');
     this.route('plans'); // pricing
     this.route('status'); // service health
+    this.route('teaser');
+    this.route('terms');
 });
 
 

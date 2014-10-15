@@ -9,7 +9,8 @@ router.get('/', function(req, res) {
 
 // vh+dv: teaser page
 router.get('/teaser', function(req, res) {
-    res.render('pages/teaser', { pages: true, title: 'TrueCron', user: req.user });
+    res.redirect(301, '/#/teaser');
+    //res.render('pages/teaser', { pages: true, title: 'TrueCron', user: req.user });
 });
 
 function validTokenProvided(req, res) {

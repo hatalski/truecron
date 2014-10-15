@@ -1,4 +1,6 @@
 <link rel="stylesheet" href="/stylesheets/landing.css"/>
+
+<script type="text/x-handlebars" data-template-name="teaser">
 <div class="teaser">
     <div class="topper">
         <div class="navbar navbar-fixed-top" role="navigation">
@@ -10,7 +12,7 @@
                             <form class="navbar-form navbar-right">
                                 <input type="email" class="form-control" placeholder="Email">
                                 <input type="password" class="form-control" placeholder="Password">
-                                <input type="button" \{{action "signin"}} class="btn btn-signin" value="SIGN IN">
+                                <input type="button" {{action "signin"}} class="btn btn-signin" value="SIGN IN">
                                 <input type="button" class="btn btn-signup" value="SIGN UP">
                             </form>
                         </div>
@@ -204,3 +206,4 @@
         </div>
     </footer>
 </div>
+</script>
