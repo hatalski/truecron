@@ -11,7 +11,7 @@ describe('USERS API',
         it('create a new user', function (done) {
             superagent.post(prefix + '/users')
                 .set('Content-Type', 'application/json')
-                .send({ "user": {"name": "Alice", "password": "P@ssw0rd"} })
+                .send({ 'user': {'name': "Alice", 'password': "P@ssw0rd"} })
                 .auth('-2', 'Igd7en1_VCMP59pBpmEF')
                 .end(function (e, res) {
                     expect(e).to.eql(null);
@@ -19,6 +19,18 @@ describe('USERS API',
                     expect(res.header['content-type']).to.eql('application/json; charset=utf-8');
                     expect(res.body.error).to.eql(null);
                     expect(res.status).to.eql(201);
+                    done();
+                });
+        });
+        it('get list of users', function (done) {
+            superagent.get(prefix + '/users')
+                .send()
+                .auth('-2', 'Igd7en1_VCMP59pBpmEF')
+                .end(function (e, res) {
+                    expect(e).to.eql(null);
+                    expect(res.header['content-type']).to.eql('application/json; charset=utf-8');
+                    expect(res.body.error).to.eql(null);
+                    expect(res.status).to.eql(200);
                     done();
                 });
         });
