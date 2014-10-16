@@ -33,8 +33,9 @@ Storage.prototype.initialize = Promise.method(function initialize() {
     models.initialize(this.sequelize);
 
     this.Person = require('./person');
-    //this.Organization = require('./organization');
-    //this.Workspace = require('./workspace');
+    this.Jobs = require('./jobs');
+    this.Organization = require('./organization');
+    this.Workspace = require('./workspace');
 
     return db.upgradeDatabaseIfNeeded(databaseOptions);
 });

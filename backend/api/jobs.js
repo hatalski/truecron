@@ -4,31 +4,34 @@ var express = require('express'),
     validator = require('../../lib/validator'),
     storage = require('../storage'),
     apiErrors = require('./../../lib/errors'),
-    config = require('../lib/config'),
     common = require('./common');
 
 var api = express.Router();
 
-api.route(common.parseListParams, '/workspaces/:org_id/:workspace_id')
-    .get('/jobs', function (req, res, next) {
+
+api.route('/jobs')
+    //
+    // List of jobs
+    //
+    .get(common.parseListParams, function (req, res, next) {
         var where = {};
         if (!!req.listParams.searchTerm) {
             where = { name: { like: req.listParams.searchTerm } };
         }
         var sort = req.listParams.sort || 'name';
 
-        storage.Job.findAndCountAll({
+        storage.Jobs.findAndCountAll({
             where: where,
             order: sort + ' ' + req.listParams.direction,
             limit: req.listParams.limit,
             offset: req.listParams.offset
         }).then(function (result) {
             res.json({
-                users: result.rows.map(personToUser),
+                job: result.rows,
                 meta: {
                     total: result.count
                 }});
         });
-    });
+    })
 
-module.exports = router;
+module.exports = api;
