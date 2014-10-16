@@ -11,6 +11,7 @@
     "GOOGLE_SSO_CLIENT_SECRET": "1knEKUzLSqEot7pElvyxA84i",
     "GOOGLE_SSO_CALLBACK_URL": "https://www.truecron.com/auth/google/callback",
     "GOOGLE_ANALYTICS_TRACKING_ID": "",
+    "API_HOST": "http://www.truecron.com/api/v1",
     "AWS_ACCESS_KEY_ID": "",
     "AWS_SECRET_ACCESS_KEY": ""
 }

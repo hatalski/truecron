@@ -11,7 +11,7 @@ var bodyParser = require('body-parser');
 
 var session = require('express-session');
 // vh: first redis should be running on vagrant instance
-//var redisClient = require('./lib/redis');
+var redisClient = require('./lib/redis');
 var RedisStore = require('connect-redis')(session);
 
 var passport = require('passport'),
@@ -51,7 +51,7 @@ app.use('/bower_components',  express.static(__dirname + '/bower_components'));
 
 app.use(cookieParser('TrueCron')); // dv: hack to fix problem with passport and redis session. @see https://github.com/jaredhanson/passport/issues/244
 app.use(session({
-    store: new RedisStore({}), //client: redisClient
+    store: new RedisStore({client: redisClient}), //client: redisClient
     secret: config.get('SESSION_SECRET') || '3rrr',
     cookie : {
         expires: false,
