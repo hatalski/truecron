@@ -69,19 +69,18 @@
     border-left-style:solid;
     border-left-width:2px;
     background-color: #ffffff;
-    height: 100%;
 }
 
 .tabletaskdetails {
     width: 100%;
 }
 
-.backgroundcolor {
+body {
     background-color: #dbdbdb;
 }
 
 .col-md-6 {
-    height: 875px;
+    min-height: 1330px;
 }
 
 .lastrowborder>tbody>tr>td {
