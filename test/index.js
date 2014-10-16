@@ -51,10 +51,10 @@ describe('USERS API',
 
 describe('JOBS API',
     function() {
-        var id;
         it('get all jobs', function(done) {
-            superagent.get(prefix + '/workspaces/1/1/jobs')
+            superagent.get(prefix + '/workspaces/-2/1')
                 .send()
+                .auth('-2', 'Igd7en1_VCMP59pBpmEF')
                 .end(function (e, res) {
                     expect(e).to.eql(null);
                     expect(res.header['content-type']).to.eql('application/json; charset=utf-8');
