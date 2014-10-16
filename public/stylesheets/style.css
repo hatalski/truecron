@@ -410,3 +410,14 @@ a {
 .archevedtask {
     color: #c9c9cb;
 }
+
+/*table body dashboard*/
+.bodydashboard {
+    width: 100%;
+
+}
+.tdbodydashboard {
+    max-width: 600px;
+    vertical-align: top;
+}
+/*table body dashboard*/

@@ -1,43 +1,51 @@
 var superagent = require('superagent');
 var expect     = require('expect.js');
 var config     = require('../lib/config.js');
-var prefix     = config.get('API_HOST') || 'http://localhost:3000/api/v1';
 var log        = require('../lib/logger.js');
+var prefix     = config.get('API_HOST') || 'http://localhost:3000/api/v1';
+
 log.info('API tests prefix: ' + prefix);
-var pg = require('pg');
 
-var conString = "postgres://" +
-    config.get('POSTGRE_USERNAME') +
-    ":" + config.get('POSTGRE_PASSWORD') + "@" +
-    config.get('POSTGRE_HOST') +
-    ":" + config.get('POSTGRE_PORT')
-    + "/" + config.get('POSTGRE_DATABASE');
-log.info('PG connection string: ' + conString);
-
-describe('TEST API',
+describe('USERS API',
     function() {
-        it('test', function(done) {
-            superagent.get(prefix + '/echo')
+//        it('create a new user', function (done) {
+//            superagent.post(prefix + '/users')
+//                .set('Content-Type', 'application/json')
+//                .send({ 'user': {'name': "Alice", 'password': "P@ssw0rd"} })
+//                .auth('-2', 'Igd7en1_VCMP59pBpmEF')
+//                .end(function (e, res) {
+//                    expect(e).to.eql(null);
+//                    console.dir(res.body);
+//                    expect(res.header['content-type']).to.eql('application/json; charset=utf-8');
+//                    expect(res.body.error).to.eql(undefined);
+//                    expect(res.status).to.eql(201);
+//                    done();
+//                });
+//        });
+        it('get list of users', function (done) {
+            superagent.get(prefix + '/users')
                 .send()
+                .auth('-2', 'Igd7en1_VCMP59pBpmEF')
                 .end(function (e, res) {
                     expect(e).to.eql(null);
+                    expect(res.header['content-type']).to.eql('application/json; charset=utf-8');
+                    expect(res.body.error).to.eql(undefined);
                     expect(res.status).to.eql(200);
-                    expect(res.body.message).to.eql('OK');
                     done();
                 });
         });
-    }
-);
-
-describe('DB CONNECTION TEST',
-    function() {
-        it('can connect', function(done) {
-            pg.connect(conString, function(err, client, d) {
-                expect(err).to.eql(null);
-                expect(client).to.be.an('object');
-                done();
-            });
-        });
+//        it('get user by id', function (done) {
+//            superagent.get(prefix + '/users/1')
+//                .send()
+//                .auth('-2', 'Igd7en1_VCMP59pBpmEF')
+//                .end(function (e, res) {
+//                    expect(e).to.eql(null);
+//                    expect(res.header['content-type']).to.eql('application/json; charset=utf-8');
+//                    expect(res.body.error).to.eql(undefined);
+//                    expect(res.status).to.eql(200);
+//                    done();
+//                });
+//        });
     }
 );
 
