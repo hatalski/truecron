@@ -11,7 +11,7 @@ describe('USERS API',
         it('create a new user', function (done) {
             superagent.post(prefix + '/users')
                 .set('Content-Type', 'application/json')
-                .send({"name": "Alice", "password": "P@ssw0rd"})
+                .send({ "user": {"name": "Alice", "password": "P@ssw0rd"} })
                 .auth('-2', 'Igd7en1_VCMP59pBpmEF')
                 .end(function (e, res) {
                     expect(e).to.eql(null);
