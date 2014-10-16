@@ -4,7 +4,8 @@
 .fa-bars,
 .fa-plus,
 .fa-pencil,
-.fa-sign-out {
+.fa-sign-out,
+.fa-times {
     color: #ff982f;
 }
 
@@ -93,4 +94,14 @@
     text-align: left;
     background-color: white;
     border: 0px;
+}
+/* smtp task style*/
+
+textarea {
+    resize: none;
+    border: solid 1px #13afc8;
+}
+
+.aligntop {
+    valign: top;
 }
