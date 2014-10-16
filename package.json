@@ -3,7 +3,8 @@
   "version": "0.0.1",
   "private": true,
   "scripts": {
-    "start": "supervisor --force-watch -i public --debug server.js"
+    "start": "supervisor --force-watch -i public --debug server.js",
+    "test": "mocha test -R spec --timeout 3000"
   },
   "dependencies": {
     "basic-auth": "~1.0.0",
