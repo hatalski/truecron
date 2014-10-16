@@ -4,7 +4,7 @@
     "POSTGRE_HOST": "prdb.truecron.com",
     "POSTGRE_PORT": 5432,
     "POSTGRE_DATABASE": "truecron",
-    "REDIS_HOST": "localhost",
+    "REDIS_HOST": "stcache.vago4d.0001.use1.cache.amazonaws.com",
     "REDIS_PORT": 6379,
     "COOKIE_DOMAIN": "truecron.com",
     "GOOGLE_SSO_CLIENT_ID": "584720647348-sfa16c6nriakjntd90qh05togeigs6co.apps.googleusercontent.com",
