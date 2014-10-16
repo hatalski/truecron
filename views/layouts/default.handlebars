@@ -12,9 +12,6 @@
     </head>
     <body>
 
-    {{#if pages}}
-        {{{body}}}{{!-- dv: server-side template --}}
-    {{else}}
     {{!-- dv: TODO: move this to application.handlebars --}}
     <script type="text/x-handlebars">
         \{{#if controllers.signin.isSignedIn}}
@@ -94,21 +91,20 @@
                 </div>
             </div>
         \{{else}}
-            \{{partial "interface-menu-top"}}
+            <!--\{{partial "interface-menu-top"}}
             <div class="backglp">{{!--background image--}}
                 <div class="container-fluid">
                     <div class="formlp">{{!--form block content--}}
                         <div> {{!--form with content--}}
-                            <div class="heightblock"></div>
+                            <div class="heightblock"></div>-->
                             {{{body}}}{{!-- dv: server-side template --}}
                             \{{outlet}}{{!-- dv: place for client-side partials --}}
-                        </div>
+                        <!--</div>
                     </div>
                 </div>
-            </div>
+            </div>-->
         \{{/if}}
     </script>
-    {{/if}}
 
     {{!-- dv: register your client-side partials here. In alphabetical order!!! --}}
     {{rawinclude "views/partials/about.handlebars"}}
@@ -123,6 +119,7 @@
     {{> signin}}
     {{> signup}}
     {{> status}}
+    {{rawinclude "views/partials/teaser.handlebars"}}
     {{> terms}}
     {{!-- dv: end of place for client-side partials --}}
 
@@ -136,7 +133,6 @@
     <script type="text/javascript" src="/bower_components/ember-data/ember-data.js"></script>
     <script type="text/javascript" src="/bower_components/ember-addons.bs_for_ember/dist/js/bs-core.min.js"></script>
     <script type="text/javascript" src="/bower_components/ember-addons.bs_for_ember/dist/js/bs-modal.min.js"></script>
-    {{#unless  pages}}{{!-- dv: this is temporary hack. We must decide we have SinglePageApplication or we have hybrid application --}}
     {{!-- application --}}
     <script type="text/javascript" src="/js/app.js"></script>
     {{!-- dv: alphabetical order for modules --}}
@@ -145,6 +141,5 @@
     <script type="text/javascript" src="/js/components/active-li.js"></script>
     <script type="text/javascript" src="/js/lib/handlebars-helpers.js"></script>
     {{!-- /components --}}
-    {{/unless }}
     </body>
 </html>
