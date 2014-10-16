@@ -1,15 +1,15 @@
 FORMAT: 1A
-HOST: https://www.truecron.com/v1
+HOST: https://www.truecron.com/api/v1
 
 # TrueCron API
 TrueCron is an *enterprise strength cloud based cron service*. 
 
 
 TrueCron provides a REST-style API with defined resources URIs, HTTP verbs and response codes. The API is accessible 
-via `https://www.truecron.com/v1`. HTTPS is the only supported transport.
+via `https://www.truecron.com/api/v1`. HTTPS is the only supported transport.
 
 ## API versions
-Current version is `v1` and it is encoded as a part of URI: https://www.truecron.com/v1. 
+Current version is `v1` and it is encoded as a part of URI: https://www.truecron.com/api/v1. 
 This endpoint is guaranteed to be compatible with all `v1` clients. New endpoints will be introduced 
 (`v2`, `v3`, etc.) for breacking changes.
 
@@ -18,7 +18,7 @@ The API returns resources and collection of resources in JSON format,
 with a ContentType `application/json` and UTF-8 encoding. 
 There are two ways to pass parameters to API:
 
-- For `GET` requests parameters are passed as part of a query string: `/v1/jobs?archived`.
+- For `GET` requests parameters are passed as part of a query string: `/api/v1/jobs?archived`.
 - For `POST`, `PUT` requests parameters are passed as JSON objects.
 
     ```
