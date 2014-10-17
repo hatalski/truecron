@@ -146,6 +146,9 @@ app.get('/smtptask', function (req, res) {
     res.sendfile('smtptask.html');
 });
 
+app.get('/archivetask', function (req, res) {
+    res.sendfile('archivetask.html');
+});
 
 /// catch 404 and forward to error handler
 app.use(function(req, res, next) {
