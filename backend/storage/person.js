@@ -148,17 +148,17 @@ var create = module.exports.create = Promise.method(function (attributes) {
         })
         .then(function (person) {
             this.person = person;
-            return history.logCreated(-1, getPersonIdCacheKey(person.Id), person, this.tx);
+            return history.logCreated(-1, getPersonIdCacheKey(person.id), person, this.tx);
         })
         .then(function () {
             return this.tx.commit();
         })
         .then(function () {
-            cache.put(getPersonIdCacheKey(person.id), this.person);
+            cache.put(getPersonIdCacheKey(this.person.id), this.person);
             return this.person;
         })
         .catch(function(err) {
-            logger.error('Failed to create a person, %j.', err);
+            logger.log('error', 'Failed to create a person, %s.', err.toString());
             if (this.tx) {
                 this.tx.rollback();
             }
@@ -187,11 +187,11 @@ var update = module.exports.update = Promise.method(function (id, attributes) {
                 throw new errors.NotFound();
             }
             this.oldPerson = person;
-            return person.updateAttributes(this.attrs, { transaction: tx });
+            return person.updateAttributes(this.attrs, { transaction: this.tx });
         })
         .then(function (person) {
             this.person = person;
-            return history.logUpdated(-1, getPersonIdCacheKey(person.Id), person, this.oldPerson, this.tx);
+            return history.logUpdated(-1, getPersonIdCacheKey(person.id), person, this.oldPerson, this.tx);
         })
         .then(function () {
             return this.tx.commit();
@@ -201,7 +201,7 @@ var update = module.exports.update = Promise.method(function (id, attributes) {
             return this.person;
         })
         .catch(function(err) {
-            logger.error('Failed to update a person, %j.', err);
+            logger.error('Failed to update the person %d. %s.', id, err.toString());
             if (this.tx) {
                 this.tx.rollback();
             }
@@ -220,6 +220,7 @@ var remove = module.exports.remove = Promise.method(function (id) {
                 // No found, that's ok for remove() operation
                 return;
             }
+
             this.person = person;
             return models.transaction()
             .then(function (tx) {
@@ -227,17 +228,17 @@ var remove = module.exports.remove = Promise.method(function (id) {
                 return this.person.destroy({ transaction: this.tx });
             })
             .then(function () {
-                return history.logRemoved(-1, getPersonIdCacheKey(this.person.Id), this.person, this.tx);
+                return history.logRemoved(-1, getPersonIdCacheKey(this.person.id), this.person, this.tx);
             })
             .then(function () {
-                this.tx.commit()
-                .then(function () {
-                    cache.remove(getPersonIdCacheKey(this.person.id),
-                                 getEmailsByPersonIdCacheKey(this.person.id));
-                })
+                return this.tx.commit();
+            })
+            .then(function () {
+                cache.remove(getPersonIdCacheKey(this.person.id),
+                             getEmailsByPersonIdCacheKey(this.person.id));
             })
             .catch(function(err) {
-                logger.error('Failed to remove the person %j, %j.', id, err);
+                logger.error('Failed to remove the person %d, %s.', id, err.toString());
                 if (this.tx) {
                     this.tx.rollback();
                 }
@@ -257,7 +258,7 @@ var getEmails = module.exports.getEmails = Promise.method(function (personId, op
             if (result.found) {
                 return result.value;
             }
-            options = _.extend({ order: 'id'}, options);
+            options = _.extend({ order: 'id' }, options);
             options.where = _.extend({}, options.where, { personId: personId });
             return models.PersonEmail.findAndCountAll(options)
                 .then(function (result) {
@@ -310,7 +311,7 @@ var addEmail = module.exports.addEmail = Promise.method(function (personId, attr
             return this.result;
         })
         .catch(function(err) {
-            logger.error('Failed to add an email, %j.', err);
+            logger.error('Failed to add a email for person %d, %s.', personId, err.toString());
             if (this.tx) {
                 this.tx.rollback();
             }
@@ -369,7 +370,7 @@ var changeEmailStatus = module.exports.changeEmailStatus = Promise.method(functi
             return this.email;
         })
         .catch(function(err) {
-            logger.error('Failed to update a status of email %j, %j.', emailIdOrValue, err);
+            logger.error('Failed to update a status of email %s of the person %d, %s.', emailIdOrValue, personId, err.toString());
             if (this.tx) {
                 this.tx.rollback();
             }
@@ -391,15 +392,15 @@ var removeEmail = module.exports.removeEmail = Promise.method(function (personId
             this.email = email;
             return this.email.destroy({ transaction: this.tx })
                 .then(function () {
-                    cache.remove(getEmailsByPersonIdCacheKey(personId), getPersonIdByEmailCacheKey(email));
-                    return history.log(-1, getPersonIdCacheKey(personId), 'email-remove', { email: email }, email, this.tx);
+                    cache.remove(getEmailsByPersonIdCacheKey(personId), getPersonIdByEmailCacheKey(this.email));
+                    return history.log(-1, getPersonIdCacheKey(personId), 'email-remove', { email: this.email }, this.email, this.tx);
                 })
                 .then(function () {
                     this.tx.commit();
                 });
         })
         .catch(function(err) {
-            logger.error('Failed to remove the email %j, %j.', emailIdOrValue, err);
+            logger.error('Failed to remove the email %s from person %d, %s.', emailIdOrValue, personId, err.toString());
             if (this.tx) {
                 this.tx.rollback();
             }
