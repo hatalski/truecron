@@ -12,7 +12,7 @@
                                 {{input class="form-control" value="login" valueBinding="login" type="email" placeholder="Email" required="required"}}
                                 {{input class="form-control" value="password" valueBinding="password" type="password" placeholder="Password" required="required"}}
                                 <input type="button" {{action "signin"}} class="btn btn-signin" value="SIGN IN">
-                                <input type="button" class="btn btn-signup" value="SIGN UP">
+                                <input type="button" {{action "signup"}} class="btn btn-signup" value="SIGN UP">
                             </form>
                         </div>
             </div>
@@ -43,8 +43,8 @@
                             <div class="container">
                                 <h2>Interested?</h2>
                                 <p>Leave your e-mail address to get notified when we are live.</p>
-                                <p><input type="email" class="form-control" placeholder="Email"></p>
-                                <p><input type="button" class="btn btn-signup" value="SIGN UP"></p>
+                                <p>{{input class="form-control" value="email" valueBinding="email" type="email" placeholder="Email" required="required"}}</p>
+                                <p><input type="button" {{action "signup"}} class="btn btn-signup" value="SIGN UP"></p>
                             </div>
                         </div>
                     </div>
@@ -53,13 +53,13 @@
                     </div>
                 </div>
             </div>
-            <h2 class="problem-definition-header">What is TRUE CRON?</h2>
+            <h2 class="problem-definition-header">What is TRUECRON?</h2>
          </div>
     </div>
     <div class="middle_grey">
         <div class="container-fluid">
             <div class="jumbotron">
-                <p>True Cron is the scheduler you have been waiting for.</p>
+                <p>TrueCron is the scheduler you have been waiting for.</p>
                 <p>It is the way the scheduler should have been built, but was not.</p>
             </div>
         </div>

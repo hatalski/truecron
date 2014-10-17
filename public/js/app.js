@@ -216,8 +216,18 @@ App.TeaserController = Ember.Controller.extend({
         signinController.set('password', this.get('password'));
         signinController.signin();
         return true;
-    }
+    },
 
+    signup: function() {
+        var self = this, email = this.get('email');
+
+        // Clear out any error messages.
+        this.set('errorMessage', null);
+        $.post('/beta/signup', data).then(function(response) {
+            self.set('errorMessage', response.message);
+            return response.success;
+        });
+    }
 });
 
 App.TeaserRoute = App.GuestOnlyRoute.extend({
