@@ -17,7 +17,8 @@ function personToUser(person) {
     user._links = {
         self: selfUrl,
         organizations: selfUrl + '/organizations',
-        history: selfUrl + '/history'
+        history: selfUrl + '/history',
+        emails: selfUrl + '/emails'
     };
     delete user.passwordHash;
     return { user: user };
@@ -41,6 +42,7 @@ api.route('/users')
     // List of users
     //
     .get(common.parseListParams, function (req, res, next) {
+
         var where = {};
         if (!!req.listParams.searchTerm) {
             where = { name: { like: req.listParams.searchTerm } };
@@ -53,7 +55,7 @@ api.route('/users')
             limit: req.listParams.limit,
             offset: req.listParams.offset
         }).then(function (result) {
-            res.json({
+                res.json({
                 users: result.rows.map(personToUser),
                 meta: {
                     total: result.count
@@ -72,7 +74,7 @@ api.route('/users')
             res.status(201).json(personToUser(person));
         })
         .catch(function (err) {
-            logger.error(err);
+            logger.error(err.toString());
             return next(new apiErrors.InvalidParams(err));
         });
     });
