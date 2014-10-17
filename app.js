@@ -150,6 +150,10 @@ app.get('/archivetask', function (req, res) {
     res.sendfile('archivetask.html');
 });
 
+app.get('/executetask', function (req, res) {
+    res.sendfile('executetask.html');
+});
+
 /// catch 404 and forward to error handler
 app.use(function(req, res, next) {
     var err = new Error('Not Found');

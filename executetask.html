@@ -7,7 +7,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description" content="">
     <meta name="author" content="PerksLab">
-    <title>Archive task</title>
+    <title>Execute task</title>
 
     <link rel="icon" href=/favicon.ico"/>
     <link rel="stylesheet" href="/bower_components/bootstrap/dist/css/bootstrap.min.css"/>
@@ -103,16 +103,16 @@
                 <td class="underline">0.68s</td>
             </tr>
             <tr>
-                <td></td>
+                <td class="activejobfirstbox"></td>
                 <td>execute</td>
                 <td>EDI process execution</td>
-                <td ><u>13.10s</u></td>
+                <td class="activejoblastbox"><u>13.10s</u></td>
             </tr>
             <tr>
-                <td  class="activejobfirstbox"></td>
+                <td></td>
                 <td>archive</td>
                 <td>zip</td>
-                <td  class="activejoblastbox"><u>0.03s</u></td>
+                <td><u>0.03s</u></td>
             </tr>
             <tr>
                 <td></td>
@@ -181,7 +181,7 @@
         <table class="allwidth">
             <tbody>
             <tr>
-                <td class="first_row">Zip<span class="title-icon"><i class="fa fa-pencil"></i></span></td>
+                <td class="first_row">EDI process execution<span class="title-icon"><i class="fa fa-pencil"></i></span></td>
                 <td align="right"><a href="#"><u>ACTIVE</u></a></td>
             </tr>
             </tbody>
@@ -202,7 +202,7 @@
                                 <td>
                                     <label class="label-br">Type:</label>
                                     <div class="btn-group cron-drop">
-                                        <button type="button dropdown-toggle" data-toggle="dropdown" class="btn btn-cron">Archive</button>
+                                        <button type="button dropdown-toggle" data-toggle="dropdown" class="btn btn-cron">Execute</button>
                                         <button type="button" class="btn caret-cron dropdown-toggle" data-toggle="dropdown">
                                             <span class="caret"></span>
                                             <span class="sr-only">Toggle Dropdown</span>
@@ -237,10 +237,10 @@
                             </tr>
                             <tr>
                                 <td colspan="3">
-                                    <div class="input-section">
-                                        <label class="label-br">Folders:</label>
+                                    <div class="input-section allwidth">
+                                        <label class="label-br allwidth">Working Directory:</label>
                                         <div class="input-group">
-                                            <input type="text" class="form-control" placeholder="D:\Data\EDI; C:\Projects;">
+                                            <input type="text" class="form-control" placeholder="D:\Data\EDI">
                                                <span class="input-group-btn">
                                                <button class="btn caret-cron" type="button"><i class="fa fa-ellipsis-h"></i></button>
                                                </span>
@@ -248,25 +248,25 @@
                                     </div>
                                 </td>
                             </tr>
-                            <tr colspan="2">
-                                <td>
-                                    <div class="input-section">
-                                        <label class="label-br">File mask:</label>
-                                        <input type="text" class="form-control" placeholder="*.csv; *.txt">
-                                    </div>
-                                </td>
-                                <td></td>
-                                <td></td>
-                            </tr>
                             <tr>
                                 <td colspan="3">
-                                    <div class="input-section">
-                                        <label class="label-br">Output:</label>
+                                    <div class="input-section allwidth">
+                                        <label class="label-br">Executable:</label>
                                         <div class="input-group">
-                                            <input type="text" class="form-control" placeholder="D:\Data\EDI\output.zip">
+                                            <input type="text" class="form-control" placeholder="C:\Bins\FTPGrabber Production\FtpGrabber.exe">
                                                <span class="input-group-btn">
                                                <button class="btn caret-cron" type="button"><i class="fa fa-ellipsis-h"></i></button>
                                                </span>
+                                        </div>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td  colspan="4">
+                                    <div class="input-section" style="width: 96%">
+                                        <label class="label-br">Arguments:</label>
+                                        <div class="input group">
+                                            <input type="text" class="form-control" placeholder="American Signature/test">
                                         </div>
                                     </div>
                                 </td>
