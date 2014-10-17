@@ -7,7 +7,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description" content="">
     <meta name="author" content="PerksLab">
-    <title>Smtp task</title>
+    <title>Execute task</title>
 
     <link rel="icon" href=/favicon.ico"/>
     <link rel="stylesheet" href="/bower_components/bootstrap/dist/css/bootstrap.min.css"/>
@@ -15,8 +15,7 @@
     <link rel="stylesheet" href="/bower_components/font-awesome/css/font-awesome.min.css"/>
     <link rel="stylesheet" href="/stylesheets/style.css"/>
 
-    <link rel="stylesheet" href="/stylesheets/taskdetails.css"/>
-    <link rel="stylesheet" href="/stylesheets/smtptask.css"/>
+    <link rel="stylesheet" href="/stylesheets/archivetask.css"/>
 
     <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
     <!--<script src="../../assets/js/ie10-viewport-bug-workaround.js"></script>-->
@@ -104,28 +103,28 @@
                 <td class="underline">0.68s</td>
             </tr>
             <tr>
-                <td></td>
+                <td class="activejobfirstbox"></td>
                 <td>execute</td>
                 <td>EDI process execution</td>
-                <td ><u>13.10s</u></td>
+                <td class="activejoblastbox"><u>13.10s</u></td>
             </tr>
             <tr>
-                <td class="icon-row"></td>
+                <td></td>
                 <td>archive</td>
                 <td>zip</td>
-                <td class="underline">0.03s</td>
+                <td><u>0.03s</u></td>
             </tr>
             <tr>
-                <td></i></td>
+                <td></td>
                 <td>copy</td>
                 <td>copy files to FTP</td>
                 <td><u>3.01s</u></td>
             </tr>
             <tr>
-                <td class="activejobfirstbox"><span class="alert-icon"><i class="fa fa-exclamation-circle"></i></span></td>
+                <td><span class="alert-icon"><i class="fa fa-exclamation-circle"></i></span></td>
                 <td>email</td>
                 <td>send notification</td>
-                <td class="red_row  activejoblastbox"><u>30.04s</u></td>
+                <td class="red_row"><u>30.04s</u></td>
             </tr>
             <tr class="archevedtask">
                 <td></td>
@@ -177,12 +176,12 @@
         </table>
     </div>
 </div><!--end class "span6" #1-->
-<div class="col-md-6 divborderright"><!--right part-->
+<div class="col-md-6 divborderright"><!--RIGHT part-->
     <div class="hiddendiv">
         <table class="tabletaskdetails">
             <tbody>
             <tr>
-                <td class="first_row">Send Notification<span class="title-icon"><i class="fa fa-pencil"></i></span></td>
+                <td class="first_row">EDI process execution<span class="title-icon"><i class="fa fa-pencil"></i></span></td>
                 <td align="right"><a href="#"><u>ACTIVE</u></a></td>
             </tr>
             </tbody>
@@ -198,101 +197,82 @@
                 </div><br>
                 <div id="collapseThree" class="accordion-body collapse in">
                     <div class="accordion-inner">
-                        <label class="label-br">Type:</label>
-                        <div class="btn-group cron-drop">
-                            <button type="button dropdown-toggle" data-toggle="dropdown" class="btn btn-cron">Email</button>
-                            <button type="button" class="btn caret-cron dropdown-toggle" data-toggle="dropdown">
-                                <span class="caret"></span>
-                                <span class="sr-only">Toggle Dropdown</span>
-                            </button>
-                            <ul class="dropdown-menu" role="menu">
-                                <li><a href="#">Archive</a></li>
-                                <li><a href="#">Another action</a></li>
-                                <li><a href="#">Something else here</a></li>
-                                <li class="divider"></li>
-                                <li><a href="#">Separated link</a></li>
-                            </ul>
-                        </div>
-                        <hr>
-                        <table width="100%">
+                        <table class="allwidth" border="1">
                             <tr>
                                 <td>
-                                    <label class="label-br">Connection:</label>
+                                    <label class="label-br">Type:</label>
                                     <div class="btn-group cron-drop">
-                                        <button type="button dropdown-toggle" data-toggle="dropdown" class="btn btn-cron">AWS SES</button>
+                                        <button type="button dropdown-toggle" data-toggle="dropdown" class="btn btn-cron">Execute</button>
                                         <button type="button" class="btn caret-cron dropdown-toggle" data-toggle="dropdown">
                                             <span class="caret"></span>
                                             <span class="sr-only">Toggle Dropdown</span>
                                         </button>
                                         <ul class="dropdown-menu" role="menu">
-                                            <li><a href="#">smtp</a></li>
-                                            <li><a href="#">ftp</a></li>
-                                            <li><a href="#">type#3</a></li>
+                                            <li><a href="#">Archive</a></li>
+                                            <li><a href="#">Another action</a></li>
+                                            <li><a href="#">Something else here</a></li>
                                             <li class="divider"></li>
                                             <li><a href="#">Separated link</a></li>
                                         </ul>
                                     </div>
                                 </td>
-                                <td> &nbsp;</td>
-                                <td></td>
-                            </tr>
-                            <tr>
+                                <td width="10%"></td>
                                 <td>
-                                    <br><label class="label-br">Recipients:</label>
-                                </td>
-                                <td width="10%">&nbsp;</td>
-                                <td>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td><img src="img/eml.png"></td>
-                            </tr>
-                            <tr valign="bottom">
-                                <td colspan="3">
-                                    <div class="input-section">
-                                        <label class="label-br">From:</label>
-                                        <input type="text" class="form-control" placeholder="client.notifications@ccron.com">
+                                    <label class="label-br">Connection:</label>
+                                    <div class="btn-group cron-drop">
+                                        <button type="button dropdown-toggle" data-toggle="dropdown" class="btn btn-cron">Local</button>
+                                        <button type="button" class="btn caret-cron dropdown-toggle" data-toggle="dropdown">
+                                            <span class="caret"></span>
+                                            <span class="sr-only">Toggle Dropdown</span>
+                                        </button>
+                                        <ul class="dropdown-menu" role="menu">
+                                            <li><a href="#">create new...</a></li>
+                                            <li><a href="#">Another action</a></li>
+                                            <li><a href="#">Something else here</a></li>
+                                            <li class="divider"></li>
+                                            <li><a href="#">Separated link</a></li>
+                                        </ul>
                                     </div>
                                 </td>
                             </tr>
-                            <tr valign="bottom">
+                            <tr>
                                 <td colspan="3">
                                     <div class="input-section">
-                                        <label class="label-br">Subject:</label>
-                                        <input type="text" class="form-control" placeholder="American Signature Invoice File is Availabl - {DATE(MM/DD/YYYY)}">
+                                        <label class="label-br">Working Directory:</label>
+                                        <div class="input-group">
+                                            <input type="text" class="form-control" placeholder="D:\Data\EDI">
+                                               <span class="input-group-btn">
+                                               <button class="btn caret-cron" type="button"><i class="fa fa-ellipsis-h"></i></button>
+                                               </span>
+                                        </div>
                                     </div>
                                 </td>
                             </tr>
-                            <tr valign="bottom">
+                            <tr>
                                 <td colspan="3">
+                                    <div class="input-section" style="width: 100%">
+                                        <label class="label-br">Executable:</label>
+                                        <div class="input-group">
+                                            <input type="text" class="form-control" placeholder="C:\Bins\FTPGrabber Production\FtpGrabber.exe">
+                                               <span class="input-group-btn">
+                                               <button class="btn caret-cron" type="button"><i class="fa fa-ellipsis-h"></i></button>
+                                               </span>
+                                        </div>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr colspan="4">
+                                <td>
                                     <div class="input-section">
-                                        <label class="label-br">Body:</label>
-                                        <textarea rows="7" cols="100%">
-                                            Invoice file is available for processing
-                                            Summary:
-                                            Number Of Invoices: <Total number of invoices>
-                                            Total Vendor Amount: <Total invoice amount>
-                                        </textarea>
+                                        <label class="label-br">Arguments:</label>
+                                        <div class="input group">
+                                            <input type="text" class="form-control" placeholder="American Signature/test">
+                                        </div>
+
                                     </div>
                                 </td>
                             </tr>
                         </table>
-                        <table class="allwidth"><!--start table with drag&drop element-->
-                            <tr>
-                                <td colspan="3"><label class="label-br">Attachments:</label></td>
-                            </tr>
-                            <tr>
-                                <td rowspan="2" style="width: 274px;"><img src="img/dndform.png"></td>
-                                <td align="left" valign="top">&nbsp;&nbsp;Attachment1.txt &nbsp;<i class="fa fa-times"></i>
-                                    <br>&nbsp;&nbsp;Attachment2.txt &nbsp;<i class="fa fa-times"></i>
-                                    <p>&nbsp;&nbsp;<button type="button" class="btn btn-default">Choose file</button></p>
-                                </td>
-                                <br>
-                                <td></td>
-                            </tr>
-                            <tr><td></td>
-                                <td></td></tr>
-                        </table><!--end table with drag&drop element-->
                         <hr>
                         <label class="label-br">Failure conditions:</label>
                         <table>
@@ -327,37 +307,37 @@
                             </tr>
                         </table>
                     </div><!--internal element accordion end-->
-                    </div>
                 </div>
-            </div><br><hr><!--end start part1 accordion3-->
-            <div class="accordion-group">
-                <div class="accordion" id="accordion4">
-                    <div class="accordion-group"><!--start part1 accordion4-->
-                        <div class="accordion-heading">
-                            <button class="accordion-toggle buttonaccordion" data-toggle="collapse" data-parent="#accordion4" href="#collapseFive">
-                                <span class="title-icon"><i class="fa fa-chevron-right"></i>Output</span>
-                            </button>
-                        </div>
-                        <div id="collapseFive" class="accordion-body collapse in">
-                            <div class="accordion-inner">
-                                <div><br><br>
-                                    <p>
-                                    <h5> Clean Folder, Monday, May 26th, duration: 0.68s</h5>
-                                    </p>
-                                    <p>
-                                        Lorem ipsum dolor sit amet, con sectetur adipisicing elit, sed do eiusmod tempor
-                                        incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud
-                                        exertition, unllamco laboris nisi ut aliquip ex ea commodo concequat. Duis aute irure
-                                        dolor in reprehenderit in volupdate velit esse cillum dolore eu fugiat nulla pariatur.
-                                    </p>
-                                </div>
+            </div>
+        </div><br><hr><!--end start part1 accordion3-->
+        <div class="accordion-group">
+            <div class="accordion" id="accordion4">
+                <div class="accordion-group"><!--start part1 accordion4-->
+                    <div class="accordion-heading">
+                        <button class="accordion-toggle buttonaccordion" data-toggle="collapse" data-parent="#accordion4" href="#collapseFive">
+                            <span class="title-icon"><i class="fa fa-chevron-right"></i>Output</span>
+                        </button>
+                    </div>
+                    <div id="collapseFive" class="accordion-body collapse in">
+                        <div class="accordion-inner">
+                            <div><br><br>
+                                <p>
+                                <h5> Clean Folder, Monday, May 26th, duration: 0.68s</h5>
+                                </p>
+                                <p>
+                                    Lorem ipsum dolor sit amet, con sectetur adipisicing elit, sed do eiusmod tempor
+                                    incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud
+                                    exertition, unllamco laboris nisi ut aliquip ex ea commodo concequat. Duis aute irure
+                                    dolor in reprehenderit in volupdate velit esse cillum dolore eu fugiat nulla pariatur.
+                                </p>
                             </div>
                         </div>
-                    </div><!--end dummy--><hr>
-                </div>
+                    </div>
+                </div><!--end dummy--><hr>
             </div>
         </div>
     </div>
+</div>
 </div><!--end class "span6" #2-->
 </div>
 </div><!--end class "row"-->
