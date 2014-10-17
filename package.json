@@ -38,6 +38,7 @@
     "mocha": "1.21.4",
     "superagent": "0.20.0",
     "expect.js": "0.3.1",
-    "validator": "3.21.0"
+    "validator": "3.21.0",
+    "randomstring": "1.0.3"
   }
 }
