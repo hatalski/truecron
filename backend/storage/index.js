@@ -34,8 +34,8 @@ Storage.prototype.initialize = Promise.method(function initialize() {
 
     this.Person = require('./person');
     this.Jobs = require('./jobs');
-    this.Organization = require('./organization');
-    this.Workspace = require('./workspace');
+    //this.Organization = require('./organization');
+    //this.Workspace = require('./workspace');
 
     return db.upgradeDatabaseIfNeeded(databaseOptions);
 });
