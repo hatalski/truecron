@@ -4,6 +4,7 @@
 var superagent = require('superagent');
 var expect     = require('expect.js');
 var validator  = require('validator');
+var random     = require("randomstring");
 var config     = require('../lib/config.js');
 var log        = require('../lib/logger.js');
 var prefix     = config.get('API_HOST') || 'http://localhost:3000/api/v1';
@@ -157,6 +158,96 @@ describe('USERS API',
                     expect(res.body.error.status).to.eql(400);
                     expect(res.body.error.message).to.eql("Invalid parameters");
                     expect(res.status).to.eql(400);
+                    done();
+                });
+        });
+        it('add email to user with empty body should fail', function (done) {
+            superagent.post(prefix + '/users/' + id_to_delete + '/emails')
+                .set('Content-Type', 'application/json')
+                .send({})
+                .auth('-2', 'Igd7en1_VCMP59pBpmEF')
+                .end(function (e, res) {
+                    expect(e).to.eql(null);
+                    expect(res.header['content-type']).to.eql('application/json; charset=utf-8');
+                    expect(res.body.error).to.be.an('object');
+                    expect(res.body.error.status).to.eql(400);
+                    expect(res.body.error.message).to.eql("Invalid parameters");
+                    expect(res.status).to.eql(400);
+                    done();
+                });
+        });
+        it('add email to user with invalid email should fail', function (done) {
+            superagent.post(prefix + '/users/' + id_to_delete + '/emails')
+                .set('Content-Type', 'application/json')
+                .send({ 'email': 'invalid@email'})
+                .auth('-2', 'Igd7en1_VCMP59pBpmEF')
+                .end(function (e, res) {
+                    expect(e).to.eql(null);
+                    expect(res.header['content-type']).to.eql('application/json; charset=utf-8');
+                    expect(res.body.error).to.be.an('object');
+                    expect(res.body.error.status).to.eql(400);
+                    expect(res.body.error.message).to.eql("Invalid parameters. Invalid email");
+                    expect(res.status).to.eql(400);
+                    done();
+                });
+        });
+        var email_id_to_delete;
+        var random_email = random.generate(10) + "@truecron.com";
+        it('add email to user', function (done) {
+            superagent.post(prefix + '/users/' + id_to_delete + '/emails')
+                .set('Content-Type', 'application/json')
+                .send({ 'email': random_email })
+                .auth('-2', 'Igd7en1_VCMP59pBpmEF')
+                .end(function (e, res) {
+                    expect(e).to.eql(null);
+                    expect(res.header['content-type']).to.eql('application/json; charset=utf-8');
+                    expect(res.body.error).to.eql(undefined);
+                    email_id_to_delete = res.body.email.id;
+                    expect(res.body.email.id).to.be.a('number');
+                    expect(res.body.email.email).to.eql(random_email);
+                    expect(res.body.email.status).to.eql('pending');
+                    expect(res.status).to.eql(201);
+                    done();
+                });
+        });
+        it('get user email by id', function (done) {
+            superagent.get(prefix + '/users/' + id_to_delete + '/emails/' + email_id_to_delete)
+                .send()
+                .auth('-2', 'Igd7en1_VCMP59pBpmEF')
+                .end(function (e, res) {
+                    expect(e).to.eql(null);
+                    expect(res.header['content-type']).to.eql('application/json; charset=utf-8');
+                    expect(res.body.error).to.eql(undefined);
+                    expect(res.body.email.id).to.be.a('number');
+                    expect(res.body.email.email).to.eql(random_email);
+                    expect(res.body.email.status).to.eql('pending');
+                    expect(res.status).to.eql(200);
+                    done();
+                });
+        });
+        it('get all user emails', function (done) {
+            superagent.get(prefix + '/users/' + id_to_delete + '/emails')
+                .send()
+                .auth('-2', 'Igd7en1_VCMP59pBpmEF')
+                .end(function (e, res) {
+                    expect(e).to.eql(null);
+                    expect(res.header['content-type']).to.eql('application/json; charset=utf-8');
+                    expect(res.body.error).to.eql(undefined);
+                    expect(res.body.emails).to.have.length(1);
+                    expect(res.body.meta.total).to.be.a('number');
+                    expect(res.status).to.eql(200);
+                    done();
+                });
+        });
+        it('delete user email', function (done) {
+            superagent.del(prefix + '/users/' + id_to_delete + '/emails/' + email_id_to_delete)
+                .send()
+                .auth('-2', 'Igd7en1_VCMP59pBpmEF')
+                .end(function (e, res) {
+                    expect(e).to.eql(null);
+                    expect(res.header['content-type']).to.eql('application/json; charset=utf-8');
+                    expect(res.body.error).to.eql(undefined);
+                    expect(res.status).to.eql(204);
                     done();
                 });
         });
