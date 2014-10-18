@@ -223,9 +223,9 @@ App.TeaserController = Ember.Controller.extend({
 
         // Clear out any error messages.
         this.set('errorMessage', null);
-        $.post('/beta/signup', data).then(function(response) {
-            self.set('errorMessage', response.message);
-            return response.success;
+        $.post('/beta/signup', { 'email': email }).then(function(response) {
+            self.set('successMessage', response.message);
+            return true;
         });
     }
 });

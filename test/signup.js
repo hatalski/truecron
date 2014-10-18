@@ -14,12 +14,12 @@ describe('SIGN UP',
     function() {
         it('beta sign up', function (done) {
             superagent.post(prefix + '/beta/signup')
-                .send('email=vitali.hatalski@truecron.com')
+                .send({'email': 'vitali.hatalski@truecron.com', 'test': true })
                 .end(function (e, res) {
                     expect(e).to.eql(null);
-                    console.dir(res.body);
                     expect(res.header['content-type']).to.eql('application/json; charset=utf-8');
                     expect(res.body.error).to.eql(undefined);
+                    expect(res.body.message).to.eql('Thanks for signing up! Share this page to spread the word!');
                     expect(res.status).to.eql(201);
                     done();
                 });
