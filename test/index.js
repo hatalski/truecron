@@ -15,7 +15,6 @@ describe('USERS API',
                 .auth('-2', 'Igd7en1_VCMP59pBpmEF')
                 .end(function (e, res) {
                     expect(e).to.eql(null);
-                    console.dir(res.body);
                     expect(res.header['content-type']).to.eql('application/json; charset=utf-8');
                     expect(res.body.error).to.eql(undefined);
                     expect(res.status).to.eql(201);
