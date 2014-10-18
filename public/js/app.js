@@ -206,7 +206,8 @@ App.TeaserController = Ember.Controller.extend({
         this.setProperties({
             email: "",
             password: "",
-            errorMessage: ""
+            errorMessage: "",
+            successMessage: ""
         });
     },
 
@@ -225,6 +226,7 @@ App.TeaserController = Ember.Controller.extend({
         this.set('errorMessage', null);
         $.post('/beta/signup', { 'email': email }).then(function(response) {
             self.set('successMessage', response.message);
+            self.set('email', "");
             return true;
         });
     }
