@@ -8,6 +8,7 @@ var random     = require("randomstring");
 var config     = require('../lib/config.js');
 var log        = require('../lib/logger.js');
 var prefix     = config.get('API_HOST') || 'http://localhost:3000/api/v1';
+var winston = require('winston');
 
 log.info('API tests prefix: ' + prefix);
 
@@ -64,8 +65,8 @@ describe('USERS API',
                     expect(res.body.user.passwordHash).to.eql(undefined);
                     expect(validator.isDate(res.body.user.createdAt)).to.be.ok();
                     expect(validator.isDate(res.body.user.updatedAt)).to.be.ok();
-                    console.log('res.body.user.extensionData = ' + res.body.user.extensionData);
-                    console.log('typeof res.body.user.extensionData = ' + (typeof res.body.user.extensionData));
+                    winston.info('res.body.user.extensionData = ' + res.body.user.extensionData);
+                    winston.info('typeof res.body.user.extensionData = ' + (typeof res.body.user.extensionData));
                     expect(res.body.user.extensionData).to.eql(null);
                     expect(res.status).to.eql(201);
                     done();
