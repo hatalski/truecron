@@ -10,7 +10,7 @@ var prefix     = config.get('API_HOST') || 'http://localhost:3000/api/v1';
 describe('JOBS API',
     function() {
         it('get all jobs', function(done) {
-            superagent.get(prefix + '/workspaces/-2/1')
+            superagent.get(prefix + '/jobs')
                 .send()
                 .auth('-2', 'Igd7en1_VCMP59pBpmEF')
                 .end(function (e, res) {
