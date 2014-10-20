@@ -212,33 +212,33 @@ var update = module.exports.update = Promise.method(function (id, attributes) {
 
 /**
  * Remove a person.
- * @param {int} id Person ID.
+ * @param {int} id job ID.
  */
 var remove = module.exports.remove = Promise.method(function (id) {
     return module.exports.findById(id).bind({})
-        .then(function (person) {
-            if (person === null) {
+        .then(function (jobs) {
+            if (jobs === null) {
                 // No found, that's ok for remove() operation
                 return;
             }
-            this.person = person;
+            this.jobs = jobs;
             return models.transaction()
                 .then(function (tx) {
                     this.tx = tx;
-                    return this.person.destroy({ transaction: this.tx });
+                    return this.jobs.destroy({ transaction: this.tx });
                 })
                 .then(function () {
-                    return history.logRemoved(-1, getPersonIdCacheKey(this.person.Id), this.person, this.tx);
+                    return history.logRemoved(-1, getPersonIdCacheKey(this.jobs.Id), this.jobs, this.tx);
                 })
                 .then(function () {
                     this.tx.commit()
                         .then(function () {
-                            cache.remove(getPersonIdCacheKey(this.person.id),
-                                getEmailsByPersonIdCacheKey(this.person.id));
+                            cache.remove(getPersonIdCacheKey(this.jobs.id),
+                                getEmailsByPersonIdCacheKey(this.jobs.id));
                         })
                 })
                 .catch(function(err) {
-                    logger.error('Failed to remove the person %j, %j.', id, err);
+                    logger.error('Failed to remove the job %j, %j.', id, err);
                     if (this.tx) {
                         this.tx.rollback();
                     }

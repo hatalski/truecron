@@ -62,5 +62,34 @@ api.route('/jobs')
                 return next(new apiErrors.InvalidParams(err));
             });
     });
+//only one job
+api.route('/jobs/:jobsid')
+    //
+    // Get a job
+    //
+    .get(function (req, res, next) {
+        res.json(jobAddLink(req.Jobs));
+    })
+    //
+    // Update a job
+    //
+    .put(function (req, res, next) {
+        if (!req.body || !req.body.user) {
+            return next(new apiErrors.InvalidParams());
+        }
+        storage.Person.update(req.Person.id, req.body.user)
+            .then(function (jobs) {
+                res.json(jobAddLink(jobs));
+            });
+    })
+    //
+    // Delete a job
+    //
+    .delete(function (req, res, next) {
+        storage.jobs.remove(req.Jobs.id)
+            .then(function () {
+                res.status(204).json({});
+            });
+    });
 
 module.exports = api;
