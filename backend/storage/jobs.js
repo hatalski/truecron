@@ -35,11 +35,11 @@ var getEmailsByPersonIdCacheKey = function(personId) {
 };
 
 //
-// PERSONS
+// jobs
 //
 
 /**
- * Search for a single person by ID.
+ * Search for a single jobs by ID.
  */
 var findById = module.exports.findById = Promise.method(function (id, transaction) {
     return cache.get(getPersonIdCacheKey(id))
@@ -47,10 +47,10 @@ var findById = module.exports.findById = Promise.method(function (id, transactio
             if (result.found) {
                 return result.value;
             }
-            return models.Person.find({ where: { id: id } }, { transaction: transaction })
-                .then(function (person) {
-                    cache.put(getPersonIdCacheKey(id), person);
-                    return person;
+            return models.job.find({ where: { id: id } }, { transaction: transaction })
+                .then(function (jobs) {
+                    cache.put(getPersonIdCacheKey(id), jobs);
+                    return jobs;
                 });
         });
 });
@@ -80,16 +80,16 @@ var findByEmail = module.exports.findByEmail = Promise.method(function (email, t
 });
 
 /**
- * Search for a single person.
+ * Search for a single job.
  * @param {object} options See Sequelize.find docs for details
  */
 var find = module.exports.find = Promise.method(function (options, transaction) {
-    return models.Person.find(options, { transaction: transaction })
-        .then(function (person) {
-            if (!!person) {
-                cache.put(getPersonIdCacheKey(persion.id), person);
+    return models.jobs.find(options, { transaction: transaction })
+        .then(function (jobs) {
+            if (!!jobs) {
+                cache.put(getPersonIdCacheKey(person.id), jobs);
             }
-            return person;
+            return jobs;
         });
 });
 

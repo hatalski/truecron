@@ -42,7 +42,7 @@ api.route('/jobs')
             offset: req.listParams.offset
         }).then(function (result) {
             res.json({
-                job: result.rows,
+                jobs: result.rows.map(jobAddLink),
                 meta: {
                     total: result.count
                 }});
@@ -62,34 +62,63 @@ api.route('/jobs')
                 return next(new apiErrors.InvalidParams(err));
             });
     });
-//only one job
+
+//
+// :userid can be specified as an integer ID or an email.
+//
+api.param('jobsid', function (req, res, next, id) {
+
+    var jobsId = null;
+    if (validator.isInt(id)) {
+        jobsId = id;
+    }
+    else {
+        next(new apiErrors.InvalidParams());
+    }
+
+    if (!!jobsId) {
+        storage.jobs.findById(id)
+            .then(function (jobs) {
+                if (jobs !== null) {
+                    req.jobs = jobs;
+                    next();
+                } else {
+                    next(new apiErrors.NotFound());
+                }
+            });
+    }
+});
+
 api.route('/jobs/:jobsid')
     //
     // Get a job
     //
     .get(function (req, res, next) {
-        res.json(jobAddLink(req.Jobs));
+        res.json(jobAddLink(req.jobs));
     })
     //
-    // Update a job
+    // Update a jobs
     //
     .put(function (req, res, next) {
-        if (!req.body || !req.body.user) {
+        if (!req.body || !req.body.jobs) {
             return next(new apiErrors.InvalidParams());
         }
-        storage.Person.update(req.Person.id, req.body.user)
+        storage.jobs.update(req.jobs.id, req.body.jobs)
             .then(function (jobs) {
                 res.json(jobAddLink(jobs));
             });
     })
     //
-    // Delete a job
+    // Delete a jobs
     //
     .delete(function (req, res, next) {
-        storage.jobs.remove(req.Jobs.id)
+        storage.jobs.remove(req.jobs.id)
             .then(function () {
                 res.status(204).json({});
             });
     });
+
+
+
 
 module.exports = api;
