@@ -633,3 +633,20 @@ h2.pitch {
 .teaser .navbar-border {
     background-color: rgba(0, 0, 0, 0.2); padding: 12px;margin-top: 0
 }
+
+/* vm - border last row table */
+.lastrowborder>tbody>tr>td {
+    border-bottom: 1px solid #ddd;
+}
+
+.allwidth {
+    width: 100%;
+}
+
+.buttonaccordion {
+    width: 100%;
+    height: 32px;
+    text-align: left;
+    background-color: white;
+    border: 0px;
+}
