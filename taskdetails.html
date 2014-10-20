@@ -178,7 +178,7 @@
 </div><!--end class "span6" #1-->
 <div class="col-md-6 divborderright">
 <div class="hiddendiv">
-    <table class="tabletaskdetails">
+    <table class="allwidth">
         <tbody>
         <tr>
             <td class="first_row">Copy Files to FTP<span class="title-icon"><i class="fa fa-pencil"></i></span></td>
@@ -189,21 +189,11 @@
     <div class="accordion" id="accordion3">
         <div class="accordion-group"><!--dummy need to open on the page could not see the contents of the tab-->
             <div class="accordion-heading">
-                <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion3" href="#collapseThree"></a>
+                <button class="accordion-toggle buttonaccordion" data-toggle="collapse" data-parent="#accordion3" href="#collapseThree">
+                    <span class="title-icon"><i class="fa fa-chevron-down"></i>Task Properties</span>
+                </button>
             </div>
             <div id="collapseThree" class="accordion-body collapse in">
-                <div class="accordion-inner">  </div>
-            </div>
-        </div><!--end dummy-->
-        <div class="accordion-group">
-            <div class="accordion-heading">
-                <div>
-                    <button class="accordion-toggle buttonaccordion" data-toggle="collapse" data-parent="#accordion3" href="#collapseFour">
-                        <span class="title-icon"><i class="fa fa-chevron-down"></i>Task Properties</span>
-                    </button>
-                </div>
-            </div><br><br>
-            <div id="collapseFour" class="accordion-body collapse">
                 <div class="accordion-inner">
                     <label class="label-br">Type:</label>
                     <div class="btn-group cron-drop">
@@ -335,10 +325,12 @@
                             </td>
                         </tr>
                     </table>
-                    <br><hr>
+                    <br>
                     <!--internal element accordion start-->
-                </div><!--internal element accordion end-->
-
+                </div>
+            </div>
+        </div><!--end part1 accordion3-->
+        <div class="accordion-group">
             </div><!--end content accordion part 2-->
             <div class="accordion" id="accordion4">
                 <hr>

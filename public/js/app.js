@@ -206,7 +206,8 @@ App.TeaserController = Ember.Controller.extend({
         this.setProperties({
             email: "",
             password: "",
-            errorMessage: ""
+            errorMessage: "",
+            successMessage: ""
         });
     },
 
@@ -216,8 +217,19 @@ App.TeaserController = Ember.Controller.extend({
         signinController.set('password', this.get('password'));
         signinController.signin();
         return true;
-    }
+    },
 
+    signup: function() {
+        var self = this, email = this.get('email');
+
+        // Clear out any error messages.
+        this.set('errorMessage', null);
+        $.post('/beta/signup', { 'email': email }).then(function(response) {
+            self.set('successMessage', response.message);
+            self.set('email', "");
+            return true;
+        });
+    }
 });
 
 App.TeaserRoute = App.GuestOnlyRoute.extend({
