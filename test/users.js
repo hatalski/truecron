@@ -64,6 +64,8 @@ describe('USERS API',
                     expect(res.body.user.passwordHash).to.eql(undefined);
                     expect(validator.isDate(res.body.user.createdAt)).to.be.ok();
                     expect(validator.isDate(res.body.user.updatedAt)).to.be.ok();
+                    console.log('res.body.user.extensionData = ' + res.body.user.extensionData);
+                    console.log('typeof res.body.user.extensionData = ' + (typeof res.body.user.extensionData));
                     expect(res.body.user.extensionData).to.eql(null);
                     expect(res.status).to.eql(201);
                     done();
