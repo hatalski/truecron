@@ -222,7 +222,7 @@ var remove = module.exports.remove = Promise.method(function (id) {
             }
 
             this.person = person;
-            return models.transaction()
+            return models.transaction().bind(this)
             .then(function (tx) {
                 this.tx = tx;
                 return this.person.destroy({ transaction: this.tx });
@@ -343,7 +343,7 @@ var findEmail = module.exports.findEmail = Promise.method(function (personId, em
     } else {
         throw new errors.InvalidParams('Invalid email.');
     }
-    return models.PersonEmail.find(where, { transaction: transaction });
+    return models.PersonEmail.find({ where: where }, { transaction: transaction });
 });
 
 var changeEmailStatus = module.exports.changeEmailStatus = Promise.method(function (personId, emailIdOrValue, newStatus) {
@@ -359,7 +359,7 @@ var changeEmailStatus = module.exports.changeEmailStatus = Promise.method(functi
             if (email === null) {
                 throw new errors.NotFound();
             }
-            return email.updateAttributes({status: newStatus}, {transaction: this.tx});
+            return email.updateAttributes({ status: newStatus }, { transaction: this.tx });
         })
         .then(function(email) {
             this.email = email;
@@ -385,15 +385,15 @@ var removeEmail = module.exports.removeEmail = Promise.method(function (personId
             this.tx = tx;
             return findEmail(personId, emailIdOrValue, this.tx);
         })
-        .then(function(email) {
-            if (email === null) {
+        .then(function(personEmail) {
+            if (personEmail === null) {
                 return; // Ok, nothing to delete
             }
-            this.email = email;
-            return this.email.destroy({ transaction: this.tx })
+            this.personEmail = personEmail;
+            return personEmail.destroy({ transaction: this.tx }).bind(this)
                 .then(function () {
-                    cache.remove(getEmailsByPersonIdCacheKey(personId), getPersonIdByEmailCacheKey(this.email));
-                    return history.log(-1, getPersonIdCacheKey(personId), 'email-remove', { email: this.email }, this.email, this.tx);
+                    cache.remove(getEmailsByPersonIdCacheKey(personId), getPersonIdByEmailCacheKey(this.personEmail.email));
+                    return history.log(-1, getPersonIdCacheKey(personId), 'email-remove', { email: this.personEmail.email }, this.personEmail, this.tx);
                 })
                 .then(function () {
                     this.tx.commit();
