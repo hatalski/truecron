@@ -11,6 +11,10 @@ var prefix     = config.get('API_HOST') || 'http://localhost:3000/api/v1';
 
 log.info('API tests prefix: ' + prefix);
 
+superagent.Request.prototype.authenticate = function() {
+    return this.auth('-2', 'Igd7en1_VCMP59pBpmEF');
+};
+
 describe('USERS API',
     function() {
         var id_to_delete;
@@ -18,7 +22,7 @@ describe('USERS API',
             superagent.post(prefix + '/users')
                 .set('Content-Type', 'application/json')
                 .send({ 'user': { 'password': "P@ssw0rd"} })
-                .auth('-2', 'Igd7en1_VCMP59pBpmEF')
+                .authenticate()
                 .end(function (e, res) {
                     expect(e).to.eql(null);
                     expect(res.header['content-type']).to.eql('application/json; charset=utf-8');
@@ -33,7 +37,7 @@ describe('USERS API',
             superagent.post(prefix + '/users')
                 .set('Content-Type', 'application/json')
                 .send({ 'user': { 'password': "P@ssw0rd"} })
-                .auth('-2', 'Igd7en1_VCMP59pBpmEF')
+                .authenticate()
                 .end(function (e, res) {
                     expect(e).to.eql(null);
                     expect(res.header['content-type']).to.eql('application/json; charset=utf-8');
@@ -48,18 +52,19 @@ describe('USERS API',
             superagent.post(prefix + '/users')
                 .set('Content-Type', 'application/json')
                 .send({ 'user': {'name': "Alice", 'password': "P@ssw0rd"} })
-                .auth('-2', 'Igd7en1_VCMP59pBpmEF')
+                .authenticate()
                 .end(function (e, res) {
                     expect(e).to.eql(null);
                     expect(res.header['content-type']).to.eql('application/json; charset=utf-8');
                     expect(res.body.error).to.eql(undefined);
                     id_to_delete = res.body.user.id;
-                    expect(res.body.user.id).to.be.a('number');
+                    expect(res.body.user.id).to.be.a('string');
                     expect(res.body.user.name).to.eql('Alice');
-                    expect(res.body.user.password).to.be.a('string');
+                    expect(res.body.user.password).to.eql(undefined);
+                    expect(res.body.user.passwordHash).to.eql(undefined);
                     expect(validator.isDate(res.body.user.createdAt)).to.be.ok();
                     expect(validator.isDate(res.body.user.updatedAt)).to.be.ok();
-                    expect(res.body.user.extensionData).to.eql(undefined);
+                    expect(res.body.user.extensionData).to.eql(null);
                     expect(res.status).to.eql(201);
                     done();
                 });
@@ -68,14 +73,15 @@ describe('USERS API',
             superagent.post(prefix + '/users')
                 .set('Content-Type', 'application/json')
                 .send({ 'user': {'name': "vitali.hatalski@truecron.com", 'password': "P@ssw0rd", 'extensionData': '{"email": "vitali.hatalski@truecron.com", "access_token": "12345" }' } })
-                .auth('-2', 'Igd7en1_VCMP59pBpmEF')
+                .authenticate()
                 .end(function (e, res) {
                     expect(e).to.eql(null);
                     expect(res.header['content-type']).to.eql('application/json; charset=utf-8');
                     expect(res.body.error).to.eql(undefined);
-                    expect(res.body.user.id).to.be.a('number');
+                    expect(res.body.user.id).to.be.a('string');
                     expect(res.body.user.name).to.eql('vitali.hatalski@truecron.com');
-                    expect(res.body.user.password).to.be.a('string');
+                    expect(res.body.user.password).to.eql(undefined);
+                    expect(res.body.user.passwordHash).to.eql(undefined);
                     expect(validator.isDate(res.body.user.createdAt)).to.be.ok();
                     expect(validator.isDate(res.body.user.updatedAt)).to.be.ok();
                     expect(res.body.user.extensionData.email).to.eql('vitali.hatalski@truecron.com');
@@ -87,7 +93,7 @@ describe('USERS API',
         it('get list of users', function (done) {
             superagent.get(prefix + '/users')
                 .send()
-                .auth('-2', 'Igd7en1_VCMP59pBpmEF')
+                .authenticate()
                 .end(function (e, res) {
                     expect(e).to.eql(null);
                     expect(res.header['content-type']).to.eql('application/json; charset=utf-8');
@@ -102,7 +108,7 @@ describe('USERS API',
             superagent.get(prefix + '/users')
                 .query({ limit: limit, offset: 1})
                 .send()
-                .auth('-2', 'Igd7en1_VCMP59pBpmEF')
+                .authenticate()
                 .end(function (e, res) {
                     expect(e).to.eql(null);
                     expect(res.header['content-type']).to.eql('application/json; charset=utf-8');
@@ -116,12 +122,12 @@ describe('USERS API',
         it('get user by id', function (done) {
             superagent.get(prefix + '/users/' + id_to_delete)
                 .send()
-                .auth('-2', 'Igd7en1_VCMP59pBpmEF')
+                .authenticate()
                 .end(function (e, res) {
                     expect(e).to.eql(null);
                     expect(res.header['content-type']).to.eql('application/json; charset=utf-8');
                     expect(res.body.error).to.eql(undefined);
-                    expect(res.body.user.id).to.be.a('number');
+                    expect(res.body.user.id).to.be.a('string');
                     expect(validator.isDate(res.body.user.createdAt)).to.be.ok();
                     expect(validator.isDate(res.body.user.updatedAt)).to.be.ok();
                     expect(res.status).to.eql(200);
@@ -132,14 +138,15 @@ describe('USERS API',
             superagent.put(prefix + '/users/' + id_to_delete)
                 .set('Content-Type', 'application/json')
                 .send({ 'user': {'name': "Tom", 'password': "UpdatedP@ssw0rd"} })
-                .auth('-2', 'Igd7en1_VCMP59pBpmEF')
+                .authenticate()
                 .end(function (e, res) {
                     expect(e).to.eql(null);
                     expect(res.header['content-type']).to.eql('application/json; charset=utf-8');
                     expect(res.body.error).to.eql(undefined);
-                    expect(res.body.user.id).to.be.a('number');
+                    expect(res.body.user.id).to.be.a('string');
                     expect(res.body.user.name).to.eql('Tom');
-                    expect(res.body.user.password).to.be.a('string');
+                    expect(res.body.user.password).to.eql(undefined);
+                    expect(res.body.user.passwordHash).to.eql(undefined);
                     expect(validator.isDate(res.body.user.createdAt)).to.be.ok();
                     expect(validator.isDate(res.body.user.updatedAt)).to.be.ok();
                     expect(res.status).to.eql(200);
@@ -150,7 +157,7 @@ describe('USERS API',
             superagent.put(prefix + '/users/' + id_to_delete)
                 .set('Content-Type', 'application/json')
                 .send({})
-                .auth('-2', 'Igd7en1_VCMP59pBpmEF')
+                .authenticate()
                 .end(function (e, res) {
                     expect(e).to.eql(null);
                     expect(res.header['content-type']).to.eql('application/json; charset=utf-8');
@@ -165,7 +172,7 @@ describe('USERS API',
             superagent.post(prefix + '/users/' + id_to_delete + '/emails')
                 .set('Content-Type', 'application/json')
                 .send({})
-                .auth('-2', 'Igd7en1_VCMP59pBpmEF')
+                .authenticate()
                 .end(function (e, res) {
                     expect(e).to.eql(null);
                     expect(res.header['content-type']).to.eql('application/json; charset=utf-8');
@@ -180,7 +187,7 @@ describe('USERS API',
             superagent.post(prefix + '/users/' + id_to_delete + '/emails')
                 .set('Content-Type', 'application/json')
                 .send({ 'email': 'invalid@email'})
-                .auth('-2', 'Igd7en1_VCMP59pBpmEF')
+                .authenticate()
                 .end(function (e, res) {
                     expect(e).to.eql(null);
                     expect(res.header['content-type']).to.eql('application/json; charset=utf-8');
@@ -197,14 +204,14 @@ describe('USERS API',
             superagent.post(prefix + '/users/' + id_to_delete + '/emails')
                 .set('Content-Type', 'application/json')
                 .send({ 'email': random_email })
-                .auth('-2', 'Igd7en1_VCMP59pBpmEF')
+                .authenticate()
                 .end(function (e, res) {
                     expect(e).to.eql(null);
                     expect(res.header['content-type']).to.eql('application/json; charset=utf-8');
                     expect(res.body.error).to.eql(undefined);
                     email_id_to_delete = res.body.email.id;
-                    expect(res.body.email.id).to.be.a('number');
-                    expect(res.body.email.email).to.eql(random_email);
+                    expect(res.body.email.id).to.be.a('string');
+                    expect(res.body.email.email).to.eql(random_email.toLowerCase()); // we store emails in lowercase
                     expect(res.body.email.status).to.eql('pending');
                     expect(res.status).to.eql(201);
                     done();
@@ -213,13 +220,13 @@ describe('USERS API',
         it('get user email by id', function (done) {
             superagent.get(prefix + '/users/' + id_to_delete + '/emails/' + email_id_to_delete)
                 .send()
-                .auth('-2', 'Igd7en1_VCMP59pBpmEF')
+                .authenticate()
                 .end(function (e, res) {
                     expect(e).to.eql(null);
                     expect(res.header['content-type']).to.eql('application/json; charset=utf-8');
                     expect(res.body.error).to.eql(undefined);
-                    expect(res.body.email.id).to.be.a('number');
-                    expect(res.body.email.email).to.eql(random_email);
+                    expect(res.body.email.id).to.be.a('string');
+                    expect(res.body.email.email).to.eql(random_email.toLowerCase()); // we store emails in lowercase
                     expect(res.body.email.status).to.eql('pending');
                     expect(res.status).to.eql(200);
                     done();
@@ -228,7 +235,7 @@ describe('USERS API',
         it('get all user emails', function (done) {
             superagent.get(prefix + '/users/' + id_to_delete + '/emails')
                 .send()
-                .auth('-2', 'Igd7en1_VCMP59pBpmEF')
+                .authenticate()
                 .end(function (e, res) {
                     expect(e).to.eql(null);
                     expect(res.header['content-type']).to.eql('application/json; charset=utf-8');
@@ -239,13 +246,27 @@ describe('USERS API',
                     done();
                 });
         });
-        it('delete user email', function (done) {
-            superagent.del(prefix + '/users/' + id_to_delete + '/emails/' + email_id_to_delete)
+        it('get user by email', function (done) {
+            superagent.get(prefix + '/users/' + random_email)
                 .send()
-                .auth('-2', 'Igd7en1_VCMP59pBpmEF')
+                .authenticate()
                 .end(function (e, res) {
                     expect(e).to.eql(null);
                     expect(res.header['content-type']).to.eql('application/json; charset=utf-8');
+                    expect(res.body.error).to.eql(undefined);
+                    expect(res.body.user.id).to.be.a('string');
+                    expect(validator.isDate(res.body.user.createdAt)).to.be.ok();
+                    expect(validator.isDate(res.body.user.updatedAt)).to.be.ok();
+                    expect(res.status).to.eql(200);
+                    done();
+                });
+        });
+        it('delete user email', function (done) {
+            superagent.del(prefix + '/users/' + id_to_delete + '/emails/' + email_id_to_delete)
+                .send()
+                .authenticate()
+                .end(function (e, res) {
+                    expect(e).to.eql(null);
                     expect(res.body.error).to.eql(undefined);
                     expect(res.status).to.eql(204);
                     done();
@@ -254,10 +275,9 @@ describe('USERS API',
         it('delete user', function (done) {
             superagent.del(prefix + '/users/' + id_to_delete)
                 .send()
-                .auth('-2', 'Igd7en1_VCMP59pBpmEF')
+                .authenticate()
                 .end(function (e, res) {
                     expect(e).to.eql(null);
-                    expect(res.header['content-type']).to.eql('application/json; charset=utf-8');
                     expect(res.body.error).to.eql(undefined);
                     expect(res.status).to.eql(204);
                     done();
