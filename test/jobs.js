@@ -57,17 +57,17 @@ describe('JOBS API',
                 });
         });
 
-//        it('delete job', function (done) {
-//            superagent.del(prefix + '/jobs/' + id_to_delete)
-//                .send()
-//                .auth('-2', 'Igd7en1_VCMP59pBpmEF')
-//                .end(function (e, res) {
-//                    expect(e).to.eql(null);
-//                    expect(res.body.error).to.eql(undefined);
-//                    expect(res.status).to.eql(204);
-//                    done();
-//                });
-//        });
+        it('delete job', function (done) {
+            superagent.del(prefix + '/jobs/' + id_to_delete)
+                .send()
+                .auth('-2', 'Igd7en1_VCMP59pBpmEF')
+                .end(function (e, res) {
+                    expect(e).to.eql(null);
+                    expect(res.body.error).to.eql(undefined);
+                    expect(res.status).to.eql(204);
+                    done();
+                });
+        });
 
 
 //        it('create a job', function (done) {

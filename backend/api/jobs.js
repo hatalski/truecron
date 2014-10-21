@@ -82,7 +82,7 @@ api.param('jobsid', function (req, res, next, id) {
         storage.Jobs.findById(id)
             .then(function (job) {
                 if (job !== null) {
-                    req.jobs = job;
+                    req.job = job;
                     next();
                 } else {
                     next(new apiErrors.NotFound());
@@ -122,10 +122,10 @@ api.route('/jobs/:jobsid')
             });
     })
     //
-    // Delete a jobs
+    // Delete a job
     //
     .delete(function (req, res, next) {
-        storage.jobs.remove(req.jobs.id)
+        storage.Jobs.remove(req.job.id)
             .then(function () {
                 res.status(204).json({});
             });
