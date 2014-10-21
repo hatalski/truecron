@@ -34,11 +34,11 @@ var getEmailsByPersonIdCacheKey = function(personId) {
 };
 
 //
-// PERSONS
+// JOBS
 //
 
 /**
- * Search for a single person by ID.
+ * Search for a single job by ID.
  */
 var findById = module.exports.findById = Promise.method(function (id, transaction) {
     return cache.get(getJobsIdCacheKey(id))
@@ -83,7 +83,7 @@ var findByEmail = module.exports.findByEmail = Promise.method(function (email, t
  * @param {object} options See Sequelize.find docs for details
  */
 var find = module.exports.find = Promise.method(function (options, transaction) {
-    return models.Person.find(options, { transaction: transaction })
+    return models.Job.find(options, { transaction: transaction })
         .then(function (jobs) {
             if (!!jobs) {
                 cache.put(getJobsIdCacheKey(jobs.id), jobs);
@@ -128,13 +128,12 @@ var processPassword = Promise.method(function (attributes) {
 });
 
 /**
- * Create a new person.
+ * Create a new job.
  * @param {object} attributes Initial attributes values. name, password/passwordHash are required.
  * @returns A newly created person.
  */
 var create = module.exports.create = Promise.method(function (attributes) {
-    if (!attributes || validator.isNull(attributes.name)
-        || validator.isNull(attributes.password) && validator.isNull(attributes.passwordHash)) {
+    if (!attributes || validator.isNull(attributes.name)) {
         throw new errors.InvalidParams();
     }
     return processPassword(attributes).bind({})
@@ -144,7 +143,7 @@ var create = module.exports.create = Promise.method(function (attributes) {
         })
         .then(function (tx) {
             this.tx = tx;
-            return models.Person.create(this.attrs, { transaction: tx });
+            return models.Job.create(this.attrs, { transaction: tx });
         })
         .then(function (jobs) {
             this.jobs = jobs;
@@ -167,8 +166,8 @@ var create = module.exports.create = Promise.method(function (attributes) {
 });
 
 /**
- * Update a person.
- * @param {int} id Person ID.
+ * Update a job.
+ * @param {int} id job ID.
  * @param {object} attributes Updated attributes values.
  * @returns An updated instance.
  */
@@ -210,8 +209,8 @@ var update = module.exports.update = Promise.method(function (id, attributes) {
 });
 
 /**
- * Remove a person.
- * @param {int} id Person ID.
+ * Remove a job.
+ * @param {int} id job ID.
  */
 var remove = module.exports.remove = Promise.method(function (id) {
     return module.exports.findById(id).bind({})
