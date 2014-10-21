@@ -89,7 +89,7 @@ api.param('jobsid', function (req, res, next, id) {
                 }
             });
     } else {
-        console.log('This is email.');
+        console.log('Error. This is email.');
         storage.Jobs.findByEmail(email)
             .then(function (person) {
                 if (person !== null) {
