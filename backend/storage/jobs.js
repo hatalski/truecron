@@ -1,4 +1,3 @@
-
 var Promise = require("bluebird"),
     _ = require('lodash'),
     models = require('./db/models'),
@@ -16,41 +15,41 @@ var Promise = require("bluebird"),
 /**
  * Gets the specific person.
  */
-var getPersonIdCacheKey = function(personId) {
-    return 'person/' + personId;
+var getJobsIdCacheKey = function(jobsId) {
+    return 'jobs/' + jobsId;
 };
 
 /**
  * Gets an ID of the person by email.
  */
 var getPersonIdByEmailCacheKey = function(email) {
-    return 'email-to-person/' + email.trim().toLowerCase();
+    return 'email-to-jobs/' + email.trim().toLowerCase();
 };
 
 /**
  * Gets email addresses of the specific person.
  */
 var getEmailsByPersonIdCacheKey = function(personId) {
-    return 'person-emails/' + personId;
+    return 'jobs-emails/' + personId;
 };
 
 //
-// jobs
+// PERSONS
 //
 
 /**
- * Search for a single jobs by ID.
+ * Search for a single person by ID.
  */
 var findById = module.exports.findById = Promise.method(function (id, transaction) {
-    return cache.get(getPersonIdCacheKey(id))
+    return cache.get(getJobsIdCacheKey(id))
         .then(function (result) {
             if (result.found) {
                 return result.value;
             }
-            return models.job.find({ where: { id: id } }, { transaction: transaction })
-                .then(function (jobs) {
-                    cache.put(getPersonIdCacheKey(id), jobs);
-                    return jobs;
+            return models.Job.find({ where: { id: id } }, { transaction: transaction })
+                .then(function (person) {
+                    cache.put(getJobsIdCacheKey(id), person);
+                    return person;
                 });
         });
 });
@@ -80,14 +79,14 @@ var findByEmail = module.exports.findByEmail = Promise.method(function (email, t
 });
 
 /**
- * Search for a single job.
+ * Search for a single person.
  * @param {object} options See Sequelize.find docs for details
  */
 var find = module.exports.find = Promise.method(function (options, transaction) {
-    return models.jobs.find(options, { transaction: transaction })
+    return models.Person.find(options, { transaction: transaction })
         .then(function (jobs) {
             if (!!jobs) {
-                cache.put(getPersonIdCacheKey(person.id), jobs);
+                cache.put(getJobsIdCacheKey(jobs.id), jobs);
             }
             return jobs;
         });
@@ -108,7 +107,7 @@ var findAndCountAll = module.exports.findAndCountAll = Promise.method(function (
     return models.Job.findAndCountAll(options)
         .then(function (result) {
             // No need to cache pages of people, but it makes sense to cache individual persons
-            //result.rows.forEach(function(person) { cache.put(getPersonIdCacheKey(person.id), person); });
+            result.rows.forEach(function(jobs) { cache.put(getJobsIdCacheKey(jobs.id), jobs); });
             return result;
         });
 });
@@ -147,19 +146,19 @@ var create = module.exports.create = Promise.method(function (attributes) {
             this.tx = tx;
             return models.Person.create(this.attrs, { transaction: tx });
         })
-        .then(function (person) {
-            this.person = person;
-            return history.logCreated(-1, getPersonIdCacheKey(person.Id), person, this.tx);
+        .then(function (jobs) {
+            this.jobs = jobs;
+            return history.logCreated(-1, getJobsIdCacheKey(jobs.id), jobs, this.tx);
         })
         .then(function () {
             return this.tx.commit();
         })
         .then(function () {
-            cache.put(getPersonIdCacheKey(person.id), this.person);
-            return this.person;
+            cache.put(getJobsIdCacheKey(this.jobs.id), this.jobs);
+            return this.jobs;
         })
         .catch(function(err) {
-            logger.error('Failed to create a person, %j.', err);
+            logger.log('error', 'Failed to create a jobs, %s.', err.toString());
             if (this.tx) {
                 this.tx.rollback();
             }
@@ -188,21 +187,21 @@ var update = module.exports.update = Promise.method(function (id, attributes) {
                 throw new errors.NotFound();
             }
             this.oldPerson = person;
-            return person.updateAttributes(this.attrs, { transaction: tx });
+            return person.updateAttributes(this.attrs, { transaction: this.tx });
         })
         .then(function (person) {
-            this.person = person;
-            return history.logUpdated(-1, getPersonIdCacheKey(person.Id), person, this.oldPerson, this.tx);
+            this.jobs = person;
+            return history.logUpdated(-1, getJobsIdCacheKey(person.id), person, this.oldPerson, this.tx);
         })
         .then(function () {
             return this.tx.commit();
         })
         .then(function () {
-            cache.put(getPersonIdCacheKey(this.person.id), this.person);
-            return this.person;
+            cache.put(getJobsIdCacheKey(this.jobs.id), this.jobs);
+            return this.jobs;
         })
         .catch(function(err) {
-            logger.error('Failed to update a person, %j.', err);
+            logger.error('Failed to update the jobs %d. %s.', id, err.toString());
             if (this.tx) {
                 this.tx.rollback();
             }
@@ -212,33 +211,34 @@ var update = module.exports.update = Promise.method(function (id, attributes) {
 
 /**
  * Remove a person.
- * @param {int} id job ID.
+ * @param {int} id Person ID.
  */
 var remove = module.exports.remove = Promise.method(function (id) {
     return module.exports.findById(id).bind({})
-        .then(function (jobs) {
-            if (jobs === null) {
+        .then(function (person) {
+            if (person === null) {
                 // No found, that's ok for remove() operation
                 return;
             }
-            this.jobs = jobs;
-            return models.transaction()
+
+            this.jobs = person;
+            return models.transaction().bind(this)
                 .then(function (tx) {
                     this.tx = tx;
                     return this.jobs.destroy({ transaction: this.tx });
                 })
                 .then(function () {
-                    return history.logRemoved(-1, getPersonIdCacheKey(this.jobs.Id), this.jobs, this.tx);
+                    return history.logRemoved(-1, getJobsIdCacheKey(this.jobs.id), this.jobs, this.tx);
                 })
                 .then(function () {
-                    this.tx.commit()
-                        .then(function () {
-                            cache.remove(getPersonIdCacheKey(this.jobs.id),
-                                getEmailsByPersonIdCacheKey(this.jobs.id));
-                        })
+                    return this.tx.commit();
+                })
+                .then(function () {
+                    cache.remove(getJobsIdCacheKey(this.jobs.id),
+                        getEmailsByPersonIdCacheKey(this.jobs.id));
                 })
                 .catch(function(err) {
-                    logger.error('Failed to remove the job %j, %j.', id, err);
+                    logger.error('Failed to remove the jobs %d, %s.', id, err.toString());
                     if (this.tx) {
                         this.tx.rollback();
                     }
@@ -258,7 +258,7 @@ var getEmails = module.exports.getEmails = Promise.method(function (personId, op
             if (result.found) {
                 return result.value;
             }
-            options = _.extend({ order: 'id'}, options);
+            options = _.extend({ order: 'id' }, options);
             options.where = _.extend({}, options.where, { personId: personId });
             return models.PersonEmail.findAndCountAll(options)
                 .then(function (result) {
@@ -304,14 +304,14 @@ var addEmail = module.exports.addEmail = Promise.method(function (personId, attr
             this.result = result;
             cache.remove(getEmailsByPersonIdCacheKey(personId));
             cache.put(getPersonIdByEmailCacheKey(email), personId);
-            return history.log(-1, getPersonIdCacheKey(personId), 'email-add', {email: email, status: status}, {}, this.tx);
+            return history.log(-1, getJobsIdCacheKey(personId), 'email-add', {email: email, status: status}, {}, this.tx);
         })
         .then(function () {
             this.tx.commit();
             return this.result;
         })
         .catch(function(err) {
-            logger.error('Failed to add an email, %j.', err);
+            logger.error('Failed to add a email for jobs %d, %s.', personId, err.toString());
             if (this.tx) {
                 this.tx.rollback();
             }
@@ -343,7 +343,7 @@ var findEmail = module.exports.findEmail = Promise.method(function (personId, em
     } else {
         throw new errors.InvalidParams('Invalid email.');
     }
-    return models.PersonEmail.find(where, { transaction: transaction });
+    return models.PersonEmail.find({ where: where }, { transaction: transaction });
 });
 
 var changeEmailStatus = module.exports.changeEmailStatus = Promise.method(function (personId, emailIdOrValue, newStatus) {
@@ -359,18 +359,18 @@ var changeEmailStatus = module.exports.changeEmailStatus = Promise.method(functi
             if (email === null) {
                 throw new errors.NotFound();
             }
-            return email.updateAttributes({status: newStatus}, {transaction: this.tx});
+            return email.updateAttributes({ status: newStatus }, { transaction: this.tx });
         })
         .then(function(email) {
             this.email = email;
-            return history.log(-1, getPersonIdCacheKey(personId), 'email-change-status', { email: email, status: newStatus }, email, this.tx);
+            return history.log(-1, getJobsIdCacheKey(personId), 'email-change-status', { email: email, status: newStatus }, email, this.tx);
         })
         .then(function () {
             this.tx.commit();
             return this.email;
         })
         .catch(function(err) {
-            logger.error('Failed to update a status of email %j, %j.', emailIdOrValue, err);
+            logger.error('Failed to update a status of email %s of the jobs %d, %s.', emailIdOrValue, personId, err.toString());
             if (this.tx) {
                 this.tx.rollback();
             }
@@ -385,22 +385,22 @@ var removeEmail = module.exports.removeEmail = Promise.method(function (personId
             this.tx = tx;
             return findEmail(personId, emailIdOrValue, this.tx);
         })
-        .then(function(email) {
-            if (email === null) {
+        .then(function(personEmail) {
+            if (personEmail === null) {
                 return; // Ok, nothing to delete
             }
-            this.email = email;
-            return this.email.destroy({ transaction: this.tx })
+            this.personEmail = personEmail;
+            return personEmail.destroy({ transaction: this.tx }).bind(this)
                 .then(function () {
-                    cache.remove(getEmailsByPersonIdCacheKey(personId), getPersonIdByEmailCacheKey(email));
-                    return history.log(-1, getPersonIdCacheKey(personId), 'email-remove', { email: email }, email, this.tx);
+                    cache.remove(getEmailsByPersonIdCacheKey(personId), getPersonIdByEmailCacheKey(this.personEmail.email));
+                    return history.log(-1, getJobsIdCacheKey(personId), 'email-remove', { email: this.personEmail.email }, this.personEmail, this.tx);
                 })
                 .then(function () {
                     this.tx.commit();
                 });
         })
         .catch(function(err) {
-            logger.error('Failed to remove the email %j, %j.', emailIdOrValue, err);
+            logger.error('Failed to remove the email %s from jobs %d, %s.', emailIdOrValue, personId, err.toString());
             if (this.tx) {
                 this.tx.rollback();
             }

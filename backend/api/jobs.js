@@ -20,7 +20,7 @@ function jobAddLink(job) {
         history: selfUrl + '/history',
         results: selfUrl + '/results'
     };
-    return { jobs: jobs };
+    return { job: jobs };
 }
 
 
@@ -50,10 +50,10 @@ api.route('/jobs')
     })
 
     .post(function (req, res, next) {
-        if (!req.body || !req.body.user) {
+        if (!req.body || !req.body.jobs) {
             return next(new apiErrors.InvalidParams());
         }
-        storage.Person.create(req.body.user)
+        storage.jobs.create(req.body.jobs)
             .then(function (job) {
                 res.status(201).json(jobAddLink(job));
             })
@@ -67,20 +67,33 @@ api.route('/jobs')
 // :userid can be specified as an integer ID or an email.
 //
 api.param('jobsid', function (req, res, next, id) {
-
+    // Allow to specify both ID and email
     var jobsId = null;
+    var email = null;
     if (validator.isInt(id)) {
         jobsId = id;
-    }
-    else {
+    } else if (validator.isEmail(id)) {
+        email = id;
+    } else {
         next(new apiErrors.InvalidParams());
     }
 
     if (!!jobsId) {
-        storage.jobs.findById(id)
-            .then(function (jobs) {
-                if (jobs !== null) {
-                    req.jobs = jobs;
+        storage.Jobs.findById(id)
+            .then(function (job) {
+                if (job !== null) {
+                    req.jobs = job;
+                    next();
+                } else {
+                    next(new apiErrors.NotFound());
+                }
+            });
+    } else {
+        console.log('This is email.');
+        storage.Jobs.findByEmail(email)
+            .then(function (person) {
+                if (person !== null) {
+                    req.Person = person;
                     next();
                 } else {
                     next(new apiErrors.NotFound());
