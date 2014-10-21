@@ -50,10 +50,10 @@ api.route('/jobs')
     })
 
     .post(function (req, res, next) {
-        if (!req.body || !req.body.jobs) {
+        if (!req.body || !req.body.job) {
             return next(new apiErrors.InvalidParams());
         }
-        storage.jobs.create(req.body.jobs)
+        storage.Jobs.create(req.body.job)
             .then(function (job) {
                 res.status(201).json(jobAddLink(job));
             })
@@ -116,7 +116,7 @@ api.route('/jobs/:jobsid')
         if (!req.body || !req.body.jobs) {
             return next(new apiErrors.InvalidParams());
         }
-        storage.jobs.update(req.jobs.id, req.body.jobs)
+        storage.Jobs.update(req.jobs.id, req.body.jobs)
             .then(function (jobs) {
                 res.json(jobAddLink(jobs));
             });
