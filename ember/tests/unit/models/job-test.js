@@ -6,7 +6,7 @@ import {
 
 moduleForModel('job', 'Job', {
   // Specify the other units that are required for this test.
-  needs: ['model:task', 'model:person', 'model:workspace', 'model:organization']
+  needs: ['model:task', 'model:person', 'model:workspace', 'model:organization', 'model:job-tag']
 });
 
 test('it exists', function() {
@@ -15,10 +15,17 @@ test('it exists', function() {
   ok(!!model);
 });
 
-test('task relationship', function() {
+test('has many tasks relationship', function() {
     var Job = this.store().modelFor('job');
     var relationship = Ember.get(Job, 'relationshipsByName').get('tasks');
     equal(relationship.key, 'tasks');
+    equal(relationship.kind, 'hasMany');
+});
+
+test('has many job tags relationship', function() {
+    var Job = this.store().modelFor('job');
+    var relationship = Ember.get(Job, 'relationshipsByName').get('tags');
+    equal(relationship.key, 'tags');
     equal(relationship.kind, 'hasMany');
 });
 

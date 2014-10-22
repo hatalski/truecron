@@ -10,6 +10,7 @@ var Job = DS.Model.extend({
     updatedAt: DS.attr('date', { defaultValue: new Date() }),
     updatedBy: DS.belongsTo('person', { async: true }),
     workspace: DS.belongsTo('workspace', { async: true }),
+    tags:      DS.hasMany('job-tag', { async: true }),
     tasks:     DS.hasMany('task', { async: true })
 });
 
