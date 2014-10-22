@@ -1,8 +1,4 @@
-/**
- * Created by Andrew on 22.10.2014.
- */
-
- var express = require('express'),
+var express = require('express'),
     _ = require('lodash'),
     logger = require('../../lib/logger'),
     validator = require('../../lib/validator'),
@@ -19,8 +15,8 @@ function addLinks(datajob) {
     var job = datajob.toJSON();
     var selfUrl = '/jobs/' + job.id;
     user._links = {
-        self: selfUrl        
-    };    
+        self: selfUrl
+    };
     return { job: job };
 }
 
@@ -42,12 +38,12 @@ api.route('/jobs')
             limit: req.listParams.limit,
             offset: req.listParams.offset
         }).then(function (result) {
-                res.json({
-                jobs: result.rows.map(addLinks),
+            res.json({
+                users: result.rows.map(addLinks),
                 meta: {
                     total: result.count
                 }});
         });
     })
-	
-	module.exports = api;
+
+module.exports = api;
