@@ -9,7 +9,7 @@ export default DS.Model.extend({
     extensionData: DS.attr('string'),
     lastLoginAt:   DS.attr('date'),
     createdAt:     DS.attr('date'),
-    updatedAt:     DS.attr('date')//,
-    //updatedBy:     DS.belongsTo('person', { async: true }),
-    //organizations: DS.hasMany('organization', { async: true })
+    updatedAt:     DS.attr('date'),
+    updatedBy:     DS.belongsTo('person', { async: true }),
+    organizations: DS.hasMany('organization', { async: true })
 });

@@ -1,3 +1,4 @@
+import Ember from "ember";
 import {
   moduleForModel,
   test
@@ -5,7 +6,7 @@ import {
 
 moduleForModel('person', 'Person', {
   // Specify the other units that are required for this test.
-  needs: []
+  needs: ['model:person', 'model:organization']
 });
 
 test('it exists', function() {

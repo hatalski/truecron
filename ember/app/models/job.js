@@ -8,9 +8,9 @@ var Job = DS.Model.extend({
     archived:  DS.attr('boolean', { defaultValue: false }),
     createdAt: DS.attr('date', { defaultValue: new Date() }),
     updatedAt: DS.attr('date', { defaultValue: new Date() }),
-    //updatedBy: DS.belongsTo('person', { async: true }),
-    //workspace: DS.belongsTo('workspace', { async: true }),
-    tasks:     DS.hasMany('task')
+    updatedBy: DS.belongsTo('person', { async: true }),
+    workspace: DS.belongsTo('workspace', { async: true }),
+    tasks:     DS.hasMany('task', { async: true })
 });
 
 Job.reopenClass({
