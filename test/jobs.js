@@ -19,7 +19,7 @@ superagent.Request.prototype.authenticate = function() {
 describe('JOBS API',
     function() {
         it('get all jobs', function (done) {
-            superagent.post(prefix + '/jobs')
+            superagent.get(prefix + '/jobs')
                 .set('Content-Type', 'application/json')
                 .send()
                 .authenticate()

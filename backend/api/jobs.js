@@ -14,7 +14,7 @@ function addLinks(datajob) {
     }
     var job = datajob.toJSON();
     var selfUrl = '/jobs/' + job.id;
-    user._links = {
+    job._links = {
         self: selfUrl
     };
     return { job: job };
@@ -39,7 +39,7 @@ api.route('/jobs')
             offset: req.listParams.offset
         }).then(function (result) {
             res.json({
-                users: result.rows.map(addLinks),
+                jobs: result.rows.map(addLinks),
                 meta: {
                     total: result.count
                 }});
