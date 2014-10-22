@@ -16,8 +16,8 @@ var Job = DS.Model.extend({
 
 Job.reopenClass({
     FIXTURES: [
-        { id: 1, name: 'Job A', startsAt: new Date('2014-09-20'), rrule: 'FREQ=WEEKLY;COUNT=30;WKST=MO', active: true, archived: false, createdAt: new Date('2014-09-19'), updatedAt: new Date('2014-09-20') },
-        { id: 2, name: 'Job B', startsAt: new Date('2014-10-21'), rrule: 'FREQ=HOURLY;INTERVAL=3;WKST=MO', active: true, archived: false, createdAt: new Date('2014-09-20'), updatedAt: new Date('2014-09-20') }
+        { id: 1, name: 'Job A', startsAt: new Date("2014-09-20T00:00:00.000Z"), rrule: 'FREQ=WEEKLY;COUNT=30;WKST=MO', active: true, archived: false, createdAt: new Date('2014-09-19T00:00:00.000Z'), updatedAt: new Date('2014-09-20T00:00:00.000Z') },
+        { id: 2, name: 'Job B', startsAt: new Date('2014-10-21T00:00:00.000Z'), rrule: 'FREQ=HOURLY;INTERVAL=3;WKST=MO', active: true, archived: false, createdAt: new Date('2014-09-20T00:00:00.000Z'), updatedAt: new Date('2014-09-20T00:00:00.000Z') }
     ]
 });
 

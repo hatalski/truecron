@@ -9,6 +9,6 @@ export default DS.Model.extend({
     createdAt: DS.attr('date'),
     updatedAt: DS.attr('date'),
     updatedBy: DS.belongsTo('person', { async: true }),
-    job:       DS.belongsTo('job', { async: true })//,
-    //taskType:  DS.belongsTo('taskType', { async: true })
+    job:       DS.belongsTo('job', { async: true }),
+    taskType:  DS.belongsTo('task-type', { async: true })
 });
