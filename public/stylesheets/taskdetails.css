@@ -94,3 +94,10 @@
     background-color: white;
     border: 0px;
 }
+
+/* style manageorganization page */
+.textblockbr {
+    width: 100%;
+    border: 2px #005888;
+    background-color: #bcbcbe;
+}
