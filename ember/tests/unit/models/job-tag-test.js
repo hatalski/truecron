@@ -1,3 +1,4 @@
+import Ember from "ember";
 import {
   moduleForModel,
   test
@@ -12,4 +13,11 @@ test('it exists', function() {
   var model = this.subject();
   // var store = this.store();
   ok(!!model);
+});
+
+test('belongs to job relationship', function() {
+    var JobTag = this.store().modelFor('job-tag');
+    var relationship = Ember.get(JobTag, 'relationshipsByName').get('job');
+    equal(relationship.key, 'job');
+    equal(relationship.kind, 'belongsTo');
 });
