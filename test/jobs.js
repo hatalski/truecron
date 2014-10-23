@@ -19,7 +19,7 @@ superagent.Request.prototype.authenticate = function() {
 describe('JOBS API',
     function() {
 
-        var id_to_delete=1;
+        var id_to_delete;
 
         it('create a new job', function (done) {
             superagent.post(prefix + '/jobs')
@@ -42,58 +42,58 @@ describe('JOBS API',
                     done();
                 });
         });
-//        it('get all jobs', function (done) {
-//            superagent.get(prefix + '/jobs')
-//                .set('Content-Type', 'application/json')
-//                .send()
-//                .authenticate()
-//                .end(function (e, res) {
-//                    expect(e).to.eql(null);
-//                    expect(res.header['content-type']).to.eql('application/json; charset=utf-8');
-//                    expect(res.status).to.eql(200);
-//                    done();
-//                });
-//        });
+        it('get all jobs', function (done) {
+            superagent.get(prefix + '/jobs')
+                .set('Content-Type', 'application/json')
+                .send()
+                .authenticate()
+                .end(function (e, res) {
+                    expect(e).to.eql(null);
+                    expect(res.header['content-type']).to.eql('application/json; charset=utf-8');
+                    expect(res.status).to.eql(200);
+                    done();
+                });
+        });
 
-//        it('get job by id', function (done) {
-//            superagent.get(prefix + '/jobs/' + id_to_delete)
-//                .send()
-//                .authenticate()
-//                .end(function (e, res) {
-//                    expect(e).to.eql(null);
-//                    expect(res.header['content-type']).to.eql('application/json; charset=utf-8');
-//                    expect(res.status).to.eql(200);
-//                    done();
-//                });
-//        });
+        it('get job by id', function (done) {
+            superagent.get(prefix + '/jobs/' + id_to_delete)
+                .send()
+                .authenticate()
+                .end(function (e, res) {
+                    expect(e).to.eql(null);
+                    expect(res.header['content-type']).to.eql('application/json; charset=utf-8');
+                    expect(res.status).to.eql(200);
+                    done();
+                });
+        });
 
-//        it('update job', function (done) {
-//            superagent.put(prefix + '/jobs/' + id_to_delete)
-//                .set('Content-Type', 'application/json')
-//                .send({ 'job':  {
-//                    'startsAt': '2014-08-21T10:00:11Z',
-//                    'rrule': 'FREQ=DAILY;INTERVAL=1;BYDAY=MO;BYHOUR=12;BYMINUTE=0;BYSECOND=0'
-//                }
-//                })
-//                .authenticate()
-//                .end(function (e, res) {
-//                    expect(e).to.eql(null);
-//                    expect(res.header['content-type']).to.eql('application/json; charset=utf-8');
-//                    expect(res.status).to.eql(200);
-//                    done();
-//                });
-//        });
+        it('update job', function (done) {
+            superagent.put(prefix + '/jobs/' + id_to_delete)
+                .set('Content-Type', 'application/json')
+                .send({ 'job':  {
+                    'startsAt': '2014-08-21T10:00:11Z',
+                    'rrule': 'FREQ=DAILY;INTERVAL=1;BYDAY=MO;BYHOUR=12;BYMINUTE=0;BYSECOND=0'
+                }
+                })
+                .authenticate()
+                .end(function (e, res) {
+                    expect(e).to.eql(null);
+                    expect(res.header['content-type']).to.eql('application/json; charset=utf-8');
+                    expect(res.status).to.eql(200);
+                    done();
+                });
+        });
 
-//        it('delete job', function (done) {
-//            superagent.del(prefix + '/jobs/' + id_to_delete)
-//                .send()
-//                .authenticate()
-//                .end(function (e, res) {
-//                    expect(e).to.eql(null);
-//                    expect(res.body.error).to.eql(undefined);
-//                    expect(res.status).to.eql(204);
-//                    done();
-//                });
-//        });
+        it('delete job', function (done) {
+            superagent.del(prefix + '/jobs/' + id_to_delete)
+                .send()
+                .authenticate()
+                .end(function (e, res) {
+                    expect(e).to.eql(null);
+                    expect(res.body.error).to.eql(undefined);
+                    expect(res.status).to.eql(204);
+                    done();
+                });
+        });
     }
 );
