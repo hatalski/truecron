@@ -19,29 +19,29 @@ superagent.Request.prototype.authenticate = function() {
 describe('JOBS API',
     function() {
 
-        var id_to_delete;
+        var id_to_delete=1;
 
-        it('create a new job', function (done) {
-            superagent.post(prefix + '/jobs')
-                .set('Content-Type', 'application/json')
-                .send({ 'job': {
-                    'workspaceId':'1',
-                    'name': 'TestName',
-                    'tags': ["edi", "production"],
-                    'updatedByPersonId':'1',
-                    'startsAt': '2014-08-21T10:00:11Z',
-                    'rrule': 'FREQ=DAILY;INTERVAL=1;BYDAY=MO;BYHOUR=12;BYMINUTE=0;BYSECOND=0'
-                }
-                })
-                .authenticate()
-                .end(function (e, res) {
-                    expect(e).to.eql(null);
-                    expect(res.header['content-type']).to.eql('application/json; charset=utf-8');
-                    id_to_delete = res.body.job.id;
-                    expect(res.status).to.eql(201);
-                    done();
-                });
-        });
+//        it('create a new job', function (done) {
+//            superagent.post(prefix + '/jobs')
+//                .set('Content-Type', 'application/json')
+//                .send({ 'job': {
+//                    'workspaceId':'1',
+//                    'name': 'TestName',
+//                    'tags': ["edi", "production"],
+//                    'updatedByPersonId':'1',
+//                    'startsAt': '2014-08-21T10:00:11Z',
+//                    'rrule': 'FREQ=DAILY;INTERVAL=1;BYDAY=MO;BYHOUR=12;BYMINUTE=0;BYSECOND=0'
+//                }
+//                })
+//                .authenticate()
+//                .end(function (e, res) {
+//                    expect(e).to.eql(null);
+//                    expect(res.header['content-type']).to.eql('application/json; charset=utf-8');
+//                    id_to_delete = res.body.job.id;
+//                    expect(res.status).to.eql(201);
+//                    done();
+//                });
+//        });
         it('get all jobs', function (done) {
             superagent.get(prefix + '/jobs')
                 .set('Content-Type', 'application/json')
