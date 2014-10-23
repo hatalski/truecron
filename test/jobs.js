@@ -30,25 +30,25 @@ describe('JOBS API',
                     done();
                 });
         });
-        it('create a new job', function (done) {
-            superagent.post(prefix + '/jobs')
-                .set('Content-Type', 'application/json')
-                .send({ 'job': {'name': 'My first test job',
-                    'workspaceId': '1',
-                    'updatedByPersonId':'1',
-                    'tags': ["edi", "production"],
-                    'startsAt': '2014-08-21T10:00:11Z',
-                    'rrule': "FREQ=DAILY;INTERVAL=1;BYDAY=MO;BYHOUR=12;BYMINUTE=0;BYSECOND=0"
-                }
-                })
-                .authenticate()
-                .end(function (e, res) {
-                    expect(e).to.eql(null);
-                    expect(res.header['content-type']).to.eql('application/json; charset=utf-8');
-                    expect(res.body.error).to.eql(undefined);
-                    expect(res.status).to.eql(201);
-                    done();
-                });
-        });
+//        it('create a new job', function (done) {
+//            superagent.post(prefix + '/jobs')
+//                .set('Content-Type', 'application/json')
+//                .send({ 'job': {'name': 'My first test job',
+//                    'workspaceId': '1',
+//                    'updatedByPersonId':'1',
+//                    'tags': ["edi", "production"],
+//                    'startsAt': '2014-08-21T10:00:11Z',
+//                    'rrule': "FREQ=DAILY;INTERVAL=1;BYDAY=MO;BYHOUR=12;BYMINUTE=0;BYSECOND=0"
+//                }
+//                })
+//                .authenticate()
+//                .end(function (e, res) {
+//                    expect(e).to.eql(null);
+//                    expect(res.header['content-type']).to.eql('application/json; charset=utf-8');
+//                    expect(res.body.error).to.eql(undefined);
+//                    expect(res.status).to.eql(201);
+//                    done();
+//                });
+//        });
     }
 );
