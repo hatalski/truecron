@@ -37,18 +37,9 @@ var findAndCountAll = module.exports.findAndCountAll = Promise.method(function (
         });
 });
 
-var processPassword = Promise.method(function (attributes) {
-    if (!attributes.password) {
-        return attributes;
-    }
-    return secrets.hashPassword(attributes.password)
-        .then(function (passwordHash) {
-            attributes.passwordHash = passwordHash;
-            delete attributes.password;
+var process = Promise.method(function (attributes) {
             return attributes;
         });
-});
-
 /**
  * Create a new job.
  */
@@ -56,7 +47,7 @@ var create = module.exports.create = Promise.method(function (attributes) {
     if (!attributes || validator.isNull(attributes.name)) {
         throw new errors.InvalidParams();
     }
-    return processPassword(attributes).bind({})
+    return process(attributes).bind({}) //need delete this
         .then(function (attrs) {
             var self = { attrs: attrs };
             return using (models.transaction(), function (tx) {
