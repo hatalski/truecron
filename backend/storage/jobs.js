@@ -87,3 +87,36 @@ var findById = module.exports.findById = Promise.method(function (id, transactio
             throw err;
         });
 });
+
+/**
+ * Update a job.
+ */
+var update = module.exports.update = Promise.method(function (id, attributes) {
+    return process(attributes).bind({})
+        .then(function (attrs) {
+            var self = { attrs: attrs };
+            return using (models.transaction(), function (tx) {
+                self.tx = tx;
+                return module.exports.findById(id, tx)
+                    .then(function (job) {
+                        if (job === null) {
+                            throw new errors.NotFound();
+                        }
+                        self.oldJob = job;
+                        return job.updateAttributes(self.attrs, { transaction: self.tx });
+                    })
+                    .then(function (job) {
+                        self.job = job;
+                        return history.logUpdated(-1, getJobIdCacheKey(job.id), job, self.oldJob, self.tx);
+                    })
+                    .then(function () {
+                        cache.put(getJobIdCacheKey(self.job.id), self.job);
+                        return self.job;
+                    });
+            });
+        })
+        .catch(function (err) {
+            logger.error('Failed to update the job %d, %s.', id, err.toString());
+            throw err;
+        });
+});

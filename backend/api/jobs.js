@@ -98,7 +98,18 @@ api.route('/jobs/:jobid')
     .get(function (req, res, next) {
         res.json(addLinks(req.Jobs));
     })
-
+    //
+    // Update a job
+    //
+    .put(function (req, res, next) {
+        if (!req.body || !req.body.job) {
+            return next(new apiErrors.InvalidParams());
+        }
+        storage.Jobs.update(req.Jobs.id, req.body.job)
+            .then(function (job) {
+                res.json(addLinks(job));
+            });
+    })
 
 
 
