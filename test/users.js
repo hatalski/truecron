@@ -284,34 +284,5 @@ describe('USERS API',
                 });
         });
 
-        it('get all jobs', function (done) {
-            superagent.get(prefix + '/jobs')
-                .set('Content-Type', 'application/json')
-                .send()
-                .authenticate()
-                .end(function (e, res) {
-                    expect(e).to.eql(null);
-                    expect(res.header['content-type']).to.eql('application/json; charset=utf-8');
-                    expect(res.status).to.eql(200);
-                    done();
-                });
-        });
-        it('create a new job', function (done) {
-            superagent.post(prefix + '/jobs')
-                .set('Content-Type', 'application/json')
-                .send({ 'job': {'name': 'testtest', 'workspaceId': '1','updatedByPersonId':'1','rrule': 'sdfsdfsdf'} })
-                .authenticate()
-                .end(function (e, res) {
-                    expect(e).to.eql(null);
-                    expect(res.header['content-type']).to.eql('application/json; charset=utf-8');
-                    expect(res.body.error).to.eql(undefined);
-                    expect(res.body.job.id).to.be.a('string');
-                    expect(res.body.job.name).to.eql('testtest');
-                    expect(validator.isDate(res.body.job.createdAt)).to.be.ok();
-                    expect(validator.isDate(res.body.job.updatedAt)).to.be.ok();
-                    expect(res.status).to.eql(201);
-                    done();
-                });
-        });
     }
 );
