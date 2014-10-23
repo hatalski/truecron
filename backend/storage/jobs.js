@@ -120,3 +120,30 @@ var update = module.exports.update = Promise.method(function (id, attributes) {
             throw err;
         });
 });
+/**
+ * Remove a job.
+ */
+var remove = module.exports.remove = Promise.method(function (id) {
+    return using (models.transaction(), function (tx) {
+        var self = { tx: tx };
+        return findById(id)
+            .then(function (job) {
+                if (job === null) {
+                    // No found, that's ok for remove() operation
+                    return;
+                }
+                self.job = job;
+                return job.destroy({transaction: self.tx})
+                    .then(function () {
+                        return history.logRemoved(-1, getJobIdCacheKey(self.job.id), self.job, self.tx);
+                    })
+                    .then(function () {
+                        cache.remove(getJobIdCacheKey(self.job.id))
+                    });
+            });
+    })
+        .catch(function (err) {
+            logger.error('Failed to remove the job %d, %s.', id, err.toString());
+            throw err;
+        });
+});

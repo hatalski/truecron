@@ -110,6 +110,15 @@ api.route('/jobs/:jobid')
                 res.json(addLinks(job));
             });
     })
+    //
+    // Delete a job
+    //
+    .delete(function (req, res, next) {
+        storage.Jobs.remove(req.Jobs.id)
+            .then(function () {
+                res.status(204).json({});
+            });
+    });
 
 
 
