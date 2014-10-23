@@ -36,7 +36,9 @@ var findAndCountAll = module.exports.findAndCountAll = Promise.method(function (
             throw err;
         });
 });
-
+var process = Promise.method(function (attributes) {
+    return attributes;
+});
 /**
  * Create a new job.
  */
@@ -44,23 +46,26 @@ var create = module.exports.create = Promise.method(function (attributes) {
     if (!attributes || validator.isNull(attributes.name)) {
         throw new errors.InvalidParams();
     }
-    var self = { attrs: attrs };
-        return using (models.transaction(), function (tx) {
-            self.tx = tx;
-            return models.Job.create(self.attrs, { transaction: tx })
-                .then(function (job) {
-                    self.job = job;
-                    return history.logCreated(-1, getJobIdCacheKey(job.id), job, self.tx);
-                })
-                .then(function () {
-                    cache.put(getJobIdCacheKey(self.job.id), self.job);
-                    return self.job;
-                });
+    return process(attributes).bind({}) //need delete this
+        .then(function (attrs) {
+            var self = { attrs: attrs };
+            return using (models.transaction(), function (tx) {
+                self.tx = tx;
+                return models.Job.create(self.attrs, { transaction: tx })
+                    .then(function (job) {
+                        self.job = job;
+                        return history.logCreated(-1, getJobIdCacheKey(job.id), job, self.tx);
+                    })
+                    .then(function () {
+                        cache.put(getJobIdCacheKey(self.job.id), self.job);
+                        return self.job;
+                    });
+            });
         })
-    .catch(function (err) {
-        logger.error('Failed to create a job, %s.', err.toString());
-        throw err;
-    });
+        .catch(function (err) {
+            logger.error('Failed to create a job, %s.', err.toString());
+            throw err;
+        });
 });
 /**
  * Search for a single job by ID.
