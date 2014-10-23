@@ -75,14 +75,13 @@
     width: 100%;
 }
 
-.backgroundcolor {
-    background-color: #dbdbdb;
-}
+
 
 .col-md-6 {
     height: 875px;
 }
 
+.lastrowborder>tbody>tr>td {
 .lastrowborder>tbody>tr>td {
     border-bottom: 1px solid #ddd;
 }
