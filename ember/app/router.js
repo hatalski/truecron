@@ -7,6 +7,7 @@ var Router = Ember.Router.extend({
 
 Router.map(function() {
     this.resource('jobs', { path: '/jobs'}, function() {
+        this.route('new');
         this.resource('job', { path: '/jobs/:job_id'});
     });
 });

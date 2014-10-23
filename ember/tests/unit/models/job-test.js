@@ -1,4 +1,5 @@
 import Ember from "ember";
+import DS from 'ember-data';
 import {
   moduleForModel,
   test
@@ -10,9 +11,21 @@ moduleForModel('job', 'Job', {
 });
 
 test('it exists', function() {
-  var model = this.subject();
-  // var store = this.store();
-  ok(!!model);
+    var model = this.subject();
+    console.dir(model);
+    // var store = this.store();
+    ok(!!model);
+});
+
+test('store create and find job by id', function() {
+    var store = this.store();
+    var record = null;
+    Ember.run(function() {
+        store.createRecord('job', { id: 1, name: 'Job A', startsAt: new Date("2014-09-20T00:00:00.000Z"), rrule: 'FREQ=WEEKLY;COUNT=30;WKST=MO', active: true, archived: false, createdAt: new Date('2014-09-19T00:00:00.000Z'), updatedAt: new Date('2014-09-20T00:00:00.000Z') });
+        record = store.find('job', 1);
+    });
+    console.log(record.get('name'));
+    equal(record.get('name'), 'Job A');
 });
 
 test('has many tasks relationship', function() {
