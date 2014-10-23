@@ -63,4 +63,43 @@ api.route('/jobs')
             });
     });
 
+//
+// Params
+//
+
+api.param('jobid', function (req, res, next, id) {
+
+    var jobid = null;
+
+    if (validator.isInt(id)) {
+        jobid = id;
+    }
+    else {
+        next(new apiErrors.InvalidParams());
+    }
+
+    if (!!jobid) {
+        storage.Jobs.findById(id)
+            .then(function (job) {
+                if (job !== null) {
+                    req.Jobs = job;
+                    next();
+                } else {
+                    next(new apiErrors.NotFound());
+                }
+            });
+    }
+});
+
+api.route('/jobs/:jobid')
+    //
+    // Get a job
+    //
+    .get(function (req, res, next) {
+        res.json(addLinks(req.Jobs));
+    })
+
+
+
+
 module.exports = api;

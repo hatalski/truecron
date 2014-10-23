@@ -77,3 +77,23 @@ var create = module.exports.create = Promise.method(function (attributes) {
             throw err;
         });
 });
+/**
+ * Search for a single job by ID.
+ */
+var findById = module.exports.findById = Promise.method(function (id, transaction) {
+    return cache.get(getJobIdCacheKey(id))
+        .then(function (result) {
+            if (result.found) {
+                return result.value;
+            }
+            return models.Job.find({ where: { id: id } }, { transaction: transaction })
+                .then(function (job) {
+                    cache.put(getJobIdCacheKey(id), job);
+                    return job;
+                });
+        })
+        .catch(function (err) {
+            logger.error('Failed to find a job by id %s, %s.', id, err.toString());
+            throw err;
+        });
+});
