@@ -5,7 +5,14 @@ var models = Object.create(null);
 module.exports = models;
 
 models.transaction = function() {
-    return this.sequelize.transaction();
+    return this.sequelize.transaction()
+        .disposer(function (transaction, promise)  {
+            if (promise.isFulfilled()) {
+                return transaction.commit();
+            } else {
+                return transaction.rollback();
+            }
+        });
 };
 
 module.exports.initialize = function(sequelize) {
