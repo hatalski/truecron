@@ -33,6 +33,7 @@ Storage.prototype.initialize = Promise.method(function initialize() {
     models.initialize(this.sequelize);
 
     this.Person = require('./person');
+    this.Jobs = require('./jobs');
     //this.Organization = require('./organization');
     //this.Workspace = require('./workspace');
 
