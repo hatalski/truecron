@@ -8,6 +8,8 @@ var Promise = require("bluebird"),
     validator = require('../../lib/validator'),
     errors = require('../../lib/errors');
 
+var using = Promise.using;
+
 //
 // Key strings to identify data in Redis
 //
@@ -51,6 +53,10 @@ var findById = module.exports.findById = Promise.method(function (id, transactio
                     cache.put(getPersonIdCacheKey(id), person);
                     return person;
                 });
+        })
+        .catch(function (err) {
+            logger.error('Failed to find a person by id %s, %s.', id, err.toString());
+            throw err;
         });
 });
 
@@ -75,6 +81,10 @@ var findByEmail = module.exports.findByEmail = Promise.method(function (email, t
                     }
                     return null;
                 });
+        })
+        .catch(function (err) {
+            logger.error('Failed to find a person by email %s, %s.', email, err.toString());
+            throw err;
         });
 });
 
@@ -89,6 +99,10 @@ var find = module.exports.find = Promise.method(function (options, transaction) 
                 cache.put(getPersonIdCacheKey(persion.id), person);
             }
             return person;
+        })
+        .catch(function (err) {
+            logger.error('Failed to find a person, %s.', err.toString());
+            throw err;
         });
 });
 
@@ -109,6 +123,10 @@ var findAndCountAll = module.exports.findAndCountAll = Promise.method(function (
             // No need to cache pages of people, but it makes sense to cache individual persons
             result.rows.forEach(function(person) { cache.put(getPersonIdCacheKey(person.id), person); });
             return result;
+        })
+        .catch(function (err) {
+            logger.error('Failed to list persons, %s.', err.toString());
+            throw err;
         });
 });
 
@@ -139,29 +157,22 @@ var create = module.exports.create = Promise.method(function (attributes) {
     }
     return processPassword(attributes).bind({})
         .then(function (attrs) {
-            this.attrs = attrs;
-            return models.transaction();
+            var self = { attrs: attrs };
+            return using (models.transaction(), function (tx) {
+                self.tx = tx;
+                return models.Person.create(self.attrs, { transaction: tx })
+                    .then(function (person) {
+                        self.person = person;
+                        return history.logCreated(-1, getPersonIdCacheKey(person.id), person, self.tx);
+                    })
+                    .then(function () {
+                        cache.put(getPersonIdCacheKey(self.person.id), self.person);
+                        return self.person;
+                    });
+            });
         })
-        .then(function (tx) {
-            this.tx = tx;
-            return models.Person.create(this.attrs, { transaction: tx });
-        })
-        .then(function (person) {
-            this.person = person;
-            return history.logCreated(-1, getPersonIdCacheKey(person.id), person, this.tx);
-        })
-        .then(function () {
-            return this.tx.commit();
-        })
-        .then(function () {
-            cache.put(getPersonIdCacheKey(this.person.id), this.person);
-            return this.person;
-        })
-        .catch(function(err) {
-            logger.log('error', 'Failed to create a person, %s.', err.toString());
-            if (this.tx) {
-                this.tx.rollback();
-            }
+        .catch(function (err) {
+            logger.error('Failed to create a person, %s.', err.toString());
             throw err;
         });
 });
@@ -175,36 +186,29 @@ var create = module.exports.create = Promise.method(function (attributes) {
 var update = module.exports.update = Promise.method(function (id, attributes) {
     return processPassword(attributes).bind({})
         .then(function (attrs) {
-            this.attrs = attrs;
-            return models.transaction();
+            var self = { attrs: attrs };
+            return using (models.transaction(), function (tx) {
+                self.tx = tx;
+                return module.exports.findById(id, tx)
+                    .then(function (person) {
+                        if (person === null) {
+                            throw new errors.NotFound();
+                        }
+                        self.oldPerson = person;
+                        return person.updateAttributes(self.attrs, { transaction: self.tx });
+                    })
+                    .then(function (person) {
+                        self.person = person;
+                        return history.logUpdated(-1, getPersonIdCacheKey(person.id), person, self.oldPerson, self.tx);
+                    })
+                    .then(function () {
+                        cache.put(getPersonIdCacheKey(self.person.id), self.person);
+                        return self.person;
+                    });
+            });
         })
-        .then(function (tx) {
-            this.tx = tx;
-            return module.exports.findById(id, tx);
-        })
-        .then(function (person) {
-            if (person === null) {
-                throw new errors.NotFound();
-            }
-            this.oldPerson = person;
-            return person.updateAttributes(this.attrs, { transaction: this.tx });
-        })
-        .then(function (person) {
-            this.person = person;
-            return history.logUpdated(-1, getPersonIdCacheKey(person.id), person, this.oldPerson, this.tx);
-        })
-        .then(function () {
-            return this.tx.commit();
-        })
-        .then(function () {
-            cache.put(getPersonIdCacheKey(this.person.id), this.person);
-            return this.person;
-        })
-        .catch(function(err) {
-            logger.error('Failed to update the person %d. %s.', id, err.toString());
-            if (this.tx) {
-                this.tx.rollback();
-            }
+        .catch(function (err) {
+            logger.error('Failed to update the person %d, %s.', id, err.toString());
             throw err;
         });
 });
@@ -214,37 +218,29 @@ var update = module.exports.update = Promise.method(function (id, attributes) {
  * @param {int} id Person ID.
  */
 var remove = module.exports.remove = Promise.method(function (id) {
-    return module.exports.findById(id).bind({})
-        .then(function (person) {
-            if (person === null) {
-                // No found, that's ok for remove() operation
-                return;
-            }
-
-            this.person = person;
-            return models.transaction()
-            .then(function (tx) {
-                this.tx = tx;
-                return this.person.destroy({ transaction: this.tx });
-            })
-            .then(function () {
-                return history.logRemoved(-1, getPersonIdCacheKey(this.person.id), this.person, this.tx);
-            })
-            .then(function () {
-                return this.tx.commit();
-            })
-            .then(function () {
-                cache.remove(getPersonIdCacheKey(this.person.id),
-                             getEmailsByPersonIdCacheKey(this.person.id));
-            })
-            .catch(function(err) {
-                logger.error('Failed to remove the person %d, %s.', id, err.toString());
-                if (this.tx) {
-                    this.tx.rollback();
+    return using (models.transaction(), function (tx) {
+        var self = { tx: tx };
+        return findById(id)
+            .then(function (person) {
+                if (person === null) {
+                    // No found, that's ok for remove() operation
+                    return;
                 }
-                throw err;
+                self.person = person;
+                return person.destroy({transaction: self.tx})
+                    .then(function () {
+                        return history.logRemoved(-1, getPersonIdCacheKey(self.person.id), self.person, self.tx);
+                    })
+                    .then(function () {
+                        cache.remove(getPersonIdCacheKey(self.person.id),
+                            getEmailsByPersonIdCacheKey(self.person.id));
+                    });
             });
-        });
+    })
+    .catch(function (err) {
+        logger.error('Failed to remove the person %d, %s.', id, err.toString());
+        throw err;
+    });
 });
 
 /**
@@ -265,6 +261,10 @@ var getEmails = module.exports.getEmails = Promise.method(function (personId, op
                     cache.put(getEmailsByPersonIdCacheKey(personId), result);
                     return result;
                 });
+        })
+        .catch(function (err) {
+            logger.error('Failed to get emails of the person %d, %s.', personId, err.toString());
+            throw err;
         });
 });
 
@@ -295,28 +295,27 @@ var addEmail = module.exports.addEmail = Promise.method(function (personId, attr
     if (!validator.isIn(status, ['active', 'pending'])) {
         throw new errors.InvalidParams('Invalid status');
     }
-    return models.transaction().bind({})
-        .then(function (tx) {
-            this.tx = tx;
-            return models.PersonEmail.create({ personId: personId, email: email, status: status }, { transaction: this.tx });
-        })
-        .then(function(result) {
-            this.result = result;
-            cache.remove(getEmailsByPersonIdCacheKey(personId));
-            cache.put(getPersonIdByEmailCacheKey(email), personId);
-            return history.log(-1, getPersonIdCacheKey(personId), 'email-add', {email: email, status: status}, {}, this.tx);
-        })
-        .then(function () {
-            this.tx.commit();
-            return this.result;
-        })
-        .catch(function(err) {
-            logger.error('Failed to add a email for person %d, %s.', personId, err.toString());
-            if (this.tx) {
-                this.tx.rollback();
-            }
-            throw err;
-        });
+    return using (models.transaction(), function (tx) {
+        var self = { tx: tx };
+        return models.PersonEmail.create({
+                personId: personId,
+                email: email,
+                status: status
+            }, {transaction: tx})
+            .then(function (result) {
+                self.result = result;
+                cache.remove(getEmailsByPersonIdCacheKey(personId));
+                cache.put(getPersonIdByEmailCacheKey(email), personId);
+                return history.log(-1, getPersonIdCacheKey(personId), 'email-add', { email: email, status: status }, {}, self.tx);
+            })
+            .then(function () {
+                return self.result;
+            })
+            .catch(function (err) {
+                logger.error('Failed to add a email for person %d, %s.', personId, err.toString());
+                throw err;
+            });
+    });
 });
 
 /**
@@ -343,67 +342,56 @@ var findEmail = module.exports.findEmail = Promise.method(function (personId, em
     } else {
         throw new errors.InvalidParams('Invalid email.');
     }
-    return models.PersonEmail.find(where, { transaction: transaction });
+    return models.PersonEmail.find({ where: where }, { transaction: transaction });
 });
 
 var changeEmailStatus = module.exports.changeEmailStatus = Promise.method(function (personId, emailIdOrValue, newStatus) {
     if (!validator.isIn(newStatus, ['active', 'pending'])) {
         throw new errors.InvalidParams('Invalid status');
     }
-    return models.transaction().bind({})
-        .then(function (tx) {
-            this.tx = tx;
-            return findEmail(personId, emailIdOrValue, this.tx);
-        })
-        .then(function(email) {
-            if (email === null) {
-                throw new errors.NotFound();
-            }
-            return email.updateAttributes({status: newStatus}, {transaction: this.tx});
-        })
-        .then(function(email) {
-            this.email = email;
-            return history.log(-1, getPersonIdCacheKey(personId), 'email-change-status', { email: email, status: newStatus }, email, this.tx);
-        })
-        .then(function () {
-            this.tx.commit();
-            return this.email;
-        })
-        .catch(function(err) {
-            logger.error('Failed to update a status of email %s of the person %d, %s.', emailIdOrValue, personId, err.toString());
-            if (this.tx) {
-                this.tx.rollback();
-            }
-            throw err;
-        });
+    return using(models.transaction(), function (tx) {
+        var self = { tx: tx };
+        return findEmail(personId, emailIdOrValue, self.tx)
+            .then(function (email) {
+                if (email === null) {
+                    throw new errors.NotFound();
+                }
+                return email.updateAttributes({ status: newStatus }, { transaction: self.tx });
+            })
+            .then(function (email) {
+                self.email = email;
+                return history.log(-1, getPersonIdCacheKey(personId), 'email-change-status',
+                                    { email: email, status: newStatus }, email, self.tx);
+            })
+            .then(function () {
+                return self.email;
+            })
+            .catch(function (err) {
+                logger.error('Failed to update a status of email %s of the person %d, %s.', emailIdOrValue, personId, err.toString());
+                throw err;
+            });
+    });
 });
 
-
 var removeEmail = module.exports.removeEmail = Promise.method(function (personId, emailIdOrValue) {
-    return models.transaction().bind({})
-        .then(function (tx) {
-            this.tx = tx;
-            return findEmail(personId, emailIdOrValue, this.tx);
-        })
-        .then(function(email) {
-            if (email === null) {
-                return; // Ok, nothing to delete
-            }
-            this.email = email;
-            return this.email.destroy({ transaction: this.tx })
-                .then(function () {
-                    cache.remove(getEmailsByPersonIdCacheKey(personId), getPersonIdByEmailCacheKey(this.email));
-                    return history.log(-1, getPersonIdCacheKey(personId), 'email-remove', { email: this.email }, this.email, this.tx);
-                })
-                .then(function () {
-                    this.tx.commit();
-                });
-        })
-        .catch(function(err) {
-            logger.error('Failed to remove the email %s from person %d, %s.', emailIdOrValue, personId, err.toString());
-            if (this.tx) {
-                this.tx.rollback();
-            }
-            throw err;
-        });
+    return using(models.transaction(), function (tx) {
+        var self = { tx: tx };
+        return findEmail(personId, emailIdOrValue, tx)
+            .then(function (personEmail) {
+                if (personEmail === null) {
+                    return; // Ok, nothing to delete
+                }
+                self.personEmail = personEmail;
+                return personEmail.destroy({transaction: self.tx})
+                    .then(function () {
+                        cache.remove(getEmailsByPersonIdCacheKey(personId), getPersonIdByEmailCacheKey(self.personEmail.email));
+                        return history.log(-1, getPersonIdCacheKey(personId), 'email-remove',
+                                            {email: self.personEmail.email}, self.personEmail, self.tx);
+                    });
+            })
+            .catch(function (err) {
+                logger.error('Failed to remove the email %s from person %d, %s.', emailIdOrValue, personId, err.toString());
+                throw err;
+            });
+    });
 });

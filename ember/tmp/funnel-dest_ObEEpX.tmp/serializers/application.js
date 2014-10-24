@@ -1,0 +1,1 @@
+/Users/vitalihatalski/perkslab/truecron/ember/app/serializers/application.js

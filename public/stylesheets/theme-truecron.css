@@ -22,3 +22,23 @@
 .navbar-inverse .navbar-nav > li > a {
     color: White;
 }
+
+.navbar-inverse .navbar-nav > .open > a, .navbar-inverse .navbar-nav > .open > a:hover, .navbar-inverse .navbar-nav > .open > a:focus {
+    background-color: #465f7c;
+}
+
+.dropdown-menu .divider {
+    background-color: #1db0ce;
+}
+
+.dropdown-menu {
+    border: 1px solid #1db0ce;
+}
+
+.dropdown-menu > li > a:hover,
+.dropdown-menu > li > a:focus {
+    background-color: #f6f6f6;
+    background-image: none;
+    border-left: solid 4px #ffa041;
+    margin: 0 3px;
+}
