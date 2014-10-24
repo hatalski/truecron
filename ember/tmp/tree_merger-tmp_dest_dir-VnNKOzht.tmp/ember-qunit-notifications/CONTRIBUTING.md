@@ -1,0 +1,1 @@
+/Users/vitalihatalski/perkslab/truecron/ember/tmp/custom_static_compiler-tmp_dest_dir-y4kw1mvl.tmp/ember-qunit-notifications/CONTRIBUTING.md

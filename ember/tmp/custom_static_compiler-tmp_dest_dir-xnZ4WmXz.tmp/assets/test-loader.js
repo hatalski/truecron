@@ -1,0 +1,1 @@
+/Users/vitalihatalski/perkslab/truecron/ember/tmp/tree_merger-tmp_dest_dir-7rdmUtN4.tmp/bower_components/ember-cli-test-loader/test-loader.js

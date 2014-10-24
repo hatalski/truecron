@@ -1,0 +1,1 @@
+/Users/vitalihatalski/perkslab/truecron/ember/tmp/custom_static_compiler-tmp_dest_dir-LPXjjYdi.tmp/true-cron/tests/helpers/resolver.js
