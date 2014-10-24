@@ -4,24 +4,17 @@ var basicAuth = require('basic-auth'),
     logger = require('../../lib/logger'),
     secrets = require('../../lib/secrets'),
     storage = require('../storage'),
-    apiErrors = require('./../../lib/errors');
+    oauthErrors = require('./oautherrors');
 
 //
-// Authenticate application by organization ID and a secret key.
+// Authenticate client application by organization ID and a secret key.
 // ID and a secret are passed as a username and password in via the Basic Authentication.
 module.exports = function (req, res, next) {
-
-    var unauthorized = function(res) {
-        res.set('WWW-Authenticate', 'Basic realm="truecron"');
-        return next(new apiErrors.NotAuthenticated());
-    };
-
     var credentials = basicAuth(req);
-    req.authenticated = false;
     req.client = null;
 
     if (!credentials || !validator.isInt(credentials.name) || !credentials.pass || credentials.pass.length === 0) {
-        return unauthorized(res);
+        return next(oauthErrors.getInvalidClient());
     }
 
     logger.profile('authentication');
@@ -37,7 +30,6 @@ module.exports = function (req, res, next) {
             }
         })
         .then(function (passwordIsGood) {
-            req.authenticated = passwordIsGood;
             logger.profile('authentication-bcrypt');
             logger.profile('authentication');
             if (passwordIsGood) {
@@ -46,10 +38,7 @@ module.exports = function (req, res, next) {
                 next();
             } else {
                 logger.debug('Authentication failed. Invalid secret or unknown client %s.', credentials.name);
-                return unauthorized(res);
+                return next(oauthErrors.getInvalidClient());
             }
         });
 };
-
-
-
