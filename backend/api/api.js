@@ -4,6 +4,7 @@ var express = require('express'),
 //    expressWinston = require('express-winston'),
     errorhandler = require('errorhandler'),
     url = require('url'),
+    util = require('util'),
     Promise = require("bluebird"),
     parseurl = require('parseurl'),
     logger = require('../../lib/logger'),
@@ -53,26 +54,14 @@ api.use(function(req, res, next) {
 
 
 api.use(function(err, req, res, next) {
-    var status = err.status;
-    var message = err.message;
-    // TODO: Move to 'errors', extract messages from inner exceptions
-    if (!status) {
-        // Check for errors caused by invalid arguments
-        if (err.name === 'SequelizeUniqueConstraintError') {
-            status = 400; // Uniqueness violation.
-            message = message || 'Uniqueness violation';
-        }
-        if (err.name === 'SequelizeValidationError') {
-            status = 400; // Invalid values.
-            message = message || 'Invalid arguments';
-        }
-    }
-    status = status || 500;
-    res.status(status);
+    logger.error(util.inspect(err));
+    // Make sure the err has an appropriate status and a message
+    err = apiErrors.normalizeError(err);
+    res.status(err.status);
     res.json({
         error: {
-            status: status,
-            message: message
+            status: err.status,
+            message: err.message
         }
     });
 });
