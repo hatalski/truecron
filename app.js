@@ -158,6 +158,11 @@ app.get('/executetask', function (req, res) {
     res.sendfile('executetask.html');
 });
 
+app.get('/manageorganization', function (req, res) {
+    res.sendfile('manageorganization.html');
+});
+
+
 /// catch 404 and forward to error handler
 app.use(function(req, res, next) {
     var err = new Error('Not Found');

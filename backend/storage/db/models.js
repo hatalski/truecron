@@ -21,7 +21,8 @@ module.exports.initialize = function(sequelize) {
         'person',
         'personemail',
         'history',
-        'organization'
+        'organization',
+        'job'
         //'workspace',
     ];
 

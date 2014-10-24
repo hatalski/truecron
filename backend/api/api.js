@@ -26,6 +26,7 @@ api.use(oauth.authenticate);
 // Routes
 //
 api.use(require('./users'));
+api.use(require('./jobs'));
 //api.use(require('./organizations'));
 //api.use(require('./workspaces'));
 
