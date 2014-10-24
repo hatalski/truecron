@@ -1,1 +1,0 @@
-/Users/vitalihatalski/perkslab/truecron/ember/bower_components/loader.js/

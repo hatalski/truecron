@@ -1,1 +1,0 @@
-/Users/vitalihatalski/perkslab/truecron/ember/tmp/concat-tmp_dest_dir-veGfnmS3.tmp/addons.js

@@ -1,1 +1,0 @@
-/Users/vitalihatalski/perkslab/truecron/ember/app/models/organization.js

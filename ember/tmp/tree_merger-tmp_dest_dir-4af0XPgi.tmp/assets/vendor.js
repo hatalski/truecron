@@ -1,1 +1,0 @@
-/Users/vitalihatalski/perkslab/truecron/ember/tmp/concat-tmp_dest_dir-V6X6mRNU.tmp/assets/vendor.js

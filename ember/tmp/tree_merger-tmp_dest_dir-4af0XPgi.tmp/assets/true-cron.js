@@ -1,1 +1,0 @@
-/Users/vitalihatalski/perkslab/truecron/ember/tmp/concat-tmp_dest_dir-Ldki1XZv.tmp/assets/true-cron.js
