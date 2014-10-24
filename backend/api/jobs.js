@@ -59,7 +59,7 @@ api.route('/jobs')
             })
             .catch(function (err) {
                 logger.error(err.toString());
-                return next(new apiErrors.InvalidParams(err));
+                return next(err);
             });
     });
 
