@@ -10,6 +10,7 @@ Router.map(function() {
         this.route('new');
         this.resource('job', { path: '/jobs/:job_id'});
     });
+  this.route('jobs/job');
 });
 
 export default Router;
