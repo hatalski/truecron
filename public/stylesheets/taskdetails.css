@@ -75,10 +75,6 @@
     width: 100%;
 }
 
-.backgroundcolor {
-    background-color: #dbdbdb;
-}
-
 .col-md-6 {
     height: 875px;
 }
@@ -100,4 +96,8 @@
     width: 100%;
     border: 2px #005888;
     background-color: #bcbcbe;
+}
+
+.paddingbodytask {
+    padding: 5%;
 }

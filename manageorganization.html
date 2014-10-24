@@ -31,7 +31,7 @@
 <body>
 <div class="backgroundcolor">
 <div >
-    <div class="row">
+    <div class="row paddingbodytask">
         <div class="span12">
             <div class="navbar navbar-inverse navbar-fixed-top" role="navigation">
                 <div class="container-fluid">
@@ -55,143 +55,213 @@
     </div>
 </div>
 <br><br><br>
-<div>
+<div class="container">
+    <div class="row">
+        <div class= "span3">
+            <div class="sidebar">
+                <ul class="nav nav-tabs">
+                    <li class="active">
+                        <a href="#">Workspaces</a>
+                    </li>
+                    <li><a href="#">Uzers</a></li>
+                </ul>
+                <div style="padding: 5%">
+                    <table>
+                        <tr>
+                            <td><button type="button" class="btn btn-default">Invite</button></td>
+                            <td width="15%">&nbsp;</td>
+                            <td><a href="#">Filter</a></td>
+                        </tr>
+                    </table>
+                </div>
+                <div class="menu-tabs">
+                    <div class="row">
+                        <div class="col-xs-2">
+                            <span></span>
+                        </div>
+                        <div class="col-xs-9">
+                            <p class="title"><a class="ember-view" href="#/jobs-item">Lev Kurts</a></p>
+                            <p>Joined: 08/28/2014</p>
+                            <p>Last logon: 08/28/2014</p>
+                        </div>
+                    </div>
+                </div><!--end "menu-tabs1"-->
+                <div class="menu-tabs">
+                    <div class="row active-job">
+                        <div class="col-xs-2">
+                            <span></span>
+                        </div>
+                        <div class="col-xs-9">
+                            <p class="title"><a id="" class="ember-view" href="#/jobs-item">John Smith</a></p>
+                            <p>Joined: 08/28/2014</p>
+                            <p>Last logon: 08/28/2014</p>
+                        </div>
+                    </div>
+                </div><!--end "menu-tabs2"-->
+                <div class="menu-tabs">
+                    <div class="row">
+                        <div class="col-xs-2">
+                            <span></span>
+                        </div>
+                        <div class="col-xs-9">
+                            <p class="title"><a class="ember-view" href="#/jobs-item">Vitali Hatalski</a></p>
+                            <p>Joined: 08/28/2014</p>
+                            <p>Last logon: 08/28/2014</p>
+                        </div>
+                    </div>
+                </div><!--end "menu-tabs3"-->
+            </div><!--end class sidebar-->
+        </div><!--end class=span-->
+        <div class="span9">
+            <div >
+                <table class="allwidth">
+                    <tbody>
+                    <tr>
+                        <td class="first_row" colspan="4">&nbsp;John Smith<span class="title-icon"><i class="fa fa-pencil"></i></span></td>
+                        <td></td>
+                        <td align="right"><a href="#"><u>Delete</u></a>&nbsp;&nbsp;</td>
+                    </tr>
+                    <tr><td>&nbsp;</td></tr>
+                    <tr>
+                        <td></td>
+                        <td colspan="2">Primary Email:</td>
+                        <td class="blue_row"><u>jsmith@acme.com</u></td>
+                        <td align="right" colspan="2">
+                            <button type="button" class="btn btn-default">Reset Password</button>&nbsp;
+                        </td>
+                    </tr>
+                    <tr valign="top">
+                        <td rowspan="3"><a class="pulltab" href="#"><img src="img/btn1.png"></a>
+                        <td colspan="2">Secundary emails:</td>
+                        <td>
+                            <select multiple="multiple" size="2">
+                                <option>jsmith@acme.com</option>
+                                <option>jsmith1@acme.com &nbsp;&nbsp;&nbsp;</option>
+                            </select>
+                        </td>
+                        <td align="left"><u><a href="#">Edit</a></u></td>
+                        <td>&nbsp;</td>
+                    </tr>
+                    <tr>
+                        <td>Organizational Role:</td>
+                        <td colspan ="4"><strong>Member <span class="title-icon"><i class="fa fa-pencil"></i></span></strong></td>
+                    </tr>
+                    <tr>
+                        <td colspan="2">
+                            <h4>Workspaces:</h4>
+                        </td>
+                        <td></td><td></td>
+                        <td align="right">
+                            <button type="button" class="btn btn-default"><i class="fa fa-plus"></i>Add workspaces</button>&nbsp;
+                        </td>
+                    </tr>
+                    </tbody>
+                </table><br>
+                <!--start task partial-->
+                <div>
+                    <table class="table table-striped table-bordered">
+                        <tbody>
+                        <tr class="first_row">
+                            <td>Title</td>
+                            <td>Role</td>
+                            <td colspan="3">Actions</td>
+                        </tr>
+                        <tr>
+                            <td>staging</td>
+                            <td>Editor</td>
+                            <td colspan="3"><a href="#"><u>edit</u></a>
+                                            <a href="#"><u>remove </u></a></td>
+                        </tr>
+                        <tr>
+                            <td>production</td>
+                            <td>Viewer</td>
+                            <td colspan="3"><a href="#"><u>edit</u></a>
+                                            <a href="#"><u>remove </u></a></td>
+                        </tr>
+                        <tr>
+                            <td>development</td>
+                            <td>Editor</td>
+                            <td colspan="3"><a href="#"><u>edit</u></a>
+                                            <a href="#"><u>remove </u></a></td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div><!--end task partial-->
+            </div><!--end class "span6" #1-->
+            <br><br><br><hr><hr><br><br>
+            <div class="container"><!--start part2 "USERS-->
+                <div class="row">
+                    <div class="span6">
+                        <table class="allwidth">
+                            <tbody>
+                            <tr>
+                                <td class="first_row">Production</td>
+                                <td></td>
+                                <td align="right"><button type="button" class="btn btn-default">Delete this workspace</button>&nbsp;</td>
+                            </tr>
+                            <tr><td>&nbsp;</td></tr>
+                            <tr>
+                                <td><strong>Users:</strong></td>
+                                <td></td>
+                                <td align="right">
+                                    <button type="button" class="btn btn-default">Add new user</button>&nbsp;
+                                </td>
+                            </tr>
+                            </tbody>
+                        </table><br>
+                        <table class="table table-striped table-bordered"><!--table2-->
+                            <tbody>
+                            <tr class="first_row">
+                                <td>Email</td>
+                                <td>Role</td>
+                                <td colspan="3">Actions</td>
+                            </tr>
+                            <tr>
+                                <td>vhatalski@naviam.com</td>
+                                <td>Admin</td>
+                                <td colspan="3"><a href="#"><u>edit</u></a>
+                                                <a href="#"><u>remove </u></a></td>
+                            </tr>
+                            <tr>
+                                <td>lkurts@gmail.com</td>
+                                <td>Admin</td>
+                                <td colspan="3"><a href="#"><u>edit</u></a>
+                                                <a href="#"><u>remove </u></a></td>
+                            </tr>
+                            <tr>
+                                <td>bengler@servicechannel.com</td>
+                                <td>Admin</td>
+                                <td colspan="3"><a href="#"><u>edit</u></a>
+                                                <a href="#"><u>remove </u></a></td>
+                            </tr>
+                            </tbody>
+                        </table>
+                        <div class="textblockbr"><!--start text block-->
+                            <p>GitHub synchronization Naviam/Cloudcron</p><br>
+                            <p>You're linked to this repository. Every change of apiary.apib document within will spawn new</p>
+                            version of cloudcron .apiary.io and related documentation.<br>
+                            Check connection with GitHub<br>
+                            Disconnect this CloudCron project from the GitHub repository.<br>
+                            CloudCron is syncing with master branch.<br>
+                            Update branch from service hook info at GitHub.
+                        </div><!--end text block-->
+                        <br><br><br><br>
+                    </div><!--end class span6-->
+                </div>  <!--end class row-->
+            </div><!--end part2 "USERS-->
+        </div><!--end class span9-->
+    </div><!--end class "row"-->
+</div><!--end container class-->
 <div class="row">
-<div class="divborderleft span6">
-    <table class="allwidth">
-        <tbody>
-        <tr>
-            <td class="first_row" colspan="4">&nbsp;John Smith<span class="title-icon"><i class="fa fa-pencil"></i></span></td>
-            <td></td>
-            <td align="right"><a href="#"><u>Delete</u></a>&nbsp;&nbsp;</td>
-        </tr>
-        <tr><td>&nbsp;</td></tr>
-        <tr>
-            <td></td>
-            <td colspan="2">Primary Email:</td>
-            <td class="blue_row"><u>jsmith@acme.com</u></td>
-            <td align="right" colspan="2">
-                <button type="button" class="btn btn-default">Reset Password</button>&nbsp;
-            </td>
-        </tr>
-        <tr valign="top">
-            <td rowspan="3"><a class="pulltab" href="#"><img src="img/btn1.png"></a>
-            <td colspan="2">Secundary emails:</td>
-            <td>
-               <select multiple="multiple" size="2">
-                <option>jsmith@acme.com</option>
-                <option>jsmith1@acme.com &nbsp;&nbsp;&nbsp;</option>
-               </select>
-            </td>
-            <td align="left"><u><a href="#">Edit</a></u></td>
-            <td>&nbsp;</td>
-        </tr>
-        <tr>
-            <td>Organizational Role:</td>
-            <td colspan ="4"><strong>Member <span class="title-icon"><i class="fa fa-pencil"></i></span></strong></td>
-        </tr>
-        <tr>
-            <td colspan="2">
-                <h4>Workspaces:</h4>
-            </td>
-            <td></td><td></td>
-            <td align="right">
-                <button type="button" class="btn btn-default"><i class="fa fa-plus"></i>Add workspaces</button>&nbsp;
-            </td>
-        </tr>
-        </tbody>
-    </table><br>
-    <!--start task partial-->
-    <div>
-        <table class="table table-striped table-bordered">
-            <tbody>
-            <tr class="first_row">
-                <td>Title</td>
-                <td>Role</td>
-                <td colspan="3">Actions</td>
-            </tr>
-            <tr>
-                <td>staging</td>
-                <td>Editor</td>
-                <td colspan="3"><u><a href="#">edit </a> <u><a href="#">remove </a></u></td>
-            </tr>
-            <tr>
-                <td>production</td>
-                <td>Viewer</td>
-                <td colspan="3"><u><a href="#">edit </a> <u><a href="#">remove </a></u></td>
-            </tr>
-            <tr>
-                <td>development</td>
-                <td>Editor</td>
-                <td colspan="3"><u><a href="#">edit </a> <u><a href="#">remove </a></u> </td>
-            </tr>
-            </tbody>
-        </table>
-    </div><!--end task partial-->
-</div><!--end class "span6" #1-->
+
+
 </div>
 </div><!--end class "row"-->
 </div> <!--end container-fluide-->
 </div><!--end class "backgroundcolor"-->
 
 
-<div><!--start part2 "USERS-->
-    <div class="row">
-        <div class="divborderleft span6">
-            <table class="allwidth">
-                <tbody>
-                <tr>
-                    <td class="first_row">Productions</td>
-                    <td></td>
-                    <td align="right"><button type="button" class="btn btn-default">Delete this workspace</button>&nbsp;</td>
-                </tr>
-                <tr><td>&nbsp;</td></tr>
-                <tr>
-                    <td><strong>Users:</strong></td>
-                    <td></td>
-                    <td align="right">
-                        <button type="button" class="btn btn-default">Add new user</button>&nbsp;
-                    </td>
-                </tr>
-                </tbody>
-            </table><br>
-            <table class="table table-striped table-bordered"><!--table2-->
-                <tbody>
-                <tr class="first_row">
-                    <td>Email</td>
-                    <td>Role</td>
-                    <td colspan="3">Actions</td>
-                </tr>
-                <tr>
-                    <td>vhatalski@naviam.com</td>
-                    <td>Admin</td>
-                    <td colspan="3"><u><a href="#">edit </a> <u><a href="#">remove </a></u></td>
-                </tr>
-                <tr>
-                    <td>lkurts@gmail.com</td>
-                    <td>Admin</td>
-                    <td colspan="3"><u><a href="#">edit </a> <u><a href="#">remove </a></u></td>
-                </tr>
-                <tr>
-                    <td>bengler@servicechannel.com</td>
-                    <td>Admin</td>
-                    <td colspan="3"><u><a href="#">edit </a> <u><a href="#">remove </a></u> </td>
-                </tr>
-                </tbody>
-            </table>
-            <div class="textblockbr"><!--start text block-->
-                <p>GitHub synchronization Naviam/Cloudcron</p><br>
-                <p>You're linked to this repository. Every change of apiary.apib document within will spawn new</p>
-                version of cloudcron .apiary.io and related documentation.<br>
-                Check connection with GitHub<br>
-                Disconnect this CloudCron project from the GitHub repository.<br>
-                CloudCron is syncing with master branch.<br>
-                Update branch from service hook info at GitHub.
-            </div><!--end text block-->
-            <br><br><br><br>
-        </div><!--end class span6-->
-    </div>  <!--end class row-->
-</div><!--end part2 "USERS-->
+
 </body>
 
 <!-- Bootstrap core JavaScript
