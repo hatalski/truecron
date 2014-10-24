@@ -8,7 +8,7 @@ DECLARE
     JobTagid bigint;
     TaskTypeid bigint;
     Taskid bigint;
-    Runid bigint;
+    Runid bigint;  
 begin
     insert into tc.Person ( name, passwordSalt, passwordHash, avatarUrl, extensionData, lastLoginAt, createdAt, updatedAt)
     values ( 'vitali', '123', '2444', '', '{}', current_date, current_date, current_date) returning id into PersonId;
