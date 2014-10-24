@@ -8,21 +8,26 @@ var validator  = require('validator');
 var random     = require("randomstring");
 var config     = require('../lib/config.js');
 var log        = require('../lib/logger.js');
+var auth       = require('./auth');
 var prefix     = config.get('API_HOST') || 'http://localhost:3000/api/v1';
 
 log.info('API tests prefix: ' + prefix);
 
-superagent.Request.prototype.authenticate = function() {
-    return this.auth('-2', 'Igd7en1_VCMP59pBpmEF');
-};
-
 describe('JOBS API',
     function() {
+        var accessToken = null;
+        before(function (done) {
+            auth.getAccessToken(function (err, token) {
+                if (err) return done(err);
+                accessToken = token;
+                done();
+            });
+        });
         it('get all jobs', function (done) {
             superagent.get(prefix + '/jobs')
                 .set('Content-Type', 'application/json')
                 .send()
-                .authenticate()
+                .authenticate(accessToken)
                 .end(function (e, res) {
                     expect(e).to.eql(null);
                     expect(res.header['content-type']).to.eql('application/json; charset=utf-8');
