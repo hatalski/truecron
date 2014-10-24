@@ -69,6 +69,7 @@ var passwordAuth = function(req, res, next) {
                 })
                 .then(function (passwordIsGood) {
                     if (passwordIsGood) {
+                        logger.debug('Authenticated %s (%d) with password, client %d.', req.body.username, person.id, req.client.id);
                         return token.issue(person.id, req, res, next);
                     } else {
                         logger.debug('Failed to authenticate %s with password. Invalid password.', req.body.username);
@@ -100,6 +101,7 @@ var googleAuth = function(req, res, next) {
 
             return ensureClientCanAuthenticate(req.client.id, person.id, 'password')
                 .then(function () {
+                    logger.debug('Authenticated %s (%d) with google, client %d.', req.body.username, person.id, req.client.id);
                     token.issue(person.id, req, res, next);
                 });
         })
@@ -111,6 +113,7 @@ var googleAuth = function(req, res, next) {
 
 var clientCredentialsAuth = function(req, res, next) {
     // TODO: Think of the client authentication token. Does it need a user ID? Which one?
+    logger.debug('TODO: Authenticated client %d with hardcoded person %d.', req.client.id, -1);
     token.issue(-1, req, res, next);
 };
 
