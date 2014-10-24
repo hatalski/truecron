@@ -46,4 +46,60 @@ api.route('/jobs')
         });
     })
 
+    //
+    // Create a new job
+    //
+    .post(function (req, res, next) {
+        if (!req.body || !req.body.job) {
+            return next(new apiErrors.InvalidParams());
+        }
+        storage.Jobs.create(req.body.job)
+            .then(function (job) {
+                res.status(201).json(addLinks(job));
+            })
+            .catch(function (err) {
+                logger.error(err.toString());
+                return next(new apiErrors.InvalidParams(err));
+            });
+    });
+
+//
+// Params
+//
+
+api.param('jobid', function (req, res, next, id) {
+
+    var jobid = null;
+
+    if (validator.isInt(id)) {
+        jobid = id;
+    }
+    else {
+        next(new apiErrors.InvalidParams());
+    }
+
+    if (!!jobid) {
+        storage.Jobs.findById(id)
+            .then(function (job) {
+                if (job !== null) {
+                    req.Jobs = job;
+                    next();
+                } else {
+                    next(new apiErrors.NotFound());
+                }
+            });
+    }
+});
+
+api.route('/jobs/:jobid')
+    //
+    // Get a job
+    //
+    .get(function (req, res, next) {
+        res.json(addLinks(req.Jobs));
+    })
+
+
+
+
 module.exports = api;
