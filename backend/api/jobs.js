@@ -46,4 +46,21 @@ api.route('/jobs')
         });
     })
 
+    //
+    // Create a new job
+    //
+    .post(function (req, res, next) {
+        if (!req.body || !req.body.job) {
+            return next(new apiErrors.InvalidParams());
+        }
+        storage.Jobs.create(req.body.job)
+            .then(function (job) {
+                res.status(201).json(addLinks(job));
+            })
+            .catch(function (err) {
+                logger.error(err.toString());
+                return next(new apiErrors.InvalidParams(err));
+            });
+    });
+
 module.exports = api;

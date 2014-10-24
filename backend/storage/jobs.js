@@ -27,12 +27,43 @@ var getJobIdCacheKey = function(jobId) {
 
 var findAndCountAll = module.exports.findAndCountAll = Promise.method(function (options) {
     return models.Job.findAndCountAll(options)
-        .then(function (result) {            
+        .then(function (result) {
             result.rows.forEach(function(job) { cache.put(getJobIdCacheKey(job.id), job); });
             return result;
         })
         .catch(function (err) {
             logger.error('Failed to list jobs, %s.', err.toString());
+            throw err;
+        });
+});
+
+
+/**
+ * Create a new job.
+ */
+var create = module.exports.create = Promise.method(function (attributes) {
+    if (!attributes || validator.isNull(attributes.name)) {
+        throw new errors.InvalidParams();
+    }
+    var self = { attrs: attributes };
+
+    return using (models.transaction(), function (tx) {
+
+        self.tx = tx;
+        return models.Job.create(self.attrs, { transaction: tx })
+            .then(function (job) {
+                self.job = job;
+
+                return history.logCreated(-1, getJobIdCacheKey(job.id), job, self.tx);
+            })
+            .then(function () {
+                cache.put(getJobIdCacheKey(self.job.id), self.job);
+                return self.job;
+            });
+    })
+
+        .catch(function (err) {
+            logger.error('Failed to create a job, %s.', err.toString());
             throw err;
         });
 });
