@@ -1,145 +1,209 @@
-<!doctype html>
-<html lang="en">
-<head>
-    <title>{{title}}:{{user}}</title>
-    <link rel="icon" href=/favicon.ico"/>
-    <link rel="stylesheet" href="/bower_components/bootstrap/dist/css/bootstrap.min.css"/>
-    <link rel="stylesheet" href="/bower_components/bootstrap/dist/css/bootstrap-theme.min.css"/>
-    <link rel="stylesheet" href="/bower_components/font-awesome/css/font-awesome.min.css"/>
-    {{!-- dv: our styles --}}
-    <link rel="stylesheet" href="/stylesheets/theme-truecron.css"/>
-    <link rel="stylesheet" href="/stylesheets/style.css"/>
-</head>
-<body>
+{{outlet}}
 
-{{!-- dv: TODO: move this to application.handlebars --}}
-<script type="text/x-handlebars">
-    \{{#if controllers.signin.isSignedIn}}
-
-    <div class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+<div class="teaser">
+<div class="topper">
+    <div class="navbar navbar-fixed-top" role="navigation">
         <div class="container-fluid">
             <div class="navbar-header">
-                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-                    <span class="sr-only">Toggle navigation</span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                </button>
-                <a class="navbar-brand" href="/"></a>
+                <a class="navbar-brand" href="#"></a>
             </div>
             <div class="navbar-collapse collapse">
-                <ul class="nav navbar-nav navbar-right">
-                    <li><a href="#" \{{action "signout" target="controllers.signin"}}>Sign out <i class="fa fa-sign-out"></i></a></li>
-                    <li>\{{#link-to "dashboard"}}<i class="fa fa-bars"></i>\{{/link-to}}</li>
-                </ul>
-                <ul class="nav navbar-nav navbar-right">
-                    <li class="dropdown">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">Organizations <span class="caret"></span></a>
-                        <ul class="dropdown-menu" role="menu">
-                            <li>\{{#link-to "organizations"}}All organizations\{{/link-to}}</li>
-                            <li class="divider"></li>
-                            <li>\{{#link-to "organizations.add"}} Add organization\{{/link-to}}</li>
-                        </ul>
-                    </li>
-
-                    <li class="dropdown">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">Settings <span class="caret"></span></a>
-                        <ul class="dropdown-menu" role="menu">
-                            <li>\{{#link-to "workspaces"}}Workspaces\{{/link-to}}</li>
-                            <li class="divider"></li>
-                            <li>\{{#link-to "users"}}<i class="fa fa-users"></i> Users\{{/link-to}}</li>
-                        </ul>
-                    </li>
-                </ul>
+                <form class="navbar-form navbar-right">
+                  {{input class="form-control" value="login" valueBinding="login" type="email" placeholder="Email" required="required"}}
+                  {{input class="form-control" value="password" valueBinding="password" type="password" placeholder="Password" required="required"}}
+                    <input type="button" {{action "signin"}} class="btn btn-signin" value="SIGN IN">
+                    <input type="button" {{action "signup"}} class="btn btn-signup" value="SIGN UP">
+                </form>
             </div>
         </div>
     </div>
     <div class="container-fluid">
-        <div class="row">
-            <div class="sidebar">
-                {{!-- dv: todo: use activeTab --}}
-
-                <ul class="nav nav-tabs" role="tablist">
-                    <li class="active">
-                        <a \{{action "showJobs"}}><span>Jobs</span></a>
-                    </li>
-                    <li class="active">
-                        <a \{{action "showConnections"}}><span>Connections</span></a>
-                    </li>
-                </ul>
-
-                \{{outlet "navigation"}}
-
-                <ul class="nav nav-sidebar">
-                    \{{#active-li currentWhen="dashboard"}}
-                    \{{#link-to 'dashboard'}}Overview\{{/link-to}}
-                    \{{/active-li}}
-                </ul>
-                <ul class="nav nav-sidebar">
-                    \{{#active-li currentWhen="execute-bar"}}
-                    \{{#link-to 'execute-bar'}}execute-bar\{{/link-to}}
-                    \{{/active-li}}
-                    <li><a \{{action "signout" target="controllers.signin"}} href="#">Sign out</a></li>
-                </ul>
+        <div class="jumbotron">
+            <h2 class="pitch">Enterprise Strength Scheduling for your Startup</h2>
+            <div class="row">
+                <div class="col-xs-3">
+                    <div class="pitch-ext">
+                        <p>Do your job.</p>
+                        <p>We will do the scheduling.</p></p>
+                    </div>
+                </div>
+                <div class="col-xs-9">
+                    <div class="top_mac"></div>
+                </div>
             </div>
         </div>
     </div>
-    <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2">
-        <div class="main">
-            {{{body}}}{{!-- dv: server-side template --}}
-            \{{outlet}}{{!-- dv: place for client-side partials --}}
+</div>
+<div class="middle">
+    <div class="container-fluid">
+        <div class="jumbotron">
+            <div class="row">
+                <div class="col-xs-3">
+                    <div class="interested_box">
+                        <div class="container">
+                            <h2>Interested?</h2>
+                            <p>Leave your e-mail address to get notified when we are live.</p>
+                            <p>{{input class="form-control" value="email" valueBinding="email" type="email" placeholder="Email" required="required"}}</p>
+                            <p><input type="button" {{action "signup"}} class="btn btn-signup" data-toggle="modal" data-target="#signup_confirm_modal" value="SIGN UP"></p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-xs-9">
+                    <div class="bottom_mac"></div>
+                </div>
+            </div>
+        </div>
+        <h2 class="problem-definition-header">What is TRUECRON?</h2>
+    </div>
+</div>
+<div class="middle_grey">
+    <div class="container-fluid">
+        <div class="jumbotron">
+            <p>TrueCron is the scheduler you have been waiting for.</p>
+            <p>It is the way the scheduler should have been built, but was not.</p>
         </div>
     </div>
-    \{{else}}
-    <!--\{{partial "interface-menu-top"}}
-            <div class="backglp">{{!--background image--}}
-                <div class="container-fluid">
-                    <div class="formlp">{{!--form block content--}}
-                        <div> {{!--form with content--}}
-                            <div class="heightblock"></div>-->
-    {{{body}}}{{!-- dv: server-side template --}}
-    \{{outlet}}{{!-- dv: place for client-side partials --}}
-    <!--</div>
+</div>
+<div class="middle_white">
+    <div class="container-fluid">
+        <div class="jumbotron">
+            <div class="row">
+                <div class="col-xs-5">
+                    <ul>
+                        <li>It runs on our servers so you do not have to worry about infrastructure.</li>
+                        <li>It knows that developers actually test code before releasing it into production.</li>
+                        <li>It knows that the fiscal calendar does not end in December.</li>
+                        <li>It does not make you write a Powershell script to copy a file.</li>
+                    </ul>
+                </div>
+                <div class="col-xs-7">
+                    <div class="words"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="middle_grey">
+    <div class="container-fluid">
+        <div class="jumbotron">
+            <p>Simply put, TrueCron is a scheduler that allows you to create a complex tasks in several clicks, peer review it,
+                test and release to production and be sure it will run properly.</p>
+        </div>
+    </div>
+</div>
+<div class="footer_white">
+    <div class="container-fluid">
+
+        <div class="row">
+            <div class="col-xs-6">
+                <div class="airbag"></div>
+            </div>
+            <div class="col-xs-6">
+                <h2 class="problem-definition-header">BUILD TEST RELEASE CYCLE SUPPORT</h2>
+                <p>
+                    Finally a scheduler made for Software Developers by Software Developers. We think that scheduled jobs are as important as your production code.
+                    Therefore it should be tested as such. Production code is typically created in a development environment,
+                    tested there and then integrated into staging environment, tested there again and only then released to production.
+                    This is exactly what TrueCron supports for scheduled jobs. Connect to your Github and make sure your jobs are proper.
+                </p>
+            </div>
+        </div>
+
+    </div>
+</div>
+<div class="footer_grey">
+    <div class="container-fluid">
+
+        <div class="row">
+            <div class="col-xs-6">
+                <h2 class="problem-definition-header">EXTENSIVE LIBRARY OF OUT OF THE BOX TASKS</h2>
+                <p>We want to create your jobs fast. So we provided pre-configured tasks for you.
+                    We can do it all from running arbitrary executable on a remote machine to encrypting a file and uploading it to S3 storage.
+                    We got tasks like SQL query execution, FTP operations, file management, MS Office format manipulations, SMTP operations, etc.
+                </p>
+            </div>
+            <div class="col-xs-6">
+                <div class="library"></div>
+            </div>
+        </div>
+    </div>
+
+</div>
+<div class="footer_white">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-xs-6">
+                <div class="ballet"></div>
+            </div>
+            <div class="col-xs-6">
+                <h2 class="problem-definition-header">POWERFUL & FLEXIBLE SCHEDULER</h2>
+                <p>
+                    No matter how complex your schedule is, we will support it. We support custom calendars like state, religious and company holidays;
+                    fiscal calendars and arbitrary calendar exceptions. Our proprietary easy to use scheduling UI allows you to set up
+                    a complicated schedule in a matter of seconds. Comprehensive scheduling dashboard provides a bird eye view of all your jobs.
+                </p>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="footer_grey">
+    <div class="container-fluid">
+
+        <div class="row">
+            <div class="col-xs-6">
+                <h2 class="problem-definition-header">SECURE AND RELIABLE</h2>
+                <p>
+                    Extensively pen tested by independent experts and state of the art SSAE-16 certified application will assure security of your data.
+                </p>
+            </div>
+            <div class="col-xs-6">
+                <div class="hands"></div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="footer_white">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-xs-6">
+                <div class="grow"></div>
+            </div>
+            <div class="col-xs-6">
+                <h2 class="problem-definition-header">GROWS WITH YOU</h2>
+                <p>
+                    We are made to scale. Whether you have 10 or 10 000 jobs TrueCron will grow with you and make sure that scheduling is not the thing you
+                    should worry about.
+                </p>
+            </div>
+        </div>
+    </div>
+</div>
+<footer>
+    <div class="container-fluid">
+        <div class="jumbotron">
+            <p>
+                © 2014 TrueCron. All rights reserved. TrueCron is an registered trademarks of Perks Lab, Inc.
+                Terms, conditions, features, availability, pricing, fees, service and support options subject to change without notice.
+                iPad and iPhone are trademarks of Apple Inc., registered in the U.S. and other countries.
+            </p>
+        </div>
+    </div>
+</footer>
+<!-- Modal -->
+<div class="modal fade" id="signup_confirm_modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                <h4 class="modal-title" id="myModalLabel">Thank you for signing up for TrueCron!</h4>
+            </div>
+            <div class="modal-body">
+              {{ successMessage }}
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
 </div>
 </div>
-</div>-->
-    \{{/if}}
-</script>
-
-{{!-- dv: register your client-side partials here. In alphabetical order!!! --}}
-{{rawinclude "views/partials/about.handlebars"}}
-{{> dashboard}}
-{{> home_page}}
-{{> hello}}
-{{> index}}
-{{rawinclude "views/partials/organizations.handlebars"}}
-{{rawinclude "views/partials/organizations-add.handlebars"}}
-{{rawinclude "views/partials/organizations-item.handlebars"}}
-{{> plans}}
-{{> signin}}
-{{> signup}}
-{{> status}}
-{{rawinclude "views/partials/teaser.handlebars"}}
-{{> terms}}
-{{!-- dv: end of place for client-side partials --}}
-
-{{!-- vh: best practice is to place js scripts at the bottom of the page
- read more : https://developer.yahoo.com/blogs/ydnfiveblog/high-performance-sites-rule-6-move-scripts-bottom-7200.html
- --}}
-<script type="text/javascript" src="/bower_components/jquery/dist/jquery.min.js"></script>
-<script type="text/javascript" src="/bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
-<script type="text/javascript" src="/bower_components/handlebars/handlebars.js"></script>
-<script type="text/javascript" src="/bower_components/ember/ember.js"></script>
-<script type="text/javascript" src="/bower_components/ember-data/ember-data.js"></script>
-<script type="text/javascript" src="/bower_components/ember-addons.bs_for_ember/dist/js/bs-core.min.js"></script>
-<script type="text/javascript" src="/bower_components/ember-addons.bs_for_ember/dist/js/bs-modal.min.js"></script>
-{{!-- application --}}
-<script type="text/javascript" src="/js/app.js"></script>
-{{!-- dv: alphabetical order for modules --}}
-<script type="text/javascript" src="/js/organizations.js"></script>
-{{!-- components --}}
-<script type="text/javascript" src="/js/components/active-li.js"></script>
-<script type="text/javascript" src="/js/lib/handlebars-helpers.js"></script>
-{{!-- /components --}}
-</body>
-</html>

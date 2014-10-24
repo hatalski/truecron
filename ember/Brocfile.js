@@ -2,7 +2,23 @@
 
 var EmberApp = require('ember-cli/lib/broccoli/ember-app');
 
-var app = new EmberApp();
+var app = new EmberApp({
+  name: require('./package.json').name,
+  minifyCSS: {
+    enabled: true,
+    options: {}
+  }
+});
+
+// css
+app.import('bower_components/bootstrap/dist/css/bootstrap-theme.css');
+app.import('bower_components/bootstrap/dist/css/bootstrap.css');
+app.import('bower_components/bootstrap/dist/css/bootstrap-theme.css');
+
+// js
+app.import('bower_components/jquery/dist/jquery.js');
+app.import('bower_components/bootstrap/dist/js/bootstrap.js');
+app.import('bower_components/ember-data/ember-data.js');
 
 // Use `app.import` to add additional libraries to the generated
 // output files.
