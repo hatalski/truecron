@@ -84,37 +84,18 @@ api.route('/users')
 //
 api.param('userid', function (req, res, next, id) {
     // Allow to specify both ID and email
-    var personId = null;
-    var email = null;
-    if (validator.isInt(id)) {
-        personId = id;
-    } else if (validator.isEmail(id)) {
-        email = id;
-    } else {
+    if (!validator.isInt(id) && !validator.isEmail(id)) {
         next(new apiErrors.InvalidParams());
     }
-
-    if (!!personId) {
-        storage.Person.findById(id)
-            .then(function (person) {
-                if (person !== null) {
-                    req.Person = person;
-                    next();
-                } else {
-                    next(new apiErrors.NotFound());
-                }
-            });
-    } else {
-        storage.Person.findByEmail(email)
-            .then(function (person) {
-                if (person !== null) {
-                    req.Person = person;
-                    next();
-                } else {
-                    next(new apiErrors.NotFound());
-                }
-            });
-    }
+    storage.Person.findByIdOrEmail(id)
+        .then(function (person) {
+            if (person !== null) {
+                req.Person = person;
+                next();
+            } else {
+                next(new apiErrors.NotFound());
+            }
+        });
 });
 
 api.route('/users/:userid')

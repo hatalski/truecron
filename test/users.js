@@ -5,24 +5,44 @@ var superagent = require('superagent');
 var expect     = require('expect.js');
 var validator  = require('validator');
 var random     = require("randomstring");
+var url        = require('url');
 var config     = require('../lib/config.js');
 var log        = require('../lib/logger.js');
+var auth       = require('./auth');
 var prefix     = config.get('API_HOST') || 'http://localhost:3000/api/v1';
 
 log.info('API tests prefix: ' + prefix);
 
-superagent.Request.prototype.authenticate = function() {
-    return this.auth('-2', 'Igd7en1_VCMP59pBpmEF');
-};
-
 describe('USERS API',
     function() {
+        var accessToken = null;
+        before(function (done) {
+            auth.getAccessToken(function (err, token) {
+                if (err) return done(err);
+                accessToken = token;
+                done();
+            });
+        });
+
+        it('create a new user without authentication should fail', function (done) {
+            superagent.post(prefix + '/users')
+                .set('Content-Type', 'application/json')
+                .send({ 'user': { 'name': 'Alice', 'password': "P@ssw0rd"} })
+                .end(function (e, res) {
+                    expect(e).to.eql(null);
+                    expect(res.header['content-type']).to.eql('application/json; charset=utf-8');
+                    expect(res.body.error).to.be.an('object');
+                    expect(res.body.error.status).to.eql(401);
+                    expect(res.status).to.eql(401);
+                    done();
+                });
+        });
         var id_to_delete;
         it('create a new user without required name should fail', function (done) {
             superagent.post(prefix + '/users')
                 .set('Content-Type', 'application/json')
+                .authenticate(accessToken)
                 .send({ 'user': { 'password': "P@ssw0rd"} })
-                .authenticate()
                 .end(function (e, res) {
                     expect(e).to.eql(null);
                     expect(res.header['content-type']).to.eql('application/json; charset=utf-8');
@@ -37,7 +57,7 @@ describe('USERS API',
             superagent.post(prefix + '/users')
                 .set('Content-Type', 'application/json')
                 .send({ 'user': { 'password': "P@ssw0rd"} })
-                .authenticate()
+                .authenticate(accessToken)
                 .end(function (e, res) {
                     expect(e).to.eql(null);
                     expect(res.header['content-type']).to.eql('application/json; charset=utf-8');
@@ -52,7 +72,7 @@ describe('USERS API',
             superagent.post(prefix + '/users')
                 .set('Content-Type', 'application/json')
                 .send({ 'user': {'name': "Alice", 'password': "P@ssw0rd"} })
-                .authenticate()
+                .authenticate(accessToken)
                 .end(function (e, res) {
                     expect(e).to.eql(null);
                     expect(res.header['content-type']).to.eql('application/json; charset=utf-8');
@@ -73,7 +93,7 @@ describe('USERS API',
             superagent.post(prefix + '/users')
                 .set('Content-Type', 'application/json')
                 .send({ 'user': {'name': "vitali.hatalski@truecron.com", 'password': "P@ssw0rd", 'extensionData': '{"email": "vitali.hatalski@truecron.com", "access_token": "12345" }' } })
-                .authenticate()
+                .authenticate(accessToken)
                 .end(function (e, res) {
                     expect(e).to.eql(null);
                     expect(res.header['content-type']).to.eql('application/json; charset=utf-8');
@@ -93,7 +113,7 @@ describe('USERS API',
         it('get list of users', function (done) {
             superagent.get(prefix + '/users')
                 .send()
-                .authenticate()
+                .authenticate(accessToken)
                 .end(function (e, res) {
                     expect(e).to.eql(null);
                     expect(res.header['content-type']).to.eql('application/json; charset=utf-8');
@@ -108,7 +128,7 @@ describe('USERS API',
             superagent.get(prefix + '/users')
                 .query({ limit: limit, offset: 1})
                 .send()
-                .authenticate()
+                .authenticate(accessToken)
                 .end(function (e, res) {
                     expect(e).to.eql(null);
                     expect(res.header['content-type']).to.eql('application/json; charset=utf-8');
@@ -122,7 +142,7 @@ describe('USERS API',
         it('get user by id', function (done) {
             superagent.get(prefix + '/users/' + id_to_delete)
                 .send()
-                .authenticate()
+                .authenticate(accessToken)
                 .end(function (e, res) {
                     expect(e).to.eql(null);
                     expect(res.header['content-type']).to.eql('application/json; charset=utf-8');
@@ -138,7 +158,7 @@ describe('USERS API',
             superagent.put(prefix + '/users/' + id_to_delete)
                 .set('Content-Type', 'application/json')
                 .send({ 'user': {'name': "Tom", 'password': "UpdatedP@ssw0rd"} })
-                .authenticate()
+                .authenticate(accessToken)
                 .end(function (e, res) {
                     expect(e).to.eql(null);
                     expect(res.header['content-type']).to.eql('application/json; charset=utf-8');
@@ -157,7 +177,7 @@ describe('USERS API',
             superagent.put(prefix + '/users/' + id_to_delete)
                 .set('Content-Type', 'application/json')
                 .send({})
-                .authenticate()
+                .authenticate(accessToken)
                 .end(function (e, res) {
                     expect(e).to.eql(null);
                     expect(res.header['content-type']).to.eql('application/json; charset=utf-8');
@@ -172,7 +192,7 @@ describe('USERS API',
             superagent.post(prefix + '/users/' + id_to_delete + '/emails')
                 .set('Content-Type', 'application/json')
                 .send({})
-                .authenticate()
+                .authenticate(accessToken)
                 .end(function (e, res) {
                     expect(e).to.eql(null);
                     expect(res.header['content-type']).to.eql('application/json; charset=utf-8');
@@ -187,7 +207,7 @@ describe('USERS API',
             superagent.post(prefix + '/users/' + id_to_delete + '/emails')
                 .set('Content-Type', 'application/json')
                 .send({ 'email': 'invalid@email'})
-                .authenticate()
+                .authenticate(accessToken)
                 .end(function (e, res) {
                     expect(e).to.eql(null);
                     expect(res.header['content-type']).to.eql('application/json; charset=utf-8');
@@ -204,7 +224,7 @@ describe('USERS API',
             superagent.post(prefix + '/users/' + id_to_delete + '/emails')
                 .set('Content-Type', 'application/json')
                 .send({ 'email': random_email })
-                .authenticate()
+                .authenticate(accessToken)
                 .end(function (e, res) {
                     expect(e).to.eql(null);
                     expect(res.header['content-type']).to.eql('application/json; charset=utf-8');
@@ -220,7 +240,7 @@ describe('USERS API',
         it('get user email by id', function (done) {
             superagent.get(prefix + '/users/' + id_to_delete + '/emails/' + email_id_to_delete)
                 .send()
-                .authenticate()
+                .authenticate(accessToken)
                 .end(function (e, res) {
                     expect(e).to.eql(null);
                     expect(res.header['content-type']).to.eql('application/json; charset=utf-8');
@@ -235,7 +255,7 @@ describe('USERS API',
         it('get all user emails', function (done) {
             superagent.get(prefix + '/users/' + id_to_delete + '/emails')
                 .send()
-                .authenticate()
+                .authenticate(accessToken)
                 .end(function (e, res) {
                     expect(e).to.eql(null);
                     expect(res.header['content-type']).to.eql('application/json; charset=utf-8');
@@ -249,7 +269,7 @@ describe('USERS API',
         it('get user by email', function (done) {
             superagent.get(prefix + '/users/' + random_email)
                 .send()
-                .authenticate()
+                .authenticate(accessToken)
                 .end(function (e, res) {
                     expect(e).to.eql(null);
                     expect(res.header['content-type']).to.eql('application/json; charset=utf-8');
@@ -264,7 +284,7 @@ describe('USERS API',
         it('delete user email', function (done) {
             superagent.del(prefix + '/users/' + id_to_delete + '/emails/' + email_id_to_delete)
                 .send()
-                .authenticate()
+                .authenticate(accessToken)
                 .end(function (e, res) {
                     expect(e).to.eql(null);
                     expect(res.body.error).to.eql(undefined);
@@ -275,7 +295,7 @@ describe('USERS API',
         it('delete user', function (done) {
             superagent.del(prefix + '/users/' + id_to_delete)
                 .send()
-                .authenticate()
+                .authenticate(accessToken)
                 .end(function (e, res) {
                     expect(e).to.eql(null);
                     expect(res.body.error).to.eql(undefined);
