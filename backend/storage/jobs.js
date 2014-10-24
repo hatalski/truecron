@@ -36,9 +36,7 @@ var findAndCountAll = module.exports.findAndCountAll = Promise.method(function (
             throw err;
         });
 });
-var process = Promise.method(function (attributes) {
-    return attributes;
-});
+
 /**
  * Create a new job.
  */
@@ -46,20 +44,17 @@ var create = module.exports.create = Promise.method(function (attributes) {
     if (!attributes || validator.isNull(attributes.name)) {
         throw new errors.InvalidParams();
     }
-    return process(attributes).bind({}) //need delete this
-        .then(function (attrs) {
-            var self = { attrs: attrs };
-            return using (models.transaction(), function (tx) {
-                self.tx = tx;
-                return models.Job.create(self.attrs, { transaction: tx })
-                    .then(function (job) {
-                        self.job = job;
-                        return history.logCreated(-1, getJobIdCacheKey(job.id), job, self.tx);
-                    })
-                    .then(function () {
-                        cache.put(getJobIdCacheKey(self.job.id), self.job);
-                        return self.job;
-                    });
+    var self = { attrs: attributes };
+    return using (models.transaction(), function (tx) {
+        self.tx = tx;
+        return models.Job.create(self.attrs, { transaction: tx })
+            .then(function (job) {
+                self.job = job;
+                return history.logCreated(-1, getJobIdCacheKey(job.id), job, self.tx);
+            })
+            .then(function () {
+                cache.put(getJobIdCacheKey(self.job.id), self.job);
+                return self.job;
             });
         })
         .catch(function (err) {
@@ -92,9 +87,7 @@ var findById = module.exports.findById = Promise.method(function (id, transactio
  * Update a job.
  */
 var update = module.exports.update = Promise.method(function (id, attributes) {
-    return process(attributes).bind({})
-        .then(function (attrs) {
-            var self = { attrs: attrs };
+            var self = { attrs: attributes };
             return using (models.transaction(), function (tx) {
                 self.tx = tx;
                 return module.exports.findById(id, tx)
@@ -113,7 +106,6 @@ var update = module.exports.update = Promise.method(function (id, attributes) {
                         cache.put(getJobIdCacheKey(self.job.id), self.job);
                         return self.job;
                     });
-            });
         })
         .catch(function (err) {
             logger.error('Failed to update the job %d, %s.', id, err.toString());
