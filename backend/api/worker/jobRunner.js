@@ -3,7 +3,7 @@
  */
 var taskRunner = require('./taskRunner');
 
-var jobRunner = new function()
+var jobRunner = new function(onDone)
 {
     this.runTasks = function(job)
     {

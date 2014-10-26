@@ -35,6 +35,13 @@ var ftpTask = function(ftpConnection, ftpTasks)
             });
         }
     };
+
+    self.init();
+};
+
+ftpTask.prototype.init = function()
+{
+    task.super_.prototype.init();
 };
 
 util.inherits(ftpTask, task);
