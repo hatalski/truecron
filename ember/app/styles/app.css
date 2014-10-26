@@ -35,6 +35,11 @@
   border: 1px solid #1db0ce;
 }
 
+.dropdown-menu > li > a {
+  border-left: solid 4px transparent;
+  margin: 0 3px;
+}
+
 .dropdown-menu > li > a:hover,
 .dropdown-menu > li > a:focus {
   background-color: #f6f6f6;
