@@ -15,20 +15,20 @@
                 <button type="button" class="btn btn-default"><i class="fa fa-filter"></i></button>
                 <button type="button" class="btn btn-default"><i class="fa fa-search"></i></button>
             </div>
-          {{#each job in jobs}}
-              <div class="menu-tabs">
-                  <div class="row">
-                      <div class="col-xs-2">
-                          <span></span>
-                      </div>
-                      <div class="col-xs-9">
-                          <p class="title">{{#link-to "organizations"}}{{name}}{{/link-to}}</p>
-                          <p>Last run: {{lastRun}}</p>
-                          <p>Next run: {{nextRun}}</p>
-                      </div>
-                  </div>
-              </div>
-          {{/each}}
+            {{#each job in jobs}}
+            <div class="menu-tabs">
+                <div class="row">
+                    <div class="col-xs-2">
+                        <span></span>
+                    </div>
+                    <div class="col-xs-9">
+                        <p class="title">{{#link-to "organizations"}}{{name}}{{/link-to}}</p>
+                        <p>Last run: {{lastRun}}</p>
+                        <p>Next run: {{nextRun}}</p>
+                    </div>
+                </div>
+            </div>
+            {{/each}}
             <div class="menu-tabs">
                 <div class="row">
                     <div class="col-xs-2">
