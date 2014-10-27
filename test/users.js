@@ -1,6 +1,6 @@
 /**
- * Created by vitalihatalski on 10/17/14.
- */
+* Created by vitalihatalski on 10/17/14.
+*/
 var superagent = require('superagent');
 var expect     = require('expect.js');
 var validator  = require('validator');

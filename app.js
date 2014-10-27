@@ -172,7 +172,7 @@ app.use(function(req, res, next) {
 
 /// error handlers
 
-if (app.get('env') === 'development') {
+if (app.get('env') === 'development' || app.get('env') === 'codeship') {
     // Pretty print JSON responses
     app.set('json spaces', '  ');
 
