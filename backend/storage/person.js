@@ -50,7 +50,7 @@ var findById = module.exports.findById = Promise.method(function (id, transactio
             }
             return models.Person.find({ where: { id: id } }, { transaction: transaction })
                 .then(function (person) {
-                    cache.put(getPersonIdCacheKey(id), person);
+                    cache.put(getPersonIdCacheKey(person.id), person);
                     return person;
                 });
         })
@@ -71,13 +71,13 @@ var findByEmail = module.exports.findByEmail = Promise.method(function (email, t
     return cache.get(getPersonIdByEmailCacheKey(email))
         .then(function (result) {
             if (result.found) {
-                return module.exports.findById(result.value);
+                return findById(result.value);
             }
             return models.PersonEmail.find({ where: { email: email } }, { transaction: transaction})
                 .then(function (personEmail) {
                     if (!!personEmail) {
                         cache.put(getPersonIdByEmailCacheKey(email), personEmail.personId);
-                        return module.exports.findById(personEmail.personId, transaction);
+                        return findById(personEmail.personId, transaction);
                     }
                     return null;
                 });
@@ -89,6 +89,20 @@ var findByEmail = module.exports.findByEmail = Promise.method(function (email, t
 });
 
 /**
+ * Search a person by ID or email.
+ */
+var findByIdOrEmail = module.exports.findByIdOrEmail = Promise.method(function (idOrEmail, transaction) {
+    // Allows to specify both ID and email
+    if (validator.isInt(idOrEmail)) {
+        return findById(idOrEmail, transaction);
+    } else if (validator.isEmail(idOrEmail)) {
+        return findByEmail(idOrEmail, transaction);
+    } else {
+        throw new apiErrors.InvalidParams('Invalid person ID or email.');
+    }
+});
+
+/**
  * Search for a single person.
  * @param {object} options See Sequelize.find docs for details
  */
@@ -96,7 +110,7 @@ var find = module.exports.find = Promise.method(function (options, transaction) 
     return models.Person.find(options, { transaction: transaction })
         .then(function (person) {
             if (!!person) {
-                cache.put(getPersonIdCacheKey(persion.id), person);
+                cache.put(getPersonIdCacheKey(person.id), person);
             }
             return person;
         })
@@ -127,6 +141,22 @@ var findAndCountAll = module.exports.findAndCountAll = Promise.method(function (
         .catch(function (err) {
             logger.error('Failed to list persons, %s.', err.toString());
             throw err;
+        });
+});
+
+/**
+ * Compares the specified password with a hash stored in the database for the user.
+ * @param {int|string} idOrEmail ID or email of the person.
+ * @param {string} password Password to check.
+ * @return A promise fulfilled with true if the person is found and the password matches the hash, false otherwise.
+ */
+var verifyPassword = module.exports.verifyPassword = Promise.method(function (idOrEmail, password) {
+    return findByIdOrEmail(idOrEmail)
+        .then(function (person) {
+            if (person === null || !person.passwordHash) {
+                return false;
+            }
+            return secrets.comparePasswordAndHash(password, person.passwordHash);
         });
 });
 
@@ -189,7 +219,7 @@ var update = module.exports.update = Promise.method(function (id, attributes) {
             var self = { attrs: attrs };
             return using (models.transaction(), function (tx) {
                 self.tx = tx;
-                return module.exports.findById(id, tx)
+                return findById(id, tx)
                     .then(function (person) {
                         if (person === null) {
                             throw new errors.NotFound();
@@ -259,6 +289,7 @@ var getEmails = module.exports.getEmails = Promise.method(function (personId, op
             return models.PersonEmail.findAndCountAll(options)
                 .then(function (result) {
                     cache.put(getEmailsByPersonIdCacheKey(personId), result);
+                    result.rows.forEach(function(email) { cache.put(getPersonIdByEmailCacheKey(email.email), personId); });
                     return result;
                 });
         })

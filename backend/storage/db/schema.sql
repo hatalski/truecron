@@ -366,6 +366,14 @@ if not HasSchemaVersion(8) then
 end if;
 end $$;
 
+do $$
+begin
+if not HasSchemaVersion(9) then
+    insert into tc.PersonEmail (personId, email, status) values (-1, 'system@truecron.com', 'active');
+    perform CommitSchemaVersion(9, 'Added email for the SYSTEM person, so it can sign in.');
+end if;
+end $$;
+
 -- Use the snippet as a template:
 --
 -- do $$

@@ -22,6 +22,7 @@ var auth = require('./routes/auth');
 var beta = require('./routes/beta');
 //var api = require('./routes/api');
 
+var oauth = require('./backend/oauth');
 var api = require('./backend/api/api');
 var storage = require('./backend/storage');
 
@@ -136,7 +137,8 @@ app.use('/', routes);
 app.use('/auth', auth);
 app.use('/beta', beta);
 app.use('/users', users);
-app.use('/api/v1', api);
+app.use('/oauth', oauth.oAuthServer); // OAuth2 server, handles password and "google" authentication
+app.use('/api/v1', api); // REST API endpoint
 
 app.use(logger.errorLogger);
 

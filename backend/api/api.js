@@ -13,14 +13,15 @@ var express = require('express'),
     storage = require('../storage'),
     apiErrors = require('./../../lib/errors'),
     common = require('./common'),
-    authenticate = require('./authenticate');
+    oauth = require('./../oauth');
 
 var api = express.Router();
 
 //
-// Application-level authentication
-//
-api.use(authenticate);
+// Authenticate all API requests.
+// Successful authentication will set req.clientId and req.personId fields.
+// Unsuccessful with fail with 401 error.
+api.use(oauth.authenticate);
 
 //
 // Routes
