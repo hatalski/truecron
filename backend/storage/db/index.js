@@ -1,30 +1,13 @@
-var Promise = require("bluebird");
-var pg = Promise.promisifyAll(require("pg"));
-var fs = Promise.promisifyAll(require("fs"));
-var path = require("path");
-var logger = require("../../../lib/logger");
+var Promise = require("bluebird"),
+    pg = Promise.promisifyAll(require("pg")),
+    fs = Promise.promisifyAll(require("fs")),
+    path = require("path"),
+    logger = require("../../../lib/logger"),
+    dbutils = require("../../../lib/database");
 
 //
 // Database connections and upgrades
 //
-
-var getConnection = module.exports.getConnection = function (databaseOptions) {
-    "use strict";
-    var close;
-    return pg.connectAsync(databaseOptions).spread(function (client, done) {
-        close = done;
-        return client;
-    }).disposer(function () {
-        try {
-            if (close) {
-                close();
-            }
-        } catch (e) {
-            // It should be pretty safe to swallow exceptions here
-            logger.error('Failed to close PG connection. ' + e.message);
-        }
-    });
-};
 
 function getSchemaVersionFromFile(filePath) {
     return fs.readFileAsync(filePath, "utf8")
@@ -62,21 +45,9 @@ function getDatabaseSchemaVersion(connection) {
         });
 }
 
-function runScript(connection, scriptFilePath) {
-    return fs.readFileAsync(scriptFilePath, "utf8")
-        .then(function (fileContent) {
-            return connection.queryAsync(fileContent);
-        })
-        .error(function (e) {
-            logger.error('Failed to execute script %s. %s', scriptFilePath, e.message);
-            logger.error(e);
-            throw e;
-        });
-}
-
 module.exports.upgradeDatabaseIfNeeded = Promise.method(function upgradeDatabaseIfNeeded(databaseOptions) {
     logger.debug('Checking if the database needs to be upgraded.');
-    return Promise.using(getConnection(databaseOptions), function (connection) {
+    return Promise.using(dbutils.getConnection(databaseOptions), function (connection) {
         var scriptPath = path.join(__dirname, 'schema.sql');
         return Promise.join(
             getSchemaVersionFromFile(scriptPath),
@@ -87,7 +58,7 @@ module.exports.upgradeDatabaseIfNeeded = Promise.method(function upgradeDatabase
                     return;
                 }
                 logger.info('Upgrading database');
-                return runScript(connection, scriptPath)
+                return dbutils.runScript(connection, scriptPath)
                     .then(function () {
                         logger.info('Database has been upgraded successfully.');
                     });
