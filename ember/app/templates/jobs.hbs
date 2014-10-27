@@ -1,1 +1,73 @@
+{{render 'navigation'}}
 {{outlet}}
+<div class="container-fluid">
+    <div class="row">
+        <div class="sidebar">
+            <ul class="nav nav-tabs" role="tablist">
+                <li class="active">
+                    <a {{action "showJobs"}}><span>Jobs</span></a>
+                </li>
+                <li>
+                    <a {{action "showConnections"}}><span>Connections</span></a>
+                </li>
+            </ul>
+            <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2">
+                <div class="main">
+                    <div class="btn-group">
+                        <button {{action "create"}} type="button" class="btn btn-default"><i class="fa fa-plus"></i>Add Job</button>
+                        <button type="button" class="btn btn-default"><i class="fa fa-filter"></i></button>
+                        <button type="button" class="btn btn-default"><i class="fa fa-search"></i></button>
+                    </div>
+                    <div class="menu-tabs">
+                        <div class="row">
+                            <div class="col-xs-2">
+                                <span></span>
+                            </div>
+                            <div class="col-xs-9">
+                                <p class="title">{{#link-to "jobs-item"}}Versace{{/link-to}}</p>
+                                <p>Last run: 07/07/14 11:02 pm</p>
+                                <p>Next run: now</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="menu-tabs">
+                        <div class="row running-job">
+                            <div class="col-xs-2">
+                                <span></span>
+                            </div>
+                            <div class="col-xs-9">
+                                <p class="title">{{#link-to "jobs-item"}}Gap{{/link-to}}</p>
+                                <p>Last run: 07/07/14 11:02 pm</p>
+                                <p>Next run: 08/08/14 11:02 pm</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="menu-tabs">
+                        <div class="row active-job">
+                            <div class="col-xs-2">
+                                <i class="fa fa-exclamation-circle fa-5"></i>
+                            </div>
+                            <div class="col-xs-9">
+                                <p class="title">{{#link-to "jobs-item"}}American Signature{{/link-to}}</p>
+                                <p>Last run: 07/07/14 11:02 pm</p>
+                                <p>Next run: 08/08/14 11:02 pm</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="menu-tabs">
+                        <div class="row archived-job">
+                            <div class="col-xs-2">
+                                <span></span>
+                            </div>
+                            <div class="col-xs-9">
+                                <p class="title">{{#link-to "jobs-item"}}DKNY{{/link-to}}</p>
+                                <p>Last run: 07/07/14 11:02 pm</p>
+                                <p>Next run: 08/08/14 11:02 pm</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
