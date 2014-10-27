@@ -52,28 +52,28 @@ describe('JOBS API',
                 });
         });
 
-        it('create a new job without required workspaceId should fail', function (done) {
-            superagent.post(prefix + '/jobs')
-                .set('Content-Type', 'application/json')
-                .send({ 'job': {
-                    'workspaceId':999999,
-                    'name': 'TestName',
-                    'tags': ["edi", "production"],
-                    'updatedByPersonId':'1',
-                    'startsAt': '2014-08-21T10:00:11Z',
-                    'rrule': 'FREQ=DAILY;INTERVAL=1;BYDAY=MO;BYHOUR=12;BYMINUTE=0;BYSECOND=0'
-                }
-                })
-                .authenticate(accessToken)
-                .end(function (e, res) {
-                    expect(e).to.eql(null);
-                    expect(res.header['content-type']).to.eql('application/json; charset=utf-8');
-                    expect(res.body.error==undefined);
-                    expect(res.body.job==undefined);
-                    expect(res.status).to.eql(400);
-                    done();
-                });
-        });
+//        it('create a new job without required workspaceId should fail', function (done) {
+//            superagent.post(prefix + '/jobs')
+//                .set('Content-Type', 'application/json')
+//                .send({ 'job': {
+//                    'workspaceId':999999,
+//                    'name': 'TestName',
+//                    'tags': ["edi", "production"],
+//                    'updatedByPersonId':'1',
+//                    'startsAt': '2014-08-21T10:00:11Z',
+//                    'rrule': 'FREQ=DAILY;INTERVAL=1;BYDAY=MO;BYHOUR=12;BYMINUTE=0;BYSECOND=0'
+//                }
+//                })
+//                .authenticate(accessToken)
+//                .end(function (e, res) {
+//                    expect(e).to.eql(null);
+//                    expect(res.header['content-type']).to.eql('application/json; charset=utf-8');
+//                    expect(res.body.error==undefined);
+//                    expect(res.body.job==undefined);
+//                    expect(res.status).to.eql(400);
+//                    done();
+//                });
+//        });
 
         it('get all jobs', function (done) {
             superagent.get(prefix + '/jobs')
