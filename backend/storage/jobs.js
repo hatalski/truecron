@@ -25,7 +25,7 @@ var getJobIdCacheKey = function(jobId) {
 // Jobs
 //
 
-var findAndCountAll = module.exports.findAndCountAll = Promise.method(function (options) {
+var findAndCountAll = module.exports.findAndCountAll = Promise.method(function (context, options) {
     return models.Job.findAndCountAll(options)
         .then(function (result) {            
             result.rows.forEach(function(job) { cache.put(getJobIdCacheKey(job.id), job); });
@@ -39,10 +39,11 @@ var findAndCountAll = module.exports.findAndCountAll = Promise.method(function (
 /**
  * Create a new job.
  */
-var create = module.exports.create = Promise.method(function (attributes) {
+var create = module.exports.create = Promise.method(function (context, attributes) {
     if (!attributes || validator.isNull(attributes.name)) {
         throw new errors.InvalidParams();
     }
+    attributes.updatedByPersonId = context.personId;
     var self = { attrs: attributes };
 
     return using (models.transaction(), function (tx) {
@@ -52,7 +53,7 @@ var create = module.exports.create = Promise.method(function (attributes) {
             .then(function (job) {
                 self.job = job;
 
-                return history.logCreated(-1, getJobIdCacheKey(job.id), job, self.tx);
+                return history.logCreated(context.personId, getJobIdCacheKey(job.id), job, self.tx);
             })
             .then(function () {
                 cache.put(getJobIdCacheKey(self.job.id), self.job);
@@ -68,7 +69,7 @@ var create = module.exports.create = Promise.method(function (attributes) {
 /**
  * Search for a single job by ID.
  */
-var findById = module.exports.findById = Promise.method(function (id, transaction) {
+var findById = module.exports.findById = Promise.method(function (context, id, transaction) {
     return cache.get(getJobIdCacheKey(id))
         .then(function (result) {
             if (result.found) {
@@ -89,11 +90,12 @@ var findById = module.exports.findById = Promise.method(function (id, transactio
 /**
  * Update a job.
  */
-var update = module.exports.update = Promise.method(function (id, attributes) {
+var update = module.exports.update = Promise.method(function (context, id, attributes) {
+    attributes.updatedByPersonId = context.personId;
     var self = { attrs: attributes };
     return using (models.transaction(), function (tx) {
         self.tx = tx;
-        return module.exports.findById(id, tx)
+        return module.exports.findById(context, id, tx)
             .then(function (job) {
                 if (job === null) {
                     throw new errors.NotFound();
@@ -103,7 +105,7 @@ var update = module.exports.update = Promise.method(function (id, attributes) {
             })
             .then(function (job) {
                 self.job = job;
-                return history.logUpdated(-1, getJobIdCacheKey(job.id), job, self.oldJob, self.tx);
+                return history.logUpdated(context.personId, getJobIdCacheKey(job.id), job, self.oldJob, self.tx);
             })
             .then(function () {
                 cache.put(getJobIdCacheKey(self.job.id), self.job);
@@ -118,10 +120,10 @@ var update = module.exports.update = Promise.method(function (id, attributes) {
 /**
  * Remove a job.
  */
-var remove = module.exports.remove = Promise.method(function (id) {
+var remove = module.exports.remove = Promise.method(function (context, id) {
     return using (models.transaction(), function (tx) {
         var self = { tx: tx };
-        return findById(id)
+        return findById(context, id)
             .then(function (job) {
                 if (job === null) {
                     // No found, that's ok for remove() operation
@@ -130,7 +132,7 @@ var remove = module.exports.remove = Promise.method(function (id) {
                 self.job = job;
                 return job.destroy({transaction: self.tx})
                     .then(function () {
-                        return history.logRemoved(-1, getJobIdCacheKey(self.job.id), self.job, self.tx);
+                        return history.logRemoved(context.personId, getJobIdCacheKey(self.job.id), self.job, self.tx);
                     })
                     .then(function () {
                         cache.remove(getJobIdCacheKey(self.job.id))
