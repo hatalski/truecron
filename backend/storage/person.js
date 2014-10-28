@@ -42,7 +42,7 @@ var getEmailsByPersonIdCacheKey = function(personId) {
 /**
  * Search for a single person by ID.
  */
-var findById = module.exports.findById = Promise.method(function (id, transaction) {
+var findById = module.exports.findById = Promise.method(function (context, id, transaction) {
     return cache.get(getPersonIdCacheKey(id))
         .then(function (result) {
             if (result.found) {
@@ -63,7 +63,7 @@ var findById = module.exports.findById = Promise.method(function (id, transactio
 /**
  * Search for a single person by email.
  */
-var findByEmail = module.exports.findByEmail = Promise.method(function (email, transaction) {
+var findByEmail = module.exports.findByEmail = Promise.method(function (context, email, transaction) {
     if (!validator.isEmail(email)) {
         return null;
     }
@@ -71,13 +71,13 @@ var findByEmail = module.exports.findByEmail = Promise.method(function (email, t
     return cache.get(getPersonIdByEmailCacheKey(email))
         .then(function (result) {
             if (result.found) {
-                return findById(result.value);
+                return findById(context, result.value);
             }
             return models.PersonEmail.find({ where: { email: email } }, { transaction: transaction})
                 .then(function (personEmail) {
                     if (!!personEmail) {
                         cache.put(getPersonIdByEmailCacheKey(email), personEmail.personId);
-                        return findById(personEmail.personId, transaction);
+                        return findById(context, personEmail.personId, transaction);
                     }
                     return null;
                 });
@@ -91,12 +91,12 @@ var findByEmail = module.exports.findByEmail = Promise.method(function (email, t
 /**
  * Search a person by ID or email.
  */
-var findByIdOrEmail = module.exports.findByIdOrEmail = Promise.method(function (idOrEmail, transaction) {
+var findByIdOrEmail = module.exports.findByIdOrEmail = Promise.method(function (context, idOrEmail, transaction) {
     // Allows to specify both ID and email
     if (validator.isInt(idOrEmail)) {
-        return findById(idOrEmail, transaction);
+        return findById(context, idOrEmail, transaction);
     } else if (validator.isEmail(idOrEmail)) {
-        return findByEmail(idOrEmail, transaction);
+        return findByEmail(context, idOrEmail, transaction);
     } else {
         throw new apiErrors.InvalidParams('Invalid person ID or email.');
     }
@@ -106,7 +106,7 @@ var findByIdOrEmail = module.exports.findByIdOrEmail = Promise.method(function (
  * Search for a single person.
  * @param {object} options See Sequelize.find docs for details
  */
-var find = module.exports.find = Promise.method(function (options, transaction) {
+var find = module.exports.find = Promise.method(function (context, options, transaction) {
     return models.Person.find(options, { transaction: transaction })
         .then(function (person) {
             if (!!person) {
@@ -131,7 +131,7 @@ var find = module.exports.find = Promise.method(function (options, transaction) 
   *}
  * ```
  */
-var findAndCountAll = module.exports.findAndCountAll = Promise.method(function (options) {
+var findAndCountAll = module.exports.findAndCountAll = Promise.method(function (context, options) {
     return models.Person.findAndCountAll(options)
         .then(function (result) {
             // No need to cache pages of people, but it makes sense to cache individual persons
@@ -150,7 +150,7 @@ var findAndCountAll = module.exports.findAndCountAll = Promise.method(function (
  * @param {string} password Password to check.
  * @return A promise fulfilled with true if the person is found and the password matches the hash, false otherwise.
  */
-var verifyPassword = module.exports.verifyPassword = Promise.method(function (idOrEmail, password) {
+var verifyPassword = module.exports.verifyPassword = Promise.method(function (context, idOrEmail, password) {
     return findByIdOrEmail(idOrEmail)
         .then(function (person) {
             if (person === null || !person.passwordHash) {
@@ -180,11 +180,12 @@ var processPassword = Promise.method(function (attributes) {
  * @param {object} attributes Initial attributes values. name, password/passwordHash are required.
  * @returns A newly created person.
  */
-var create = module.exports.create = Promise.method(function (attributes) {
+var create = module.exports.create = Promise.method(function (context, attributes) {
     if (!attributes || validator.isNull(attributes.name)
         || validator.isNull(attributes.password) && validator.isNull(attributes.passwordHash)) {
         throw new errors.InvalidParams();
     }
+    attributes.updatedByPersonId = context.personId;
     return processPassword(attributes).bind({})
         .then(function (attrs) {
             var self = { attrs: attrs };
@@ -193,7 +194,7 @@ var create = module.exports.create = Promise.method(function (attributes) {
                 return models.Person.create(self.attrs, { transaction: tx })
                     .then(function (person) {
                         self.person = person;
-                        return history.logCreated(-1, getPersonIdCacheKey(person.id), person, self.tx);
+                        return history.logCreated(context.personId, getPersonIdCacheKey(person.id), person, self.tx);
                     })
                     .then(function () {
                         cache.put(getPersonIdCacheKey(self.person.id), self.person);
@@ -213,13 +214,14 @@ var create = module.exports.create = Promise.method(function (attributes) {
  * @param {object} attributes Updated attributes values.
  * @returns An updated instance.
  */
-var update = module.exports.update = Promise.method(function (id, attributes) {
+var update = module.exports.update = Promise.method(function (context, id, attributes) {
+    attributes.updatedByPersonId = context.personId;
     return processPassword(attributes).bind({})
         .then(function (attrs) {
             var self = { attrs: attrs };
             return using (models.transaction(), function (tx) {
                 self.tx = tx;
-                return findById(id, tx)
+                return findById(context, id, tx)
                     .then(function (person) {
                         if (person === null) {
                             throw new errors.NotFound();
@@ -229,7 +231,7 @@ var update = module.exports.update = Promise.method(function (id, attributes) {
                     })
                     .then(function (person) {
                         self.person = person;
-                        return history.logUpdated(-1, getPersonIdCacheKey(person.id), person, self.oldPerson, self.tx);
+                        return history.logUpdated(context.personId, getPersonIdCacheKey(person.id), person, self.oldPerson, self.tx);
                     })
                     .then(function () {
                         cache.put(getPersonIdCacheKey(self.person.id), self.person);
@@ -247,10 +249,10 @@ var update = module.exports.update = Promise.method(function (id, attributes) {
  * Remove a person.
  * @param {int} id Person ID.
  */
-var remove = module.exports.remove = Promise.method(function (id) {
+var remove = module.exports.remove = Promise.method(function (context, id) {
     return using (models.transaction(), function (tx) {
         var self = { tx: tx };
-        return findById(id)
+        return findById(context, id)
             .then(function (person) {
                 if (person === null) {
                     // No found, that's ok for remove() operation
@@ -259,7 +261,7 @@ var remove = module.exports.remove = Promise.method(function (id) {
                 self.person = person;
                 return person.destroy({transaction: self.tx})
                     .then(function () {
-                        return history.logRemoved(-1, getPersonIdCacheKey(self.person.id), self.person, self.tx);
+                        return history.logRemoved(context.personId, getPersonIdCacheKey(self.person.id), self.person, self.tx);
                     })
                     .then(function () {
                         cache.remove(getPersonIdCacheKey(self.person.id),
@@ -278,7 +280,7 @@ var remove = module.exports.remove = Promise.method(function (id) {
  * @param {int} personId ID of the person to get emails of.
  * @param {object} options See Sequelize.findAndCountAll docs for details.
  */
-var getEmails = module.exports.getEmails = Promise.method(function (personId, options) {
+var getEmails = module.exports.getEmails = Promise.method(function (context, personId, options) {
     return cache.get(getEmailsByPersonIdCacheKey(personId))
         .then(function (result) {
             if (result.found) {
@@ -311,7 +313,7 @@ var getEmails = module.exports.getEmails = Promise.method(function (personId, op
  * ```
  * @returns An added instance.
  */
-var addEmail = module.exports.addEmail = Promise.method(function (personId, attributes) {
+var addEmail = module.exports.addEmail = Promise.method(function (context, personId, attributes) {
     if (!attributes) {
         throw new errors.InvalidParams('Invalid email');
     }
@@ -337,7 +339,7 @@ var addEmail = module.exports.addEmail = Promise.method(function (personId, attr
                 self.result = result;
                 cache.remove(getEmailsByPersonIdCacheKey(personId));
                 cache.put(getPersonIdByEmailCacheKey(email), personId);
-                return history.log(-1, getPersonIdCacheKey(personId), 'email-add', { email: email, status: status }, {}, self.tx);
+                return history.log(context.personId, getPersonIdCacheKey(personId), 'email-add', { email: email, status: status }, {}, self.tx);
             })
             .then(function () {
                 return self.result;
@@ -364,7 +366,7 @@ var addEmail = module.exports.addEmail = Promise.method(function (personId, attr
  * }
  * ```
  */
-var findEmail = module.exports.findEmail = Promise.method(function (personId, emailIdOrValue, transaction) {
+var findEmail = module.exports.findEmail = Promise.method(function (context, personId, emailIdOrValue, transaction) {
     var where = { personId: personId };
     if (validator.isInt(emailIdOrValue)) {
         where.id = emailIdOrValue;
@@ -376,13 +378,13 @@ var findEmail = module.exports.findEmail = Promise.method(function (personId, em
     return models.PersonEmail.find({ where: where }, { transaction: transaction });
 });
 
-var changeEmailStatus = module.exports.changeEmailStatus = Promise.method(function (personId, emailIdOrValue, newStatus) {
+var changeEmailStatus = module.exports.changeEmailStatus = Promise.method(function (context, personId, emailIdOrValue, newStatus) {
     if (!validator.isIn(newStatus, ['active', 'pending'])) {
         throw new errors.InvalidParams('Invalid status');
     }
     return using(models.transaction(), function (tx) {
         var self = { tx: tx };
-        return findEmail(personId, emailIdOrValue, self.tx)
+        return findEmail(context, personId, emailIdOrValue, self.tx)
             .then(function (email) {
                 if (email === null) {
                     throw new errors.NotFound();
@@ -391,7 +393,7 @@ var changeEmailStatus = module.exports.changeEmailStatus = Promise.method(functi
             })
             .then(function (email) {
                 self.email = email;
-                return history.log(-1, getPersonIdCacheKey(personId), 'email-change-status',
+                return history.log(context.personId, getPersonIdCacheKey(personId), 'email-change-status',
                                     { email: email, status: newStatus }, email, self.tx);
             })
             .then(function () {
@@ -404,10 +406,10 @@ var changeEmailStatus = module.exports.changeEmailStatus = Promise.method(functi
     });
 });
 
-var removeEmail = module.exports.removeEmail = Promise.method(function (personId, emailIdOrValue) {
+var removeEmail = module.exports.removeEmail = Promise.method(function (context, personId, emailIdOrValue) {
     return using(models.transaction(), function (tx) {
         var self = { tx: tx };
-        return findEmail(personId, emailIdOrValue, tx)
+        return findEmail(context, personId, emailIdOrValue, tx)
             .then(function (personEmail) {
                 if (personEmail === null) {
                     return; // Ok, nothing to delete
@@ -416,7 +418,7 @@ var removeEmail = module.exports.removeEmail = Promise.method(function (personId
                 return personEmail.destroy({transaction: self.tx})
                     .then(function () {
                         cache.remove(getEmailsByPersonIdCacheKey(personId), getPersonIdByEmailCacheKey(self.personEmail.email));
-                        return history.log(-1, getPersonIdCacheKey(personId), 'email-remove',
+                        return history.log(context.personId, getPersonIdCacheKey(personId), 'email-remove',
                                             {email: self.personEmail.email}, self.personEmail, self.tx);
                     });
             })
