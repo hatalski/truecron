@@ -9,6 +9,7 @@ var express = require('express'),
     logger = require('../../lib/logger'),
     secrets = require('../../lib/secrets'),
     storage = require('../storage'),
+    context = require('../context'),
     clientAuth = require('./clientauth'),
     oauthErrors = require('./oautherrors'),
     token = require('./token');
@@ -56,7 +57,7 @@ var passwordAuth = function(req, res, next) {
     if (errors) {
         return next(oauthErrors.getInvalidRequest());
     }
-    return storage.Person.findByEmail(req.body.username)
+    return storage.Person.findByEmail(context.SystemContext, req.body.username)
         .then(function (person) {
             if (person === null) {
                 logger.debug('Failed to authenticate %s with password. User not found', req.body.username);
@@ -70,7 +71,7 @@ var passwordAuth = function(req, res, next) {
                 .then(function (passwordIsGood) {
                     if (passwordIsGood) {
                         logger.debug('Authenticated %s (%d) with password, client %d.', req.body.username, person.id, req.client.id);
-                        return token.issue(person.id, req, res, next);
+                        return token.issue(new context.Context(person.id, req.client.id), req, res, next);
                     } else {
                         logger.debug('Failed to authenticate %s with password. Invalid password.', req.body.username);
                         next(oauthErrors.getInvalidGrant());
@@ -92,7 +93,7 @@ var googleAuth = function(req, res, next) {
     if (errors) {
         return next(oauthErrors.getInvalidRequest());
     }
-    return storage.Person.findByEmail(req.body.username)
+    return storage.Person.findByEmail(context.SystemContext, req.body.username)
         .then(function (person) {
             if (person === null) {
                 logger.debug('Failed to authenticate %s with Google. User not found', req.body.username);
@@ -102,7 +103,7 @@ var googleAuth = function(req, res, next) {
             return ensureClientCanAuthenticate(req.client.id, person.id, 'password')
                 .then(function () {
                     logger.debug('Authenticated %s (%d) with google, client %d.', req.body.username, person.id, req.client.id);
-                    token.issue(person.id, req, res, next);
+                    token.issue(new context.Context(person.id, req.client.id), req, res, next);
                 });
         })
         .catch(function (err) {
@@ -113,8 +114,8 @@ var googleAuth = function(req, res, next) {
 
 var clientCredentialsAuth = function(req, res, next) {
     // TODO: Think of the client authentication token. Does it need a user ID? Which one?
-    logger.debug('TODO: Authenticated client %d with hardcoded person %d.', req.client.id, -1);
-    token.issue(-1, req, res, next);
+    logger.debug('TODO: Authenticated client %d with hardcoded person %d.', req.client.id, context.SystemPersonId);
+    token.issue(new context.Context(context.SystemPersonId, req.client.id), req, res, next);
 };
 
 //
