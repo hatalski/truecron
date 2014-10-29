@@ -25,7 +25,7 @@ module.exports = function (req, res, next) {
                 this.organization = organization;
                 return secrets.comparePasswordAndHash(credentials.pass, organization.secretHash);
             } else {
-                logger.debug('Authentication failed. Could not find client %s or it has no secret.', credentials.name);
+                logger.debug('Client authentication failed. Could not find client %s or it has no secret.', credentials.name);
                 return false;
             }
         })
@@ -34,10 +34,10 @@ module.exports = function (req, res, next) {
             logger.profile('authentication');
             if (passwordIsGood) {
                 req.client = this.organization;
-                logger.debug('Authentication succeeded. Client %d %s.', this.organization.id, this.organization.name);
+                logger.debug('Client authentication succeeded. Client %d %s.', this.organization.id, this.organization.name);
                 next();
             } else {
-                logger.debug('Authentication failed. Invalid secret or unknown client %s.', credentials.name);
+                logger.debug('Client authentication failed. Invalid secret or unknown client %s.', credentials.name);
                 return next(oauthErrors.getInvalidClient());
             }
         });

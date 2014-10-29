@@ -32,7 +32,7 @@ api.route('/jobs')
         }
         var sort = req.listParams.sort || 'name';
 
-        storage.Jobs.findAndCountAll({
+        storage.Jobs.findAndCountAll(req.context, {
             where: where,
             order: sort + ' ' + req.listParams.direction,
             limit: req.listParams.limit,
@@ -53,7 +53,7 @@ api.route('/jobs')
         if (!req.body || !req.body.job) {
             return next(new apiErrors.InvalidParams());
         }
-        storage.Jobs.create(req.body.job)
+        storage.Jobs.create(req.context, req.body.job)
             .then(function (job) {
                 res.status(201).json(addLinks(job));
             })
@@ -79,7 +79,7 @@ api.param('jobid', function (req, res, next, id) {
     }
 
     if (!!jobid) {
-        storage.Jobs.findById(id)
+        storage.Jobs.findById(req.context, id)
             .then(function (job) {
                 if (job !== null) {
                     req.Jobs = job;
@@ -105,7 +105,7 @@ api.route('/jobs/:jobid')
         if (!req.body || !req.body.job) {
             return next(new apiErrors.InvalidParams());
         }
-        storage.Jobs.update(req.Jobs.id, req.body.job)
+        storage.Jobs.update(req.context, req.Jobs.id, req.body.job)
             .then(function (job) {
                 res.json(addLinks(job));
             });
@@ -114,7 +114,7 @@ api.route('/jobs/:jobid')
     // Delete a job
     //
     .delete(function (req, res, next) {
-        storage.Jobs.remove(req.Jobs.id)
+        storage.Jobs.remove(req.context, req.Jobs.id)
             .then(function () {
                 res.status(204).json({});
             });

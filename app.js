@@ -162,6 +162,9 @@ app.get('/manageorganization', function (req, res) {
     res.sendfile('manageorganization.html');
 });
 
+app.get('/manageorganizationws', function (req, res) {
+    res.sendfile('manageorganizationws.html');
+});
 
 /// catch 404 and forward to error handler
 app.use(function(req, res, next) {

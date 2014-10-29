@@ -49,7 +49,7 @@ api.route('/users')
         }
         var sort = req.listParams.sort || 'name';
 
-        storage.Person.findAndCountAll({
+        storage.Person.findAndCountAll(req.context, {
             where: where,
             order: sort + ' ' + req.listParams.direction,
             limit: req.listParams.limit,
@@ -69,7 +69,7 @@ api.route('/users')
         if (!req.body || !req.body.user) {
             return next(new apiErrors.InvalidParams());
         }
-        storage.Person.create(req.body.user)
+        storage.Person.create(req.context, req.body.user)
         .then(function (person) {
             res.status(201).json(personToUser(person));
         })
@@ -87,7 +87,7 @@ api.param('userid', function (req, res, next, id) {
     if (!validator.isInt(id) && !validator.isEmail(id)) {
         next(new apiErrors.InvalidParams());
     }
-    storage.Person.findByIdOrEmail(id)
+    storage.Person.findByIdOrEmail(req.context, id)
         .then(function (person) {
             if (person !== null) {
                 req.Person = person;
@@ -112,7 +112,7 @@ api.route('/users/:userid')
         if (!req.body || !req.body.user) {
             return next(new apiErrors.InvalidParams());
         }
-        storage.Person.update(req.Person.id, req.body.user)
+        storage.Person.update(req.context, req.Person.id, req.body.user)
             .then(function (person) {
                 res.json(personToUser(person));
             });
@@ -121,7 +121,7 @@ api.route('/users/:userid')
     // Delete a user
     //
     .delete(function (req, res, next) {
-        storage.Person.remove(req.Person.id)
+        storage.Person.remove(req.context, req.Person.id)
             .then(function () {
                 res.status(204).json({});
             });
@@ -141,7 +141,7 @@ api.route('/users/:userid/emails')
         }
         var sort = req.listParams.sort || 'id';
 
-        storage.Person.getEmails(req.Person.id, {
+        storage.Person.getEmails(req.context, req.Person.id, {
             where: where,
             order: sort + ' ' + req.listParams.direction,
             limit: req.listParams.limit,
@@ -162,7 +162,7 @@ api.route('/users/:userid/emails')
         if (!req.body || !req.body.email) {
             return next(new apiErrors.InvalidParams());
         }
-        storage.Person.addEmail(req.Person.id, req.body.email)
+        storage.Person.addEmail(req.context, req.Person.id, req.body.email)
             .then(function (email) {
                 res.status(201).json(personEmailToEmail(req.Person.id, email));
             })
@@ -180,7 +180,7 @@ api.param('email', function (req, res, next, id) {
     if (!validator.isInt(id) && !validator.isEmail(id)) {
         next(new apiErrors.InvalidParams());
     }
-    storage.Person.findEmail(req.Person.id, id)
+    storage.Person.findEmail(req.context, req.Person.id, id)
         .then(function (email) {
             if (!!email) {
                 req.Email = email;
@@ -206,7 +206,7 @@ api.route('/users/:userid/emails/:email')
         if (!req.body || !req.body.email || !req.body.email.status) {
             return next(new apiErrors.InvalidParams());
         }
-        storage.Person.changeEmailStatus(req.Person.id, req.Email.id, req.body.email.status)
+        storage.Person.changeEmailStatus(req.context, req.Person.id, req.Email.id, req.body.email.status)
             .then(function (email) {
                 res.json(personEmailToEmail(req.Person.id, email));
             })
@@ -219,7 +219,7 @@ api.route('/users/:userid/emails/:email')
     // Delete the email of the user
     //
     .delete(function (req, res, next) {
-        storage.Person.removeEmail(req.Person.id, req.Email.id)
+        storage.Person.removeEmail(req.context, req.Person.id, req.Email.id)
             .then(function () {
                 res.status(204).json({});
             });
