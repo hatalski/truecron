@@ -34,7 +34,7 @@ Storage.prototype.initialize = Promise.method(function initialize() {
 
     this.Person = require('./person');
     this.Jobs = require('./jobs');
-    //this.Tasks = require('/tasks');
+    this.Tasks = require('/tasks');
     //this.Organization = require('./organization');
     //this.Workspace = require('./workspace');
 
