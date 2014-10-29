@@ -4,7 +4,8 @@
 .fa-bars,
 .fa-plus,
 .fa-pencil,
-.fa-sign-out {
+.fa-sign-out,
+.fa {
     color: #ff982f;
 }
 
@@ -101,4 +102,10 @@
 .mainx {
     padding-top: 0px;
     padding-right: 0px;
+}
+
+.alignright {
+    vertical-align: top;
+    valign: top;
+    align-content: flex-start;
 }

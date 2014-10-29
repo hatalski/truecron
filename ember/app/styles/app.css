@@ -113,13 +113,28 @@ a {
   .sidebar {
     position: fixed;
     min-width: 275px;
-    top: 51px;
+    top: 164px;
     bottom: 0;
     left: 0;
     z-index: 1000;
     display: block;
     overflow-x: hidden;
     overflow-y: auto; /* Scrollable contents if viewport is shorter than content. */
+    background-color: #d9d9db;
+    border-right: 6px solid #d8d8da;
+    border-top: 6px solid #d8d8da;
+  }
+}
+@media (min-width: 768px) {
+  .sidebar_tabs {
+    position: fixed;
+    min-width: 275px;
+    top: 51px;
+    bottom: 0;
+    left: 0;
+    z-index: 1000;
+    display: block;
+    overflow: hidden; /* Scrollable contents if viewport is shorter than content. */
     background-color: #d9d9db;
     border-right: 6px solid #d8d8da;
     border-top: 6px solid #d8d8da;
@@ -222,7 +237,7 @@ a {
   text-decoration: underline;
 }
 
-.sidebar .nav-tabs > li.active > a, .nav-tabs > li.active > a:hover, .nav-tabs > li.active > a:focus {
+.sidebar_tabs .nav-tabs > li.active > a, .nav-tabs > li.active > a:hover, .nav-tabs > li.active > a:focus {
   background-color: #f4f4f4;
   color: #ff9e40;
   font-weight: bold;
@@ -231,7 +246,7 @@ a {
   border: solid 6px #c9c9cb;
   text-align: center;
 }
-.sidebar .nav-tabs > li > a {
+.sidebar_tabs .nav-tabs > li > a {
   border-radius: 0;
   color: #bcbcbe;
   font-size: 20px;
@@ -240,7 +255,7 @@ a {
   border-top: solid 6px #d8d8da;
   margin-right: 0;
 }
-.sidebar .active span {
+.sidebar_tabs .active span {
   color:#474747
 }
 
@@ -248,20 +263,20 @@ a {
   padding-left: 6px;
   padding-right: 0;
 }
-.sidebar .btn-group, .btn-group-vertical{
+.sidebar_tabs .btn-group, .btn-group-vertical{
   padding: 6px;
   background-color: #fff;
   width: 100%;
 }
 
-.sidebar .btn-group > .btn {
+.sidebar_tabs .btn-group > .btn {
   background-color: #fff;
   border-radius: 0;
   border: solid 1px #13afc8;
   margin-right: 5px;
 }
 
-.sidebar .btn-default {
+.sidebar_tabs .btn-default {
   background-image: none;
 }
 
