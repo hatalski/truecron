@@ -46,3 +46,24 @@ api.route('/jobs/:jobid/tasks')
                 }});
         });
     })
+
+api.param('jobid', function (req, res, next, id) {
+
+    var jobid = null;
+
+    if (validator.isInt(id)) {
+        jobid = id;
+    }
+    else {
+        next(new apiErrors.InvalidParams());
+    }
+
+    if (!!jobid) {
+
+        /////???
+
+
+    }
+});
+
+module.exports = api;
