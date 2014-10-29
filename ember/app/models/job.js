@@ -16,8 +16,56 @@ var Job = DS.Model.extend({
 
 Job.reopenClass({
     FIXTURES: [
-        { id: 1, name: 'Job A', startsAt: new Date("2014-09-20T00:00:00.000Z"), rrule: 'FREQ=WEEKLY;COUNT=30;WKST=MO', active: true, archived: false, createdAt: new Date('2014-09-19T00:00:00.000Z'), updatedAt: new Date('2014-09-20T00:00:00.000Z') },
-        { id: 2, name: 'Job B', startsAt: new Date('2014-10-21T00:00:00.000Z'), rrule: 'FREQ=HOURLY;INTERVAL=3;WKST=MO', active: true, archived: false, createdAt: new Date('2014-09-20T00:00:00.000Z'), updatedAt: new Date('2014-09-20T00:00:00.000Z') }
+        {
+            id: 1,
+            name: 'Corporate Website Monitoring',
+            startsAt: new Date("2014-09-20T00:00:10.000Z"),
+            rrule: 'FREQ=WEEKLY;WKST=MO;INTERVAL=2;BYDAY=MO,FR;COUNT=5',
+            active: true,
+            archived: false,
+            createdAt: new Date('2014-09-19T00:00:00.000Z'),
+            updatedAt: new Date('2014-09-20T00:00:00.000Z')
+        },
+        {
+            id: 2,
+            name: 'Database Site Backup',
+            startsAt: new Date('2014-10-21T00:04:00.000Z'),
+            rrule: 'FREQ=MONTHLY;BYDAY=+3TU',
+            active: true,
+            archived: false,
+            createdAt: new Date('2014-09-20T00:00:00.000Z'),
+            updatedAt: new Date('2014-09-20T00:00:00.000Z')
+        },
+        {
+            id: 3,
+            name: 'Weekly Accounting Report',
+            startsAt: new Date('2014-10-21T00:04:00.000Z'),
+            rrule: 'INTERVAL=6;FREQ=MONTHLY',
+            active: true,
+            archived: false,
+            createdAt: new Date('2014-09-20T00:00:00.000Z'),
+            updatedAt: new Date('2014-09-20T00:00:00.000Z')
+        },
+        {
+            id: 4,
+            name: 'Intranet Monitoring',
+            startsAt: new Date('2014-10-21T00:04:00.000Z'),
+            rrule: 'FREQ=HOURLY;INTERVAL=3;WKST=MO',
+            active: true,
+            archived: true,
+            createdAt: new Date('2014-09-20T00:00:00.000Z'),
+            updatedAt: new Date('2014-09-20T00:00:00.000Z')
+        },
+        {
+            id: 5,
+            name: 'New Clients Report',
+            startsAt: new Date('2014-10-21T00:04:00.000Z'),
+            rrule: 'FREQ=HOURLY;INTERVAL=3;WKST=MO',
+            active: true,
+            archived: false,
+            createdAt: new Date('2014-09-20T00:00:00.000Z'),
+            updatedAt: new Date('2014-09-20T00:00:00.000Z')
+        }
     ]
 });
 
