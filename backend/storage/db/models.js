@@ -23,7 +23,8 @@ module.exports.initialize = function(sequelize) {
         'history',
         'organization',
         'job'
-        //'workspace',
+        ,'task'
+         //'workspace',
     ];
 
     daos.forEach(function (dao) {
