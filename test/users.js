@@ -52,7 +52,7 @@ describe('USERS API',
                     expect(res.header['content-type']).to.eql('application/json; charset=utf-8');
                     expect(res.body.error).to.be.an('object');
                     expect(res.body.error.status).to.eql(400);
-                    expect(res.body.error.message).to.eql("Invalid parameters. Error: Invalid parameters");
+                    expect(res.body.error.message).to.contain("Invalid parameters");
                     expect(res.status).to.eql(400);
                     done();
                 });
@@ -67,7 +67,7 @@ describe('USERS API',
                     expect(res.header['content-type']).to.eql('application/json; charset=utf-8');
                     expect(res.body.error).to.be.an('object');
                     expect(res.body.error.status).to.eql(400);
-                    expect(res.body.error.message).to.eql("Invalid parameters. Error: Invalid parameters");
+                    expect(res.body.error.message).to.contain("Invalid parameters");
                     expect(res.status).to.eql(400);
                     done();
                 });

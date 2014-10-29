@@ -4,6 +4,7 @@ var basicAuth = require('basic-auth'),
     logger = require('../../lib/logger'),
     secrets = require('../../lib/secrets'),
     storage = require('../storage'),
+    context = require('../context'),
     oauthErrors = require('./oautherrors');
 
 //
@@ -18,7 +19,7 @@ module.exports = function (req, res, next) {
     }
 
     logger.profile('authentication');
-    storage.tempfindOrganizationById(parseInt(credentials.name, 10)).bind({})
+    storage.Organization.findById(context.SystemContext, parseInt(credentials.name, 10)).bind({})
         .then(function (organization) {
             logger.profile('authentication-bcrypt');
             if (!!organization && !!organization.secretHash) {
