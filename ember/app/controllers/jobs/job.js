@@ -10,10 +10,7 @@ export default Ember.ObjectController.extend({
     recurrence: function() {
         var o = RRule.parseString(this.get('model.rrule'));
         o.dtstart = this.get('model.startsAt');
-        //console.dir(o);
         var rule = new RRule(o);
-        //var rule = RRule.fromString(this.get('model.rrule'));
-        //console.dir(rule);
         var now = new Date();
         return {
             text: rule.toText(),
