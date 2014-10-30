@@ -5,7 +5,7 @@ import {
 
 moduleForModel('organization', 'Organization', {
   // Specify the other units that are required for this test.
-  needs: []
+  needs: ['model:person','model:workspace','model:job']
 });
 
 test('it exists', function() {

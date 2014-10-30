@@ -3,7 +3,7 @@ import {
   test
 } from 'ember-qunit';
 
-moduleFor('route:organizations/index', 'OrganizationsIndexRoute', {
+moduleFor('route:jobs/job/tasks/index', 'JobsJobTasksIndexRoute', {
   // Specify the other units that are required for this test.
   // needs: ['controller:foo']
 });

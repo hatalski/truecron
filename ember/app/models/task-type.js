@@ -1,5 +1,36 @@
 import DS from 'ember-data';
 
-export default DS.Model.extend({
+var TaskType = DS.Model.extend({
     name: DS.attr('string')
 });
+
+TaskType.reopenClass({
+  FIXTURES: [
+    {
+      id: 1,
+      name: 'file'
+    },
+    {
+      id: 2,
+      name: 'execute'
+    },
+    {
+      id: 3,
+      name: 'archive'
+    },
+    {
+      id: 4,
+      name: 'sftp'
+    },
+    {
+      id: 5,
+      name: 'smtp'
+    },
+    {
+      id: 6,
+      name: 'http'
+    }
+  ]
+});
+
+export default TaskType;

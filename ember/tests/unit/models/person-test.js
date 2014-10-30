@@ -6,7 +6,7 @@ import {
 
 moduleForModel('person', 'Person', {
   // Specify the other units that are required for this test.
-  needs: ['model:person', 'model:organization']
+  needs: ['model:person', 'model:organization', 'model:workspace']
 });
 
 test('it exists', function() {

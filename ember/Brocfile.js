@@ -24,6 +24,9 @@ app.import("bower_components/font-awesome/fonts/FontAwesome.otf", { destDir: "fo
 app.import('bower_components/jquery/dist/jquery.js');
 app.import('bower_components/bootstrap/dist/js/bootstrap.js');
 app.import('bower_components/ember-data/ember-data.js');
+app.import('bower_components/rrule/lib/rrule.js');
+app.import('bower_components/rrule/lib/nlp.js');
+app.import('bower_components/moment/moment.js');
 
 // Use `app.import` to add additional libraries to the generated
 // output files.
