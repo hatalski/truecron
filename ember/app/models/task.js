@@ -23,9 +23,9 @@ Task.reopenClass({
       position: 1,
       timeout: 1000,
       createdAt: new Date('2014-09-19T00:00:00.000Z'),
-      updatedAt: new Date('2014-09-20T00:00:00.000Z')//,
-      //job: 1,
-      //taskType: 1
+      updatedAt: new Date('2014-09-20T00:00:00.000Z'),
+      job: 1,
+      taskType: 1
     }//,
     //{
     //  id: 2,
