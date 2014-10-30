@@ -1,6 +1,6 @@
 import DS from 'ember-data';
 
-var Org =       DS.Model.extend({
+var Organization = DS.Model.extend({
     name:       DS.attr('string'),
     email:      DS.attr('string'),
     plan:       DS.attr('string'),
@@ -11,4 +11,31 @@ var Org =       DS.Model.extend({
     users:      DS.hasMany('person', { async: true, inverse: 'updatedBy' })
 });
 
-export default Org;
+Organization.reopenClass({
+  FIXTURES: [
+    {
+      id: 1,
+      name: 'Personal',
+      email: '',
+      plan: '',
+      createdAt: new Date(),
+      updatedAt: new Date(),
+      updatedBy: 1,
+      workspaces: [1,2],
+      users: [1]
+    },
+    {
+      id: 2,
+      name: 'Pied Piper',
+      email: '',
+      plan: '',
+      createdAt: new Date(),
+      updatedAt: new Date(),
+      updatedBy: 1,
+      workspaces: [3,4,5],
+      users: [1]
+    }
+  ]
+});
+
+export default Organization;

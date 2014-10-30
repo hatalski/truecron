@@ -11,7 +11,7 @@
                 </li>
             </ul>
             <div class="btn-group">
-                <button {{action "create"}} type="button" class="btn btn-default"><i class="fa fa-plus"></i>Add Job</button>
+                {{#link-to "jobs/addjob" classNames="btn btn-default"}}<i class="fa fa-plus"></i>Add Job{{/link-to}}
                 <button type="button" class="btn btn-default"><i class="fa fa-filter"></i></button>
                 <button type="button" class="btn btn-default"><i class="fa fa-search"></i></button>
             </div>
