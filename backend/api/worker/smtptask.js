@@ -20,7 +20,7 @@ var smtpTask = function(from, to, subject, text, html) {
         html: html
     };
 
-    self.run = function(afterSend)
+    self.run = function(callback)
     {
         if(!self.isStarted()) {
             self.start();
@@ -30,15 +30,15 @@ var smtpTask = function(from, to, subject, text, html) {
                 } else {
                     self.onMessage(info);
                 }
-                self.afterSend(afterSend);
+                self.afterSend(callback);
             });
         }
     };
 
-    self.afterSend = function(afterSend)
+    self.afterSend = function(callback)
     {
-        if (afterSend && typeof afterSend === 'function')
-            afterSend();
+        if (callback && typeof callback === 'function')
+            callback();
 
         this.complete();
     };
