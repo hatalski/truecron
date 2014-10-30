@@ -109,3 +109,7 @@
     valign: top;
     align-content: flex-start;
 }
+/* jobs /2 */
+.smallpadding {
+    padding: 0px;
+}
