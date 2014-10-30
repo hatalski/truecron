@@ -30,8 +30,8 @@
                         </div>
                         <div class="col-xs-9">
                             <p class="title">{{name}}</p>
-                            <p>Last run: {{recurrence.lastRun}}</p>
-                            <p>Next run: {{recurrence.nextRun}}</p>
+                            <p>Last run: {{time-from recurrence.lastRun}}</p>
+                            <p>Next run: {{time-from recurrence.nextRun}}</p>
                         </div>
                     </div>
                   {{/link-to}}

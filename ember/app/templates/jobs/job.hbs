@@ -17,8 +17,8 @@
         <td rowspan="3">
         <td colspan="2">Ends after 5 runs</td>
         <td></td>
-        <td class="red_row">{{recurrence.lastRun}}</td>
-        <td>{{recurrence.nextRun}}</td>
+        <td class="red_row">{{format-date recurrence.lastRun 'L LT'}}</td>
+        <td>{{format-date recurrence.nextRun 'L LT'}}</td>
     </tr>
     <tr><td colspan="6">&nbsp;</td></tr>
     <tr>
@@ -34,7 +34,7 @@
     </tbody>
 </table>
 
-<br>
+<br> {{outlet}}
 <br><br><hr>
 <div class="accordion" id="accordion2">
     <div class="accordion-group"><!--start part1 accordion2-->
@@ -76,5 +76,3 @@
         <tr><td></td><td align="right"><a href="#"><u>ARCHIVE</u></a></td></tr>
     </table>
 </div>
-
-{{outlet}}
