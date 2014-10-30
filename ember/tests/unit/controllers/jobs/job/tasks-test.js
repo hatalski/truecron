@@ -3,7 +3,7 @@ import {
   test
 } from 'ember-qunit';
 
-moduleFor('controller:organizations', 'OrganizationsController', {
+moduleFor('controller:jobs/job/tasks', 'JobsJobTasksController', {
   // Specify the other units that are required for this test.
   // needs: ['controller:foo']
 });
