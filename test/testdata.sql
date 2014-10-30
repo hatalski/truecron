@@ -156,4 +156,5 @@ insert into tc.History (id, resourceUrl, personId, operation, change, oldValue)
     select -64, '/organizations/-21', -20, 'workspace-access', '{ "workspaceId": "-23", "personId": "-20", "role": "viewer" }', null
     where not exists (select * from tc.History
     where id = -64);
-
+--for Task test
+insert into tc.Job (workspaceId, name, updatedByPersonId, rrule) values (-12, testJob1, -20, 'tratata')
