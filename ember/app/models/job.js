@@ -35,7 +35,8 @@ Job.reopenClass({
             active: true,
             archived: false,
             createdAt: new Date('2014-09-20T00:00:00.000Z'),
-            updatedAt: new Date('2014-09-20T00:00:00.000Z')
+            updatedAt: new Date('2014-09-20T00:00:00.000Z'),
+            tasks: []
         },
         {
             id: 3,
@@ -45,7 +46,8 @@ Job.reopenClass({
             active: true,
             archived: false,
             createdAt: new Date('2014-09-20T00:00:00.000Z'),
-            updatedAt: new Date('2014-09-20T00:00:00.000Z')
+            updatedAt: new Date('2014-09-20T00:00:00.000Z'),
+            tasks: []
         },
         {
             id: 4,
@@ -55,7 +57,8 @@ Job.reopenClass({
             active: true,
             archived: true,
             createdAt: new Date('2014-09-20T00:00:00.000Z'),
-            updatedAt: new Date('2014-09-20T00:00:00.000Z')
+            updatedAt: new Date('2014-09-20T00:00:00.000Z'),
+            tasks: []
         },
         {
             id: 5,
@@ -65,7 +68,8 @@ Job.reopenClass({
             active: true,
             archived: false,
             createdAt: new Date('2014-09-20T00:00:00.000Z'),
-            updatedAt: new Date('2014-09-20T00:00:00.000Z')
+            updatedAt: new Date('2014-09-20T00:00:00.000Z'),
+            tasks: []
         }
     ]
 });

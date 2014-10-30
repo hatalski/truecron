@@ -12,6 +12,6 @@ export function timeFrom(date, from) {
   else {
     return "never";
   }
-};
+}
 
 export default Ember.Handlebars.makeBoundHelper(timeFrom);
