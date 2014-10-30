@@ -2,7 +2,31 @@
 
 var EmberApp = require('ember-cli/lib/broccoli/ember-app');
 
-var app = new EmberApp();
+var app = new EmberApp({
+  name: require('./package.json').name,
+  minifyCSS: {
+    enabled: false,
+    options: {}
+  }
+});
+
+// css
+app.import('bower_components/bootstrap/dist/css/bootstrap-theme.css');
+app.import('bower_components/bootstrap/dist/css/bootstrap.css');
+app.import('bower_components/font-awesome/css/font-awesome.min.css');
+app.import("bower_components/font-awesome/fonts/fontawesome-webfont.eot", { destDir: "fonts" });
+app.import("bower_components/font-awesome/fonts/fontawesome-webfont.svg", { destDir: "fonts" });
+app.import("bower_components/font-awesome/fonts/fontawesome-webfont.ttf", { destDir: "fonts" });
+app.import("bower_components/font-awesome/fonts/fontawesome-webfont.woff", { destDir: "fonts" });
+app.import("bower_components/font-awesome/fonts/FontAwesome.otf", { destDir: "fonts" });
+
+// js
+app.import('bower_components/jquery/dist/jquery.js');
+app.import('bower_components/bootstrap/dist/js/bootstrap.js');
+app.import('bower_components/ember-data/ember-data.js');
+app.import('bower_components/rrule/lib/rrule.js');
+app.import('bower_components/rrule/lib/nlp.js');
+app.import('bower_components/moment/moment.js');
 
 // Use `app.import` to add additional libraries to the generated
 // output files.

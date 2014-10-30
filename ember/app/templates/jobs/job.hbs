@@ -1,0 +1,78 @@
+<table class="allwidth">
+    <tbody>
+    <tr>
+        <td class="first_row" colspan="4">&nbsp;{{name}}<span class="title-icon"><i class="fa fa-pencil"></i></span></td>
+        <td></td>
+        <td align="right"><a href="#"><u>ACTIVE</u></a>&nbsp;&nbsp;</td>
+    </tr>
+    <tr><td>&nbsp;</td></tr>
+    <tr>
+        <td></td>
+        <td class="blue_row" colspan="2">{{recurrence.text}}</td>
+        <td>&nbsp;</td>
+        <td class="blue_row">LAST RUN</td>
+        <td class="blue_row">NEXT RUN</td>
+    </tr>
+    <tr>
+        <td rowspan="3">
+        <td colspan="2">Ends after 5 runs</td>
+        <td></td>
+        <td class="red_row">{{format-date recurrence.lastRun 'L LT'}}</td>
+        <td>{{format-date recurrence.nextRun 'L LT'}}</td>
+    </tr>
+    <tr><td colspan="6">&nbsp;</td></tr>
+    <tr>
+        <td colspan="2">
+            <h4>Tasks</h4>
+        </td>
+        <td></td>
+        <td></td>
+        <td align="right">
+            <button {{action "create"}} type="button" class="btn btn-default"><i class="fa fa-plus"></i>Add Job</button>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+<br> {{render 'jobs/job/tasks'}}
+<br><br><hr>
+<div class="accordion" id="accordion2">
+    <div class="accordion-group"><!--start part1 accordion2-->
+        <div class="accordion-heading">
+            <button class="accordion-toggle buttonaccordion" data-toggle="collapse" data-parent="#accordion2" href="#collapseOne">
+                <span class="title-icon"><i class="fa fa-chevron-right"></i>Recent Changes</span>
+            </button>
+        </div>
+        <div id="collapseOne" class="accordion-body collapse in">
+            <div class="accordion-inner">
+                <label class="checkbox inline">
+                    &nbsp; by: &nbsp; &nbsp;&nbsp;&nbsp;&nbsp;
+                    <input type="checkbox" id="inlineCheckbox2" value="option2"> me &nbsp; &nbsp; &nbsp;
+                    <input type="checkbox" id="inlineCheckbox3" value="option3"> others &nbsp; &nbsp; &nbsp;
+                </label>
+                <div class="table-responsive">
+                    <table class="table table-striped lastrowborder ">
+                        <tr>
+                            <td>07/07/14 12:32 pm</td>
+                            <td>Lev Kurts</td>
+                            <td>added "copy files to FTP"</td>
+                        </tr>
+                        <tr>
+                            <td>07/07/14  1:02 pm</td>
+                            <td>Vitali Hatalski</td>
+                            <td>added "send notification"</td>
+                        </tr>
+                        <tr>
+                            <td>07/07/14 11:35 pm</td>
+                            <td>Lev Kurts</td>
+                            <td>added "copy files to FTP"</td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div><!--end part1 accordion2--><hr>
+    <table class="table borderless">
+        <tr><td></td><td align="right"><a href="#"><u>ARCHIVE</u></a></td></tr>
+    </table>
+</div>
