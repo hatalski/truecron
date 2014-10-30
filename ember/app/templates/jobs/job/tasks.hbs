@@ -2,12 +2,15 @@
 <div class="table-responsive">
     <table class="table table-striped lastrowborder">
         <tbody>
-        <tr>
-            <td class="icon-row"></td>
-            <td>delete</td>
-            <td>clean folder</td>
-            <td class="underline">0.68s</td>
-        </tr>
+        {{#each}}
+            <tr>
+                <td class="icon-row"></td>
+                <td>{{taskType.name}}</td>
+                <td>{{name}}</td>
+                <td class="underline">0.68s</td>
+            </tr>
+        {{/each}}
+
         <tr>
             <td></td>
             <td>execute</td>
@@ -41,6 +44,4 @@
         </tbody>
     </table>
 </div>
-{{#each}}
-  {{name}}
-{{/each}}
+
