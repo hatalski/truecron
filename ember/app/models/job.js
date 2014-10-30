@@ -24,7 +24,8 @@ Job.reopenClass({
             active: true,
             archived: false,
             createdAt: new Date('2014-09-19T00:00:00.000Z'),
-            updatedAt: new Date('2014-09-20T00:00:00.000Z')
+            updatedAt: new Date('2014-09-20T00:00:00.000Z'),
+            tasks: [1,2,3,4,5]
         },
         {
             id: 2,

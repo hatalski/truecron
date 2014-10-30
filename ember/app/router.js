@@ -11,6 +11,7 @@ Router.map(function() {
       this.resource('tasks', { path: '/tasks' });
     });
   });
+  //this.resource('jobs/job/tasks', function() { });
 });
 
 export default Router;
