@@ -158,6 +158,6 @@ insert into tc.History (id, resourceUrl, personId, operation, change, oldValue)
     where id = -64);
 --for Task test
 
-insert into tc.Job (id,workspaceId, name, updatedByPersonId, rrule)
-    select -33, -23, 'testJob1', -20, 'tratata'
-    where not exists (select * from tc.Job)
+--insert into tc.Job (id,workspaceId, name, updatedByPersonId, rrule)
+--    select -33, -23, 'testJob1', -20, 'tratata'
+--    where not exists (select * from tc.Job)
