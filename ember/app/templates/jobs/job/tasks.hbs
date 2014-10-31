@@ -2,45 +2,14 @@
 <div class="table-responsive">
     <table class="table table-striped lastrowborder">
         <tbody>
-        <tr>
-            <td class="icon-row"></td>
-            <td>delete</td>
-            <td>clean folder</td>
-            <td class="underline">0.68s</td>
-        </tr>
-        <tr>
-            <td></td>
-            <td>execute</td>
-            <td>EDI process execution</td>
-            <td ><u>13.10s</u></td>
-        </tr>
-        <tr>
-            <td class="icon-row"></td>
-            <td>archive</td>
-            <td>zip</td>
-            <td class="underline">0.03s</td>
-        </tr>
-        <tr>
-            <td class="activejobfirstbox"></td>
-            <td>copy</td>
-            <td>copy files to FTP</td>
-            <td class="activejoblastbox"><u>3.01s</u></td>
-        </tr>
-        <tr>
-            <td class="icon-row"><span class="alert-icon"><i class="fa fa-exclamation-circle"></i></span></td>
-            <td>email</td>
-            <td>send notification</td>
-            <td class="red_row"><u>30.04s</u></td>
-        </tr>
-        <tr class="archevedtask">
-            <td></td>
-            <td >delete</td>
-            <td>clean folder</td>
-            <td class="underline">0.68s</td>
-        </tr>
+        {{#each}}
+            {{#link-to "jobdetails.task" this tagName="tr" activeClass="activejobfirstbox"}}
+                <td class="icon-row"></td>
+                <td>{{taskType.name}}</td>
+                <td>{{name}}</td>
+                <td class="underline">0.68s</td>
+            {{/link-to}}
+        {{/each}}
         </tbody>
     </table>
 </div>
-{{#each}}
-  {{name}}
-{{/each}}

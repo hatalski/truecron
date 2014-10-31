@@ -51,7 +51,21 @@
             <button {{action "create"}} type="button" class="chok"><i class="fa fa-plus"></i> Add Job</button>
         </div>
     </div>
-    <br> {{render 'jobs/job/tasks'}}
+    <br>
+    <div class="table-responsive">
+      <table class="table table-striped lastrowborder">
+          <tbody>
+          {{#each tasks}}
+            {{#link-to "jobdetails" this tagName="tr" activeClass="activejobfirstbox"}}
+                <td class="icon-row"></td>
+                <td>{{taskType.name}}</td>
+                <td>{{name}}</td>
+                <td class="underline">0.68s</td>
+            {{/link-to}}
+          {{/each}}
+          </tbody>
+      </table>
+    </div>
     <br><br><hr>
   <div class="accordion" id="accordion2">
     <div class="accordion-group"><!--start part1 accordion2-->
