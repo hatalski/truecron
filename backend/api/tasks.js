@@ -23,6 +23,25 @@ function addLinks(datatask) {
     return { task: task };
 }
 
+api.param('jobid', function (req, res, next, id) {
+
+    var jobid = null;
+
+    if (validator.isInt(id)) {
+        jobid = id;
+    }
+    else {
+        next(new apiErrors.InvalidParams());
+    }
+
+    if (!!jobid) {
+
+        /////???
+
+
+    }
+});
+
 api.route('/jobs/:jobid/tasks')
 
     .get(common.parseListParams, function (req, res, next) {
