@@ -26,16 +26,20 @@ Task.prototype.init = function()
 
 Task.prototype.onError = function(error)
 {
-    var errorText = 'Sorry ' + error;
-    logger.error(errorText);
-    this.outPut.push(errorText);
+    if(error) {
+        var errorText = 'Sorry ' + error;
+        logger.error(errorText);
+        this.outPut.push(errorText);
+    }
 };
 
 Task.prototype.onMessage = function(message)
 {
-    var messageText = 'Message sent: ' + JSON.stringify(message);
-    logger.info(messageText);
-    this.outPut.push(messageText);
+    if(message) {
+        var messageText = 'Message sent: ' + JSON.stringify(message);
+        logger.info(messageText);
+        this.outPut.push(messageText);
+    }
 };
 
 Task.prototype.start = function()

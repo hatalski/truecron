@@ -82,6 +82,12 @@
   margin: 0 3px;
 }
 
+.dropdown-header {
+  font-weight: bold;
+  color: #000;
+  text-transform: uppercase;
+}
+
 /*
  *
  * dv: here must be only non twitter bootstrap rules. Please place twitter bootstrap rules in theme-truecron.css
@@ -123,6 +129,7 @@ a {
     background-color: #d9d9db;
     border-right: 6px solid #d8d8da;
     border-top: 6px solid #d8d8da;
+    border-left: 6px solid #d8d8da;
   }
 }
 @media (min-width: 768px) {
@@ -138,6 +145,7 @@ a {
     background-color: #d9d9db;
     border-right: 6px solid #d8d8da;
     border-top: 6px solid #d8d8da;
+    border-left: 6px solid #d8d8da;
   }
 }
 
@@ -166,6 +174,8 @@ a {
 .archived-job p,
 .archived-job a {
   color: #b4b4b4;
+}
+.archived-job {
   background-color: #e3e3e3;
 }
 
@@ -174,9 +184,14 @@ a {
   background: url("arrow.png") no-repeat right center;
 }
 
+.active-job .archived-job {
+  background: #e3e3e3 url("arrow.png") no-repeat right center;
+}
 .running-job {
   background: url("loading.gif") no-repeat left center;
 }
+
+.sidebar_tabs .nav-tabs li {width: 50%}
 
 /*
  * Main content
@@ -242,18 +257,23 @@ a {
   color: #ff9e40;
   font-weight: bold;
   text-decoration: underline;
-  font-size: 20px;
+  font-size: 17px;
   border: solid 6px #c9c9cb;
   text-align: center;
+  padding-left: 0;
+  padding-right: 0;
 }
 .sidebar_tabs .nav-tabs > li > a {
   border-radius: 0;
   color: #bcbcbe;
-  font-size: 20px;
+  font-size: 17px;
   font-weight: bold;
   border: solid 6px #c9c9cb;
   border-top: solid 6px #d8d8da;
+  text-align: center;
   margin-right: 0;
+  padding-left: 0;
+  padding-right: 0;
 }
 .sidebar_tabs .active span {
   color:#474747
@@ -280,6 +300,11 @@ a {
   background-image: none;
 }
 
+.sidebar_tabs li {
+  cursor: pointer;
+  cursor: hand;
+}
+
 .sidebar .btn-group {
   border-bottom: solid 5px #c9c9cb;
 }
@@ -287,7 +312,10 @@ a {
   background: linear-gradient(#f9f9f9, #efefef);
   border-bottom: solid 5px #c9c9cb;
 }
-
+.sidebar .menu-tabs .row {
+  cursor: pointer;
+  cursor: hand;
+}
 .menu-tabs .col-xs-9 {
   color: #484848;
   padding: 5px;

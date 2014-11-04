@@ -1,42 +1,73 @@
-<table class="allwidth">
-    <tbody>
-    <tr>
-        <td class="first_row" colspan="4">&nbsp;{{name}}<span class="title-icon"><i class="fa fa-pencil"></i></span></td>
-        <td></td>
-        <td align="right"><a href="#"><u>ACTIVE</u></a>&nbsp;&nbsp;</td>
-    </tr>
-    <tr><td>&nbsp;</td></tr>
-    <tr>
-        <td></td>
-        <td class="blue_row" colspan="2">{{recurrence.text}}</td>
-        <td>&nbsp;</td>
-        <td class="blue_row">LAST RUN</td>
-        <td class="blue_row">NEXT RUN</td>
-    </tr>
-    <tr>
-        <td rowspan="3">
-        <td colspan="2">Ends after 5 runs</td>
-        <td></td>
-        <td class="red_row">{{format-date recurrence.lastRun 'L LT'}}</td>
-        <td>{{format-date recurrence.nextRun 'L LT'}}</td>
-    </tr>
-    <tr><td colspan="6">&nbsp;</td></tr>
-    <tr>
-        <td colspan="2">
+<div class="col-sm-12">
+    <div class="row">
+        <div class="col-sm-7 first_row">
+          {{name}}<span class="title-icon"><i class="fa fa-pencil"></i></span>
+        </div>
+        <div class="col-sm-5" align="right">
+            <a href="#"><u>ACTIVE</u></a>
+        </div>
+    </div>
+    <br>
+    <div class="row">
+        <div class="col-sm-1">
+            &nbsp;
+        </div>
+        <div class="col-sm-6 blue_row">
+          <a href="#">{{recurrence.text}}</a>
+        </div>
+        <div class="col-sm-3 blue_row">
+            <a href="#">LAST RUN</a>
+        </div>
+        <div class="col-sm-2">
+            NEXT RUN
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-sm-1">
+            &nbsp;
+        </div>
+        <div class="col-sm-6">
+            Ends after 5 runs
+        </div>
+        <div class="col-sm-3 red_row">
+          {{format-date recurrence.lastRun 'L LT'}}
+        </div>
+        <div class="col-sm-2">
+          {{format-date recurrence.nextRun 'L LT'}}
+        </div>
+    </div>
+  <br>
+    <div class="row">
+        <div class="col-sm-1">
+            <a class="pulltab" href="#"><img src="../public/img/btn1.png"></a>
+        </div>
+        <div class="col-sm-6">
             <h4>Tasks</h4>
-        </td>
-        <td></td>
-        <td></td>
-        <td align="right">
-            <button {{action "create"}} type="button" class="btn btn-default"><i class="fa fa-plus"></i>Add Job</button>
-        </td>
-    </tr>
-    </tbody>
-</table>
-
-<br> {{render 'jobs/job/tasks'}}
-<br><br><hr>
-<div class="accordion" id="accordion2">
+        </div>
+        <div class="col-sm-2">
+            &nbsp;
+        </div>
+        <div class="col-sm-3" align="right">
+            <button {{action "create"}} type="button" class="chok"><i class="fa fa-plus"></i> Add Job</button>
+        </div>
+    </div>
+    <br>
+    <div class="table-responsive">
+      <table class="table table-striped lastrowborder">
+          <tbody>
+          {{#each tasks}}
+            {{#link-to "jobdetails" this tagName="tr" activeClass="activejobfirstbox"}}
+                <td class="icon-row"></td>
+                <td>{{taskType.name}}</td>
+                <td>{{name}}</td>
+                <td class="underline">0.68s</td>
+            {{/link-to}}
+          {{/each}}
+          </tbody>
+      </table>
+    </div>
+    <br><br><hr>
+  <div class="accordion" id="accordion2">
     <div class="accordion-group"><!--start part1 accordion2-->
         <div class="accordion-heading">
             <button class="accordion-toggle buttonaccordion" data-toggle="collapse" data-parent="#accordion2" href="#collapseOne">
@@ -45,11 +76,11 @@
         </div>
         <div id="collapseOne" class="accordion-body collapse in">
             <div class="accordion-inner">
-                <label class="checkbox inline">
+                <div class="checkbox inline">
                     &nbsp; by: &nbsp; &nbsp;&nbsp;&nbsp;&nbsp;
                     <input type="checkbox" id="inlineCheckbox2" value="option2"> me &nbsp; &nbsp; &nbsp;
                     <input type="checkbox" id="inlineCheckbox3" value="option3"> others &nbsp; &nbsp; &nbsp;
-                </label>
+                </div>
                 <div class="table-responsive">
                     <table class="table table-striped lastrowborder ">
                         <tr>
@@ -58,7 +89,7 @@
                             <td>added "copy files to FTP"</td>
                         </tr>
                         <tr>
-                            <td>07/07/14  1:02 pm</td>
+                            <td>07/07/14  &nbsp;1:02 pm</td>
                             <td>Vitali Hatalski</td>
                             <td>added "send notification"</td>
                         </tr>
@@ -72,7 +103,10 @@
             </div>
         </div>
     </div><!--end part1 accordion2--><hr>
-    <table class="table borderless">
-        <tr><td></td><td align="right"><a href="#"><u>ARCHIVE</u></a></td></tr>
-    </table>
+    <div class="row">
+        <div class="col-sm-12" align="right">
+            <a href="#"><u>ARCHIVE</u></a>
+        </div>
+    </div>
+ </div>
 </div>

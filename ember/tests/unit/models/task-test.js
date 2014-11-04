@@ -11,8 +11,31 @@ moduleForModel('task', 'Task', {
 
 test('it exists', function() {
   var model = this.subject();
-  // var store = this.store();
+  var store = this.store();
+  console.dir(store);
   ok(!!model);
+});
+
+test('store create and find task by id', function() {
+  var store = this.store();
+  var record = null;
+  Ember.run(function() {
+    store.createRecord('task', {
+        id: 2,
+        name: 'EDI process execution',
+        active: true,
+        settings: '',
+        position: 1,
+        timeout: 1000,
+        createdAt: new Date('2014-09-19T00:00:00.000Z'),
+        updatedAt: new Date('2014-09-20T00:00:00.000Z')//,
+        //job: 1,
+        //taskType: 2
+      });
+    record = store.find('task', 2);
+  });
+  console.log(record.get('name'));
+  equal(record.get('name'), 'EDI process execution');
 });
 
 test('belongs to person relationship', function() {
