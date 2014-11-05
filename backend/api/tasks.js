@@ -10,6 +10,7 @@ var express = require('express'),
     common = require('./common');
 
 var api = express.Router();
+var jobid = null;
 
 function addLinks(datatask) {
     if (datatask === undefined) {
@@ -25,7 +26,6 @@ function addLinks(datatask) {
 
 api.param('jobid', function (req, res, next, id) {
 
-    var jobid = null;
 
     if (validator.isInt(id)) {
         jobid = id;
@@ -34,12 +34,17 @@ api.param('jobid', function (req, res, next, id) {
         next(new apiErrors.InvalidParams());
     }
 
-    if (!!jobid) {
-
-        /////???
-
-
-    }
+//    if (!!jobid) {
+//        storage.Tasks.findAllTasksByJobId(req.context, id)
+//            .then(function (task) {
+//                if (task !== null) {
+//                    req.Tasks = task;
+//                    next();
+//                } else {
+//                    next(new apiErrors.NotFound());
+//                }
+//            });
+//    }
 });
 
 api.route('/jobs/:jobid/tasks')
@@ -52,8 +57,8 @@ api.route('/jobs/:jobid/tasks')
         }
         var sort = req.listParams.sort || 'name';
 
-        storage.Tasks.findAndCountAll(req.context, {
-            where: where,
+        storage.Tasks.findAllTasksByJobId(req.context, {
+            where: where+' '+'jobId='+jobid,
             order: sort + ' ' + req.listParams.direction,
             limit: req.listParams.limit,
             offset: req.listParams.offset
@@ -65,24 +70,5 @@ api.route('/jobs/:jobid/tasks')
                 }});
         });
     })
-
-api.param('jobid', function (req, res, next, id) {
-
-    var jobid = null;
-
-    if (validator.isInt(id)) {
-        jobid = id;
-    }
-    else {
-        next(new apiErrors.InvalidParams());
-    }
-
-    if (!!jobid) {
-
-        /////???
-
-
-    }
-});
 
 module.exports = api;
