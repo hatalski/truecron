@@ -759,3 +759,8 @@ h2.pitch {
 .rightbottom {
   align-content: flex-end;
 }
+
+.broadlines>tbody>tr>td {
+  height: 65px;
+  vertical-align: middle;
+}
