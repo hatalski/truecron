@@ -749,3 +749,13 @@ h2.pitch {
   background-color: white;
   border: 0px;
 }
+/* vm - added in dashboard */
+.paddingzero {
+  padding-left: 0px;
+  padding-right: 0px;
+  padding-bottom: 5px;
+}
+
+.rightbottom {
+  align-content: flex-end;
+}

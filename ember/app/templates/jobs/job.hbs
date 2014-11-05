@@ -36,22 +36,21 @@
           {{format-date recurrence.nextRun 'L LT'}}
         </div>
     </div>
-  <br>
     <div class="row">
         <div class="col-sm-1 paddingzero">
             <a href="#"><img src="assets/btn1.png"></a>
         </div>
         <div class="col-sm-6">
-            <h4>Tasks</h4>
+            <br><br><h4>Tasks</h4>
         </div>
         <div class="col-sm-2">
             &nbsp;
         </div>
         <div class="col-sm-3" align="right">
-            <button {{action "create"}} type="button" class="chok"><i class="fa fa-plus"></i> Add Job</button>
+           <br> <button {{action "create"}} type="button" class="chok"><i class="fa fa-plus"></i> Add Job</button>
         </div>
     </div>
-    <br> {{render 'jobs/job/tasks'}}
+    {{render 'jobs/job/tasks'}}
     <br><br><hr>
   <div class="accordion" id="accordion2">
     <div class="accordion-group"><!--start part1 accordion2-->
