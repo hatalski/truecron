@@ -76,9 +76,9 @@ describe('ORGANIZATIONS API',
                     done();
                 });
         });
-        it('search for organization', function (done) {
+        it.only('search for organization', function (done) {
             superagent.get(prefix + '/organizations')
-                .query({ q: orgName })
+                .query({ q: 'Acme' })
                 .send()
                 .authenticate(accessToken)
                 .end(function (e, res) {

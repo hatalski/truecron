@@ -311,21 +311,22 @@ var find = module.exports.find = Promise.method(function (context, options, tran
  * organizations.
  * @param {object} options See Sequelize.findAndCountAll docs for details
  * ```
- * {
- *    rows: [ { "organization": {...}}, { "organization": {...}}, ...],
-  *   count: 100
-  *}
- * ```
- * Only organizations the current user has access to are returned.
- */
-var findAndCountAll = module.exports.findAndCountAll = Promise.method(function (context, options) {
-    return getAccessibleOrganizations(context)
-        .then(function (accessEntries) {
-            var accessibleIds = _.keys(accessEntries);
-            options = _.merge(options, {where: {id: accessibleIds}});
-            return models.Organization.findAndCountAll(options);
+            * {
+            *    rows: [ { "organization": {...}}, { "organization": {...}}, ...],
+            *   count: 100
+            *}
+        * ```
+    * Only organizations the current user has access to are returned.
+    */
+    var findAndCountAll = module.exports.findAndCountAll = Promise.method(function (context, options) {
+        return getAccessibleOrganizations(context)
+            .then(function (accessEntries) {
+                var accessibleIds = _.keys(accessEntries);
+                options = _.merge(options, {where: {id: accessibleIds}});
+                return models.Organization.findAndCountAll(options);
         })
         .then(function (result) {
+            logger.debug('findAndCountAll returned: ' + require('util').inspect(result, { depth: 3 }));
             // No need to cache pages of orgs, but it makes sense to cache individual organizations
             result.rows.forEach(function(organization) { cache.put(getOrganizationIdCacheKey(organization.id), organization); });
             return result;
