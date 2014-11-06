@@ -7,7 +7,7 @@ var config     = require('../lib/config.js');
 var log        = require('../lib/logger.js');
 var context    = require('../backend/context.js');
 var auth       = require('./auth');
-var initdb     = require('./initdb');
+var testdata   = require('./testdata');
 var prefix     = config.get('API_HOST') || 'http://localhost:3000/api/v1';
 
 log.info('API tests prefix: ' + prefix);
@@ -15,14 +15,12 @@ log.info('API tests prefix: ' + prefix);
 describe('ORGANIZATIONS API',
     function() {
         var accessToken = null;
-        var personId = -10; // -10 is a person added by testdata.sql
-        var personEmail = 'bj@it.acme.corp';
         var orgName = random.generate(10) + ' Corp';
 
         before(function (done) {
-            initdb(function (err) {
+            testdata.initdb(function (err) {
                 if (err) done(err);
-                auth.getAccessToken(personEmail, function (err, token) {
+                auth.getAccessToken(testdata.BrianJohnston.email, function (err, token) {
                     if (err) return done(err);
                     accessToken = token;
                     done();
@@ -71,7 +69,7 @@ describe('ORGANIZATIONS API',
                     id_to_delete = res.body.organization.id;
                     expect(res.body.organization.id).to.be.a('string');
                     expect(res.body.organization.name).to.eql(orgName);
-                    expect(res.body.organization.updatedByPersonId).to.eql(personId);
+                    expect(res.body.organization.updatedByPersonId).to.eql(testdata.BrianJohnston.id);
                     expect(validator.isDate(res.body.organization.createdAt)).to.be.ok();
                     expect(validator.isDate(res.body.organization.updatedAt)).to.be.ok();
                     done();
@@ -149,7 +147,7 @@ describe('ORGANIZATIONS API',
                     done();
                 });
         });
-        it('delete non-existent organization should fail', function (done) {
+        it('delete non-existent organization should fail with 404', function (done) {
             superagent.del(prefix + '/organizations/-384579237')
                 .send()
                 .authenticate(accessToken)

@@ -98,7 +98,7 @@ var findByIdOrEmail = module.exports.findByIdOrEmail = Promise.method(function (
     } else if (validator.isEmail(idOrEmail)) {
         return findByEmail(context, idOrEmail, transaction);
     } else {
-        throw new apiErrors.InvalidParams('Invalid person ID or email.');
+        throw new errors.InvalidParams('Invalid person ID or email.');
     }
 });
 

@@ -18,10 +18,10 @@ Cache.prototype.initialize = function() {
     this.redisClient = redis.createClient(redisOptions);
 };
 
-Cache.prototype.put = function(key, value) {
+Cache.prototype.put = Promise.method(function(key, value) {
     // save value.toJSON() if not null, or null
     return value;
-};
+});
 
 Cache.prototype.get = Promise.method(function(key) {
     return {
@@ -31,8 +31,8 @@ Cache.prototype.get = Promise.method(function(key) {
     };
 });
 
-Cache.prototype.remove = function(keys) {
+Cache.prototype.remove = Promise.method(function(keys) {
 
-};
+});
 
 module.exports = new Cache();
