@@ -76,13 +76,51 @@ describe('ORGANIZATIONS API',
                     done();
                 });
         });
-        it.only('search for organization', function (done) {
+        it.only('sequalize findAndCountAll test', function (done) {
+            var Promise = require("bluebird"),
+                Sequelize = require('sequelize'),
+                models = require('../backend/storage/db/models');
+
+            var databaseOptions = {
+                host: config.get('POSTGRE_HOST'),
+                port: config.get('POSTGRE_PORT'),
+                database: config.get('POSTGRE_DATABASE'),
+                user: config.get('POSTGRE_USERNAME'),
+                password: config.get('POSTGRE_PASSWORD')
+            };
+            var seqOpts = {
+                host: databaseOptions.host,
+                port: databaseOptions.port,
+                dialect: 'postgres',
+                logging: log.debug,
+                quoteIdentifiers: false,
+                omitNull: true
+            };
+
+            this.sequelize = new Sequelize(databaseOptions.database, databaseOptions.user, databaseOptions.password, seqOpts);
+            models.initialize(this.sequelize);
+            var options = {
+                where: { name: { like: '%Acme%' } },
+                order: 'name asc',
+                limit: 30,
+                offset: 0
+            };
+            models.Organization.findAndCountAll(options)
+                .then(function (result) {
+                    log.debug('findAndCountAll result: ' + util.inspect(result, { depth: 3 }));
+                    expect(result.rows).to.have.length(1);
+                    expect(result.count).to.eql(1);
+                    done();
+                });
+
+        });
+        it('search for organization', function (done) {
             superagent.get(prefix + '/organizations')
-                .query({ q: 'Acme' })
+                .query({ q: orgName })
                 .send()
                 .authenticate(accessToken)
                 .end(function (e, res) {
-                    log.debug('search result: ' + util.inspect(res.body, { depth: null }));
+                    log.debug('search result: ' + util.inspect(res.body, { depth: 3 }));
                     expect(e).to.eql(null);
                     expect(res.status).to.eql(200);
                     expect(res.header['content-type']).to.eql('application/json; charset=utf-8');
