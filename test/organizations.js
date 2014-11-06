@@ -2,6 +2,7 @@ var superagent = require('superagent');
 var expect     = require('expect.js');
 var validator  = require('validator');
 var random     = require("randomstring");
+var util       = require('util');
 var url        = require('url');
 var config     = require('../lib/config.js');
 var log        = require('../lib/logger.js');
@@ -81,6 +82,7 @@ describe('ORGANIZATIONS API',
                 .send()
                 .authenticate(accessToken)
                 .end(function (e, res) {
+                    log.debug('search result: ' + util.inspect(res.body, { depth: null }));
                     expect(e).to.eql(null);
                     expect(res.status).to.eql(200);
                     expect(res.header['content-type']).to.eql('application/json; charset=utf-8');
