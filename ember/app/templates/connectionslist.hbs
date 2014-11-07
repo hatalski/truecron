@@ -1,0 +1,22 @@
+<div class="sidebar">
+    {{#each}}
+        <div class="menu-tabs">
+          {{#link-to "jobs.job" this tagName="div" activeClass="active-job"}}
+            <div {{bind-attr class=":row archived:archived-job running:running-job"}}>
+                <div class="col-xs-2">
+                    {{#if lastRunError}}
+                        <i class="fa fa-exclamation-circle fa-5"></i>
+                    {{else}}
+                        <span></span>
+                    {{/if}}
+                </div>
+                <div class="col-xs-9">
+                    <p class="title">{{name}}</p>
+                    <p>{{time-from recurrence.lastRun}}</p>
+                    <p>{{time-from recurrence.nextRun}}</p>
+                </div>
+            </div>
+          {{/link-to}}
+        </div>
+    {{/each}}
+</div>

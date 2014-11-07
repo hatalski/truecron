@@ -42,7 +42,7 @@
                     <table class="table table-striped lastrowborder">
                         <tbody>
                         {{#each tasks}}
-                          {{#link-to "jobdetails.taskdetails" this tagName="tr" activeClass="activejobfirstbox"}}
+                          {{#link-to "tasks.task" this tagName="tr" activeClass="activejobfirstbox"}}
                               <td class="icon-row"></td>
                               <td>{{taskType.name}}</td>
                               <td>{{name}}</td>
