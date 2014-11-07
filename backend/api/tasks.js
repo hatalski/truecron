@@ -10,7 +10,7 @@ var express = require('express'),
     common = require('./common');
 
 var api = express.Router();
-var jobid = null;
+var jobId = null;
 
 function addLinks(datatask) {
     if (datatask === undefined) {
@@ -51,14 +51,12 @@ api.route('/jobs/:jobid/tasks')
 
     .get(common.parseListParams, function (req, res, next) {
 
-        var where = {};
-        if (!!req.listParams.searchTerm) {
-            where = { name: { like: req.listParams.searchTerm } };
-        }
+        var where = {jobId:jobId};
+
         var sort = req.listParams.sort || 'name';
 
         storage.Tasks.findAllTasksByJobId(req.context, {
-            where: where+' '+'jobId='+jobid,
+            where: where,
             order: sort + ' ' + req.listParams.direction,
             limit: req.listParams.limit,
             offset: req.listParams.offset

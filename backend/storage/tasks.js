@@ -20,7 +20,7 @@ var getTaskIdCacheKey = function(taskId) {
     return 'task/' + taskId;
 };
 
-var findAllTasksByJobId = module.exports.findById = Promise.method(function (context, id, transaction) {
+var findAllTasksByJobId = module.exports.findAllTasksByJobId = Promise.method(function (context, id, transaction) {
     return cache.get(getTaskIdCacheKey(id))
         .then(function (result) {
             if (result.found) {

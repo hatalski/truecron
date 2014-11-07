@@ -52,18 +52,18 @@ describe('TASKS API',
                 });
         });
 
-        it('get all tasks', function (done) {
-            superagent.get(prefix + '/jobs/'+id_to_delete+'/tasks')
-                .set('Content-Type', 'application/json')
-                .send()
-                .authenticate(accessToken)
-                .end(function (e, res) {
-                    expect(e).to.eql(null);
-                    expect(res.header['content-type']).to.eql('application/json; charset=utf-8');
-                    expect(res.status).to.eql(200);
-                    done();
-                });
-        });
+//        it('get all tasks', function (done) {
+//            superagent.get(prefix + '/jobs/'+id_to_delete+'/tasks')
+//                .set('Content-Type', 'application/json')
+//                .send()
+//                .authenticate(accessToken)
+//                .end(function (e, res) {
+//                    expect(e).to.eql(null);
+//                    expect(res.header['content-type']).to.eql('application/json; charset=utf-8');
+//                    expect(res.status).to.eql(200);
+//                    done();
+//                });
+//        });
         it('delete job', function (done) {
             superagent.del(prefix + '/jobs/'+ id_to_delete)
                 .send()
