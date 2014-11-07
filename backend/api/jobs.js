@@ -43,6 +43,10 @@ api.route('/jobs')
                 meta: {
                     total: result.count
                 }});
+        })
+		.catch(function (err) {
+            logger.error(err.toString());
+            next(err);
         });
     })
 
@@ -71,14 +75,9 @@ api.param('jobid', function (req, res, next, id) {
 
     var jobid = null;
 
-    if (validator.isInt(id)) {
-        jobid = id;
+    if (!validator.isInt(id)) {
+		return next(new apierrors.invalidparams('Invalid job ID.'));
     }
-    else {
-        next(new apiErrors.InvalidParams());
-    }
-
-    if (!!jobid) {
         storage.Jobs.findById(req.context, id)
             .then(function (job) {
                 if (job !== null) {
@@ -87,8 +86,12 @@ api.param('jobid', function (req, res, next, id) {
                 } else {
                     next(new apiErrors.NotFound());
                 }
-            });
-    }
+            })
+			.catch(function (err) {
+            logger.error(err.toString());
+            next(err);
+			});
+    
 });
 
 api.route('/jobs/:jobid')
@@ -106,18 +109,26 @@ api.route('/jobs/:jobid')
             return next(new apiErrors.InvalidParams());
         }
         storage.Jobs.update(req.context, req.Jobs.id, req.body.job)
-            .then(function (job) {
-                res.json(addLinks(job));
-            });
+        .then(function (job) {
+            res.json(addLinks(job));
+        })
+        .catch(function (err) {
+            logger.error(err.toString());
+            next(err);
+        });
     })
     //
     // Delete a job
     //
     .delete(function (req, res, next) {
         storage.Jobs.remove(req.context, req.Jobs.id)
-            .then(function () {
-                res.status(204).json({});
-            });
+        .then(function () {
+            res.status(204).json({});
+        })
+        .catch(function (err) {
+            logger.error(err.toString());
+            next(err);
+        });
     });
 
 
