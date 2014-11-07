@@ -17,10 +17,20 @@ module.exports.SystemOrgId = -2;
  * @param clientId {string} ID of an authenticated client (application).
  * @constructor
  */
-var Context = module.exports.Context = function (personId, clientId) {
+var Context = function (personId, clientId) {
     "use strict";
-    this.personId = personId;
-    this.clientId = clientId;
+    this.personId = +personId;
+    this.clientId = +clientId;
+};
+
+module.exports.Context = Context;
+
+/**
+ * Clone an existing context.
+ * @param context A Context instance to clone.
+ */
+module.exports.clone = function (context) {
+    return new Context(context.personId, context.clientId);
 };
 
 /**

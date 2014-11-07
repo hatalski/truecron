@@ -157,3 +157,37 @@ insert into tc.History (id, resourceUrl, personId, operation, change, oldValue)
     where not exists (select * from tc.History
     where id = -64);
 
+--
+-- Иван Петров from AJAX
+--
+
+-- Password is P@ssw0rd
+insert into tc.Person (id, name, passwordHash, createdAt, updatedAt, updatedByPersonId)
+    select -24, 'Иван Петров', '$2a$06$kCzCtZjvi01NJpXcv.mJxu/1dVSEMZAJywUP8nslZnEKOgPWD.pBq', 'now', 'now', -1
+    where not exists (select * from tc.Person
+    where id = -24);
+
+insert into tc.History (id, resourceUrl, personId, operation, change, oldValue)
+    select -65, '/users/-24', -24, 'created', '{ "name": "Иван Петров", "passwordHash": "$2a$06$kCzCtZjvi01NJpXcv.mJxu/1dVSEMZAJywUP8nslZnEKOgPWD.pBq" }', null
+    where not exists (select * from tc.History
+    where id = -65);
+
+insert into tc.PersonEmail (id, personId, email, status)
+    select -24, -24, 'petrov@ajax.corp', 'active'
+    where not exists (select * from tc.PersonEmail
+    where id = -24);
+
+insert into tc.History (id, resourceUrl, personId, operation, change, oldValue)
+    select -66, '/users/-24', -24, 'email-add', '{ "email": "petrov@ajax.corp", "status": "active" }', null
+    where not exists (select * from tc.History
+    where id = -66);
+
+insert into tc.OrganizationToPerson (organizationId, personId, role, createdAt, updatedAt, updatedByPersonId)
+    select -21, -24, 'member', 'now', 'now', -20
+    where not exists (select * from tc.OrganizationToPerson
+    where organizationId = -21 and personId = -24);
+
+insert into tc.History (id, resourceUrl, personId, operation, change, oldValue)
+    select -67, '/organizations/-21', -20, 'member-add', '{ "personId": "-24", "role": "member" }', null
+    where not exists (select * from tc.History
+    where id = -67);

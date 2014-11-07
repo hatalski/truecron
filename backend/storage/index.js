@@ -33,8 +33,8 @@ Storage.prototype.initialize = Promise.method(function initialize() {
     models.initialize(this.sequelize);
 
     this.Person = require('./person');
+    this.Organization = require('./organization');
     this.Jobs = require('./jobs');
-    //this.Organization = require('./organization');
     //this.Workspace = require('./workspace');
 
     return db.upgradeDatabaseIfNeeded(databaseOptions);
@@ -43,10 +43,5 @@ Storage.prototype.initialize = Promise.method(function initialize() {
 Storage.prototype.transaction = function() {
     return models.transaction();
 };
-
-// TEMP
-Storage.prototype.tempfindOrganizationById = Promise.method(function (id) {
-    return models.Organization.find({ where: { id: id } });
-});
 
 module.exports = new Storage();

@@ -29,6 +29,14 @@ var logRemoved = module.exports.logRemoved = function (personId, objectPath, old
     return log(personId, objectPath, 'removed', {}, oldData, transaction);
 };
 
+var logAccessGranted = module.exports.logAccessGranted = function (personId, objectPath, accessEntry, transaction) {
+    return log(personId, objectPath, 'granted', accessEntry, null, transaction);
+};
+
+var logAccessRevoked = module.exports.logAccessRevoked = function (personId, objectPath, accessEntry, transaction) {
+    return log(personId, objectPath, 'revoked', accessEntry, null, transaction);
+};
+
 var getObjectLog = module.exports.getObjectLog = Promise.method(function (objectPath, options) {
     options = _.extend({ order: [['createdAt', 'desc']] }, options);
     options.where = _.extend({}, options.where, { resourceUrl: { like: objectPath + '%' } });

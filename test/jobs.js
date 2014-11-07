@@ -9,7 +9,7 @@ var random     = require("randomstring");
 var config     = require('../lib/config.js');
 var log        = require('../lib/logger.js');
 var auth       = require('./auth');
-var initdb     = require('./initdb');
+var testdata   = require('./testdata');
 var prefix     = config.get('API_HOST') || 'http://localhost:3000/api/v1';
 
 var workspaceIdMaster=-12;
@@ -20,7 +20,7 @@ describe('JOBS API',
     function() {
         var accessToken = null;
         before(function (done) {
-            initdb(function (err) {
+            testdata.initdb(function (err) {
                 if (err) done(err);
                 auth.getAccessToken(function (err, token) {
                     if (err) return done(err);
