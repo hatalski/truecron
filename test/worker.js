@@ -49,7 +49,7 @@ describe('SFTP task',
                 password: 'vagrant',
                 protocol: 'sftp',
                 port: 22
-            }, ['ls -l', 'cd non-existing-dir/']);
+            }, ['ls -l']);
 
             sFtpTask.run(function(){
                 expect(sFtpTask.status).not.to.eql('waiting');
