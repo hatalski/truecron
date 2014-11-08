@@ -38,25 +38,25 @@ describe('FTP task',
     });
 
 
-describe('SFTP task',
-    function()
-    {
-        it('has run', function(done)
-        {
-            var sFtpTask = new FtpTask({
-                host: 'dev.truecron.com',
-                username: 'vagrant',
-                password: 'vagrant',
-                protocol: 'sftp',
-                port: 22
-            }, ['ls -l']);
-
-            sFtpTask.run(function(){
-                expect(sFtpTask.status).not.to.eql('waiting');
-                done();
-            });
-        });
-    });
+//describe('SFTP task',
+//    function()
+//    {
+//        it('has run', function(done)
+//        {
+//            var sFtpTask = new FtpTask({
+//                host: 'dev.truecron.com',
+//                username: 'vagrant',
+//                password: 'vagrant',
+//                protocol: 'sftp',
+//                port: 22
+//            }, ['ls -l']);
+//
+//            sFtpTask.run(function(){
+//                expect(sFtpTask.status).not.to.eql('waiting');
+//                done();
+//            });
+//        });
+//    });
 
 
 
