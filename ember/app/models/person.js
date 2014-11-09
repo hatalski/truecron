@@ -27,7 +27,7 @@ User.reopenClass({
       lastLoginAt: new Date(),
       createdAt: new Date(),
       updatedBy: 1,
-      organizations: [1]
+      organizations: [1,2]
     }
   ]
 });
