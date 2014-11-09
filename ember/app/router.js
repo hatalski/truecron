@@ -17,7 +17,7 @@ Router.map(function() {
   // });
   this.route('profile');
   this.resource('dashboard', function() { 
-    this.route('organization', { path: '/:org_id' }, function() {
+    this.route('organization', { path: '/:organization_name' }, function() {
       this.route('workspace', { path: '/:workspace_id' }, function() {
         this.route('jobs', { path: '/jobs' }, function() {
           this.route('new');
