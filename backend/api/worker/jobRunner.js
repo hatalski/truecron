@@ -1,11 +1,10 @@
 /**
  * Created by estet on 10/26/14.
  */
-var taskRunner = require('./taskRunner');
 
-var jobRunner = new function(onDone)
+var jobRunner = new function()
 {
-    this.runTasks = function(job)
+    this.runTasks = function(job, callBack)
     {
         if(!job)
         {
@@ -13,6 +12,7 @@ var jobRunner = new function(onDone)
         }
 
         if(job.tasks) {
+
             job.tasks.forEach(
                 function (index, task) {
                     taskRunner.run(task);
