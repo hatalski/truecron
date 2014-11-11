@@ -1,7 +1,7 @@
 <div class="sidebar">
     {{#each}}
         <div class="menu-tabs">
-          {{#link-to "jobs.job" this tagName="div" activeClass="active-job"}}
+          {{#link-to "dashboard.organization.workspace.jobs.job" this tagName="div" activeClass="active-job"}}
             <div {{bind-attr class=":row archived:archived-job running:running-job"}}>
                 <div class="col-xs-2">
                     {{#if lastRunError}}

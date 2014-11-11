@@ -252,7 +252,7 @@ a {
   text-decoration: underline;
 }
 
-.sidebar_tabs .nav-tabs > li.active > a, .nav-tabs > li.active > a:hover, .nav-tabs > li.active > a:focus {
+.sidebar_tabs .nav-tabs > li.active, .nav-tabs > li.active:hover, .nav-tabs > li.active:focus {
   background-color: #f4f4f4;
   color: #ff9e40;
   font-weight: bold;
@@ -263,7 +263,7 @@ a {
   padding-left: 0;
   padding-right: 0;
 }
-.sidebar_tabs .nav-tabs > li > a {
+.sidebar_tabs .nav-tabs > li {
   border-radius: 0;
   color: #bcbcbe;
   font-size: 17px;

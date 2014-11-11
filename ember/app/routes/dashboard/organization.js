@@ -2,10 +2,14 @@ import Ember from 'ember';
 
 export default Ember.Route.extend({
 	model: function(params) {
-		return this.store.find('organization', params.organization_name);
+		this.set('organizationName', params.organization_name);
+		return this.store.find('organization', { name: params.organization_name });
 	},
 	serialize: function(model) {
-		// this will make the URL `/posts/foo-post`
 		return { organization_name: model.get('name') };
-	}
+	},
+	setupController: function(controller, model) {
+	    this.controllerFor('dashboard').set('choosenOrganization', this.get('organizationName'));
+	    this._super(controller, model);
+    }
 });
