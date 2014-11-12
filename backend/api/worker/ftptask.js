@@ -1,23 +1,38 @@
 /**
- * Created by estet on 10/26/14.
+ * Created by estet on 11/2/14.
+ *
+ *  IMPORTANT INFORMATION!!!
+ *
+ *  require to have lftp installed
+ *
+ *  mac os x: https://code.google.com/p/rudix/downloads/detail?name=lftp-4.0.5-0.dmg&can=2&q=lftp
+ *
+ *  windows: http://nwgat.ninja/lftp-4-4-10-for-windows/
+ *
  */
+
 var task = require('./task'),
     transporter = require('../../../lib/smtp'),
     util = require('util'),
     logger = require('../../../lib/logger');
-var JSFtp = require("jsftp");
+var FTPS = require('ftps');
 
-var ftpTask = function(ftpConnection, ftpCommands)
+var SftpTask = function(connection, ftpCommands)
 {
     var self = this;
-    self.ftpConnection = ftpConnection;
+
+    if(Object.prototype.toString.call( ftpCommands ) !== '[object Array]')
+    {
+        ftpCommands = [ftpCommands];
+    }
+
     self.settings =
     {
-        ftpConnection :ftpConnection,
-        ftpTasks : ftpCommands
+        connection: connection,
+        commands: ftpCommands
     };
 
-    self.ftpClient = new JSFtp(ftpConnection);
+    self.ftpClient =  new FTPS(self.settings.connection);
 
     self.run = function(callback)
     {
@@ -25,33 +40,29 @@ var ftpTask = function(ftpConnection, ftpCommands)
             self.start();
             var quitFtp = function(callback)
             {
-                self.ftpClient.raw('QUIT', function (err, res) {
+                self.ftpClient.raw('QUIT').exec(function (err, res) {
                     self.afterSend(callback);
                 });
             };
 
             var callFtp = function(index)
             {
-                var command = ftpCommands[index];
+                var command = self.settings.commands[index];
+
                 if(command) {
-                    if(command) {
-                        if(Object.prototype.toString.call( command ) !== '[object Array]')
-                        {
-                            command = [command, null];
-                        }
-                        try {
-                            self.ftpClient[command[0].toLowerCase()](command[1], function (err, res) {
-                                self.onError(err);
-                                self.onMessage(res);
-                                index++;
-                                callFtp(index);
-                            });
-                        }
-                        catch(ex)
-                        {
-                            self.onError(ex);
-                            quitFtp(callback);
-                        }
+                    try {
+                        self.ftpClient.raw(command).exec(function (err, res) {
+                            self.onError(err);
+                            self.onError(res['error']);
+                            self.onMessage(res['data']);
+                            index++;
+                            callFtp(index);
+                        });
+                    }
+                    catch(ex)
+                    {
+                        self.onError(ex);
+                        quitFtp(callback);
                     }
                 }
                 else
@@ -59,7 +70,15 @@ var ftpTask = function(ftpConnection, ftpCommands)
                     quitFtp(callback);
                 }
             };
+
             callFtp(0);
+        }
+    };
+
+    self.callBack = function(callBack)
+    {
+        if(typeof callBack === 'function') {
+            callback();
         }
     };
 
@@ -73,11 +92,11 @@ var ftpTask = function(ftpConnection, ftpCommands)
     self.init();
 };
 
-ftpTask.prototype.init = function()
+SftpTask.prototype.init = function()
 {
     task.super_.prototype.init();
 };
 
-util.inherits(ftpTask, task);
+util.inherits(SftpTask, task);
 
-module.exports = ftpTask;
+module.exports = SftpTask;

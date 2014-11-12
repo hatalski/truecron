@@ -11,7 +11,6 @@ var FtpTask    = require('../backend/api/worker/ftptask');
 var FtpConnection = require('../backend/api/worker/ftpConnection');
 
 var mailTask;
-var ftpTask;
 
 describe('Email task',
     function() {
@@ -24,15 +23,43 @@ describe('Email task',
         });
     });
 
-describe('Ftp task',
+describe('FTP task',
     function()
     {
         it('has run', function(done)
         {
-            ftpTask = new FtpTask(new FtpConnection('ftp.darvision.com', 'anonymous', '@anonymous'), [['ls','.'],'LIST']);
+            var ftpTask = new FtpTask({host:'ftp.darvision.com', username:'anonymous', password:'@anonymous', protocol: 'ftp'}, 'ls .');
+
             ftpTask.run(function(){
                 expect(ftpTask.status).not.to.eql('waiting');
                 done();
             });
         });
     });
+
+
+//describe('SFTP task',
+//    function()
+//    {
+//        it('has run', function(done)
+//        {
+//            var sFtpTask = new FtpTask({
+//                host: 'dev.truecron.com',
+//                username: 'vagrant',
+//                password: 'vagrant',
+//                protocol: 'sftp',
+//                port: 22
+//            }, ['ls -l']);
+//
+//            sFtpTask.run(function(){
+//                expect(sFtpTask.status).not.to.eql('waiting');
+//                done();
+//            });
+//        });
+//    });
+
+
+
+
+
+
