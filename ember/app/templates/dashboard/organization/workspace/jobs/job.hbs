@@ -39,7 +39,7 @@
   <br>
     <div class="row">
         <div class="col-sm-1">
-            <a class="pulltab" href="#"><img src="../public/img/btn1.png"></a>
+            <a class="pulltab" href="#"><img src="../assets/btn1.png"></a>
         </div>
         <div class="col-sm-6">
             <h4>Tasks</h4>
@@ -56,7 +56,7 @@
       <table class="table table-striped lastrowborder">
           <tbody>
           {{#each tasks}}
-            {{#link-to "tasks.task" this tagName="tr" activeClass="activejobfirstbox"}}
+            {{#link-to "dashboard.organization.workspace.tasks.task" this tagName="tr" activeClass="activejobfirstbox"}}
                 <td class="icon-row"></td>
                 <td>{{taskType.name}}</td>
                 <td>{{name}}</td>

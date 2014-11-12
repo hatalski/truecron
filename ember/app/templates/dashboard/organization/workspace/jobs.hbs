@@ -1,21 +1,39 @@
-<div class="container-fluid">
-    <div class="row">
-        <div class="sidebar_tabs">
-            <ul class="nav nav-tabs" role="tablist">
-                {{#link-to (query-params tab="jobslist") tagName="li"}}<span>Jobs</span>{{/link-to}}
-                {{#link-to (query-params tab="connectionslist") tagName="li"}}<span>Connections</span>{{/link-to}}
-            </ul>
-            <div class="btn-group">
-                {{#link-to "dashboard.organization.workspace.jobs.new" classNames="btn btn-default"}}<i class="fa fa-plus"></i>Add Job{{/link-to}}
-                <button type="button" class="btn btn-default"><i class="fa fa-filter"></i></button>
-                <button type="button" class="btn btn-default"><i class="fa fa-search"></i></button>
+<div class="sidebar_tabs">
+    <ul class="nav nav-tabs" role="tablist">
+        {{#link-to "dashboard.organization.workspace.jobs" tagName="li"}}<span>Jobs</span>{{/link-to}}
+        {{#link-to "dashboard.organization.workspace.connections" tagName="li"}}<span>Connections</span>{{/link-to}}
+    </ul>
+    <div class="btn-group">
+        {{#link-to "dashboard.organization.workspace.jobs.new" classNames="btn btn-default"}}<i class="fa fa-plus"></i>Add Job{{/link-to}}
+        <button type="button" class="btn btn-default"><i class="fa fa-filter"></i></button>
+        <button type="button" class="btn btn-default"><i class="fa fa-search"></i></button>
+    </div>
+</div>
+<div class="sidebar">
+{{#each}}
+    <div class="menu-tabs">
+      {{#link-to "dashboard.organization.workspace.jobs.job" this tagName="div" activeClass="active-job"}}
+        <div {{bind-attr class=":row archived:archived-job running:running-job"}}>
+            <div class="col-xs-2">
+                {{#if lastRunError}}
+                    <i class="fa fa-exclamation-circle fa-5"></i>
+                {{else}}
+                    <span></span>
+                {{/if}}
+            </div>
+            <div class="col-xs-9">
+                <p class="title">{{name}}</p>
+                <p>Last run: {{time-from recurrence.lastRun}}</p>
+                <p>Next run: {{time-from recurrence.nextRun}}</p>
             </div>
         </div>
-        {{!-- {{render tab this}} --}}
-        <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2">
-            <div class="main">
-              {{outlet}}
-            </div>
-        </div>
+      {{/link-to}}
+    </div>
+{{/each}}
+</div>
+{{!-- {{render tab this}} --}}
+<div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2">
+    <div class="main">
+      {{outlet}}
     </div>
 </div>

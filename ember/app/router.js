@@ -23,6 +23,16 @@ Router.map(function() {
           this.route('new');
           this.route('job', { path: '/:job_id' }); // job details with jobs list on the left side
         });
+        this.route('tasks', { path: '/:org_id/:workspace_id/jobs/:job_id/tasks' }, function() { // job details full screen
+          this.route('index'); // scheduler UI on the right side
+          this.route('new');
+          this.route('task', { path: '/:task_id' }); // task details on the right side
+        });
+        this.route('connections', { path: '/connections' }, function() { // job details full screen
+          this.route('index'); // explain connections
+          this.route('new');
+          this.route('connection', { path: '/:connection_id' }); // task details on the right side
+        });
       });
     });
   });
