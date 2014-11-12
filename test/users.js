@@ -9,7 +9,7 @@ var url        = require('url');
 var config     = require('../lib/config.js');
 var log        = require('../lib/logger.js');
 var auth       = require('./auth');
-var initdb     = require('./initdb');
+var testdata   = require('./testdata');
 var prefix     = config.get('API_HOST') || 'http://localhost:3000/api/v1';
 
 log.info('API tests prefix: ' + prefix);
@@ -18,7 +18,7 @@ describe('USERS API',
     function() {
         var accessToken = null;
         before(function (done) {
-            initdb(function (err) {
+            testdata.initdb(function (err) {
                 if (err) done(err);
                 auth.getAccessToken(function (err, token) {
                     if (err) return done(err);
@@ -52,7 +52,7 @@ describe('USERS API',
                     expect(res.header['content-type']).to.eql('application/json; charset=utf-8');
                     expect(res.body.error).to.be.an('object');
                     expect(res.body.error.status).to.eql(400);
-                    expect(res.body.error.message).to.eql("Invalid parameters. Error: Invalid parameters");
+                    expect(res.body.error.message).to.contain("Invalid parameters");
                     expect(res.status).to.eql(400);
                     done();
                 });
@@ -67,7 +67,7 @@ describe('USERS API',
                     expect(res.header['content-type']).to.eql('application/json; charset=utf-8');
                     expect(res.body.error).to.be.an('object');
                     expect(res.body.error.status).to.eql(400);
-                    expect(res.body.error.message).to.eql("Invalid parameters. Error: Invalid parameters");
+                    expect(res.body.error.message).to.contain("Invalid parameters");
                     expect(res.status).to.eql(400);
                     done();
                 });

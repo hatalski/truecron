@@ -60,6 +60,10 @@ api.route('/users')
                 meta: {
                     total: result.count
                 }});
+        })
+        .catch(function (err) {
+            logger.error(err.toString());
+            next(err);
         });
     })
     //
@@ -75,7 +79,7 @@ api.route('/users')
         })
         .catch(function (err) {
             logger.error(err.toString());
-            return next(new apiErrors.InvalidParams(err));
+            return next(err);
         });
     });
 
@@ -90,11 +94,15 @@ api.param('userid', function (req, res, next, id) {
     storage.Person.findByIdOrEmail(req.context, id)
         .then(function (person) {
             if (person !== null) {
-                req.Person = person;
+                req.person = person;
                 next();
             } else {
                 next(new apiErrors.NotFound());
             }
+        })
+        .catch(function (err) {
+            logger.error(err.toString());
+            next(err);
         });
 });
 
@@ -103,7 +111,7 @@ api.route('/users/:userid')
     // Get a user
     //
     .get(function (req, res, next) {
-        res.json(personToUser(req.Person));
+        res.json(personToUser(req.person));
     })
     //
     // Update a user
@@ -112,18 +120,26 @@ api.route('/users/:userid')
         if (!req.body || !req.body.user) {
             return next(new apiErrors.InvalidParams());
         }
-        storage.Person.update(req.context, req.Person.id, req.body.user)
+        storage.Person.update(req.context, req.person.id, req.body.user)
             .then(function (person) {
                 res.json(personToUser(person));
+            })
+            .catch(function (err) {
+                logger.error(err.toString());
+                next(err);
             });
     })
     //
     // Delete a user
     //
     .delete(function (req, res, next) {
-        storage.Person.remove(req.context, req.Person.id)
+        storage.Person.remove(req.context, req.person.id)
             .then(function () {
                 res.status(204).json({});
+            })
+            .catch(function (err) {
+                logger.error(err.toString());
+                next(err);
             });
     });
 
@@ -141,7 +157,7 @@ api.route('/users/:userid/emails')
         }
         var sort = req.listParams.sort || 'id';
 
-        storage.Person.getEmails(req.context, req.Person.id, {
+        storage.Person.getEmails(req.context, req.person.id, {
             where: where,
             order: sort + ' ' + req.listParams.direction,
             limit: req.listParams.limit,
@@ -149,10 +165,14 @@ api.route('/users/:userid/emails')
         })
         .then(function (result) {
             res.json({
-                emails: result.rows.map(_.partial(personEmailToEmail, req.Person.id)),
+                emails: result.rows.map(_.partial(personEmailToEmail, req.person.id)),
                 meta: {
                     total: result.count
                 }});
+        })
+        .catch(function (err) {
+            logger.error(err.toString());
+            next(err);
         });
     })
     //
@@ -162,9 +182,9 @@ api.route('/users/:userid/emails')
         if (!req.body || !req.body.email) {
             return next(new apiErrors.InvalidParams());
         }
-        storage.Person.addEmail(req.context, req.Person.id, req.body.email)
+        storage.Person.addEmail(req.context, req.person.id, req.body.email)
             .then(function (email) {
-                res.status(201).json(personEmailToEmail(req.Person.id, email));
+                res.status(201).json(personEmailToEmail(req.person.id, email));
             })
             .catch(function (err) {
                 logger.error(err);
@@ -178,9 +198,9 @@ api.route('/users/:userid/emails')
 //
 api.param('email', function (req, res, next, id) {
     if (!validator.isInt(id) && !validator.isEmail(id)) {
-        next(new apiErrors.InvalidParams());
+        return next(new apiErrors.InvalidParams());
     }
-    storage.Person.findEmail(req.context, req.Person.id, id)
+    storage.Person.findEmail(req.context, req.person.id, id)
         .then(function (email) {
             if (!!email) {
                 req.Email = email;
@@ -188,6 +208,10 @@ api.param('email', function (req, res, next, id) {
             } else {
                 next(new apiErrors.NotFound());
             }
+        })
+        .catch(function (err) {
+            logger.error(err.toString());
+            next(err);
         });
 });
 
@@ -197,7 +221,7 @@ api.route('/users/:userid/emails/:email')
     // Get an email address of the user :userid
     //
     .get(function (req, res, next) {
-        res.json(personEmailToEmail(req.Person.id, req.Email));
+        res.json(personEmailToEmail(req.person.id, req.Email));
     })
     //
     // Change status of the email address (pending, active)
@@ -206,9 +230,9 @@ api.route('/users/:userid/emails/:email')
         if (!req.body || !req.body.email || !req.body.email.status) {
             return next(new apiErrors.InvalidParams());
         }
-        storage.Person.changeEmailStatus(req.context, req.Person.id, req.Email.id, req.body.email.status)
+        storage.Person.changeEmailStatus(req.context, req.person.id, req.Email.id, req.body.email.status)
             .then(function (email) {
-                res.json(personEmailToEmail(req.Person.id, email));
+                res.json(personEmailToEmail(req.person.id, email));
             })
             .catch(function (err) {
                 logger.error(err);
@@ -219,12 +243,14 @@ api.route('/users/:userid/emails/:email')
     // Delete the email of the user
     //
     .delete(function (req, res, next) {
-        storage.Person.removeEmail(req.context, req.Person.id, req.Email.id)
+        storage.Person.removeEmail(req.context, req.person.id, req.Email.id)
             .then(function () {
                 res.status(204).json({});
+            })
+            .catch(function (err) {
+                logger.error(err.toString());
+                next(err);
             });
     });
-
-
 
 module.exports = api;

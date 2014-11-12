@@ -1,6 +1,6 @@
 /**
-* Created by Andrew on 22.10.2014.
-*/
+ * Created by Andrew on 22.10.2014.
+ */
 
 var superagent = require('superagent');
 var expect     = require('expect.js');
@@ -9,7 +9,7 @@ var random     = require("randomstring");
 var config     = require('../lib/config.js');
 var log        = require('../lib/logger.js');
 var auth       = require('./auth');
-var initdb     = require('./initdb');
+var testdata   = require('./testdata');
 var prefix     = config.get('API_HOST') || 'http://localhost:3000/api/v1';
 
 var workspaceIdMaster=-12;
@@ -20,7 +20,7 @@ describe('JOBS API',
     function() {
         var accessToken = null;
         before(function (done) {
-            initdb(function (err) {
+            testdata.initdb(function (err) {
                 if (err) done(err);
                 auth.getAccessToken(function (err, token) {
                     if (err) return done(err);
@@ -51,6 +51,29 @@ describe('JOBS API',
                     done();
                 });
         });
+
+//        it('create a new job without required workspaceId should fail', function (done) {
+//            superagent.post(prefix + '/jobs')
+//                .set('Content-Type', 'application/json')
+//                .send({ 'job': {
+//                    'workspaceId':999999,
+//                    'name': 'TestName',
+//                    'tags': ["edi", "production"],
+//                    'updatedByPersonId':'1',
+//                    'startsAt': '2014-08-21T10:00:11Z',
+//                    'rrule': 'FREQ=DAILY;INTERVAL=1;BYDAY=MO;BYHOUR=12;BYMINUTE=0;BYSECOND=0'
+//                }
+//                })
+//                .authenticate(accessToken)
+//                .end(function (e, res) {
+//                    expect(e).to.eql(null);
+//                    expect(res.header['content-type']).to.eql('application/json; charset=utf-8');
+//                    expect(res.body.error==undefined);
+//                    expect(res.body.job==undefined);
+//                    expect(res.status).to.eql(400);
+//                    done();
+//                });
+//        });
 
         it('get all jobs', function (done) {
             superagent.get(prefix + '/jobs')

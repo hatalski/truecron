@@ -13,7 +13,6 @@ var settings = {
  * Issue and send a bearer token for the specified security context.
  */
 module.exports.issue = function(context, req, res, next) {
-    require('../../lib/logger').info('ISSUE TOKEN: ' + require('util').inspect(context));
     var token = jwt.sign(context, settings.secret, { expiresInMinutes: settings.expiresInMinutes });
     res.set({
         'Cache-Control': 'no-store',
@@ -35,7 +34,8 @@ module.exports.issue = function(context, req, res, next) {
  * If the token is invalid, the request ends with 401 code.
  */
 module.exports.verify = function(req, res, next) {
-    req.context = context.SystemContext; // Fallback value if authentication fails.
+    // Fallback value if authentication fails.
+    req.context = context.SystemContext;
     var token = '';
     var headerToken = req.get('Authorization');
     if (headerToken) {
@@ -56,7 +56,8 @@ module.exports.verify = function(req, res, next) {
             if (err) {
                return next(err);
             }
-            req.context = decoded;
+            // Clone the decoded object to make it a Context instance and get rid of JWT fields.
+            req.context = context.clone(decoded);
             return next();
         });
     } else {

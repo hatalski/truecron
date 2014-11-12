@@ -50,7 +50,7 @@ var findById = module.exports.findById = Promise.method(function (context, id, t
             }
             return models.Person.find({ where: { id: id } }, { transaction: transaction })
                 .then(function (person) {
-                    cache.put(getPersonIdCacheKey(person.id), person);
+                    cache.put(getPersonIdCacheKey(id), person);
                     return person;
                 });
         })
@@ -98,7 +98,7 @@ var findByIdOrEmail = module.exports.findByIdOrEmail = Promise.method(function (
     } else if (validator.isEmail(idOrEmail)) {
         return findByEmail(context, idOrEmail, transaction);
     } else {
-        throw new apiErrors.InvalidParams('Invalid person ID or email.');
+        throw new errors.InvalidParams('Invalid person ID or email.');
     }
 });
 
