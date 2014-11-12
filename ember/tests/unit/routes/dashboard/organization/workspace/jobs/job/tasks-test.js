@@ -3,7 +3,7 @@ import {
   test
 } from 'ember-qunit';
 
-moduleFor('route:jobdetails', 'JobdetailsRoute', {
+moduleFor('route:dashboard/organization/workspace/jobs/job/tasks', 'JobsJobTasksRoute', {
   // Specify the other units that are required for this test.
   // needs: ['controller:foo']
 });

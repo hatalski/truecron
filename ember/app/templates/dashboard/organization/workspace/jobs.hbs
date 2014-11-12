@@ -4,12 +4,6 @@
             <ul class="nav nav-tabs" role="tablist">
                 {{#link-to (query-params tab="jobslist") tagName="li"}}<span>Jobs</span>{{/link-to}}
                 {{#link-to (query-params tab="connectionslist") tagName="li"}}<span>Connections</span>{{/link-to}}
-                {{!-- <li class="active">
-                    <a {{action "showJobs"}}><span>Jobs</span></a>
-                </li>
-                <li>
-                    <a {{action "showConnections"}}><span>Connections</span></a>
-                </li> --}}
             </ul>
             <div class="btn-group">
                 {{#link-to "dashboard.organization.workspace.jobs.new" classNames="btn btn-default"}}<i class="fa fa-plus"></i>Add Job{{/link-to}}
@@ -17,7 +11,7 @@
                 <button type="button" class="btn btn-default"><i class="fa fa-search"></i></button>
             </div>
         </div>
-        {{render "tab" this}}
+        {{render tab this}}
         <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2">
             <div class="main">
               {{outlet}}
