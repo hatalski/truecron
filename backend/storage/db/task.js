@@ -1,6 +1,3 @@
-/**
- * Created by Andrew on 29.10.2014.
- */
 module.exports = function(sequelize, DataTypes) {
 
     var Task = sequelize.define('Task', {

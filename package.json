@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "start": "supervisor -i public --debug server.js",
-    "test": "mocha test -R spec --timeout 5000"
+    "test": "mocha test -R spec --timeout 10000"
   },
   "dependencies": {
     "basic-auth": "~1.0.0",
