@@ -35,3 +35,34 @@ var findAllTasks = module.exports.findAllTasks = Promise.method(function (contex
             throw err;
         });
 });
+
+/**
+ * Create a new task.
+ */
+var create = module.exports.create = Promise.method(function (context, attributes) {
+    if (!attributes || validator.isNull(attributes.name)) {
+        throw new errors.InvalidParams();
+    }
+    attributes.updatedByPersonId = context.personId;
+    var self = { attrs: attributes };
+
+    return using (models.transaction(), function (tx) {
+
+        self.tx = tx;
+        return models.Task.create(self.attrs, { transaction: tx })
+            .then(function (task) {
+                self.task = task;
+
+                return history.logCreated(context.personId, getTaskIdCacheKey(task.id), task, self.tx);
+            })
+            .then(function () {
+                cache.put(getTaskIdCacheKey(self.task.id), self.task);
+                return self.task;
+            });
+    })
+
+        .catch(function (err) {
+            logger.error('Failed to create a task, %s.', err.toString());
+            throw err;
+        });
+});

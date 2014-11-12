@@ -10,14 +10,14 @@ var express = require('express'),
     common = require('./common');
 
 var api = express.Router();
-var jobId = null;
+//var jobId = null;
 
 function addLinks(datatask) {
     if (datatask === undefined) {
         return datatask;
     }
     var task = datatask.toJSON();
-    var selfUrl = '/jobs/'+jobId+'/tasks/' + task.id;
+    var selfUrl = '/jobs/:jobid/tasks/' + task.id;
     task._links = {
         self: selfUrl
     };
@@ -73,5 +73,20 @@ api.route('/jobs/:jobid/tasks')
                 next(err);
             });
     })
-
+//
+    // Create a new task
+    //
+    .post(function (req, res, next) {
+        if (!req.body || !req.body.task) {
+            return next(new apiErrors.InvalidParams());
+        }
+        storage.Tasks.create(req.context, req.body.task)
+            .then(function (task) {
+                res.status(201).json(addLinks(task));
+            })
+            .catch(function (err) {
+                logger.error(err.toString());
+                return next(err);
+            });
+    });
 module.exports = api;
