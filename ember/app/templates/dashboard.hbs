@@ -17,7 +17,7 @@
                         {{#each organization in organizations}}
                             <li class="dropdown-header">{{organization.name}}</li>
                             {{#each workspace in organization.workspaces}}
-                            <li><a {{action "changeWorkspace" organization workspace}}>{{workspace.name}}</a>
+                            <li><a href="#" {{action "changeWorkspace" organization workspace}}>{{workspace.name}}</a>
                             {{!-- {{#link-to "dashboard.organization.workspace.jobs" organization workspace}}{{workspace.name}}{{/link-to}} --}}
                             </li>
                             {{/each}}
@@ -27,7 +27,7 @@
                 <li class="dropdown">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown">{{name}}<span class="caret"></span></a>
                     <ul class="dropdown-menu" role="menu">
-                        <li>{{#link-to "profile"}}My Profile{{/link-to}}</li>
+                        <li>{{#link-to "profile"}}<i class="fa fa-user"></i> My Profile{{/link-to}}</li>
                         <li class="divider"></li>
                         <li><a href="#" {{action "signout" target="controllers.signin"}}><i class="fa fa-sign-out"></i> Sign out</a></li>
                     </ul>
