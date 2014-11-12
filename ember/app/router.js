@@ -26,6 +26,8 @@ Router.map(function() {
       });
     });
   });
+
+  this.resource('jobs', { path: 'dash/:organization_id/:workspace_id' });
 });
 
 export default Router;

@@ -2,14 +2,23 @@ import Ember from 'ember';
 
 export default Ember.Route.extend({
 	model: function(params) {
-		this.set('workspaceName', params.workspace_name);
 		return this.store.find('workspace', { name: params.workspace_name });
 	},
 	serialize: function(model) {
 		return { workspace_name: model.get('name') };
 	},
 	setupController: function(controller, model) {
-	    this.controllerFor('dashboard').set('choosenWorkspace', this.get('workspaceName'));
+		if (this.controllerFor('dashboard').get('choosenWorkspace') == null) {
+	    	this.controllerFor('dashboard').set('choosenWorkspace', model.get('firstObject'));
+		}
 	    this._super(controller, model);
-    }
+    },
+    afterModel: function(workspace) {
+		console.log('afterModel' + workspace);
+		// if (workspace.get('firstObject') === undefined) {
+		// 	this.controllerFor('dashboard').set('choosenWorkspace', workspace.get('name'));
+		// } else {
+		// 	this.controllerFor('dashboard').set('choosenWorkspace', workspace.get('firstObject'));
+		// }
+	}
 });
