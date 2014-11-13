@@ -290,8 +290,10 @@ var findById = module.exports.findById = Promise.method(function (context, id, t
 var find = module.exports.find = Promise.method(function (context, options, transaction) {
     return getAccessibleOrganizations(context, transaction)
         .then(function (accessEntries) {
-            var accessibleIds = _.keys(accessEntries);
-            options = _.merge(options, { where: { id: accessibleIds } });
+            if (!context.isSystem()) {
+                var accessibleIds = _.keys(accessEntries);
+                options = _.merge(options, {where: {id: accessibleIds}});
+            }
             return models.Organization.find(options, { transaction: transaction });
         })
         .then(function (organization) {
@@ -321,8 +323,10 @@ var find = module.exports.find = Promise.method(function (context, options, tran
 var findAndCountAll = module.exports.findAndCountAll = Promise.method(function (context, options) {
     return getAccessibleOrganizations(context)
         .then(function (accessEntries) {
-            var accessibleIds = _.keys(accessEntries);
-            options = _.merge(options, {where: {id: accessibleIds}});
+            if (!context.isSystem()) {
+                var accessibleIds = _.keys(accessEntries);
+                options = _.merge(options, {where: {id: accessibleIds}});
+            }
             return models.Organization.findAndCountAll(options);
         })
         .then(function (result) {

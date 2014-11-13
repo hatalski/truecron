@@ -15,6 +15,42 @@ describe('ORGANIZATIONS ACCESS',
     function() {
         before(testdata.initdb);
 
+        it('must allow an administrator to get an organization by ID', function (done) {
+            auth.getAccessToken(testdata.system.email, function (err, token) {
+                if (err) return done(err);
+                superagent.get(prefix + '/organizations/' + testdata.AjaxCorp.id)
+                    .set('Content-Type', 'application/json')
+                    .send()
+                    .authenticate(token)
+                    .end(function (e, res) {
+                        expect(e).to.eql(null);
+                        expect(res.status).to.eql(200);
+                        expect(res.body.organization.name).to.eql(testdata.AjaxCorp.name);
+                        done();
+                    });
+            });
+        });
+        it('must allow an administrator to find an organization', function (done) {
+            auth.getAccessToken(testdata.system.email, function (err, token) {
+                if (err) return done(err);
+                superagent.get(prefix + '/organizations')
+                    .query({ q: testdata.AjaxCorp.name })
+                    .send()
+                    .authenticate(token)
+                    .end(function (e, res) {
+                        expect(e).to.eql(null);
+                        expect(res.status).to.eql(200);
+                        var found = false;
+                        res.body.organizations.forEach(function (row) {
+                            if (row.organization.name === testdata.AjaxCorp.name) {
+                                found = true;
+                            }
+                        });
+                        expect(found).to.eql(true);
+                        done();
+                    });
+            });
+        });
         it('must return access denied when a user gets an organization by ID he has no access', function (done) {
             auth.getAccessToken(testdata.BrianJohnston.email, function (err, token) {
                 if (err) return done(err);
