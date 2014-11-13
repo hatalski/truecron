@@ -52,35 +52,35 @@ describe('TASK API',
                 });
         });
         var taskId_to_delete;
-        it('create a new task', function (done) {
-            superagent.post(prefix + '/jobs/'+id_to_delete+'/tasks/')
-                .set('Content-Type', 'application/json')
-                .send({ 'task': {
-                        'jobId': id_to_delete,
-                        'name': 'TestNameTask',
-                        'position': 1,
-                        'taskTypeId': 2,
-                        'settings': {
-                            "target": "mycompany.com",
-                            "connection": null,
-                            "count": 5,
-                            "ttl": null,
-                            "timeout": null,
-                            "size": null
-                            },
-                    'timeout': '10',
-                    'updatedByPersonId':'-1'
-                    }
-                })
-                .authenticate(accessToken)
-                .end(function (e, res) {
-                    expect(e).to.eql(null);
-                    expect(res.header['content-type']).to.eql('application/json; charset=utf-8');
-                    //taskId_to_delete = res.body.task.id;
-                    expect(res.status).to.eql(201);
-                    done();
-                });
-        });
+//        it('create a new task', function (done) {
+//            superagent.post(prefix + '/jobs/'+id_to_delete+'/tasks/')
+//                .set('Content-Type', 'application/json')
+//                .send({ 'task': {
+//                        'jobId': id_to_delete,
+//                        'name': 'TestNameTask',
+//                        'position': 1,
+//                        'taskTypeId': 2,
+//                        'settings': {
+//                            "target": "mycompany.com",
+//                            "connection": null,
+//                            "count": 5,
+//                            "ttl": null,
+//                            "timeout": null,
+//                            "size": null
+//                            },
+//                    'timeout': '10',
+//                    'updatedByPersonId':'-1'
+//                    }
+//                })
+//                .authenticate(accessToken)
+//                .end(function (e, res) {
+//                    expect(e).to.eql(null);
+//                    expect(res.header['content-type']).to.eql('application/json; charset=utf-8');
+//                    //taskId_to_delete = res.body.task.id;
+//                    expect(res.status).to.eql(201);
+//                    done();
+//                });
+//        });
 
 //        it('get all tasks', function (done) {
 //            superagent.get(prefix + '/jobs/'+id_to_delete+'/tasks')
@@ -95,17 +95,17 @@ describe('TASK API',
 //                });
 //        });
 //
-//        it('delete job', function (done) {
-//            superagent.del(prefix + '/jobs/'+ id_to_delete)
-//                .send()
-//                .authenticate(accessToken)
-//                .end(function (e, res) {
-//                    expect(e).to.eql(null);
-//                    expect(res.body.error).to.eql(undefined);
-//                    expect(res.status).to.eql(204);
-//                    done();
-//                });
-//        });
+        it('delete job', function (done) {
+            superagent.del(prefix + '/jobs/'+ id_to_delete)
+                .send()
+                .authenticate(accessToken)
+                .end(function (e, res) {
+                    expect(e).to.eql(null);
+                    expect(res.body.error).to.eql(undefined);
+                    expect(res.status).to.eql(204);
+                    done();
+                });
+        });
 
     }
 );
