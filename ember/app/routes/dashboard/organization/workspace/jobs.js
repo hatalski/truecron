@@ -10,8 +10,8 @@ export default Ember.Route.extend({
 	    return jobs;
 	},
 	setupController: function(controller, model) {
-		//controller.set('current', this.get('params'));
-	    //this.controllerFor('dashboard').set('test', this.get('params'));
+		// controller.set('current', this.get('params'));
+	    // this.controllerFor('dashboard').set('test', this.get('params'));
 	    // var organization = this.controllerFor('dashboard').get('choosenOrganization');
 	    // var workspace = this.controllerFor('dashboard').get('choosenWorkspace');
 	    // var workspaceModel = this.modelFor('dashboard.organization.workspace');

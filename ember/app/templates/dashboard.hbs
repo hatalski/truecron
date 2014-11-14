@@ -18,7 +18,6 @@
                             <li class="dropdown-header">{{organization.name}}</li>
                             {{#each workspace in organization.workspaces}}
                             <li><a href="#" {{action "changeWorkspace" organization workspace}}>{{workspace.name}}</a>
-                            {{!-- {{#link-to "dashboard.organization.workspace.jobs" organization workspace}}{{workspace.name}}{{/link-to}} --}}
                             </li>
                             {{/each}}
                         {{/each}}
