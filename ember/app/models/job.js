@@ -25,6 +25,7 @@ Job.reopenClass({
             archived: false,
             createdAt: new Date('2014-09-19T00:00:00.000Z'),
             updatedAt: new Date('2014-09-20T00:00:00.000Z'),
+            workspace: 1,
             tasks: [1,2,3,4,5]
         },
         {
@@ -36,6 +37,7 @@ Job.reopenClass({
             archived: false,
             createdAt: new Date('2014-09-20T00:00:00.000Z'),
             updatedAt: new Date('2014-09-20T00:00:00.000Z'),
+            workspace: 1,
             tasks: []
         },
         {
@@ -47,6 +49,7 @@ Job.reopenClass({
             archived: false,
             createdAt: new Date('2014-09-20T00:00:00.000Z'),
             updatedAt: new Date('2014-09-20T00:00:00.000Z'),
+            workspace: 1,
             tasks: []
         },
         {
@@ -58,6 +61,7 @@ Job.reopenClass({
             archived: true,
             createdAt: new Date('2014-09-20T00:00:00.000Z'),
             updatedAt: new Date('2014-09-20T00:00:00.000Z'),
+            workspace: 2,
             tasks: []
         },
         {
@@ -69,6 +73,19 @@ Job.reopenClass({
             archived: false,
             createdAt: new Date('2014-09-20T00:00:00.000Z'),
             updatedAt: new Date('2014-09-20T00:00:00.000Z'),
+            workspace: 1,
+            tasks: []
+        },
+        {
+            id: 6,
+            name: 'New Clients Report',
+            startsAt: new Date('2014-10-21T00:04:00.000Z'),
+            rrule: 'FREQ=HOURLY;INTERVAL=3;WKST=MO',
+            active: true,
+            archived: false,
+            createdAt: new Date('2014-09-20T00:00:00.000Z'),
+            updatedAt: new Date('2014-09-20T00:00:00.000Z'),
+            workspace: 2,
             tasks: []
         }
     ]

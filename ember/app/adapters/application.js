@@ -14,7 +14,9 @@ import DS from 'ember-data';
 // });
 
 export default DS.FixtureAdapter.extend({
-	queryFixtures: function(records, query) {        
+	queryFixtures: function(records, query) {
+        console.dir(records);
+        console.dir(query);
         return records.filter(function(record) {
             for(var key in query) {
                 if (!query.hasOwnProperty(key)) { continue; }

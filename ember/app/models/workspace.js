@@ -17,7 +17,7 @@ Workspace.reopenClass({
       name: 'Development',
       createdAt: new Date(),
       updatedAt: new Date(),
-      jobs: [1,2,3,4,5],
+      jobs: [1,2,3,5],
       connections: [1,2,3],
       organization: 1
     },
@@ -26,7 +26,7 @@ Workspace.reopenClass({
       name: 'Production',
       createdAt: new Date(),
       updatedAt: new Date(),
-      jobs: [],
+      jobs: [4,6],
       connections: [],
       organization: 1
     },
