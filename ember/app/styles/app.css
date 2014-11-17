@@ -20,6 +20,17 @@
   margin-top: 0;
 }
 
+.job-name {
+  /*text-transform: uppercase;*/
+  cursor: pointer;
+  cursor: hand;
+  border-bottom: 1px dashed #d0d0d0;
+}
+
+.job-name:hover {
+  background-color: #EEE;
+}
+
 /* vm - border last row table */
 .lastrowborder>tbody>tr>td {
   border-bottom: 1px solid #ddd;

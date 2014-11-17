@@ -1,28 +1,39 @@
 <div class="col-sm-12">
     <div class="row">
-        <div class="col-sm-7 first_row">
-          {{name}}<span class="title-icon"><i class="fa fa-pencil"></i></span>
+        <div class="col-sm-7">
+          <h3><span class="job-name" data-toggle="tooltip" data-placement="bottom" title="Rename">{{name}}</span><h3>
         </div>
         <div class="col-sm-5" align="right">
-            <a href="#"><u>ACTIVE</u></a>
+            <h3>
+            <a href="#">
+            {{#if this.active}}
+                <u>ACTIVE</u>
+            {{else}}
+                <u>INACTIVE</u>
+            {{/if}}
+            </a>
+            </h3>
         </div>
     </div>
     <br>
     <div class="row">
-        <div class="col-sm-1">
-            &nbsp;
+        <div class="col-sm-2">
+            <button {{action "runjob"}} type="button" class="chok"><i class="fa fa-play"></i> Run Job</button>
         </div>
-        <div class="col-sm-6 blue_row">
-          <a href="#">{{recurrence.text}}</a>
-        </div>
-        <div class="col-sm-3 blue_row">
-            <a href="#">LAST RUN</a>
+        <div class="col-sm-6">
+          <h4 class="blue_row">{{recurrence.text}}</h4>
+          <div>Ends after 5 runs</div>
         </div>
         <div class="col-sm-2">
-            <a href="#">NEXT RUN</a>
+            <h4>LAST RUN</h4>
+            <div>{{format-date recurrence.lastRun 'L LT'}}</div>
+        </div>
+        <div class="col-sm-2">
+            <h4>NEXT RUN</h4>
+            <div>{{format-date recurrence.nextRun 'L LT'}}</div>
         </div>
     </div>
-    <div class="row">
+{{!--     <div class="row">
         <div class="col-sm-1">
             &nbsp;
         </div>
@@ -35,20 +46,13 @@
         <div class="col-sm-2">
           {{format-date recurrence.nextRun 'L LT'}}
         </div>
-    </div>
+    </div> --}}
   <br>
     <div class="row">
-        <div class="col-sm-1">
-            <a class="pulltab" href="#"><img src="../assets/btn1.png"></a>
-        </div>
-        <div class="col-sm-6">
-            <h4>Tasks</h4>
-        </div>
-        <div class="col-sm-2">
-            &nbsp;
+        <div class="col-sm-9">
         </div>
         <div class="col-sm-3" align="right">
-            <button {{action "create"}} type="button" class="chok"><i class="fa fa-plus"></i> Add Task</button>
+            <button {{action "addtask" this}} type="button" class="chok"><i class="fa fa-plus"></i> Add Task</button>
         </div>
     </div>
     <br>
@@ -57,12 +61,14 @@
           <tbody>
           {{#each tasks}}
             <tr {{action "viewtask" this}}>
-            {{!-- {{#link-to "dashboard.organization.workspace.tasks.task" job this tagName="tr" activeClass="activejobfirstbox"}} --}}
                 <td class="icon-row"></td>
                 <td>{{taskType.name}}</td>
                 <td>{{name}}</td>
                 <td class="underline">0.68s</td>
-            {{!-- {{/link-to}} --}}
+            </tr>
+          {{else}}
+            <tr>
+                <td style="border: none;background:none;text-align:center">There are no tasks yet created for this job. Please click "Add Task" button to add a first one.</td>
             </tr>
           {{/each}}
           </tbody>
@@ -85,21 +91,15 @@
                 </div>
                 <div class="table-responsive">
                     <table class="table table-striped lastrowborder ">
-                        <tr>
-                            <td>07/07/14 12:32 pm</td>
-                            <td>Lev Kurts</td>
-                            <td>added "copy files to FTP"</td>
-                        </tr>
-                        <tr>
-                            <td>07/07/14  &nbsp;1:02 pm</td>
-                            <td>Vitali Hatalski</td>
-                            <td>added "send notification"</td>
-                        </tr>
-                        <tr>
-                            <td>07/07/14 11:35 pm</td>
-                            <td>Lev Kurts</td>
-                            <td>added "copy files to FTP"</td>
-                        </tr>
+                        <tbody>
+                            {{#each history}}
+                            <tr>
+                                <td>{{format-date updatedAt 'L LT'}}</td>
+                                <td>{{updatedBy.name}}</td>
+                                <td>{{description}}</td>
+                            </tr>
+                            {{/each}}
+                        </tbody>
                     </table>
                 </div>
             </div>
