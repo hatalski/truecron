@@ -2,6 +2,7 @@ import Ember from 'ember';
 
 export default Ember.Route.extend({
 	model: function(params) {
+		console.log('load workspace model with name : ' + params.workspace_name);
 		return this.store.find('workspace', { name: params.workspace_name });
 	},
 	serialize: function(model) {

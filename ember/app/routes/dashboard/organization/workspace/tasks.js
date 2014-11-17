@@ -2,10 +2,9 @@ import Ember from 'ember';
 
 export default Ember.Route.extend({
 	model: function(params) {
-		console.log(params.job_id);
-		var job = this.modelFor('job');
-		console.dir(job);
-	    var tasks = this.store.find('task', params.job_id);
-	    return tasks;
+		console.log('load model for tasks with job id : ' + params.job_id);
+	    var job = this.store.find('job', params.job_id);
+		console.dir(job);	    
+	    return job.get('tasks');
 	}
 });

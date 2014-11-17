@@ -48,7 +48,7 @@
             &nbsp;
         </div>
         <div class="col-sm-3" align="right">
-            <button {{action "create"}} type="button" class="chok"><i class="fa fa-plus"></i> Add Job</button>
+            <button {{action "create"}} type="button" class="chok"><i class="fa fa-plus"></i> Add Task</button>
         </div>
     </div>
     <br>
@@ -56,12 +56,14 @@
       <table class="table table-striped lastrowborder">
           <tbody>
           {{#each tasks}}
-            {{#link-to "dashboard.organization.workspace.tasks.task" this tagName="tr" activeClass="activejobfirstbox"}}
+            <tr {{action "viewtask" this}}>
+            {{!-- {{#link-to "dashboard.organization.workspace.tasks.task" job this tagName="tr" activeClass="activejobfirstbox"}} --}}
                 <td class="icon-row"></td>
                 <td>{{taskType.name}}</td>
                 <td>{{name}}</td>
                 <td class="underline">0.68s</td>
-            {{/link-to}}
+            {{!-- {{/link-to}} --}}
+            </tr>
           {{/each}}
           </tbody>
       </table>

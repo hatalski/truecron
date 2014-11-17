@@ -2,6 +2,7 @@ import Ember from 'ember';
 
 export default Ember.Route.extend({
 	model: function(params) {
+		console.log('load organization model with name : ' + params.organization_name);
 		return this.store.find('organization', { name: params.organization_name });
 	},
 	serialize: function(model) {
