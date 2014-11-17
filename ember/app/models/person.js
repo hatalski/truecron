@@ -28,6 +28,19 @@ User.reopenClass({
       createdAt: new Date(),
       updatedBy: 1,
       organizations: [1,2]
+    },
+    {
+      id: 2,
+      login: 'lev.kurts@truecron.com',
+      name: 'Lev Kurts',
+      passwordSalt: '',
+      passwordHash: '',
+      avatarUrl: '',
+      extensionData: '',
+      lastLoginAt: new Date(),
+      createdAt: new Date(),
+      updatedBy: 2,
+      organizations: [1,2]
     }
   ]
 });
