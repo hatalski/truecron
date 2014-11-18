@@ -58,8 +58,8 @@ Task.prototype.onComplete = function(callBack)
     this.status = taskStatusEnum.completed;
     this.onMessage('Completed');
 
-    if (callback && typeof callback === 'function')
-        callback();
+    if (callBack && typeof callBack === 'function')
+        callBack();
 };
 
 Task.prototype.run = function() {
