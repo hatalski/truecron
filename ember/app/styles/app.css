@@ -130,7 +130,7 @@ a {
   .sidebar {
     position: fixed;
     min-width: 275px;
-    top: 164px;
+    top: 138px;
     bottom: 0;
     left: 0;
     z-index: 1000;
@@ -147,7 +147,7 @@ a {
   .sidebar_tabs {
     position: fixed;
     min-width: 275px;
-    top: 51px;
+    top: 50px;
     bottom: 0;
     left: 0;
     z-index: 1000;
