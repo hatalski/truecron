@@ -11,6 +11,7 @@ var Job = DS.Model.extend({
     updatedBy: DS.belongsTo('person', { async: true }),
     workspace: DS.belongsTo('workspace', { async: true }),
     tags:      DS.hasMany('job-tag', { async: true }),
+    history:   DS.hasMany('job-history', { async: true }),
     tasks:     DS.hasMany('task', { async: true })
 });
 
@@ -25,6 +26,8 @@ Job.reopenClass({
             archived: false,
             createdAt: new Date('2014-09-19T00:00:00.000Z'),
             updatedAt: new Date('2014-09-20T00:00:00.000Z'),
+            history: [1,2,3],
+            workspace: 1,
             tasks: [1,2,3,4,5]
         },
         {
@@ -36,6 +39,8 @@ Job.reopenClass({
             archived: false,
             createdAt: new Date('2014-09-20T00:00:00.000Z'),
             updatedAt: new Date('2014-09-20T00:00:00.000Z'),
+            history: [],
+            workspace: 1,
             tasks: []
         },
         {
@@ -43,10 +48,12 @@ Job.reopenClass({
             name: 'Weekly Accounting Report',
             startsAt: new Date('2014-10-21T00:04:00.000Z'),
             rrule: 'INTERVAL=6;FREQ=MONTHLY',
-            active: true,
+            active: false,
             archived: false,
             createdAt: new Date('2014-09-20T00:00:00.000Z'),
             updatedAt: new Date('2014-09-20T00:00:00.000Z'),
+            history: [],
+            workspace: 1,
             tasks: []
         },
         {
@@ -58,6 +65,8 @@ Job.reopenClass({
             archived: true,
             createdAt: new Date('2014-09-20T00:00:00.000Z'),
             updatedAt: new Date('2014-09-20T00:00:00.000Z'),
+            history: [],
+            workspace: 2,
             tasks: []
         },
         {
@@ -69,6 +78,21 @@ Job.reopenClass({
             archived: false,
             createdAt: new Date('2014-09-20T00:00:00.000Z'),
             updatedAt: new Date('2014-09-20T00:00:00.000Z'),
+            history: [],
+            workspace: 1,
+            tasks: []
+        },
+        {
+            id: 6,
+            name: 'New Clients Report',
+            startsAt: new Date('2014-10-21T00:04:00.000Z'),
+            rrule: 'FREQ=HOURLY;INTERVAL=3;WKST=MO',
+            active: true,
+            archived: false,
+            createdAt: new Date('2014-09-20T00:00:00.000Z'),
+            updatedAt: new Date('2014-09-20T00:00:00.000Z'),
+            history: [],
+            workspace: 2,
             tasks: []
         }
     ]

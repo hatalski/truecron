@@ -1,0 +1,81 @@
+<div class="container">
+    <table class="table-ftp"> <!--start table #1-->
+        <tbody><tr>
+            <td>
+                <h1>{{name}}</h1>
+                {{log this.task-type}}
+                <em>{{taskType.name}}</em>
+            </td>
+            <td>
+            </td>
+            <td align="right">
+                <a href="#" class="btn btn-success btn-large">Active </a>
+            </td>
+        </tr>
+        </tbody></table>
+    <br>
+    <table class="table-ftp">  {{!--start table #2--}}
+        <tbody><tr>
+            <td>
+                Protocol:
+            </td>
+            <td>
+                <div class="btn-group">
+                    <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
+                        SFTP
+                        <span class="caret"></span>
+                    </button>
+                    <ul class="dropdown-menu">
+                        <li><a href="#">FTP</a></li>
+                    </ul>
+                </div>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                Host:
+            </td>
+            <td>
+                <input type="text" class="form-control" placeholder="Text input">
+            </td>
+        </tr>
+        <tr>
+            <td>
+                Port:
+            </td>
+            <td>
+                <input type="text" class="form-control" placeholder="Text input">
+            </td>
+        </tr>
+        <tr>
+            <td>
+                User name:
+            </td>
+            <td>
+                <input type="text" class="form-control" placeholder="Text input">
+            </td>
+        </tr>
+        <tr>
+            <td>
+                Password:
+            </td>
+            <td>
+                <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Password">
+            </td>
+        </tr>
+        <tr>
+            <td>
+                Private key:
+            </td>
+            <td>
+                <input type="text" class="form-control" placeholder="Text input">
+            </td>
+        </tr>
+        <tr>
+            <td></td>
+            <td align="right"> <a href="#"><span class="glyphicon glyphicon-trash"></span>
+            </a>
+            </td>
+        </tr>
+    </table>
+</div>

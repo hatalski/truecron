@@ -20,6 +20,17 @@
   margin-top: 0;
 }
 
+.job-name {
+  /*text-transform: uppercase;*/
+  cursor: pointer;
+  cursor: hand;
+  border-bottom: 1px dashed #d0d0d0;
+}
+
+.job-name:hover {
+  background-color: #EEE;
+}
+
 /* vm - border last row table */
 .lastrowborder>tbody>tr>td {
   border-bottom: 1px solid #ddd;
@@ -119,7 +130,7 @@ a {
   .sidebar {
     position: fixed;
     min-width: 275px;
-    top: 164px;
+    top: 138px;
     bottom: 0;
     left: 0;
     z-index: 1000;
@@ -136,7 +147,7 @@ a {
   .sidebar_tabs {
     position: fixed;
     min-width: 275px;
-    top: 51px;
+    top: 50px;
     bottom: 0;
     left: 0;
     z-index: 1000;
@@ -252,7 +263,7 @@ a {
   text-decoration: underline;
 }
 
-.sidebar_tabs .nav-tabs > li.active > a, .nav-tabs > li.active > a:hover, .nav-tabs > li.active > a:focus {
+.sidebar_tabs .nav-tabs > li.active, .nav-tabs > li.active:hover, .nav-tabs > li.active:focus {
   background-color: #f4f4f4;
   color: #ff9e40;
   font-weight: bold;
@@ -263,7 +274,7 @@ a {
   padding-left: 0;
   padding-right: 0;
 }
-.sidebar_tabs .nav-tabs > li > a {
+.sidebar_tabs .nav-tabs > li {
   border-radius: 0;
   color: #bcbcbe;
   font-size: 17px;
