@@ -5,8 +5,8 @@ export default Ember.Route.extend({
 		// TODO: replace 1 with authenticated user id
 		return this.store.find('person', 1);
 	},
-	afterModel: function(person) {
-		console.log('dashboard afterModel : ' + person.get('organizations.firstObject').get('name'));
-		//this.transitionTo('dashboard.organization.workspace.jobs', 'Personal', 'Development');
+	afterModel: function() {
+		//console.dir('dashboard afterModel : ' + person.get('organizations').get('firstObject'));
+		//this.transitionTo('dashboard.organization', 'Personal');
 	}
 });
