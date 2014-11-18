@@ -41,7 +41,7 @@ var SftpTask = function(connection, ftpCommands)
             var quitFtp = function(callback)
             {
                 self.ftpClient.raw('QUIT').exec(function (err, res) {
-                    self.afterSend(callback);
+                    self.onComplete(callback);
                 });
             };
 
@@ -73,20 +73,6 @@ var SftpTask = function(connection, ftpCommands)
 
             callFtp(0);
         }
-    };
-
-    self.callBack = function(callBack)
-    {
-        if(typeof callBack === 'function') {
-            callback();
-        }
-    };
-
-    self.afterSend = function(callback)
-    {
-        if (callback && typeof callback === 'function')
-            callback();
-        this.complete();
     };
 
     self.init();
