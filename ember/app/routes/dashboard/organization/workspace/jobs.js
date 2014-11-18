@@ -19,5 +19,12 @@ export default Ember.Route.extend({
 	    // console.dir(organization);
 	    // console.dir(workspace);
 	    this._super(controller, model);
-    }
+    },
+	afterModel: function(jobs) {
+		if (jobs.get('length') > 0) {
+			this.transitionTo('dashboard.organization.workspace.jobs.job', jobs.get('firstObject'));
+		} else {
+			this.transitionTo('dashboard.organization.workspace.jobs.new');
+		}
+	}
 });
