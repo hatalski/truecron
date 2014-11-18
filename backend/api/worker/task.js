@@ -44,6 +44,7 @@ Task.prototype.onMessage = function(message)
 
 Task.prototype.start = function()
 {
+    this.onMessage('Started');
     this.status = taskStatusEnum.started;
 };
 
@@ -52,9 +53,17 @@ Task.prototype.isStarted = function()
     return this.status == taskStatusEnum.started;
 };
 
-Task.prototype.complete = function()
+Task.prototype.onComplete = function(callBack)
 {
     this.status = taskStatusEnum.completed;
+    this.onMessage('Completed');
+
+    if (callback && typeof callback === 'function')
+        callback();
+};
+
+Task.prototype.run = function() {
+    throw new Error('Task needs to have run() defined.');
 };
 
 module.exports = Task;

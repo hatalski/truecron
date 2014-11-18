@@ -30,17 +30,9 @@ var smtpTask = function(from, to, subject, text, html) {
                 } else {
                     self.onMessage(info);
                 }
-                self.afterSend(callback);
+                self.onComplete(callback);
             });
         }
-    };
-
-    self.afterSend = function(callback)
-    {
-        if (callback && typeof callback === 'function')
-            callback();
-
-        this.complete();
     };
 
     self.init();
