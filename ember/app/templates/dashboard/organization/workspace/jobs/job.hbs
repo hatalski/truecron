@@ -18,7 +18,7 @@
     <br>
     <div class="row">
         <div class="col-sm-2">
-            <button {{action "runjob"}} type="button" class="chok"><i class="fa fa-play"></i> Run Job</button>
+            <button {{action "runjob"}} type="button" class="chok"><i class="fa fa-play"></i> Run</button>
         </div>
         <div class="col-sm-6">
           <h4 class="blue_row">{{recurrence.text}}</h4>
@@ -33,21 +33,7 @@
             <div>{{format-date recurrence.nextRun 'L LT'}}</div>
         </div>
     </div>
-{{!--     <div class="row">
-        <div class="col-sm-1">
-            &nbsp;
-        </div>
-        <div class="col-sm-6">
-            Ends after 5 runs
-        </div>
-        <div class="col-sm-3 red_row">
-          {{format-date recurrence.lastRun 'L LT'}}
-        </div>
-        <div class="col-sm-2">
-          {{format-date recurrence.nextRun 'L LT'}}
-        </div>
-    </div> --}}
-  <br>
+    <br>
     <div class="row">
         <div class="col-sm-9">
         </div>
@@ -61,9 +47,11 @@
           <tbody>
           {{#each tasks}}
             <tr {{action "viewtask" this}}>
-                <td class="icon-row"></td>
+                <td class="icon-row"><span class="title-icon"><i class="fa fa-ellipsis-v"></i><i class="fa fa-ellipsis-v"></i><i class="fa fa-ellipsis-v"></i><i class="fa fa-ellipsis-v"></i></td>
+                <td>{{position}}.</td>
                 <td>{{taskType.name}}</td>
                 <td>{{name}}</td>
+                <td>output</td>
                 <td class="underline">0.68s</td>
             </tr>
           {{else}}
