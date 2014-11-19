@@ -11,7 +11,7 @@ var express = require('express'),
 var api = express.Router();
 
 //
-//
+//add links
 //
 //+++++++++++++++++++++++++++++++
 function formatTask(task) {
@@ -67,5 +67,21 @@ api.route('/jobs/:jobid/tasks')
             });
     });
 
+api.route('/jobs/:jobid/tasks/:taskid')
+
+//
+// Get task by id
+//
+    .get(common.parseListParams, function (req, res, next) {
+        var where = {};
+        if (!!req.listParams.searchTerm) {
+            where = { jobId: req.params.jobid , id:req.params.id};
+        }
+        var sort = req.listParams.sort || 'name';
+
+        storage.Tasks.findById(req.context, req.params.taskid, req.params.jobid).then(function (task) {
+            res.json(formatTask(task));
+        });
+    });
 
 module.exports = api;

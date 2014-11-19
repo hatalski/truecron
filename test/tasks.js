@@ -16,7 +16,7 @@ var taskTypeId=-100;
 var updatedByPersonId=-1;
 var id_to_delete;
 var workspaceIdMaster=-12;
-var id_to_delete_task;
+var id_task_to_delete;
 
 describe('TASK API',
     function() {
@@ -41,7 +41,7 @@ describe('TASK API',
                     'workspaceId':workspaceIdMaster,
                     'name': 'TestName',
                     'tags': ["edi", "production"],
-                    'updatedByPersonId':'-1',
+                    'updatedByPersonId':updatedByPersonId,
                     'startsAt': '2014-08-21T10:00:11Z',
                     'rrule': 'FREQ=DAILY;INTERVAL=1;BYDAY=MO;BYHOUR=12;BYMINUTE=0;BYSECOND=0'
                 }
@@ -55,7 +55,6 @@ describe('TASK API',
                     done();
                 });
         });
-
 
         it('create a new task', function (done) {
             superagent.post(prefix + '/jobs/'+id_to_delete+'/tasks')
@@ -84,7 +83,7 @@ describe('TASK API',
                     expect(res.status).to.eql(201);
                     expect(res.header['content-type']).to.eql('application/json; charset=utf-8');
                     expect(res.body.error).to.eql(undefined);
-                    id_to_delete_task = res.body.task.id;
+                    id_task_to_delete = res.body.task.id;
                     expect(res.body.task.id).to.be.a('string');
                     expect(res.body.task.name).to.eql('TaskTestname');
                     expect(validator.isDate(res.body.task.createdAt)).to.be.ok();
@@ -92,6 +91,7 @@ describe('TASK API',
                     done();
                 });
         });
+
         it('get all tasks', function (done) {
             superagent.get(prefix + '/jobs/'+id_to_delete+'/tasks')
                 .set('Content-Type', 'application/json')
@@ -100,6 +100,22 @@ describe('TASK API',
                 .end(function (e, res) {
                     expect(e).to.eql(null);
                     expect(res.header['content-type']).to.eql('application/json; charset=utf-8');
+                    expect(res.status).to.eql(200);
+                    done();
+                });
+        });
+        
+        it('get task by id', function (done) {
+            superagent.get(prefix + '/jobs/' + id_to_delete+'/tasks/'+id_task_to_delete)
+                .send()
+                .authenticate(accessToken)
+                .end(function (e, res) {
+                    expect(e).to.eql(null);
+                    expect(res.header['content-type']).to.eql('application/json; charset=utf-8');
+                    expect(res.body.error).to.eql(undefined);
+                    expect(res.body.task.id).to.be.a('string');
+                    expect(validator.isDate(res.body.task.createdAt)).to.be.ok();
+                    expect(validator.isDate(res.body.task.updatedAt)).to.be.ok();
                     expect(res.status).to.eql(200);
                     done();
                 });

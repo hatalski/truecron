@@ -41,4 +41,23 @@ var findAndCountAll = module.exports.findAndCountAll = Promise.method(function (
         });
 });
 
-
+//
+// Search for a single task by ID.
+//
+var findById = module.exports.findById = Promise.method(function (context, id, jobid, transaction) {
+    return cache.get(getTaskIdCacheKey(id))
+        .then(function (result) {
+            if (result.found) {
+                return result.value;
+            }
+            return models.Task.find({ where: { id: id, jobId: jobid } }, { transaction: transaction })
+                .then(function (task) {
+                    cache.put(getTaskIdCacheKey(id), task);
+                    return task;
+                });
+        })
+        .catch(function (err) {
+            logger.error('Failed to find a task by id %s, %s.', id, err.toString());
+            throw err;
+        });
+});
