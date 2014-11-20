@@ -3,10 +3,11 @@
         <div class="col-sm-7">
           <h3><span class="job-name" data-toggle="tooltip" data-placement="bottom" title="Rename">{{name}}</span><h3>
         </div>
+        {{log task}}
         <div class="col-sm-5 text-right">
             <h3>
             <a href="#">
-            {{#if this.active}}
+            {{#if active}}
                 <u>active</u>
             {{else}}
                 <u>inactive</u>
@@ -21,17 +22,16 @@
                 <div class="accordion-inner">
                     <label class="label-br">Type:</label>
                     <div class="btn-group cron-drop">
-                        <button type="button dropdown-toggle" data-toggle="dropdown" class="btn btn-cron">Copy</button>
+                        {{log taskType}}
+                        <button type="button dropdown-toggle" data-toggle="dropdown" class="btn btn-cron">{{taskType.name}}</button>
                         <button type="button" class="btn caret-cron dropdown-toggle" data-toggle="dropdown">
                             <span class="caret"></span>
                             <span class="sr-only">Toggle Dropdown</span>
                         </button>
                         <ul class="dropdown-menu" role="menu">
-                            <li><a href="#">Archive</a></li>
-                            <li><a href="#">Another action</a></li>
-                            <li><a href="#">Something else here</a></li>
-                            <li class="divider"></li>
-                            <li><a href="#">Separated link</a></li>
+                            {{#each taskTypes}}
+                                <li><a href="#">{{name}}</a></li>
+                            {{/each}}
                         </ul>
                     </div>
                     <hr>

@@ -47,14 +47,20 @@
             <div class="table-responsive">
                 <table class="table table-striped lastrowborder">
                     <tbody>
-                    {{#each tasks}}
-                      {{#link-to "dashboard.organization.workspace.tasks.task" this tagName="tr" activeClass="activejobfirstbox"}}
-                          <td class="icon-row"></td>
-                          <td>{{taskType.name}}</td>
-                          <td>{{name}}</td>
-                          <td class="underline">0.68s</td>
-                      {{/link-to}}
-                    {{/each}}
+                      {{#each tasks}}
+                        <tr {{action "viewtask" this}}>
+                            <td class="icon-row"><span class="title-icon"><i class="fa fa-ellipsis-v"></i><i class="fa fa-ellipsis-v"></i><i class="fa fa-ellipsis-v"></i><i class="fa fa-ellipsis-v"></i></td>
+                            <td>{{position}}.</td>
+                            <td>{{taskType.name}}</td>
+                            <td>{{name}}</td>
+                            <td>output</td>
+                            <td class="underline">0.68s</td>
+                        </tr>
+                      {{else}}
+                        <tr>
+                            <td style="border: none;background:none;text-align:center">There are no tasks yet created for this job. Please click "Add Task" button to add a first one.</td>
+                        </tr>
+                      {{/each}}
                     </tbody>
                 </table>
             </div>
