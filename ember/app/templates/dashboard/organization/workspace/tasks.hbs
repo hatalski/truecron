@@ -48,7 +48,7 @@
                 <table class="table table-striped lastrowborder">
                     <tbody>
                       {{#each tasks}}
-                        <tr {{action "viewtask" this}}>
+                        <tr {{action "viewtask" this}} class="clickable">
                             <td class="icon-row"><span class="title-icon"><i class="fa fa-ellipsis-v"></i><i class="fa fa-ellipsis-v"></i><i class="fa fa-ellipsis-v"></i><i class="fa fa-ellipsis-v"></i></td>
                             <td>{{position}}.</td>
                             <td>{{taskType.name}}</td>

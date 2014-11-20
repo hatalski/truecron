@@ -20,6 +20,15 @@
   margin-top: 0;
 }
 
+tr.clickable {
+  cursor: pointer;
+  cursor: hand;
+}
+
+tr:hover {
+  background-color: #EEE;
+}
+
 .job-name {
   /*text-transform: uppercase;*/
   cursor: pointer;
