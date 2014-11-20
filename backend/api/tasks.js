@@ -84,6 +84,19 @@ api.route('/jobs/:jobid/tasks/:taskid')
         });
     })
 
+    //
+    // Update a task
+    //
+    .put(function (req, res, next) {
+        if (!req.body || !req.body.task) {
+            return next(new apiErrors.InvalidParams());
+        }
+        storage.Tasks.update(req.context, req.params.taskid, req.params.jobid, req.body.task)
+            .then(function (task) {
+                res.json(formatTask(task));
+            });
+    })
+
 //
 // Delete a task
 //

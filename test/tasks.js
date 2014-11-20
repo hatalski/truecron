@@ -124,23 +124,23 @@ describe('TASK API',
         id_to_delete=99;
         id_task_to_delete=4;
 
-        //it('update task', function (done) {
-        //    superagent.put(prefix + '/jobs/' + id_to_delete+'/tasks/'+id_task_to_delete)
-        //        .set('Content-Type', 'application/json')
-        //        .send({ 'task':  {
-        //
-        //            'position': 10
-        //        }
-        //        })
-        //        .authenticate(accessToken)
-        //        .end(function (e, res) {
-        //            expect(e).to.eql(null);
-        //            expect(res.header['content-type']).to.eql('application/json; charset=utf-8');
-        //            //expect(validator.isDate(res.body.task.startsAt)).to.be.ok();
-        //            expect(res.status).to.eql(200);
-        //            done();
-        //        });
-        //});
+        it('update task', function (done) {
+            superagent.put(prefix + '/jobs/' + id_to_delete+'/tasks/'+id_task_to_delete)
+                .set('Content-Type', 'application/json')
+                .send({ 'task':  {
+
+                    'position': 10
+                }
+                })
+                .authenticate(accessToken)
+                .end(function (e, res) {
+                    expect(e).to.eql(null);
+                    expect(res.header['content-type']).to.eql('application/json; charset=utf-8');
+                    //expect(validator.isDate(res.body.task.startsAt)).to.be.ok();
+                    expect(res.status).to.eql(200);
+                    done();
+                });
+        });
 
         it('delete task', function (done) {
             superagent.del(prefix + '/jobs/' + id_to_delete+'/tasks/'+id_task_to_delete)

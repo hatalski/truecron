@@ -63,6 +63,37 @@ var findById = module.exports.findById = Promise.method(function (context, id, j
 });
 
 /**
+ * Update a task.
+ */
+var update = module.exports.update = Promise.method(function (context, id, jobid, attributes) {
+    attributes.updatedByPersonId = context.personId;
+    var self = { attrs: attributes };
+    return using (models.transaction(), function (tx) {
+        self.tx = tx;
+        return module.exports.findById(context, id, jobid, tx)
+            .then(function (task) {
+                if (task === null) {
+                    throw new errors.NotFound();
+                }
+                self.oldTask = task;
+                return task.updateAttributes(self.attrs, { transaction: self.tx });
+            })
+            .then(function (task) {
+                self.task = task;
+                return history.logUpdated(context.personId, getTaskIdCacheKey(task.id), task, self.oldTask, self.tx);
+            })
+            .then(function () {
+                cache.put(getTaskIdCacheKey(self.task.id), self.task);
+                return self.task;
+            });
+    })
+        .catch(function (err) {
+            logger.error('Failed to update the task %d, %s.', id, err.toString());
+            throw err;
+        });
+});
+
+/**
  * Remove a task.
  */
 var remove = module.exports.remove = Promise.method(function (context, id) {
