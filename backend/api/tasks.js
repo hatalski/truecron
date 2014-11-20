@@ -82,6 +82,16 @@ api.route('/jobs/:jobid/tasks/:taskid')
         storage.Tasks.findById(req.context, req.params.taskid, req.params.jobid).then(function (task) {
             res.json(formatTask(task));
         });
-    });
+    })
+
+//
+// Delete a task
+//
+.delete(function (req, res, next) {
+    storage.Tasks.remove(req.context, req.params.taskid)
+        .then(function () {
+            res.status(204).json({});
+        });
+});
 
 module.exports = api;

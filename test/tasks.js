@@ -104,7 +104,7 @@ describe('TASK API',
                     done();
                 });
         });
-        
+
         it('get task by id', function (done) {
             superagent.get(prefix + '/jobs/' + id_to_delete+'/tasks/'+id_task_to_delete)
                 .send()
@@ -117,6 +117,39 @@ describe('TASK API',
                     expect(validator.isDate(res.body.task.createdAt)).to.be.ok();
                     expect(validator.isDate(res.body.task.updatedAt)).to.be.ok();
                     expect(res.status).to.eql(200);
+                    done();
+                });
+        });
+
+        id_to_delete=99;
+        id_task_to_delete=4;
+
+        //it('update task', function (done) {
+        //    superagent.put(prefix + '/jobs/' + id_to_delete+'/tasks/'+id_task_to_delete)
+        //        .set('Content-Type', 'application/json')
+        //        .send({ 'task':  {
+        //
+        //            'position': 10
+        //        }
+        //        })
+        //        .authenticate(accessToken)
+        //        .end(function (e, res) {
+        //            expect(e).to.eql(null);
+        //            expect(res.header['content-type']).to.eql('application/json; charset=utf-8');
+        //            //expect(validator.isDate(res.body.task.startsAt)).to.be.ok();
+        //            expect(res.status).to.eql(200);
+        //            done();
+        //        });
+        //});
+
+        it('delete task', function (done) {
+            superagent.del(prefix + '/jobs/' + id_to_delete+'/tasks/'+id_task_to_delete)
+                .send()
+                .authenticate(accessToken)
+                .end(function (e, res) {
+                    expect(e).to.eql(null);
+                    expect(res.body.error).to.eql(undefined);
+                    expect(res.status).to.eql(204);
                     done();
                 });
         });

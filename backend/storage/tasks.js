@@ -61,3 +61,31 @@ var findById = module.exports.findById = Promise.method(function (context, id, j
             throw err;
         });
 });
+
+/**
+ * Remove a task.
+ */
+var remove = module.exports.remove = Promise.method(function (context, id) {
+    return using (models.transaction(), function (tx) {
+        var self = { tx: tx };
+        return findById(context, id)
+            .then(function (task) {
+                if (task === null) {
+                    // No found, that's ok for remove() operation
+                    return;
+                }
+                self.task = task;
+                return task.destroy({transaction: self.tx})
+                    .then(function () {
+                        return history.logRemoved(context.personId, getTaskIdCacheKey(self.task.id), self.task, self.tx);
+                    })
+                    .then(function () {
+                        cache.remove(getTaskIdCacheKey(self.task.id))
+                    });
+            });
+    })
+        .catch(function (err) {
+            logger.error('Failed to remove the task %d, %s.', id, err.toString());
+            throw err;
+        });
+});
