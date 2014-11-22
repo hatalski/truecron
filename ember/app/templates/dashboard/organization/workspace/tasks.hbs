@@ -58,7 +58,7 @@
                     <tbody>
                       {{#each tasks}}
                         {{#link-to "dashboard.organization.workspace.tasks.task" this.job.id this tagName="tr" activeClass="active-task" class="clickable active:archived-task" replace=true}}
-                            <td class="icon-row"><span class="title-icon"><i class="fa fa-th"></i></td>
+                            <td class="icon-row"><i class="fa fa-arrows-alt"></i></td>
                             <td>{{position}}.</td>
                             <td>{{taskType.name}}</td>
                             <td>{{name}}</td>
