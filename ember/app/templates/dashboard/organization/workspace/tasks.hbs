@@ -2,36 +2,25 @@
     <div class="row">
         <div class="col-md-6">
             <div class="row">
-                <h2><span class="job-name" data-toggle="tooltip" data-placement="bottom" title="Rename">{{name}}</span> <small>{{#each tags}} {{name}} {{/each}}</small><h2>
-                {{!-- <div class="col-sm-5 text-right">
-                    <h3>
-                    <a href="#" {{action "changeActiveState"}}>
-                    {{#if this.active}}
-                        <u>active</u>
-                    {{else}}
-                        <u>inactive</u>
-                    {{/if}}
-                    </a>
-                    </h3>
-                </div> --}}
+                <h2><span class="job-name" data-toggle="tooltip" data-placement="bottom" title="Rename">{{name}}</span><small>{{#each tags}} {{name}} {{/each}}</small></h2>
             </div>
             <div class="row">
-                <div class="col-sm-6">
-                  <h4 class="blue_row">{{recurrence.text}}</h4>
-                  <div>Ends after 5 runs</div>
+                <div class="col-sm-8">
+                    <h5 class="blue_row">{{recurrence.text}}</h5>
+                    <h5>Ends after 5 runs</h5>
+                </div>
+                <div class="col-sm-1 text-right">
+                    <h5>last:</h5>
+                    <h5>next:</h5>
                 </div>
                 <div class="col-sm-3">
-                    <h4>LAST RUN</h4>
-                    <div>{{format-date recurrence.lastRun 'L LT'}}</div>
-                </div>
-                <div class="col-sm-3">
-                    <h4>NEXT RUN</h4>
-                    <div>{{format-date recurrence.nextRun 'L LT'}}</div>
+                    <h5>{{format-date recurrence.lastRun 'L LT'}}</h5>
+                    <h5>{{format-date recurrence.nextRun 'L LT'}}</h5>
                 </div>
             </div>
             <br/>
             <div class="row">
-                <div class="col-sm-9">
+                <div class="col-sm-9" style="padding-left: 0px">
                     <button {{action "run" this}} type="button" class="chok"><i class="fa fa-play"></i> Run</button>
                     <button {{action "suspend" this}} type="button" class="chok active"><i class="fa fa-pause"></i> Suspend</button>
                     <button {{action "archive" this}} type="button" class="chok"><i class="fa fa-archive"></i> Archive</button>

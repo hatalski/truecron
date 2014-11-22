@@ -6,24 +6,14 @@
 /*
  * Main content
  */
-.main {
-  margin-top: 51px;
-  padding: 20px!important;
-}
 .cron-main {
-  padding: 0px;background-color: #fff;
-}
-body {
-  background-color: #EEE;
+  padding: 0;
 }
 @media (min-width: 768px) {
   .main {
     padding-right: 10px;
     padding-left: 0px;
   }
-}
-.main .page-header {
-  margin-top: 0;
 }
 
 tr.clickable {
@@ -232,17 +222,12 @@ a {
  */
 
 .main {
-  margin-top: 51px;
+  margin-top: 31px;
   padding: 20px;
 }
 @media (min-width: 768px) {
   .main {
-    padding-right: 40px;
-    padding-left: 60px;
   }
-}
-.main .page-header {
-  margin-top: 0;
 }
 
 /*
@@ -557,7 +542,7 @@ a {
 /* start signin style */
 .chok {
   background-color: #fff;
-  padding: 12px 30px 12px 30px;
+  padding: 6px 15px 6px 15px;
   border: 1px solid #10accc;
 }
 .orblk {
