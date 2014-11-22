@@ -4,7 +4,7 @@
         {{#link-to "dashboard.organization.workspace.connections" tagName="li"}}<span>Connections</span>{{/link-to}}
     </ul>
     <div class="btn-group">
-        {{#link-to "dashboard.organization.workspace.jobs.new" classNames="btn btn-default"}}<i class="fa fa-plus"></i>Add Job{{/link-to}}
+        <a href="#" class="btn btn-default" {{action "addjob"}}><i class="fa fa-plus"></i>Add Job</a>
         <button type="button" class="btn btn-default"><i class="fa fa-filter"></i></button>
         <button type="button" class="btn btn-default"><i class="fa fa-search"></i></button>
     </div>
