@@ -1,6 +1,6 @@
 <div class="row">
     <div class="col-sm-12">
-      <h2><span class="job-name" data-toggle="tooltip" data-placement="bottom" title="Rename">{{name}}</span><h2>
+      <h2><span class="job-name" data-toggle="tooltip" data-placement="bottom" title="Rename">{{name}}</span> <small>{{#each tags}} {{name}} {{/each}}</small><h2>
     </div>
     {{!-- <div class="col-sm-5 text-right">
         <h3>
@@ -45,14 +45,14 @@
   <table class="table table-striped lastrowborder">
       <tbody>
       {{#each tasks}}
-        <tr {{action "viewtask" this}} class="clickable">
+        {{#link-to "dashboard.organization.workspace.tasks.task" this.job.id this tagName="tr" activeClass="active-task" class="clickable"}}
             <td class="icon-row"><span class="title-icon"><i class="fa fa-th"></i></td>
             <td>{{position}}.</td>
             <td>{{taskType.name}}</td>
             <td>{{name}}</td>
             <td>output</td>
             <td class="underline">0.68s</td>
-        </tr>
+        {{/link-to}}
       {{else}}
         <tr>
             <td style="border: none;background:none;text-align:center">There are no tasks yet created for this job. Please click "Add Task" button to add a first one.</td>

@@ -213,6 +213,18 @@ a {
   background: url("loading.gif") no-repeat left center;
 }
 
+.archived-task {
+  color: #c9c9cb;
+}
+
+.active-task td:first-child {
+  border-left: solid 3px #ff9e2f;
+}
+
+.active-task td:last-child {
+  background: url("arrow.png") no-repeat right center;
+}
+
 .sidebar_tabs .nav-tabs li {width: 50%}
 
 /*
@@ -555,10 +567,6 @@ a {
   margin-left: 213px;
 }
 /* end signin style */
-
-.archevedtask {
-  color: #c9c9cb;
-}
 
 /*table body dashboard*/
 .bodydashboard {

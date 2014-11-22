@@ -17,12 +17,5 @@ export default Ember.ObjectController.extend({
             lastRun: rule.before(now, true),
             nextRun: rule.after(now, true)
         };
-    }.property('model.rrule', 'model.startsAt'),
-    actions: {
-        viewtask: function(task) {
-            console.dir('task : ' + task);
-            console.dir('job : ' + task.get('job.id'));
-            this.transitionToRoute('dashboard.organization.workspace.tasks.task', task.get('job.id'), task);
-        }
-    }
+    }.property('model.rrule', 'model.startsAt')
 });
