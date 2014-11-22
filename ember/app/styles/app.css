@@ -25,10 +25,6 @@ tr.clickable {
   cursor: hand;
 }
 
-tr:hover {
-  background-color: #EEE;
-}
-
 .job-name {
   /*text-transform: uppercase;*/
   cursor: pointer;

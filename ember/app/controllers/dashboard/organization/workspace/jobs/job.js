@@ -13,7 +13,7 @@ export default Ember.ObjectController.extend({
         var rule = new RRule(o);
         var now = new Date();
         return {
-            text: rule.toText(),
+            text:    rule.toText(),
             lastRun: rule.before(now, true),
             nextRun: rule.after(now, true)
         };

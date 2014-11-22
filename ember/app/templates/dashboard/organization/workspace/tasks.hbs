@@ -2,12 +2,10 @@
     <div class="row">
         <div class="col-md-6">
             <div class="row">
-                <div class="col-sm-7">
-                  <h3><span class="job-name" data-toggle="tooltip" data-placement="bottom" title="Rename">{{name}}</span><h3>
-                </div>
-                <div class="col-sm-5 text-right">
+                <h2><span class="job-name" data-toggle="tooltip" data-placement="bottom" title="Rename">{{name}}</span> <small>tag1 tag2</small><h2>
+                {{!-- <div class="col-sm-5 text-right">
                     <h3>
-                    <a href="#">
+                    <a href="#" {{action "changeActiveState"}}>
                     {{#if this.active}}
                         <u>active</u>
                     {{else}}
@@ -15,21 +13,18 @@
                     {{/if}}
                     </a>
                     </h3>
-                </div>
+                </div> --}}
             </div>
             <div class="row">
-                <div class="col-sm-2">
-                    <button {{action "runjob"}} type="button" class="chok"><i class="fa fa-play"></i> Run</button>
-                </div>
                 <div class="col-sm-6">
                   <h4 class="blue_row">{{recurrence.text}}</h4>
                   <div>Ends after 5 runs</div>
                 </div>
-                <div class="col-sm-2">
+                <div class="col-sm-3">
                     <h4>LAST RUN</h4>
                     <div>{{format-date recurrence.lastRun 'L LT'}}</div>
                 </div>
-                <div class="col-sm-2">
+                <div class="col-sm-3">
                     <h4>NEXT RUN</h4>
                     <div>{{format-date recurrence.nextRun 'L LT'}}</div>
                 </div>
@@ -37,6 +32,9 @@
             <br/>
             <div class="row">
                 <div class="col-sm-9">
+                    <button {{action "run" this}} type="button" class="chok"><i class="fa fa-play"></i> Run</button>
+                    <button {{action "suspend" this}} type="button" class="chok active"><i class="fa fa-pause"></i> Suspend</button>
+                    <button {{action "archive" this}} type="button" class="chok"><i class="fa fa-archive"></i> Archive</button>
                 </div>
                 <div class="col-sm-3" align="right">
                     <button {{action "addtask" this}} type="button" class="chok"><i class="fa fa-plus"></i> Add Task</button>
@@ -49,11 +47,10 @@
                     <tbody>
                       {{#each tasks}}
                         <tr {{action "viewtask" this}} class="clickable">
-                            <td class="icon-row"><span class="title-icon"><i class="fa fa-ellipsis-v"></i><i class="fa fa-ellipsis-v"></i><i class="fa fa-ellipsis-v"></i><i class="fa fa-ellipsis-v"></i></td>
+                            <td class="icon-row"><span class="title-icon"><i class="fa fa-th"></i></td>
                             <td>{{position}}.</td>
                             <td>{{taskType.name}}</td>
                             <td>{{name}}</td>
-                            <td>output</td>
                             <td class="underline">0.68s</td>
                         </tr>
                       {{else}}
@@ -65,39 +62,28 @@
                 </table>
             </div>
             <!--end task partial-->
-            <div class="accordion" id="accordion2">
-                <div class="accordion-group"><!--start part1 accordion2-->
-                    <div class="accordion-heading">
-                        <button class="accordion-toggle buttonaccordion" data-toggle="collapse" data-parent="#accordion2" href="#collapseOne">
-                            <span class="title-icon"><i class="fa fa-chevron-right"></i>Recent Changes</span>
-                        </button>
+            <div class="row">
+                <h3>Recent Changes</h3>
+                <div class="accordion-inner">
+                    <div class="checkbox inline">
+                        <span>by:</span>
+                        <label>{{input type="checkbox" id="filterRecentChangesByMe" value="me"}} me</label>
+                        <label>{{input type="checkbox" id="filterRecentChangesByOthers" value="others"}} others</label>
                     </div>
-                    <div id="collapseOne" class="accordion-body collapse in">
-                        <div class="accordion-inner">
-                            <label class="checkbox inline">
-                                &nbsp; by: &nbsp; &nbsp;&nbsp;&nbsp;&nbsp;
-                                <input type="checkbox" id="inlineCheckbox2" value="option2"> me &nbsp; &nbsp; &nbsp;
-                                <input type="checkbox" id="inlineCheckbox3" value="option3"> others &nbsp; &nbsp; &nbsp;
-                            </label>
-                            <div class="table-responsive">
-                                <table class="table table-striped lastrowborder ">
-                                    <tbody>
-                                        {{#each history}}
-                                        <tr>
-                                            <td>{{format-date updatedAt 'L LT'}}</td>
-                                            <td>{{updatedBy.name}}</td>
-                                            <td>{{description}}</td>
-                                        </tr>
-                                        {{/each}}
-                                    </tbody>
-                                </table>
-                            </div>
-                        </div>
+                    <div class="table-responsive">
+                        <table class="table table-striped lastrowborder ">
+                            <tbody>
+                                {{#each history}}
+                                <tr>
+                                    <td>{{format-date updatedAt 'L LT'}}</td>
+                                    <td>{{updatedBy.name}}</td>
+                                    <td>{{description}}</td>
+                                </tr>
+                                {{/each}}
+                            </tbody>
+                        </table>
                     </div>
-                </div><!--end part1 accordion2--><hr>
-                <table class="table borderless">
-                    <tr><td></td><td class="text-right"><a href="#"><u>archive</u></a></td></tr>
-                </table>
+                </div>
             </div>
         </div><!--end class "span6" #1-->
         <div class="col-md-6 divborderright">
