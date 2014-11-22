@@ -62,26 +62,24 @@
   </table>
 </div>
 <div class="row">
-    <h3>Recent Changes</h3>
-    <div class="accordion-inner">
-        <div class="checkbox inline">
-            <span>by:</span>
-            <label>{{input type="checkbox" id="filterRecentChangesByMe" value="me"}} me</label>
-            <label>{{input type="checkbox" id="filterRecentChangesByOthers" value="others"}} others</label>
-        </div>
-        <div class="table-responsive">
-            <table class="table table-striped lastrowborder ">
-                <tbody>
-                    {{#each history}}
-                    <tr>
-                        <td>{{format-date updatedAt 'L LT'}}</td>
-                        <td>{{updatedBy.name}}</td>
-                        <td>{{description}}</td>
-                    </tr>
-                    {{/each}}
-                </tbody>
-            </table>
-        </div>
+    <h3>Revisions</h3>
+    <div class="checkbox inline">
+        <span>by:</span>
+        <label>{{input type="checkbox" id="filterRecentChangesByMe" value="me"}} me</label>
+        <label>{{input type="checkbox" id="filterRecentChangesByOthers" value="others"}} others</label>
+    </div>
+    <div class="table-responsive">
+        <table class="table table-striped lastrowborder ">
+            <tbody>
+                {{#each history}}
+                <tr>
+                    <td>{{format-date updatedAt 'L LT'}}</td>
+                    <td>{{updatedBy.name}}</td>
+                    <td>{{description}}</td>
+                </tr>
+                {{/each}}
+            </tbody>
+        </table>
     </div>
 </div>
 {{!-- <div class="row">
