@@ -7,10 +7,16 @@ export default Ember.Route.extend({
   },
   setupController: function(controller, model) {
   	var self = this;
-	this.controllerFor('dashboard.organization.workspace.tasks.task').set('taskTypes', this.store.find('task-type'));
-	this.store.find('task-type', model.get('taskType.id')).then(function(result) {
-		self.controllerFor('dashboard.organization.workspace.tasks.task').set('currentTaskType', result.get('name'));
-	});
-	this._super(controller, model);
+	  this.controllerFor('dashboard.organization.workspace.tasks.task').set('taskTypes', this.store.find('task-type'));
+	  this.store.find('task-type', model.get('taskType.id')).then(function(result) {
+		  self.controllerFor('dashboard.organization.workspace.tasks.task').set('currentTaskType', result.get('name'));
+	  });
+	  this._super(controller, model);
+  },
+  actions: {
+    rename: function(task) {
+      console.log('rename to : ' + task.get('name'));
+      task.save();
+    }
   }
 });
