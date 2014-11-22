@@ -17,5 +17,11 @@ export default Ember.ObjectController.extend({
             lastRun: rule.before(now, true),
             nextRun: rule.after(now, true)
         };
-    }.property('model.rrule', 'model.startsAt')
+    }.property('model.rrule', 'model.startsAt'),
+    actions: {
+        rename: function(job) {
+            console.log('rename to : ' + job.get('name'));
+            job.save();
+        }
+    }
 });
