@@ -36,7 +36,7 @@
                     <button {{action "suspend" this}} type="button" class="chok active"><i class="fa fa-pause"></i> Suspend</button>
                     <button {{action "archive" this}} type="button" class="chok"><i class="fa fa-archive"></i> Archive</button>
                 </div>
-                <div class="col-sm-3" align="right">
+                <div class="col-sm-3 text-right">
                     <button {{action "addtask" this}} type="button" class="chok"><i class="fa fa-plus"></i> Add Task</button>
                 </div>
             </div>
@@ -71,7 +71,7 @@
                         <label>{{input type="checkbox" id="filterRecentChangesByOthers" value="others"}} others</label>
                     </div>
                     <div class="table-responsive">
-                        <table class="table table-striped lastrowborder ">
+                        <table class="table table-striped lastrowborder">
                             <tbody>
                                 {{#each history}}
                                 <tr>
