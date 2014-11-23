@@ -12,7 +12,7 @@
                   <div class="modal-body">
                     <div class="form-group">
                         <p>Enter a new job name:</p>
-                        {{input type="text" class="form-control" value=name}}
+                        {{input type="text" class="form-control" value=name autofocus=true}}
                     </div>
                   </div>
                   <div class="modal-footer">
@@ -27,8 +27,9 @@
 </div>
 <div class="row">
     <div class="col-sm-8">
-        <h5 class="blue_row">{{recurrence.text}}</h5>
-        <h5>Ends after 5 runs</h5>
+        <h4 class="text-capitalize" data-toggle="modal" data-target="#rescheduleForm" title="Reschedule"><span class="job-name">{{recurrence.text}}</span></h4>
+        {{!-- <h5 class="blue_row">{{recurrence.text}}</h5> --}}
+        {{!-- <h5>Ends after 5 runs</h5> --}}
     </div>
     <div class="col-sm-1 text-right">
         <h5>last:</h5>
@@ -39,6 +40,46 @@
         <h5>{{format-date recurrence.nextRun 'L LT'}}</h5>
     </div>
 </div>
+<div class="modal fade" id="rescheduleForm">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+        <h4 class="modal-title">Reschedule job</h4>
+      </div>
+      <form role="form" {{action "rename" this}}>
+          <div class="modal-body">
+            <div class="form-group">
+                <p>Summary:</p>
+                <p>{{recurrence.text}}</p>
+            </div>
+            <div class="form-group">
+                <p>Repeats:</p>
+                {{view "select" content=repeatRules value=selectedRepeatRule}}
+            </div>
+            <div class="form-group">
+                <p>Repeats every:</p>
+                {{view "select" content=repeatEvery value=selectedRepeatEvery}} {{selectedRepeatRule}}
+            </div>
+            <div class="form-group">
+                <p>Starts on:</p>
+                {{input type="text"}}
+            </div>
+            <div class="form-group">
+                <p>Ends:</p>
+                {{input type="radio" name="repeatRuleEnds" value="never"}} Never
+                {{input type="radio" name="repeatRuleEnds" value="after"}} After
+                {{input type="radio" name="repeatRuleEnds" value="on"}} On
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button type="submit" class="btn btn-primary" data-dismiss="modal">Ok</button>
+            <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+          </div>
+      </form>
+    </div><!-- /.modal-content -->
+  </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
 <br/>
 <div class="row">
     <div class="col-sm-9">
