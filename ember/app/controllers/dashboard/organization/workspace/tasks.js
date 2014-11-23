@@ -35,6 +35,18 @@ export default Ember.ObjectController.extend({
                 console.dir('new task is created: ' + newTask);
                 self.transitionToRoute('dashboard.organization.workspace.tasks.task', newTask.get('job.id'), newTask);
             });
+        },
+        archive: function(job) {
+            //job.deleteRecord();
+            var archived = job.get('archived');
+            job.set('archived', !archived);
+            job.save();
+            //this.transitionToRoute('dashboard.organization.workspace.jobs', job.get('workspace'));
+        },
+        suspend: function(job) {
+            var active = job.get('active');
+            job.set('active', !active);
+            job.save();
         }
     }
 });

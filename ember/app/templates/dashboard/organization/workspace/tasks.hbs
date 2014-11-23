@@ -45,7 +45,9 @@
                 <div class="col-sm-9" style="padding-left: 0px">
                     <button {{action "run" this}} type="button" class="chok"><i class="fa fa-play"></i> Run</button>
                     <button {{action "suspend" this}} type="button" class="chok active"><i class="fa fa-pause"></i> Suspend</button>
+                    {{active}}
                     <button {{action "archive" this}} type="button" class="chok"><i class="fa fa-archive"></i> Archive</button>
+                    {{archived}}
                 </div>
                 <div class="col-sm-3 text-right">
                     <button {{action "addtask" this}} type="button" class="chok"><i class="fa fa-plus"></i> Add Task</button>

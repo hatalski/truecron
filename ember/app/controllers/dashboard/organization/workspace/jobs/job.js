@@ -40,9 +40,16 @@ export default Ember.ObjectController.extend({
             });
         },
         archive: function(job) {
-            job.deleteRecord();
+            //job.deleteRecord();
+            var archived = job.get('archived');
+            job.set('archived', !archived);
             job.save();
-            this.transitionToRoute('dashboard.organization.workspace.jobs', job.get('workspace'));
+            //this.transitionToRoute('dashboard.organization.workspace.jobs', job.get('workspace'));
+        },
+        suspend: function(job) {
+            var active = job.get('active');
+            job.set('active', !active);
+            job.save();
         }
     }
 });
