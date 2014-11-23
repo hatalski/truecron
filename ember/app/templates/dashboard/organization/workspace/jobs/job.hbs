@@ -8,7 +8,7 @@
                 <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
                 <h4 class="modal-title">Rename job</h4>
               </div>
-              <form role="form" {{action "rename" this}}>
+              <form role="form">
                   <div class="modal-body">
                     <div class="form-group">
                         <p>Enter a new job name:</p>
@@ -16,7 +16,7 @@
                     </div>
                   </div>
                   <div class="modal-footer">
-                    <button type="submit" class="btn btn-primary" data-dismiss="modal">Ok</button>
+                    <button type="button" {{action "rename" this}} class="btn btn-primary" data-dismiss="modal">Ok</button>
                     <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
                   </div>
               </form>
@@ -47,7 +47,7 @@
         <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
         <h4 class="modal-title">Reschedule job</h4>
       </div>
-      <form role="form" {{action "rename" this}}>
+      <form role="form">
           <div class="modal-body">
             <div class="form-group">
                 <p>Summary:</p>
@@ -73,7 +73,7 @@
             </div>
           </div>
           <div class="modal-footer">
-            <button type="submit" class="btn btn-primary" data-dismiss="modal">Ok</button>
+            <button type="button" {{action "reschedule" this}} class="btn btn-primary" data-dismiss="modal">Ok</button>
             <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
           </div>
       </form>
