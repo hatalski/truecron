@@ -15,8 +15,8 @@ Router.map(function() {
           this.route('job', { path: '/:job_id' }); // job details with jobs list on the left side
         });
         this.route('tasks', { path: '/jobs/:job_id/tasks' }, function() { // job details full screen
-          this.route('rrule'); // scheduler UI on the right side
-          this.route('new');
+          //this.route('rrule'); // scheduler UI on the right side
+          this.route('index');
           this.route('task', { path: '/:task_id' }); // task details on the right side
         });
         this.route('connections', { path: '/connections' }, function() { // job details full screen

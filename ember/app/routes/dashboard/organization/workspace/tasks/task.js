@@ -12,11 +12,5 @@ export default Ember.Route.extend({
 		  self.controllerFor('dashboard.organization.workspace.tasks.task').set('currentTaskType', result.get('name'));
 	  });
 	  this._super(controller, model);
-  },
-  actions: {
-    rename: function(task) {
-      console.log('rename to : ' + task.get('name'));
-      task.save();
-    }
   }
 });

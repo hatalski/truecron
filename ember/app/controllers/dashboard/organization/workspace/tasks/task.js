@@ -16,6 +16,23 @@ export default Ember.ObjectController.extend({
             this.set('currentTaskType', taskType.get('name'));
             this.model.set('taskType', taskType);
             this.model.save();
-        }
+        },
+        rename: function(task) {
+	      console.log('rename to : ' + task.get('name'));
+	      task.save();
+	    },
+	    delete: function(task) {
+	      var job = task.get('job');
+	      console.dir('task to remove : ' + job.get('name'));
+	      task.deleteRecord();
+	      task.save();
+	      //this.transitionToRoute('dashboard.organization.workspace.jobs', job.get('workspace'));
+	      this.transitionToRoute('dashboard.organization.workspace.tasks', job.get('workspace'), job);
+	    },
+	    suspend: function(task) {
+	      var active = task.get('active');
+	      task.set('active', !active);
+	      task.save();
+	    }
     }
 });
