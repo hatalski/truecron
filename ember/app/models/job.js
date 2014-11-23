@@ -28,6 +28,7 @@ Job.reopenClass({
             updatedAt: new Date('2014-09-20T00:00:00.000Z'),
             history: [1,2,3],
             workspace: 1,
+            tags: [1,2],
             tasks: [1,2,3,4,5]
         },
         {
@@ -40,6 +41,7 @@ Job.reopenClass({
             createdAt: new Date('2014-09-20T00:00:00.000Z'),
             updatedAt: new Date('2014-09-20T00:00:00.000Z'),
             history: [],
+            tags: [],
             workspace: 1,
             tasks: []
         },
@@ -53,6 +55,7 @@ Job.reopenClass({
             createdAt: new Date('2014-09-20T00:00:00.000Z'),
             updatedAt: new Date('2014-09-20T00:00:00.000Z'),
             history: [],
+            tags: [],
             workspace: 1,
             tasks: []
         },
@@ -66,6 +69,7 @@ Job.reopenClass({
             createdAt: new Date('2014-09-20T00:00:00.000Z'),
             updatedAt: new Date('2014-09-20T00:00:00.000Z'),
             history: [],
+            tags: [],
             workspace: 2,
             tasks: []
         },
@@ -79,6 +83,7 @@ Job.reopenClass({
             createdAt: new Date('2014-09-20T00:00:00.000Z'),
             updatedAt: new Date('2014-09-20T00:00:00.000Z'),
             history: [],
+            tags: [],
             workspace: 1,
             tasks: []
         },
@@ -92,6 +97,7 @@ Job.reopenClass({
             createdAt: new Date('2014-09-20T00:00:00.000Z'),
             updatedAt: new Date('2014-09-20T00:00:00.000Z'),
             history: [],
+            tags: [],
             workspace: 2,
             tasks: []
         }

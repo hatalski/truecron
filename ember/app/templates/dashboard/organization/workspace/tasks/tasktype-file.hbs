@@ -1,0 +1,81 @@
+<table width="100%">
+    <tr>
+        <td>
+            <label class="label-br">Source connection:</label>
+            <div class="btn-group cron-drop">
+                <button type="button dropdown-toggle" data-toggle="dropdown" class="btn btn-cron">local</button>
+                <button type="button" class="btn caret-cron dropdown-toggle" data-toggle="dropdown">
+                    <span class="caret"></span>
+                    <span class="sr-only">Toggle Dropdown</span>
+                </button>
+                <ul class="dropdown-menu" role="menu">
+                    <li><a href="#">smtp</a></li>
+                    <li><a href="#">ftp</a></li>
+                    <li><a href="#">type#3</a></li>
+                    <li class="divider"></li>
+                    <li><a href="#">Separated link</a></li>
+                </ul>
+            </div>
+        </td>
+        <td> &nbsp;</td>
+        <td>
+            <label class="label-br">Target connection:</label>
+            <div class="btn-group cron-drop">
+                <button type="button dropdown-toggle" data-toggle="dropdown" class="btn btn-cron">AmericanSignature sFTP</button>
+                <button type="button" class="btn caret-cron dropdown-toggle" data-toggle="dropdown">
+                    <span class="caret"></span>
+                    <span class="sr-only">Toggle Dropdown</span>
+                </button>
+                <ul class="dropdown-menu" role="menu">
+                    <li><a href="#">type 2</a></li>
+                    <li><a href="#">type 3</a></li>
+                    <li><a href="#">type 4</a></li>
+                    <li class="divider"></li>
+                    <li><a href="#">Separated link</a></li>
+                </ul>
+            </div>
+        </td>
+    </tr>
+    <tr>
+        <td>
+            <div class="input-section">
+                <label class="label-br">Source folder:</label>
+                <div class="input-group">
+                    <input type="text" class="form-control" placeholder="D:\Data\AmericanSignature">
+                           <span class="input-group-btn">
+                           <button class="btn caret-cron" type="button"><i class="fa fa-ellipsis-h"></i></button>
+                           </span>
+                </div>
+            </div>
+        </td>
+        <td width="10%">&nbsp;</td>
+        <td>
+            <div class="input-section">
+                <label class="label-br">Target folder:</label>
+                <div class="input-group">
+                    <input type="text" class="form-control" placeholder="">
+                           <span class="input-group-btn">
+                           <button class="btn caret-cron" type="button"><i class="fa fa-ellipsis-h"></i></button>
+                           </span>
+                </div>
+            </div>
+        </td>
+    </tr>
+    <tr valign="bottom">
+        <td>
+            <div class="input-section">
+                <label class="label-br">File mask:</label>
+                <input type="text" class="form-control" placeholder="*.csv">
+            </div>
+        </td>
+        <td>&nbsp;</td>
+        <td>
+            <div class="input-group">
+                          <span class="input-group-addon check-cron">
+                            <input type="checkbox">
+                          </span>
+                <input type="text" class="form-control" placeholder="overvrite existing files">
+            </div>
+        </td>
+    </tr>
+</table>

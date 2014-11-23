@@ -9,7 +9,12 @@ JobTag.reopenClass({
   FIXTURES: [
     {
       id: 1,
-      name: "edi",
+      name: "web",
+      job: 1
+    },
+    {
+      id: 2,
+      name: "monitoring",
       job: 1
     }
   ]

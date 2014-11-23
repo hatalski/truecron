@@ -1,41 +1,93 @@
-
 <div class="row">
-    <div class="col-sm-7">
-      <h3><span class="job-name" data-toggle="tooltip" data-placement="bottom" title="Rename">{{name}}</span><h3>
-    </div>
-    <div class="col-sm-5 text-right">
-        <h3>
-        <a href="#">
-        {{#if this.active}}
-            <u>active</u>
-        {{else}}
-            <u>inactive</u>
-        {{/if}}
-        </a>
-        </h3>
+    <div class="col-sm-12">
+      <h2><span class="job-name" data-toggle="modal" data-target="#jobNameForm" title="Rename">{{name}}</span> <small>{{#each tags}} {{name}} {{/each}}</small><h2>
+      <div class="modal fade" id="jobNameForm">
+          <div class="modal-dialog">
+            <div class="modal-content">
+              <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                <h4 class="modal-title">Rename job</h4>
+              </div>
+              <form role="form" {{action "rename" this}}>
+                  <div class="modal-body">
+                    <div class="form-group">
+                        <p>Enter a new job name:</p>
+                        {{input type="text" class="form-control" value=name autofocus=true}}
+                    </div>
+                  </div>
+                  <div class="modal-footer">
+                    <button type="submit" class="btn btn-primary" data-dismiss="modal">Ok</button>
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+                  </div>
+              </form>
+            </div><!-- /.modal-content -->
+          </div><!-- /.modal-dialog -->
+        </div><!-- /.modal -->
     </div>
 </div>
-<br>
 <div class="row">
-    <div class="col-sm-2">
-        <button {{action "runjob"}} type="button" class="chok"><i class="fa fa-play"></i> Run</button>
+    <div class="col-sm-8">
+        <h4 class="text-capitalize" data-toggle="modal" data-target="#rescheduleForm" title="Reschedule"><span class="job-name">{{recurrence.text}}</span></h4>
+        {{!-- <h5 class="blue_row">{{recurrence.text}}</h5> --}}
+        {{!-- <h5>Ends after 5 runs</h5> --}}
     </div>
-    <div class="col-sm-6">
-      <h4 class="blue_row">{{recurrence.text}}</h4>
-      <div>Ends after 5 runs</div>
+    <div class="col-sm-1 text-right">
+        <h5>last:</h5>
+        <h5>next:</h5>
     </div>
-    <div class="col-sm-2">
-        <h4>LAST RUN</h4>
-        <div>{{format-date recurrence.lastRun 'L LT'}}</div>
-    </div>
-    <div class="col-sm-2">
-        <h4>NEXT RUN</h4>
-        <div>{{format-date recurrence.nextRun 'L LT'}}</div>
+    <div class="col-sm-3">
+        <h5>{{format-date recurrence.lastRun 'L LT'}}</h5>
+        <h5>{{format-date recurrence.nextRun 'L LT'}}</h5>
     </div>
 </div>
-<br>
+<div class="modal fade" id="rescheduleForm">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+        <h4 class="modal-title">Reschedule job</h4>
+      </div>
+      <form role="form" {{action "rename" this}}>
+          <div class="modal-body">
+            <div class="form-group">
+                <p>Summary:</p>
+                <p>{{recurrence.text}}</p>
+            </div>
+            <div class="form-group">
+                <p>Repeats:</p>
+                {{view "select" content=repeatRules value=selectedRepeatRule}}
+            </div>
+            <div class="form-group">
+                <p>Repeats every:</p>
+                {{view "select" content=repeatEvery value=selectedRepeatEvery}} {{selectedRepeatRule}}
+            </div>
+            <div class="form-group">
+                <p>Starts on:</p>
+                {{input type="text"}}
+            </div>
+            <div class="form-group">
+                <p>Ends:</p>
+                {{input type="radio" name="repeatRuleEnds" value="never"}} Never
+                {{input type="radio" name="repeatRuleEnds" value="after"}} After
+                {{input type="radio" name="repeatRuleEnds" value="on"}} On
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button type="submit" class="btn btn-primary" data-dismiss="modal">Ok</button>
+            <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+          </div>
+      </form>
+    </div><!-- /.modal-content -->
+  </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+<br/>
 <div class="row">
     <div class="col-sm-9">
+        <button {{action "run" this}} type="button" class="chok"><i class="fa fa-play"></i> Run</button>
+        <button {{action "suspend" this}} type="button" class="chok active"><i class="fa fa-pause"></i> Suspend</button>
+        {{active}}
+        <button {{action "archive" this}} type="button" class="chok"><i class="fa fa-archive"></i> Archive</button>
+        {{archived}}
     </div>
     <div class="col-sm-3" align="right">
         <button {{action "addtask" this}} type="button" class="chok"><i class="fa fa-plus"></i> Add Task</button>
@@ -46,14 +98,14 @@
   <table class="table table-striped lastrowborder">
       <tbody>
       {{#each tasks}}
-        <tr {{action "viewtask" this}}>
-            <td class="icon-row"><span class="title-icon"><i class="fa fa-ellipsis-v"></i><i class="fa fa-ellipsis-v"></i><i class="fa fa-ellipsis-v"></i><i class="fa fa-ellipsis-v"></i></td>
+        {{#link-to "dashboard.organization.workspace.tasks.task" this.job.id this tagName="tr" activeClass="active-task" class="clickable"}}
+            <td class="icon-row"><i class="fa fa-arrows-alt"></i></td>
             <td>{{position}}.</td>
             <td>{{taskType.name}}</td>
             <td>{{name}}</td>
             <td>output</td>
             <td class="underline">0.68s</td>
-        </tr>
+        {{/link-to}}
       {{else}}
         <tr>
             <td style="border: none;background:none;text-align:center">There are no tasks yet created for this job. Please click "Add Task" button to add a first one.</td>
@@ -62,39 +114,24 @@
       </tbody>
   </table>
 </div>
-<div class="accordion" id="accordion2">
-<div class="accordion-group"><!--start part1 accordion2-->
-    <div class="accordion-heading">
-        <button class="accordion-toggle buttonaccordion" data-toggle="collapse" data-parent="#accordion2" href="#collapseOne">
-            <span class="title-icon"><i class="fa fa-chevron-right"></i>Recent Changes</span>
-        </button>
-    </div>
-    <div id="collapseOne" class="accordion-body collapse in">
-        <div class="accordion-inner">
-            <div class="checkbox inline">
-                &nbsp; by: &nbsp; &nbsp;&nbsp;&nbsp;&nbsp;
-                <input type="checkbox" id="inlineCheckbox2" value="option2"> me &nbsp; &nbsp; &nbsp;
-                <input type="checkbox" id="inlineCheckbox3" value="option3"> others &nbsp; &nbsp; &nbsp;
-            </div>
-            <div class="table-responsive">
-                <table class="table table-striped lastrowborder ">
-                    <tbody>
-                        {{#each history}}
-                        <tr>
-                            <td>{{format-date updatedAt 'L LT'}}</td>
-                            <td>{{updatedBy.name}}</td>
-                            <td>{{description}}</td>
-                        </tr>
-                        {{/each}}
-                    </tbody>
-                </table>
-            </div>
-        </div>
-    </div>
-</div><!--end part1 accordion2--><hr>
 <div class="row">
-    <div class="col-sm-12" align="right">
-        <a href="#"><u>archive</u></a>
+    <h3>Revision history</h3>
+    <div class="checkbox inline">
+        <span>by:</span>
+        <label>{{input type="checkbox" id="filterRecentChangesByMe" value="me"}} me</label>
+        <label>{{input type="checkbox" id="filterRecentChangesByOthers" value="others"}} others</label>
     </div>
-</div>
+    <div class="table-responsive">
+        <table class="table table-striped lastrowborder ">
+            <tbody>
+                {{#each history}}
+                <tr>
+                    <td>{{format-date updatedAt 'L LT'}}</td>
+                    <td>{{updatedBy.name}}</td>
+                    <td>{{description}}</td>
+                </tr>
+                {{/each}}
+            </tbody>
+        </table>
+    </div>
 </div>

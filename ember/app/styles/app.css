@@ -6,9 +6,8 @@
 /*
  * Main content
  */
-.main {
-  margin-top: 51px;
-  padding: 20px;
+.cron-main {
+  padding: 0;
 }
 @media (min-width: 768px) {
   .main {
@@ -16,8 +15,10 @@
     padding-left: 0px;
   }
 }
-.main .page-header {
-  margin-top: 0;
+
+tr.clickable {
+  cursor: pointer;
+  cursor: hand;
 }
 
 .job-name {
@@ -202,6 +203,18 @@ a {
   background: url("loading.gif") no-repeat left center;
 }
 
+.archived-task {
+  color: #c9c9cb;
+}
+
+.active-task td:first-child {
+  border-left: solid 3px #ff9e2f;
+}
+
+.active-task td:last-child {
+  background: url("arrow.png") no-repeat right center;
+}
+
 .sidebar_tabs .nav-tabs li {width: 50%}
 
 /*
@@ -209,17 +222,12 @@ a {
  */
 
 .main {
-  margin-top: 51px;
+  margin-top: 31px;
   padding: 20px;
 }
 @media (min-width: 768px) {
   .main {
-    padding-right: 40px;
-    padding-left: 60px;
   }
-}
-.main .page-header {
-  margin-top: 0;
 }
 
 /*
@@ -534,7 +542,7 @@ a {
 /* start signin style */
 .chok {
   background-color: #fff;
-  padding: 12px 30px 12px 30px;
+  padding: 6px 15px 6px 15px;
   border: 1px solid #10accc;
 }
 .orblk {
@@ -544,10 +552,6 @@ a {
   margin-left: 213px;
 }
 /* end signin style */
-
-.archevedtask {
-  color: #c9c9cb;
-}
 
 /*table body dashboard*/
 .bodydashboard {
