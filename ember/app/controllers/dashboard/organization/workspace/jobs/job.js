@@ -38,6 +38,11 @@ export default Ember.ObjectController.extend({
                 console.dir('new task is created: ' + newTask);
                 self.transitionToRoute('dashboard.organization.workspace.tasks.task', newTask.get('job.id'), newTask);
             });
+        },
+        archive: function(job) {
+            job.deleteRecord();
+            job.save();
+            this.transitionToRoute('dashboard.organization.workspace.jobs', job.get('workspace'));
         }
     }
 });

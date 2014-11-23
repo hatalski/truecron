@@ -6,12 +6,12 @@ export default Ember.Route.extend({
 	    if (wsp === undefined) {
 	    	wsp = this.modelFor('dashboard.organization.workspace');
 	    }
+	    this.set('workspace', wsp);
 	    var jobs = wsp.get('jobs');
 	    return jobs;
 	},
 	setupController: function(controller, model) {
-		// controller.set('current', this.get('params'));
-	    // this.controllerFor('dashboard').set('test', this.get('params'));
+	    this.controllerFor('dashboard.organization.workspace.jobs').set('workspace', this.get('workspace'));
 	    // var organization = this.controllerFor('dashboard').get('choosenOrganization');
 	    // var workspace = this.controllerFor('dashboard').get('choosenWorkspace');
 	    // var workspaceModel = this.modelFor('dashboard.organization.workspace');
@@ -24,7 +24,7 @@ export default Ember.Route.extend({
 		if (jobs.get('length') > 0) {
 			this.transitionTo('dashboard.organization.workspace.jobs.job', jobs.get('firstObject'));
 		} else {
-			this.transitionTo('dashboard.organization.workspace.jobs.new');
+			this.transitionTo('dashboard.organization.workspace.jobs');
 		}
 	}
 });

@@ -21,7 +21,6 @@ Router.map(function() {
         });
         this.route('connections', { path: '/connections' }, function() { // job details full screen
           this.route('index'); // explain connections
-          this.route('new');
           this.route('connection', { path: '/:connection_id' }); // task details on the right side
         });
       });
