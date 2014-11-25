@@ -1,0 +1,94 @@
+<div class="row">
+    <h2><span class="job-name" data-toggle="modal" data-target="#taskNameForm" title="Rename">{{name}}</span> <small>{{taskType.name}}</small> <h2>
+</div>
+<div class="modal fade" id="taskNameForm">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+        <h4 class="modal-title">Rename task</h4>
+      </div>
+      <form role="form" {{action "rename" this}}>
+          <div class="modal-body">
+            <div class="form-group">
+                <p>Enter a new task name:</p>
+                {{input type="text" class="form-control" value=name}}
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button type="submit" class="btn btn-primary" data-dismiss="modal">Ok</button>
+            <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+          </div>
+      </form>
+    </div><!-- /.modal-content -->
+  </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+<div class="row">
+    <div class="col-sm-6">
+        {{!-- <label class="label-br">Type:</label> --}}
+        <div class="btn-group cron-drop">
+            <button type="button dropdown-toggle" data-toggle="dropdown" class="btn btn-cron"><b>type:</b> {{taskType.name}}</button>
+            <button type="button" class="btn caret-cron dropdown-toggle" data-toggle="dropdown">
+                <span class="caret"></span>
+                <span class="sr-only">Toggle Dropdown</span>
+            </button>
+            <ul class="dropdown-menu" role="menu">
+                {{#each taskTypes}}
+                    <li><a href="#" {{action "changeType" this}}>{{name}}</a></li>
+                {{/each}}
+            </ul>
+        </div>
+    </div>
+    <div class="col-sm-6 text-right">
+    {{active}}
+        <button {{action "suspend" this}} type="button" class="chok"><i class="fa fa-pause"></i> Suspend</button>
+        <button {{action "delete" this}} type="button" class="chok"><i class="fa fa-remove"></i> Delete</button>
+    </div>
+</div>
+<div class="row" style="margin-top: 15px; margin-bottom: 15px; padding-top: 10px; padding-bottom: 10px; border-top: 1px solid #EEE; border-bottom: 1px solid #EEE;">
+    {{partial taskTypePartial}}
+</div>
+<div class="row">
+    <label class="label-br">Failure conditions:</label>
+    <table>
+        <tr valign="top">
+            <td>
+                <div class="input-group">
+                    <span class="input-group-addon check-cron">
+                        <input type="checkbox">
+                    </span>
+                    <input type="text" class="form-control" placeholder="timeout">
+                </div>
+            </td>
+            <td width="5%">&nbsp;</td>
+            <td>
+                <div class="btn-group cron-drop">
+                    <button type="button dropdown-toggle" data-toggle="dropdown" class="btn btn-cron">10 seconds</button>
+                    <button type="button" class="btn caret-cron dropdown-toggle" data-toggle="dropdown">
+                        <span class="caret"></span>
+                        <span class="sr-only">Toggle Dropdown</span>
+                    </button>
+                    <ul class="dropdown-menu" role="menu">
+                        <li><a href="#">Action</a></li>
+                        <li><a href="#">Another action</a></li>
+                        <li><a href="#">Something else here</a></li>
+                        <li class="divider"></li>
+                        <li><a href="#">Separated link</a></li>
+                    </ul>
+                </div>
+            </td>
+        </tr>
+    </table>
+</div>
+<br/>
+<div class="row">
+    <h3>Task Output</h3>
+    <div>
+        <h5>Clean Folder, Monday, May 26th, duration: 0.68s</h5>
+        <p>Lorem ipsum dolor sit amet, con sectetur adipisicing elit, sed do eiusmod tempor
+            incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud
+            exertition, unllamco laboris nisi ut aliquip ex ea commodo concequat. Duis aute irure
+            dolor in reprehenderit in volupdate velit esse cillum dolore eu fugiat nulla pariatur.
+        </p>
+    </div>
+</div>

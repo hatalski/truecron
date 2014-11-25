@@ -2,24 +2,29 @@
  * Created by estet on 10/26/14.
  */
 
-var jobRunner = new function()
-{
-    this.runTasks = function(job, callBack)
-    {
-        if(!job)
-        {
-            throw new Exception('job is required parameter');
+var jobRunner = function(job, callBack) {
+    if (!job) {
+        throw new Exception('Sorry mate, but job is required parameter');
+    }
+
+    var executeTask = function (index) {
+        if (job.tasks.length > index) {
+            var task = job.tasks[index];
+            if (task) {
+                task.run(executeTask(index + 1));//on call back running next task in order
+            }
         }
-
-        if(job.tasks) {
-
-            job.tasks.forEach(
-                function (index, task) {
-                    taskRunner.run(task);
-                }
-            );
+        else {
+            if (typeof callBack === 'function') {
+                callBack();
+            }
         }
     };
+
+    if (job.tasks) {
+
+        executeTask(0);//Executing first task.
+    }
 };
 
 module.exports = jobRunner;

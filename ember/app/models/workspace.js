@@ -5,8 +5,9 @@ var Workspace =   DS.Model.extend({
     createdAt:    DS.attr('date'),
     updatedAt:    DS.attr('date'),
     updatedBy:    DS.belongsTo('person', { async: true }),
+    organization: DS.belongsTo('organization', { async: true }),
     jobs:         DS.hasMany('job', { async: true }),
-    organization: DS.belongsTo('organization', { async: true })
+    connections:  DS.hasMany('connection', { async: true })
 });
 
 Workspace.reopenClass({
@@ -16,7 +17,8 @@ Workspace.reopenClass({
       name: 'Development',
       createdAt: new Date(),
       updatedAt: new Date(),
-      jobs: [1,2,3,4,5],
+      jobs: [1,2,3,5],
+      connections: [1,2,3],
       organization: 1
     },
     {
@@ -24,7 +26,8 @@ Workspace.reopenClass({
       name: 'Production',
       createdAt: new Date(),
       updatedAt: new Date(),
-      jobs: [],
+      jobs: [4,6],
+      connections: [],
       organization: 1
     },
     {
@@ -33,6 +36,7 @@ Workspace.reopenClass({
       createdAt: new Date(),
       updatedAt: new Date(),
       jobs: [],
+      connections: [],
       organization: 2
     },
     {
@@ -41,6 +45,7 @@ Workspace.reopenClass({
       createdAt: new Date(),
       updatedAt: new Date(),
       jobs: [],
+      connections: [],
       organization: 2
     },
     {
@@ -49,6 +54,7 @@ Workspace.reopenClass({
       createdAt: new Date(),
       updatedAt: new Date(),
       jobs: [],
+      connections: [],
       organization: 2
     }
   ]

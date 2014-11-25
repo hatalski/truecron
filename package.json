@@ -7,6 +7,7 @@
     "test": "mocha test -R spec --timeout 10000"
   },
   "dependencies": {
+    "archiver": "^0.12.0",
     "basic-auth": "~1.0.0",
     "bcryptjs": "~2.0.2",
     "bluebird": "~2.3.2",
@@ -21,7 +22,7 @@
     "express-validator": "2.6.0",
     "express-winston": "0.2.8",
     "handlebars-helper-rawinclude": "~0.0.1",
-    "jsonwebtoken":"~1.1.2",
+    "jsonwebtoken": "~1.1.2",
     "morgan": "~1.2.2",
     "nconf": "0.6.9",
     "node-logentries": "^0.1.4",

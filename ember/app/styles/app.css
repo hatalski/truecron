@@ -6,9 +6,8 @@
 /*
  * Main content
  */
-.main {
-  margin-top: 51px;
-  padding: 20px;
+.cron-main {
+  padding: 0;
 }
 @media (min-width: 768px) {
   .main {
@@ -16,8 +15,21 @@
     padding-left: 0px;
   }
 }
-.main .page-header {
-  margin-top: 0;
+
+tr.clickable {
+  cursor: pointer;
+  cursor: hand;
+}
+
+.job-name {
+  /*text-transform: uppercase;*/
+  cursor: pointer;
+  cursor: hand;
+  border-bottom: 1px dashed #d0d0d0;
+}
+
+.job-name:hover {
+  background-color: #EEE;
 }
 
 /* vm - border last row table */
@@ -119,7 +131,7 @@ a {
   .sidebar {
     position: fixed;
     min-width: 275px;
-    top: 164px;
+    top: 138px;
     bottom: 0;
     left: 0;
     z-index: 1000;
@@ -136,7 +148,7 @@ a {
   .sidebar_tabs {
     position: fixed;
     min-width: 275px;
-    top: 51px;
+    top: 50px;
     bottom: 0;
     left: 0;
     z-index: 1000;
@@ -191,6 +203,18 @@ a {
   background: url("loading.gif") no-repeat left center;
 }
 
+.archived-task {
+  color: #c9c9cb;
+}
+
+.active-task td:first-child {
+  border-left: solid 3px #ff9e2f;
+}
+
+.active-task td:last-child {
+  background: url("arrow.png") no-repeat right center;
+}
+
 .sidebar_tabs .nav-tabs li {width: 50%}
 
 /*
@@ -198,17 +222,12 @@ a {
  */
 
 .main {
-  margin-top: 51px;
+  margin-top: 31px;
   padding: 20px;
 }
 @media (min-width: 768px) {
   .main {
-    padding-right: 40px;
-    padding-left: 60px;
   }
-}
-.main .page-header {
-  margin-top: 0;
 }
 
 /*
@@ -252,7 +271,7 @@ a {
   text-decoration: underline;
 }
 
-.sidebar_tabs .nav-tabs > li.active > a, .nav-tabs > li.active > a:hover, .nav-tabs > li.active > a:focus {
+.sidebar_tabs .nav-tabs > li.active, .nav-tabs > li.active:hover, .nav-tabs > li.active:focus {
   background-color: #f4f4f4;
   color: #ff9e40;
   font-weight: bold;
@@ -263,7 +282,7 @@ a {
   padding-left: 0;
   padding-right: 0;
 }
-.sidebar_tabs .nav-tabs > li > a {
+.sidebar_tabs .nav-tabs > li {
   border-radius: 0;
   color: #bcbcbe;
   font-size: 17px;
@@ -523,7 +542,7 @@ a {
 /* start signin style */
 .chok {
   background-color: #fff;
-  padding: 12px 30px 12px 30px;
+  padding: 6px 15px 6px 15px;
   border: 1px solid #10accc;
 }
 .orblk {
@@ -533,10 +552,6 @@ a {
   margin-left: 213px;
 }
 /* end signin style */
-
-.archevedtask {
-  color: #c9c9cb;
-}
 
 /*table body dashboard*/
 .bodydashboard {

@@ -1,0 +1,79 @@
+<table width="100%">
+    <tr>
+        <td>
+            <label class="label-br">Connection:</label>
+            <div class="btn-group cron-drop">
+                <button type="button dropdown-toggle" data-toggle="dropdown" class="btn btn-cron">AWS SES</button>
+                <button type="button" class="btn caret-cron dropdown-toggle" data-toggle="dropdown">
+                    <span class="caret"></span>
+                    <span class="sr-only">Toggle Dropdown</span>
+                </button>
+                <ul class="dropdown-menu" role="menu">
+                    <li><a href="#">smtp</a></li>
+                    <li><a href="#">ftp</a></li>
+                    <li><a href="#">type#3</a></li>
+                    <li class="divider"></li>
+                    <li><a href="#">Separated link</a></li>
+                </ul>
+            </div>
+        </td>
+        <td> &nbsp;</td>
+        <td></td>
+    </tr>
+    <tr>
+        <td>
+            <br><label class="label-br">Recipients:</label>
+        </td>
+        <td width="10%">&nbsp;</td>
+        <td>
+        </td>
+    </tr>
+    <tr>
+        <td><img src="assets/eml.png"></td>
+    </tr>
+    <tr valign="bottom">
+        <td colspan="3">
+            <div class="input-section">
+                <label class="label-br">From:</label>
+                <input type="text" class="form-control" placeholder="client.notifications@ccron.com">
+            </div>
+        </td>
+    </tr>
+    <tr valign="bottom">
+        <td colspan="3">
+            <div class="input-section">
+                <label class="label-br">Subject:</label>
+                <input type="text" class="form-control" placeholder="American Signature Invoice File is Availabl - {DATE(MM/DD/YYYY)}">
+            </div>
+        </td>
+    </tr>
+    <tr valign="bottom">
+        <td colspan="3">
+            <div class="input-section">
+                <label class="label-br">Body:</label>
+                <textarea rows="7" cols="100%">
+Invoice file is available for processing
+Summary:
+Number Of Invoices: <Total number of invoices>
+Total Vendor Amount: <Total invoice amount>
+                </textarea>
+            </div>
+        </td>
+    </tr>
+</table>
+<table class="allwidth"><!--start table with drag&drop element-->
+    <tr>
+        <td colspan="3"><label class="label-br">Attachments:</label></td>
+    </tr>
+    <tr>
+        <td rowspan="2" style="width: 274px;"><img src="assets/dndform.png"></td>
+        <td align="left" valign="top">&nbsp;&nbsp;Attachment1.txt &nbsp;<i class="fa fa-times"></i>
+            <br>&nbsp;&nbsp;Attachment2.txt &nbsp;<i class="fa fa-times"></i>
+            <p>&nbsp;&nbsp;<button type="button" class="btn btn-default">Choose file</button></p>
+        </td>
+        <br>
+        <td></td>
+    </tr>
+    <tr><td></td>
+        <td></td></tr>
+</table><!--end table with drag&drop element-->

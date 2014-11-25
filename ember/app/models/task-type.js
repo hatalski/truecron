@@ -29,6 +29,10 @@ TaskType.reopenClass({
     {
       id: 6,
       name: 'http'
+    },
+    {
+      id: 7,
+      name: 'empty'
     }
   ]
 });
