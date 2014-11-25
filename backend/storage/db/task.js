@@ -29,7 +29,8 @@ module.exports = function(sequelize, DataTypes) {
                                 this.setDataValue('settings', value);
                             }
                         },
-        updatedByPersonId:{ type: DataTypes.BIGINT, allowNull:false}
+        updatedByPersonId:{ type: DataTypes.BIGINT, allowNull:false},
+        timeout:{ type: DataTypes.BIGINT, allowNull:false}
     }, {
         schema: 'tc',
         tableName: 'task',
