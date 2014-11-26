@@ -36,6 +36,7 @@ Storage.prototype.initialize = Promise.method(function initialize() {
     this.Organization = require('./organization');
     this.Jobs = require('./jobs');
     this.Tasks = require('./tasks');
+    this.Runs = require('./runs');
     //this.Workspace = require('./workspace');
 
     return db.upgradeDatabaseIfNeeded(databaseOptions);

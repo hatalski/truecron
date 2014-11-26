@@ -24,7 +24,8 @@ module.exports.initialize = function(sequelize) {
         'organization',
         'organizationtoperson',
         'job',
-        'task'
+        'task',
+        'run'
         //'workspace',
     ];
 
