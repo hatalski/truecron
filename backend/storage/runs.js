@@ -20,7 +20,11 @@ var getRunIdCacheKey = function(runId) {
     return 'run/' + runId;
 };
 
-var createRun = module.exports.createRun = Promise.method(function (context, jobId, attributes) {
+//
+// Create run
+//
+
+var create = module.exports.create = Promise.method(function (context, jobId, attributes) {
     attributes.updatedByPersonId = context.personId;
     attributes.jobId = jobId;
     return using(models.transaction(), function (tx) {
@@ -31,6 +35,10 @@ var createRun = module.exports.createRun = Promise.method(function (context, job
             throw err;
         });
 });
+
+//
+// findAndCountAll run
+//
 
 var findAndCountAll = module.exports.findAndCountAll = Promise.method(function (context, options) {
     return models.Run.findAndCountAll(options)

@@ -59,30 +59,30 @@ describe('RUNS API',
                     done();
                 });
         });
-//        id_to_delete=3;
-//        it('create a new run', function (done) {
-//            superagent.post(prefix + '/jobs/'+id_to_delete+'/runs')
-//                .set('Content-Type', 'application/json')
-//                .authenticate(accessToken)
-//                .send({ 'run': {
-//                    "jobId": id_to_delete,
-//                    'startedAt': '2014-08-21T10:00:11Z',
-//                    "startedByPersonId": updatedByPersonId,
-//                    "status": 5,
-//                    "elapsed": "15",
-//                    "message": "Hello World!"
-//                }
-//                })
-//                .end(function (e, res) {
-//                    expect(e).to.eql(null);
-//                    expect(res.status).to.eql(201);
-//                    expect(res.header['content-type']).to.eql('application/json; charset=utf-8');
-//                    expect(res.body.error).to.eql(undefined);
-//                    id_run_to_delete = res.body.run.id;
-//                    expect(res.body.run.id).to.be.a('string');
-//                    done();
-//                });
-//        });
+        //id_to_delete=-222;
+        it('create a new run', function (done) {
+            superagent.post(prefix + '/jobs/'+id_to_delete+'/runs')
+                .set('Content-Type', 'application/json')
+                .authenticate(accessToken)
+                .send({ 'run': {
+                    "jobId": id_to_delete,
+                    'startedAt': '2014-08-21T10:00:11Z',
+                    "startedByPersonId": updatedByPersonId,
+                    "status": 5,
+                    "elapsed": '1 day -01:00:00',
+                    "message": "Hello World!"
+                }
+                })
+                .end(function (e, res) {
+                    expect(e).to.eql(null);
+                    expect(res.status).to.eql(201);
+                    expect(res.header['content-type']).to.eql('application/json; charset=utf-8');
+                    expect(res.body.error).to.eql(undefined);
+                    id_run_to_delete = res.body.run.id;
+                    expect(res.body.run.id).to.be.a('string');
+                    done();
+                });
+        });
 
         it('get all runs', function (done) {
             superagent.get(prefix + '/jobs/'+id_to_delete+'/runs')
@@ -96,52 +96,62 @@ describe('RUNS API',
                     done();
                 });
         });
+        //id_run_to_delete=3;
+        it('get run by id', function (done) {
+            superagent.get(prefix + '/jobs/' + id_to_delete+'/runs/'+id_run_to_delete)
+                .send()
+                .authenticate(accessToken)
+                .end(function (e, res) {
+                    expect(e).to.eql(null);
+                    expect(res.header['content-type']).to.eql('application/json; charset=utf-8');
+                    expect(res.body.error).to.eql(undefined);
+                    expect(res.body.run.id).to.be.a('string');
+                    expect(validator.isDate(res.body.run.startedAt)).to.be.ok();
+                    expect(res.status).to.eql(200);
+                    done();
+                });
+        });
 
-//        it('get run by id', function (done) {
-//            superagent.get(prefix + '/jobs/' + id_to_delete+'/runs/'+id_run_to_delete)
-//                .send()
-//                .authenticate(accessToken)
-//                .end(function (e, res) {
-//                    expect(e).to.eql(null);
-//                    expect(res.header['content-type']).to.eql('application/json; charset=utf-8');
-//                    expect(res.body.error).to.eql(undefined);
-//                    expect(res.body.run.id).to.be.a('string');
-//                    expect(validator.isDate(res.body.run.startedAt)).to.be.ok();
-//                    expect(res.status).to.eql(200);
-//                    done();
-//                });
-//        });
 
-////        id_to_delete=114;
-////        id_run_to_delete=17;
-//
-//        it('update run', function (done) {
-//            superagent.put(prefix + '/jobs/' + id_to_delete+'/runs/'+id_run_to_delete)
-//                .set('Content-Type', 'application/json')
-//                .send({ "run":  {
-//                    "status": 10
-//                }
-//                })
-//                .authenticate(accessToken)
-//                .end(function (e, res) {
-//                    expect(e).to.eql(null);
-//                    expect(res.header['content-type']).to.eql('application/json; charset=utf-8');
-//                    expect(res.status).to.eql(200);
-//                    done();
-//                });
-//        });
+        //it('update run', function (done) {
+        //    superagent.put(prefix + '/jobs/' + id_to_delete+'/runs/'+id_run_to_delete)
+        //        .set('Content-Type', 'application/json')
+        //        .send({ "run":  {
+        //            "message": 'Hello my world!!!'
+        //        }
+        //        })
+        //        .authenticate(accessToken)
+        //        .end(function (e, res) {
+        //            expect(e).to.eql(null);
+        //            expect(res.header['content-type']).to.eql('application/json; charset=utf-8');
+        //            expect(res.status).to.eql(200);
+        //            done();
+        //        });
+        //});
 
-//        it('delete run', function (done) {
-//            superagent.del(prefix + '/jobs/' + id_to_delete+'/runs/'+id_run_to_delete)
-//                .send()
-//                .authenticate(accessToken)
-//                .end(function (e, res) {
-//                    expect(e).to.eql(null);
-//                    expect(res.body.error).to.eql(undefined);
-//                    expect(res.status).to.eql(204);
-//                    done();
-//                });
-//        });
+        it('delete run', function (done) {
+            superagent.del(prefix + '/jobs/' + id_to_delete+'/runs/'+id_run_to_delete)
+                .send()
+                .authenticate(accessToken)
+                .end(function (e, res) {
+                    expect(e).to.eql(null);
+                    expect(res.body.error).to.eql(undefined);
+                    expect(res.status).to.eql(204);
+                    done();
+                });
+        });
+
+        //it('delete non-existent run should fail with 404', function (done) {
+        //    superagent.del(prefix + '/jobs/' + id_to_delete+'/runs/-123154654')
+        //        .send()
+        //        .authenticate(accessToken)
+        //        .end(function (e, res) {
+        //            expect(e).to.eql(null);
+        //            expect(res.status).to.eql(404);
+        //            expect(res.body.error.status).to.eql(404);
+        //            done();
+        //        });
+        //});
 
         it('delete job', function (done) {
             superagent.del(prefix + '/jobs/'+ id_to_delete)

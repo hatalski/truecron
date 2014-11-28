@@ -36,7 +36,7 @@ api.route('/jobs/:jobid/runs')
         if (!!req.listParams.searchTerm) {
             where = { jobId: req.params.jobid };
         }
-        var sort = req.listParams.sort || 'name';
+        var sort = req.listParams.sort || 'elapsed';
 
         storage.Runs.findAndCountAll(req.context, {
             where: where,
@@ -52,13 +52,13 @@ api.route('/jobs/:jobid/runs')
         });
     })
     //
-    // Add a new run
+    // Create a new run
     //
     .post(function (req, res, next) {
         if (!req.body || !req.body.run) {
             return next(new apiErrors.InvalidParams());
         }
-        storage.Runs.createRun(req.context, req.params.jobid, req.body.run)
+        storage.Runs.create(req.context, req.params.jobid, req.body.run)
             .then(function (run) {
                 res.status(201).json(formatRun(run));
             })
@@ -78,7 +78,7 @@ api.route('/jobs/:jobid/runs/:runid')
         if (!!req.listParams.searchTerm) {
             where = { jobId: req.params.jobid , id:req.params.runid};
         }
-        var sort = req.listParams.sort || 'name';
+        var sort = req.listParams.sort || 'elapsed';
 
         storage.Runs.findById(req.context, req.params.runid, req.params.jobid).then(function (run) {
             res.json(formatRun(run));

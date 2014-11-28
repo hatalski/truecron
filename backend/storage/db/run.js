@@ -15,11 +15,11 @@ module.exports = function(sequelize, DataTypes) {
         }, {
         schema: 'tc',
         tableName: 'run',
-        timestamps: true,
+        timestamps: false,
         freezeTableName: true,
         classMethods: {
-            associate: function (models) {
-                Run.belongsTo(models.Job, { as: 'job', foreignKey: 'jobId' });
+            associate: function(models) {
+                Run.belongsTo(models.Person, { as: 'startedBy', foreignKey: 'startedByPersonId' });
             }
         }
     });
