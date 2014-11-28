@@ -55,7 +55,7 @@ var findAndCountAll = module.exports.findAndCountAll = Promise.method(function (
 //
 // Search for a single run by ID.
 //
-var findById = module.exports.findById = Promise.method(function (context, id, jobid, transaction) {
+var findById = module.exports.findById = Promise.method(function (context, jobid, id,  transaction) {
     return cache.get(getRunIdCacheKey(id))
         .then(function (result) {
             if (result.found) {
@@ -76,12 +76,12 @@ var findById = module.exports.findById = Promise.method(function (context, id, j
 /**
  * Update a run.
  */
-var update = module.exports.update = Promise.method(function (context, id, jobid, attributes) {
+var update = module.exports.update = Promise.method(function (context, jobid, id, attributes) {
     attributes.updatedByPersonId = context.personId;
     var self = { attrs: attributes };
     return using (models.transaction(), function (tx) {
         self.tx = tx;
-        return module.exports.findById(context, id, jobid, tx)
+        return module.exports.findById(context, jobid, id, tx)
             .then(function (run) {
                 if (run === null) {
                     throw new errors.NotFound();
@@ -107,10 +107,10 @@ var update = module.exports.update = Promise.method(function (context, id, jobid
 /**
  * Remove a run.
  */
-var remove = module.exports.remove = Promise.method(function (context, id) {
+var remove = module.exports.remove = Promise.method(function (context, jobId, id) {
     return using (models.transaction(), function (tx) {
         var self = { tx: tx };
-        return findById(context, id)
+        return findById(context, jobId, id)
             .then(function (run) {
                 if (run === null) {
                     // No found, that's ok for remove() operation

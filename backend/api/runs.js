@@ -51,6 +51,8 @@ api.route('/jobs/:jobid/runs')
                 }});
         });
     })
+
+/* not use for api
     //
     // Create a new run
     //
@@ -68,6 +70,8 @@ api.route('/jobs/:jobid/runs')
             });
     });
 
+*/
+
 api.route('/jobs/:jobid/runs/:runid')
 
 //
@@ -80,19 +84,30 @@ api.route('/jobs/:jobid/runs/:runid')
         }
         var sort = req.listParams.sort || 'elapsed';
 
-        storage.Runs.findById(req.context, req.params.runid, req.params.jobid).then(function (run) {
-            res.json(formatRun(run));
-        });
-    })
-
+        storage.Runs.findById(req.context, req.params.jobid, req.params.runid)
+            .then(function (run) {
+                if (run!==null){
+                    res.json(formatRun(run));
+                }
+            else{
+                    next(new apiErrors.NotFound());
+                }
+        })
+            .catch(function (err) {
+                logger.error(err.toString());
+                next(err);
+            })
+    });
+/* not use for api
     //
     // Update a run
     //
+
     .put(function (req, res, next) {
         if (!req.body || !req.body.run) {
             return next(new apiErrors.InvalidParams());
         }
-        storage.Runs.update(req.context, req.params.runid, req.params.jobid, req.body.run)
+        storage.Runs.update(req.context, req.params.jobid, req.params.runid, req.body.run)
             .then(function (run) {
                 res.json(formatRun(run));
             });
@@ -102,10 +117,10 @@ api.route('/jobs/:jobid/runs/:runid')
 // Delete a run
 //
     .delete(function (req, res, next) {
-        storage.Runs.remove(req.context, req.params.runid)
+        storage.Runs.remove(req.context, req.params.jobid, req.params.runid)
             .then(function () {
                 res.status(204).json({});
             });
     });
-
+*/
 module.exports = api;
