@@ -20,8 +20,8 @@ module.exports = function(environment) {
   };
 
   ENV['simple-auth'] = {
-    // authenticationRoute: 'index',
-    // routeAfterAuthentication: 'dashboard',
+    authenticationRoute: 'index',
+    routeAfterAuthentication: 'dashboard',
     authorizer: 'simple-auth-authorizer:oauth2-bearer',
     crossOriginWhitelist: ['http://dev.truecron.com:3000']
   }
