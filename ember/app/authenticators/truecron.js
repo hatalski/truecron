@@ -160,7 +160,7 @@ export default Base.extend({
           }
           resolve(response);
         });
-      }, function(xhr, status, error) {
+      }, function(xhr) { // , status, error
         Ember.run(function() {
           reject(xhr.responseJSON || xhr.responseText);
         });
@@ -183,7 +183,7 @@ export default Base.extend({
       delete _this._refreshTokenTimeout;
       resolve();
     }
-    return new Ember.RSVP.Promise(function(resolve, reject) {
+    return new Ember.RSVP.Promise(function(resolve) { // , reject
       if (!Ember.isEmpty(_this.serverTokenRevocationEndpoint)) {
         var requests = [];
         Ember.A(['access_token', 'refresh_token']).forEach(function(tokenType) {
@@ -193,7 +193,7 @@ export default Base.extend({
             }));
           }
         });
-        Ember.$.when.apply(Ember.$, requests).always(function(responses) {
+        Ember.$.when.apply(Ember.$, requests).always(function() { // responses
           success(resolve);
         });
       } else {
@@ -218,8 +218,7 @@ export default Base.extend({
     @protected
   */
   makeRequest: function(url, data) {
-  	console.dir('makeRequest data : ' + data);
-    return Ember.$.ajax({
+  	return Ember.$.ajax({
       url:         url,
       beforeSend: function (xhr) {
 		xhr.setRequestHeader('Authorization', 'Basic LTI6SWdkN2VuMV9WQ01QNTlwQnBtRUY=');
@@ -237,17 +236,17 @@ export default Base.extend({
   */
   scheduleAccessTokenRefresh: function(expiresIn, expiresAt, refreshToken) {
     var _this = this;
-    if (this.refreshAccessTokens) {
+    if (_this.refreshAccessTokens) {
       var now = (new Date()).getTime();
       if (Ember.isEmpty(expiresAt) && !Ember.isEmpty(expiresIn)) {
         expiresAt = new Date(now + expiresIn * 1000).getTime();
       }
       var offset = (Math.floor(Math.random() * 5) + 5) * 1000;
       if (!Ember.isEmpty(refreshToken) && !Ember.isEmpty(expiresAt) && expiresAt > now - offset) {
-        Ember.run.cancel(this._refreshTokenTimeout);
-        delete this._refreshTokenTimeout;
+        Ember.run.cancel(_this._refreshTokenTimeout);
+        delete _this._refreshTokenTimeout;
         if (!Ember.testing) {
-          this._refreshTokenTimeout = Ember.run.later(this, this.refreshAccessToken, expiresIn, refreshToken, expiresAt - now - offset);
+          _this._refreshTokenTimeout = Ember.run.later(_this, _this.refreshAccessToken, expiresIn, refreshToken, expiresAt - now - offset);
         }
       }
     }
