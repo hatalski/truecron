@@ -141,7 +141,7 @@ describe('TASK API',
 //                    done();
 //                });
 //        });
-
+        //id_task_to_delete=2;
         it('delete task', function (done) {
             superagent.del(prefix + '/jobs/' + id_to_delete+'/tasks/'+id_task_to_delete)
                 .send()
