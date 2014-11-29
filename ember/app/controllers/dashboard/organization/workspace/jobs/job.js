@@ -25,7 +25,13 @@ export default Ember.ObjectController.extend({
     }.property('model.id'),
     recurrence: function() {
         var o = RRule.parseString(this.get('model.rrule'));
-        o.dtstart = this.get('model.startsAt');
+        var startsAt = this.get('model.startsAt');
+        console.log('startsAt : ' + startsAt);
+        if (startsAt === undefined) {
+            startsAt = new Date();
+        }
+        console.log('startsAt date : ' + new Date(startsAt));
+        o.dtstart = new Date(startsAt);
         var rule = new RRule(o);
         var now = new Date();
         return {
@@ -38,6 +44,10 @@ export default Ember.ObjectController.extend({
         rename: function(job) {
             console.log('rename to : ' + job.get('name'));
             job.save();
+        },
+        reschedule: function(job) {
+            var recurrence = job.get('recurrence');
+            console.dir('reschedule has been called', recurrence);
         },
         addtask: function(job) {
             var self = this;
