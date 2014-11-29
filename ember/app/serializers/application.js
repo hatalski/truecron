@@ -1,6 +1,7 @@
 import DS from 'ember-data';
 
 export default DS.RESTSerializer.extend({
+	serializer: DS.JSONSerializer.create({container: Ember.App.__container__})
     // primaryKey: '_id'
  //    serializeBelongsTo: function(record, json, relationship) {
 	//     var key = relationship.key,
