@@ -28,7 +28,7 @@
                     <ul class="dropdown-menu" role="menu">
                         <li>{{#link-to "profile"}}<i class="fa fa-user"></i> My Profile{{/link-to}}</li>
                         <li class="divider"></li>
-                        <li><a href="#" {{action "signout" target="controllers.signin"}}><i class="fa fa-sign-out"></i> Sign out</a></li>
+                        <li><a href="#" {{action "invalidateSession"}}><i class="fa fa-sign-out"></i> Sign out</a></li>
                     </ul>
                 </li>
             </ul>
