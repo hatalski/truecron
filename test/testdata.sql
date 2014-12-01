@@ -206,8 +206,3 @@ insert into tc.Run (id, jobId, status, elapsed)
     select -200, -222, 15, '1 day -01:00:00'
         where not exists (select * from tc.Run
     where id = -200);
-
-insert into tc.PersonEmail (id, personId, email, status)
-    select -210, 4, 'vitali.hatalski@truecron.com', 'active'
-    where not exists (select * from tc.PersonEmail
-    where id = -210);
