@@ -15,11 +15,16 @@ export default Ember.Route.extend({
 	    this._super(controller, model);
     },
 	afterModel: function(organization) {
-		console.log('afterModel' + organization);
-		// if (organization.get('firstObject') === undefined) {
-		// 	this.controllerFor('dashboard').set('choosenOrganization', organization.get('name'));
-		// } else {
-		// 	this.controllerFor('dashboard').set('choosenOrganization', organization.get('firstObject'));
+		console.log('organization afterModel : ' + organization);
+		// var self = this;
+		// var length = organization.get('workspaces.length');
+		// var workspaces = organization.get('workspaces');
+		// console.dir('redirect to workspace if any exist : ' + length);
+		// if (length > 0) {
+		// 	var firstObject = workspaces.get('firstObject');
+		// 	self.store.find('workspace', firstObject.get('id')).then(function(workspace) {
+		// 		self.transitionTo('dashboard.organization.workspace.jobs', organization, workspace);
+		//     });
 		// }
 	}
 });

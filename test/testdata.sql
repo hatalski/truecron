@@ -206,5 +206,3 @@ insert into tc.Run (id, jobId, status, elapsed)
     select -200, -222, 15, '1 day -01:00:00'
         where not exists (select * from tc.Run
     where id = -200);
-
-

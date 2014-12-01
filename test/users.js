@@ -41,7 +41,7 @@ describe('USERS API',
                     done();
                 });
         });
-        var id_to_delete;
+        var id_to_delete, id_to_save;
         it('create a new user without required name should fail', function (done) {
             superagent.post(prefix + '/users')
                 .set('Content-Type', 'application/json')
@@ -103,6 +103,7 @@ describe('USERS API',
                     expect(res.header['content-type']).to.eql('application/json; charset=utf-8');
                     expect(res.body.error).to.eql(undefined);
                     expect(res.body.user.id).to.be.a('string');
+                    id_to_save = res.body.user.id;
                     expect(res.body.user.name).to.eql('vitali.hatalski@truecron.com');
                     expect(res.body.user.password).to.eql(undefined);
                     expect(res.body.user.passwordHash).to.eql(undefined);
