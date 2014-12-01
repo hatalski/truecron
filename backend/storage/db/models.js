@@ -24,7 +24,8 @@ module.exports.initialize = function(sequelize) {
         'organization',
         'organizationtoperson',
         'job',
-        //'workspace',
+        'workspace',
+        'workspacetoperson'
     ];
 
     daos.forEach(function (dao) {

@@ -8,15 +8,17 @@ var express = require('express'),
 
 var api = express.Router();
 
-function addLinks(datajob) {
+function addLinks(req, datajob) {
     if (datajob === undefined) {
         return datajob;
     }
     var job = datajob.toJSON();
-    var selfUrl = '/jobs/' + job.id;
     job._links = {
-        self: selfUrl
+        self: req.context.links.job(job.id),
+        tasks: req.context.links.tasks(job.id),
+        history: req.context.links.jobHistory(job.id)
     };
+    common.formatApiOutput(job);
     return { job: job };
 }
 
@@ -39,7 +41,7 @@ api.route('/jobs')
             offset: req.listParams.offset
         }).then(function (result) {
             res.json({
-                jobs: result.rows.map(addLinks),
+                jobs: result.rows.map(addLinks.bind(null, req)),
                 meta: {
                     total: result.count
                 }});
@@ -55,7 +57,7 @@ api.route('/jobs')
         }
         storage.Jobs.create(req.context, req.body.job)
             .then(function (job) {
-                res.status(201).json(addLinks(job));
+                res.status(201).json(addLinks(req, job));
             })
             .catch(function (err) {
                 logger.error(err.toString());
@@ -83,6 +85,7 @@ api.param('jobid', function (req, res, next, id) {
             .then(function (job) {
                 if (job !== null) {
                     req.Jobs = job;
+                    req.context.links.jobId = job.id;
                     next();
                 } else {
                     next(new apiErrors.NotFound());
@@ -96,7 +99,7 @@ api.route('/jobs/:jobid')
     // Get a job
     //
     .get(function (req, res, next) {
-        res.json(addLinks(req.Jobs));
+        res.json(addLinks(req, req.Jobs));
     })
     //
     // Update a job
@@ -107,7 +110,7 @@ api.route('/jobs/:jobid')
         }
         storage.Jobs.update(req.context, req.Jobs.id, req.body.job)
             .then(function (job) {
-                res.json(addLinks(job));
+                res.json(addLinks(req, job));
             });
     })
     //

@@ -29,3 +29,15 @@ module.exports.parseListParams  = function (req, res, next) {
     req.listParams.direction = req.param('direction') || 'asc';
     return next();
 };
+
+module.exports.formatApiOutput = function(result) {
+    // Some common transformations we do on the objects returned from API calls.
+    if (!result) {
+        return result;
+    }
+    if (result.updatedByPersonId) {
+        result.updatedByUserId = result.updatedByPersonId;
+        delete result.updatedByPersonId;
+    }
+    return result;
+};

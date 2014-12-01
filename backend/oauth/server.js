@@ -57,7 +57,7 @@ var passwordAuth = function(req, res, next) {
     if (errors) {
         return next(oauthErrors.getInvalidRequest());
     }
-    return storage.Person.findByEmail(context.SystemContext, req.body.username)
+    return storage.Person.findByEmail(context.newSystemContext(), req.body.username)
         .then(function (person) {
             if (person === null) {
                 logger.debug('Failed to authenticate %s with password. User not found', req.body.username);
@@ -93,7 +93,7 @@ var googleAuth = function(req, res, next) {
     if (errors) {
         return next(oauthErrors.getInvalidRequest());
     }
-    return storage.Person.findByEmail(context.SystemContext, req.body.username)
+    return storage.Person.findByEmail(context.newSystemContext(), req.body.username)
         .then(function (person) {
             if (person === null) {
                 logger.debug('Failed to authenticate %s with Google. User not found', req.body.username);

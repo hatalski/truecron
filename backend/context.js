@@ -1,3 +1,4 @@
+var apiLinks = require('./api/links');
 
 /**
  * -1 is an ID of the SYSTEM user, used for system-wide activity.
@@ -12,26 +13,19 @@ module.exports.SystemPersonId = -1;
 module.exports.SystemOrgId = -2;
 
 /**
- * A security context, has information about current authenticated person, authenticated client, etc.
+ * A call context, has information about current authenticated person, authenticated client, etc.
  * @param personId {string} ID of an authenticated person.
  * @param clientId {string} ID of an authenticated client (application).
  * @constructor
  */
-var Context = function (personId, clientId) {
+var Context = function (personId, clientId, links) {
     "use strict";
     this.personId = +personId;
     this.clientId = +clientId;
+    this.links = links || new apiLinks.Links();
 };
 
 module.exports.Context = Context;
-
-/**
- * Clone an existing context.
- * @param context A Context instance to clone.
- */
-module.exports.clone = function (context) {
-    return new Context(context.personId, context.clientId);
-};
 
 /**
  * Get whether the context represents a System context, i.e. no authenticated user.
@@ -42,8 +36,18 @@ Context.prototype.isSystem = function() {
 };
 
 /**
- * A "system" context. Used when an authenticated user is not available. For example, for actions taking place
+ * Clone an existing context.
+ * @param context A Context instance to clone.
+ */
+module.exports.clone = function (context) {
+    return new Context(context.personId, context.clientId, context.links);
+};
+
+/**
+ * Create a "system" context. Used when an authenticated user is not available. For example, for actions taking place
  * before a user is authenticated, or executed on schedule, without user context.
  * @type {Context}
  */
-module.exports.SystemContext = new Context(module.exports.SystemPersonId, module.exports.SystemOrgId);
+module.exports.newSystemContext = function () {
+    return new Context(module.exports.SystemPersonId, module.exports.SystemOrgId);
+};

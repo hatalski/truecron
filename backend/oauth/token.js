@@ -13,7 +13,11 @@ var settings = {
  * Issue and send a bearer token for the specified security context.
  */
 module.exports.issue = function(context, req, res, next) {
-    var token = jwt.sign(context, settings.secret, { expiresInMinutes: settings.expiresInMinutes });
+    var data = {
+        uid: context.personId,
+        cid: context.clientId
+    };
+    var token = jwt.sign(data, settings.secret, { expiresInMinutes: settings.expiresInMinutes });
     res.set({
         'Cache-Control': 'no-store',
         'Pragma': 'no-cache'
@@ -34,8 +38,6 @@ module.exports.issue = function(context, req, res, next) {
  * If the token is invalid, the request ends with 401 code.
  */
 module.exports.verify = function(req, res, next) {
-    // Fallback value if authentication fails.
-    req.context = context.SystemContext;
     var token = '';
     var headerToken = req.get('Authorization');
     if (headerToken) {
@@ -56,8 +58,10 @@ module.exports.verify = function(req, res, next) {
             if (err) {
                return next(err);
             }
-            // Clone the decoded object to make it a Context instance and get rid of JWT fields.
-            req.context = context.clone(decoded);
+            if (!decoded.uid || !decoded.cid) {
+                next(new errors.NotAuthenticated('Invalid token.'));
+            }
+            req.context = new context.Context(decoded.uid, decoded.cid);
             return next();
         });
     } else {

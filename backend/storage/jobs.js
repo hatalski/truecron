@@ -53,7 +53,7 @@ var create = module.exports.create = Promise.method(function (context, attribute
             .then(function (job) {
                 self.job = job;
 
-                return history.logCreated(context.personId, getJobIdCacheKey(job.id), job, self.tx);
+                return history.logCreated(context.personId, context.links.job(job.id), job, self.tx);
             })
             .then(function () {
                 cache.put(getJobIdCacheKey(self.job.id), self.job);
@@ -105,7 +105,7 @@ var update = module.exports.update = Promise.method(function (context, id, attri
             })
             .then(function (job) {
                 self.job = job;
-                return history.logUpdated(context.personId, getJobIdCacheKey(job.id), job, self.oldJob, self.tx);
+                return history.logUpdated(context.personId, context.links.job(job.id), job, self.oldJob, self.tx);
             })
             .then(function () {
                 cache.put(getJobIdCacheKey(self.job.id), self.job);
@@ -132,7 +132,7 @@ var remove = module.exports.remove = Promise.method(function (context, id) {
                 self.job = job;
                 return job.destroy({transaction: self.tx})
                     .then(function () {
-                        return history.logRemoved(context.personId, getJobIdCacheKey(self.job.id), self.job, self.tx);
+                        return history.logRemoved(context.personId, context.links.job(self.job.id), self.job, self.tx);
                     })
                     .then(function () {
                         cache.remove(getJobIdCacheKey(self.job.id))

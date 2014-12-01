@@ -181,6 +181,9 @@ var processPassword = Promise.method(function (attributes) {
  * @returns A newly created person.
  */
 var create = module.exports.create = Promise.method(function (context, attributes) {
+    if (!context.isSystem()) {
+        throw new errors.AccessDenied('Only SYSTEM can create new organizations.');
+    }
     if (!attributes || validator.isNull(attributes.name)
         || validator.isNull(attributes.password) && validator.isNull(attributes.passwordHash)) {
         throw new errors.InvalidParams();
@@ -194,7 +197,7 @@ var create = module.exports.create = Promise.method(function (context, attribute
                 return models.Person.create(self.attrs, { transaction: tx })
                     .then(function (person) {
                         self.person = person;
-                        return history.logCreated(context.personId, getPersonIdCacheKey(person.id), person, self.tx);
+                        return history.logCreated(context.personId, context.links.user(person.id), person, self.tx);
                     })
                     .then(function () {
                         cache.put(getPersonIdCacheKey(self.person.id), self.person);
@@ -231,7 +234,7 @@ var update = module.exports.update = Promise.method(function (context, id, attri
                     })
                     .then(function (person) {
                         self.person = person;
-                        return history.logUpdated(context.personId, getPersonIdCacheKey(person.id), person, self.oldPerson, self.tx);
+                        return history.logUpdated(context.personId, context.links.user(person.id), person, self.oldPerson, self.tx);
                     })
                     .then(function () {
                         cache.put(getPersonIdCacheKey(self.person.id), self.person);
@@ -261,7 +264,7 @@ var remove = module.exports.remove = Promise.method(function (context, id) {
                 self.person = person;
                 return person.destroy({transaction: self.tx})
                     .then(function () {
-                        return history.logRemoved(context.personId, getPersonIdCacheKey(self.person.id), self.person, self.tx);
+                        return history.logRemoved(context.personId, context.links.user(self.person.id), self.person, self.tx);
                     })
                     .then(function () {
                         cache.remove(getPersonIdCacheKey(self.person.id),
@@ -339,7 +342,7 @@ var addEmail = module.exports.addEmail = Promise.method(function (context, perso
                 self.result = result;
                 cache.remove(getEmailsByPersonIdCacheKey(personId));
                 cache.put(getPersonIdByEmailCacheKey(email), personId);
-                return history.log(context.personId, getPersonIdCacheKey(personId), 'email-add', { email: email, status: status }, {}, self.tx);
+                return history.log(context.personId, context.links.user(personId), 'email-add', { email: email, status: status }, {}, self.tx);
             })
             .then(function () {
                 return self.result;
@@ -354,8 +357,8 @@ var addEmail = module.exports.addEmail = Promise.method(function (context, perso
 /**
  * Find a email of the person.
  * @param {int} personId ID of the person to get a email of.
- * @param {string} emailIdOrValue Either a email string or a numberic ID of the email object.
- * @param {object} transaction Optional transaction object if the search shoould be a part of transaction.
+ * @param {string} emailIdOrValue Either a email string or a numeric ID of the email object.
+ * @param {object} transaction Optional transaction object if the search should be a part of transaction.
  * @returns An instance of email object or null.
  * ```
  * { email: {
@@ -393,7 +396,7 @@ var changeEmailStatus = module.exports.changeEmailStatus = Promise.method(functi
             })
             .then(function (email) {
                 self.email = email;
-                return history.log(context.personId, getPersonIdCacheKey(personId), 'email-change-status',
+                return history.log(context.personId, context.links.user(personId), 'email-change-status',
                                     { email: email, status: newStatus }, email, self.tx);
             })
             .then(function () {
@@ -418,7 +421,7 @@ var removeEmail = module.exports.removeEmail = Promise.method(function (context,
                 return personEmail.destroy({transaction: self.tx})
                     .then(function () {
                         cache.remove(getEmailsByPersonIdCacheKey(personId), getPersonIdByEmailCacheKey(self.personEmail.email));
-                        return history.log(context.personId, getPersonIdCacheKey(personId), 'email-remove',
+                        return history.log(context.personId, context.links.user(personId), 'email-remove',
                                             {email: self.personEmail.email}, self.personEmail, self.tx);
                     });
             })
