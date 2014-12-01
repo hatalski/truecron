@@ -17,7 +17,7 @@ var getTaskIdCacheKey = function(taskId) {
     return 'task/' + taskId;
 };
 
-var createTask = module.exports.createTask = Promise.method(function (context, jobId, attributes) {
+var create = module.exports.create = Promise.method(function (context, jobId, attributes) {
     attributes.updatedByPersonId = context.personId;
     attributes.jobId = jobId;
     return using(models.transaction(), function (tx) {
