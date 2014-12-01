@@ -19,6 +19,18 @@ module.exports = function(environment) {
     }
   };
 
+  ENV['simple-auth'] = {
+    authenticationRoute: 'index',
+    routeAfterAuthentication: 'dashboard',
+    routeIfAlreadyAuthenticated: 'dashboard',
+    authorizer: 'simple-auth-authorizer:oauth2-bearer',
+    crossOriginWhitelist: ['http://dev.truecron.com:3000']
+  }
+
+  ENV['simple-auth-oauth2'] = {
+    serverTokenEndpoint: 'http://dev.truecron.com:3000/oauth/token'
+  }
+
   if (environment === 'development') {
     // ENV.APP.LOG_RESOLVER = true;
     ENV.APP.LOG_ACTIVE_GENERATION = true;
@@ -30,8 +42,8 @@ module.exports = function(environment) {
       'default-src': "'none'",
       'script-src': "'self' 'unsafe-inline' 'unsafe-eval' use.typekit.net connect.facebook.net maps.googleapis.com maps.gstatic.com",
       'font-src': "'self' data: use.typekit.net",
-      'connect-src': "'self'",
-      'img-src': "'self' www.facebook.com p.typekit.net",
+      'connect-src': "'self' dev.truecron.com:3000",
+      'img-src': "'self' www.facebook.com p.typekit.net data:",
       'style-src': "'self' 'unsafe-inline' use.typekit.net",
       'frame-src': "s-static.ak.facebook.com static.ak.facebook.com www.facebook.com"
     }

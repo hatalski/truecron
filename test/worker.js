@@ -8,7 +8,7 @@ var log        = require('../lib/logger.js');
 var smtpTask   = require('../backend/api/worker/smtptask');
 var jobRunner  = require('../backend/api/worker/jobRunner');
 var FtpTask    = require('../backend/api/worker/ftptask');
-var FtpConnection = require('../backend/api/worker/ftpConnection');
+var ArchiveTask = require('../backend/api/worker/archivetask');
 
 var mailTask;
 
@@ -36,6 +36,20 @@ describe('FTP task',
             });
         });
     });
+
+//describe('Archive task',
+//    function()
+//    {
+//        it('has run', function(done)
+//        {
+//            var archiveTask = new ArchiveTask(['123.js', 'api.js'], '123.zip', 'zip');
+//
+//            archiveTask.run(function(){
+//                expect(ftpTask.status).not.to.eql('waiting');
+//                done();
+//            });
+//        });
+//    });
 
 
 //describe('SFTP task',

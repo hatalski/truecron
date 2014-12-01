@@ -24,5 +24,31 @@ describe('SIGN UP',
                     done();
                 });
         });
+
+        it('beta sign up without email should fail', function (done) {
+            superagent.post(prefix + '/beta/signup')
+                .send({'email': '', 'test': true })
+                .end(function (e, res) {
+                    expect(e).to.eql(null);
+                    expect(res.header['content-type']).to.eql('application/json; charset=utf-8');
+                    expect(res.body.error).to.eql(undefined);
+                    //expect(res.body.message).to.eql('Incorrect Email!');
+                    expect(res.status).to.eql(400);
+                    done();
+                });
+        });
+
+        it('beta sign up with incorrect email should fail', function (done) {
+            superagent.post(prefix + '/beta/signup')
+                .send({'email': '', 'test': true })
+                .end(function (e, res) {
+                    expect(e).to.eql(null);
+                    expect(res.header['content-type']).to.eql('application/json; charset=utf-8');
+                    expect(res.body.error).to.eql(undefined);
+                    //expect(res.body.message).to.eql('Incorrect Email!');
+                    expect(res.status).to.eql(400);
+                    done();
+                });
+        });
     }
 );

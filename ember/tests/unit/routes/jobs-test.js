@@ -5,7 +5,7 @@ import {
 
 moduleFor('route:jobs', 'JobsRoute', {
   // Specify the other units that are required for this test.
-  needs: ['controller:jobs']
+  // needs: ['controller:foo']
 });
 
 test('it exists', function() {

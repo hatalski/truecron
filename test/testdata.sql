@@ -191,3 +191,18 @@ insert into tc.History (id, resourceUrl, personId, operation, change, oldValue)
     select -67, '/organizations/-21', -20, 'member-add', '{ "personId": "-24", "role": "member" }', null
     where not exists (select * from tc.History
     where id = -67);
+
+insert into tc.TaskType (id, name)
+    select -100, 'TestType'
+        where not exists (select * from tc.TaskType
+    where id = -100);
+
+insert into tc.Job (id, workspaceId, name, updatedByPersonId, rrule)
+    select -222, -22, 'TestDataName1', -1, 'rruleTextTralala'
+        where not exists (select * from tc.Job
+    where id = -222);
+
+insert into tc.Run (id, jobId, status, elapsed)
+    select -200, -222, 15, '1 day -01:00:00'
+        where not exists (select * from tc.Run
+    where id = -200);
