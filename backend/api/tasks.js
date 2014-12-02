@@ -79,19 +79,9 @@ api.route('/jobs/:jobid/tasks/:taskid')
         }
         var sort = req.listParams.sort || 'name';
 
-        storage.Tasks.findById(req.context, req.params.jobid, req.params.taskid)
-            .then(function (task) {
-                if (task!==null){
-                    res.json(formatTask(task));
-                }
-                else{
-                    next(new apiErrors.NotFound());
-                }
-            })
-            .catch(function (err) {
-                logger.error(err.toString());
-                next(err);
-            });
+        storage.Tasks.findById(req.context, req.params.taskid, req.params.jobid).then(function (task) {
+            res.json(formatTask(task));
+        });
     })
 
     //
@@ -101,7 +91,7 @@ api.route('/jobs/:jobid/tasks/:taskid')
         if (!req.body || !req.body.task) {
             return next(new apiErrors.InvalidParams());
         }
-        storage.Tasks.update(req.context, req.params.jobid, req.params.taskid,  req.body.task)
+        storage.Tasks.update(req.context, req.params.taskid, req.params.jobid, req.body.task)
             .then(function (task) {
                 res.json(formatTask(task));
             });
@@ -111,13 +101,9 @@ api.route('/jobs/:jobid/tasks/:taskid')
 // Delete a task
 //
 .delete(function (req, res, next) {
-    storage.Tasks.remove(req.context, req.params.jobid, req.params.taskid)
+    storage.Tasks.remove(req.context, req.params.taskid)
         .then(function () {
             res.status(204).json({});
-        })
-        .catch(function (err) {
-            logger.error(err.toString());
-            next(err);
         });
 });
 
