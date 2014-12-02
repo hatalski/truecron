@@ -53,7 +53,7 @@ var ArchiveTask = function(files, outputName, type)
 
 ArchiveTask.prototype.init = function()
 {
-    task.super_.prototype.init();
+    ArchiveTask.super_.prototype.init();
 };
 
 util.inherits(ArchiveTask, task);
