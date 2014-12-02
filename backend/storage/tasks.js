@@ -44,7 +44,7 @@ var findAndCountAll = module.exports.findAndCountAll = Promise.method(function (
 //
 // Search for a single task by ID.
 //
-var findById = module.exports.findById = Promise.method(function (context, id, jobid, transaction) {
+var findById = module.exports.findById = Promise.method(function (context, jobid, id, transaction) {
     return cache.get(getTaskIdCacheKey(id))
         .then(function (result) {
             if (result.found) {
@@ -52,6 +52,9 @@ var findById = module.exports.findById = Promise.method(function (context, id, j
             }
             return models.Task.find({ where: { id: id, jobId: jobid } }, { transaction: transaction })
                 .then(function (task) {
+                    if (task==null) {
+                        throw new errors.NotFound();
+                    }
                     cache.put(getTaskIdCacheKey(id), task);
                     return task;
                 });
@@ -65,12 +68,12 @@ var findById = module.exports.findById = Promise.method(function (context, id, j
 /**
  * Update a task.
  */
-var update = module.exports.update = Promise.method(function (context, id, jobid, attributes) {
+var update = module.exports.update = Promise.method(function (context,  jobid, id, attributes) {
     attributes.updatedByPersonId = context.personId;
     var self = { attrs: attributes };
     return using (models.transaction(), function (tx) {
         self.tx = tx;
-        return module.exports.findById(context, id, jobid, tx)
+        return module.exports.findById(context, jobid, id,  tx)
             .then(function (task) {
                 if (task === null) {
                     throw new errors.NotFound();
@@ -96,10 +99,10 @@ var update = module.exports.update = Promise.method(function (context, id, jobid
 /**
  * Remove a task.
  */
-var remove = module.exports.remove = Promise.method(function (context, id) {
+var remove = module.exports.remove = Promise.method(function (context, jobId, id) {
     return using (models.transaction(), function (tx) {
         var self = { tx: tx };
-        return findById(context, id)
+        return findById(context, jobId, id)
             .then(function (task) {
                 if (task === null) {
                     // No found, that's ok for remove() operation

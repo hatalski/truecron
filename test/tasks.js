@@ -141,7 +141,6 @@ describe('TASK API',
 //                    done();
 //                });
 //        });
-        //id_task_to_delete=2;
         it('delete task', function (done) {
             superagent.del(prefix + '/jobs/' + id_to_delete+'/tasks/'+id_task_to_delete)
                 .send()
@@ -150,6 +149,17 @@ describe('TASK API',
                     expect(e).to.eql(null);
                     expect(res.body.error).to.eql(undefined);
                     expect(res.status).to.eql(204);
+                    done();
+                });
+        });
+        it('delete non-existent task should fail with 404', function (done) {
+            superagent.del(prefix + '/jobs/' + id_to_delete+'/tasks/-31215454')
+                .send()
+                .authenticate(accessToken)
+                .end(function (e, res) {
+                    expect(e).to.eql(null);
+                    expect(res.status).to.eql(404);
+                    expect(res.body.error.status).to.eql(404);
                     done();
                 });
         });
