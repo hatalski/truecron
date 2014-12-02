@@ -88,9 +88,14 @@ api.route('/users')
 //
 api.param('userid', function (req, res, next, id) {
     // Allow to specify both ID and email
-    if (!validator.isInt(id) && !validator.isEmail(id)) {
+    if (!validator.isInt(id) && !validator.isEmail(id)&& id!='current') {
         next(new apiErrors.InvalidParams());
     }
+
+    if (id=='current'){
+        id=req.context.personId;
+    }
+
     storage.Person.findByIdOrEmail(req.context, id)
         .then(function (person) {
             if (person !== null) {
