@@ -1,6 +1,7 @@
 import Ember from 'ember';
+import AuthenticatedRouteMixin from 'simple-auth/mixins/authenticated-route-mixin';
 
-export default Ember.Route.extend({
+export default Ember.Route.extend(AuthenticatedRouteMixin, {
 	model: function(params) {
 		console.log('load workspace model with name : ' + params.workspace_name);
 		return this.store.find('workspace', { name: params.workspace_name });
