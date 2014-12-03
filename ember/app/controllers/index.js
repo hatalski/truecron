@@ -7,7 +7,7 @@ export default Ember.Controller.extend(LoginControllerMixin, {
     //authenticator: 'simple-auth-authenticator:oauth2-password-grant',
     actions: { 
 	  	authenticate: function(options) {
-	  		console.dir(options);
+	  		console.dir('authenticate options : ' + options);
 	  		this._super(options);
 	  	}
     }
