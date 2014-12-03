@@ -57,7 +57,7 @@ api.route('/jobs/:jobid/tasks')
         if (!req.body || !req.body.task) {
             return next(new apiErrors.InvalidParams());
         }
-        storage.Tasks.createTask(req.context, req.params.jobid, req.body.task)
+        storage.Tasks.create(req.context, req.params.jobid, req.body.task)
             .then(function (task) {
                 res.status(201).json(formatTask(task));
             })
