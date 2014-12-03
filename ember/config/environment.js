@@ -23,7 +23,8 @@ module.exports = function(environment) {
     authenticationRoute: 'index',
     routeAfterAuthentication: 'dashboard',
     routeIfAlreadyAuthenticated: 'dashboard',
-    authorizer: 'simple-auth-authorizer:oauth2-bearer',
+    //authorizer: 'simple-auth-authorizer:oauth2-bearer',
+    authorizer: 'authorizer:truecron',
     crossOriginWhitelist: ['http://dev.truecron.com:3000']
   }
 
@@ -34,7 +35,7 @@ module.exports = function(environment) {
   if (environment === 'development') {
     // ENV.APP.LOG_RESOLVER = true;
     ENV.APP.LOG_ACTIVE_GENERATION = true;
-    // ENV.APP.LOG_TRANSITIONS = true;
+    ENV.APP.LOG_TRANSITIONS = true;
     // ENV.APP.LOG_TRANSITIONS_INTERNAL = true;
     ENV.APP.LOG_VIEW_LOOKUPS = true;
 
