@@ -10,14 +10,14 @@ var User = DS.Model.extend({
     lastLoginAt:   DS.attr('date'),
     createdAt:     DS.attr('date'),
     updatedAt:     DS.attr('date'),
-    updatedBy:     DS.belongsTo('person', { async: true }),
+    updatedBy:     DS.belongsTo('user', { async: true }),
     organizations: DS.hasMany('organization', { async: true })
 });
 
 User.reopenClass({
   FIXTURES: [
     {
-      id: 1,
+      id: 'current',
       login: 'vitali.hatalski@truecron.com',
       name: 'Vitali Hatalski',
       passwordSalt: '',
