@@ -7,12 +7,16 @@ export default Ember.Route.extend(AuthenticatedRouteMixin, {
 		console.dir('session ' + this.get('session'));
 		return this.store.find('user', 'current');
 	},
-	afterModel: function(user) {
+	afterModel: function() {
 		var self = this;
 		self.store.find('organization').then(function(orgs) {
 			console.dir('orgs : ' + orgs);
 			if (orgs.get('length') > 0) {
-				console.log('first organization : ' + orgs.get('firstObject'));
+				var firstOrg = orgs.get('firstObject');
+				console.log('first organization : ' + firstOrg.get('workspaces.length'));
+				// self.store.findHasMany(firstOrg, 'workspaces').then(function(workspaces) {
+				// 	console.dir('workspaces : ' + workspaces);
+				// });
 			}
 		});
 		// var length = user.get('organizations.length');

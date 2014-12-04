@@ -19,7 +19,7 @@ function formatOrganization(req, organization) {
         return organization;
     }
     var org = organization.toJSON();
-    org._links = {
+    org.links = {
         self: req.context.links.organization(org.id),
         members: req.context.links.organizationMembers(org.id),
         workspaces: req.context.links.workspaces(org.id),

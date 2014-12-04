@@ -13,7 +13,7 @@ function formatUser(req, person) {
         return person;
     }
     var user = person.toJSON();
-    user._links = {
+    user.links = {
         self: req.context.links.user(user.id),
         emails: req.context.links.userEmails(user.id),
         history: req.context.links.userHistory(user.id)
@@ -145,7 +145,7 @@ function formatEmail(req, email) {
     }
     var result = email.toJSON();
     logger.debug('req.context.links: ' +  require('util').inspect(req.context.links));
-    result._links = {
+    result.links = {
         self: req.context.links.userEmail(email.id)
     };
     delete result.personId;
