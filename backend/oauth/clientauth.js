@@ -19,7 +19,7 @@ module.exports = function (req, res, next) {
     }
 
     logger.profile('authentication');
-    storage.Organization.findById(context.SystemContext, parseInt(credentials.name, 10)).bind({})
+    storage.Organization.findById(context.newSystemContext(), parseInt(credentials.name, 10)).bind({})
         .then(function (organization) {
             logger.profile('authentication-bcrypt');
             if (!!organization && !!organization.secretHash) {

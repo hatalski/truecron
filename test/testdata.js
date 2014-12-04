@@ -9,14 +9,14 @@ var Promise = require('bluebird'),
 var system = module.exports.system = { id: context.SystemPersonId, name: 'SYSTEM', email: 'system@truecron.com' };
 
 var brian = module.exports.BrianJohnston = { id: -10, name: 'Brian Johnston', email: 'bj@it.acme.corp' };
-var acme = module.exports.AcmeCorp = { id: -11, name: 'Acme Corporation', email: 'bj@it.acme.corp', updatedByPersonId: brian.id };
-module.exports.MyWorkspace = { id: -12, name: 'My workspace', organizationId: acme.id, updatedByPersonId: brian.id };
+var acme = module.exports.AcmeCorp = { id: -11, name: 'Acme Corporation', email: 'bj@it.acme.corp', updatedByUserId: brian.id };
+module.exports.MyWorkspace = { id: -12, name: 'My workspace', organizationId: acme.id, updatedByUserId: brian.id };
 
 var suresh = module.exports.SureshKumar = { id: -20, name: 'Suresh Kumar', email: 'skumar@ajax.corp' };
 var petrov = module.exports.IvanPetrov = { id: -24, name: 'Иван Петров', email: 'petrov@ajax.corp' };
-var ajax = module.exports.AjaxCorp = { id: -21, name: 'Ajax Corporation', email: 'dev-cron@ajax.corp', updatedByPersonId: suresh.id };
-module.exports.StagingWorkspace = { id: -22, name: 'Staging', organizationId: ajax.id, updatedByPersonId: suresh.id };
-module.exports.ProductionWorkspace = { id: -23, name: 'Production', organizationId: ajax.id, updatedByPersonId: suresh.id };
+var ajax = module.exports.AjaxCorp = { id: -21, name: 'Ajax Corporation', email: 'dev-cron@ajax.corp', updatedByUserId: suresh.id };
+module.exports.StagingWorkspace = { id: -22, name: 'Staging', organizationId: ajax.id, updatedByUserId: suresh.id };
+module.exports.ProductionWorkspace = { id: -23, name: 'Production', organizationId: ajax.id, updatedByUserId: suresh.id };
 
 module.exports.initdb = function initDb (done) {
     var databaseOptions = {

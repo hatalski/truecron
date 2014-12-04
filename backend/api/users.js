@@ -8,33 +8,19 @@ var express = require('express'),
 
 var api = express.Router();
 
-function personToUser(person) {
+function formatUser(req, person) {
     if (person === undefined) {
         return person;
     }
     var user = person.toJSON();
-    var selfUrl = '/users/' + user.id;
     user._links = {
-        self: selfUrl,
-        organizations: selfUrl + '/organizations',
-        history: selfUrl + '/history',
-        emails: selfUrl + '/emails'
+        self: req.context.links.user(user.id),
+        emails: req.context.links.userEmails(user.id),
+        history: req.context.links.userHistory(user.id)
     };
     delete user.passwordHash;
+    common.formatApiOutput(user);
     return { user: user };
-}
-
-function personEmailToEmail(personId, email) {
-    if (email === undefined) {
-        return email;
-    }
-    var result = email.toJSON();
-    var selfUrl = '/users/' + personId + '/emails/' + email.id;
-    result._links = {
-        self: selfUrl
-    };
-    delete result.personId;
-    return { email: result };
 }
 
 api.route('/users')
@@ -44,7 +30,7 @@ api.route('/users')
     .get(common.parseListParams, function (req, res, next) {
 
         var where = {};
-        if (!!req.listParams.searchTerm) {
+        if (req.listParams.searchTerm) {
             where = { name: { like: req.listParams.searchTerm } };
         }
         var sort = req.listParams.sort || 'name';
@@ -56,7 +42,7 @@ api.route('/users')
             offset: req.listParams.offset
         }).then(function (result) {
                 res.json({
-                users: result.rows.map(personToUser),
+                users: result.rows.map(formatUser.bind(null, req)),
                 meta: {
                     total: result.count
                 }});
@@ -75,7 +61,7 @@ api.route('/users')
         }
         storage.Person.create(req.context, req.body.user)
         .then(function (person) {
-            res.status(201).json(personToUser(person));
+            res.status(201).json(formatUser(req, person));
         })
         .catch(function (err) {
             logger.error(err.toString());
@@ -100,6 +86,7 @@ api.param('userid', function (req, res, next, id) {
         .then(function (person) {
             if (person !== null) {
                 req.person = person;
+                req.context.links.userId = +person.id;
                 next();
             } else {
                 next(new apiErrors.NotFound());
@@ -116,7 +103,7 @@ api.route('/users/:userid')
     // Get a user
     //
     .get(function (req, res, next) {
-        res.json(personToUser(req.person));
+        res.json(formatUser(req, req.person));
     })
     //
     // Update a user
@@ -127,7 +114,7 @@ api.route('/users/:userid')
         }
         storage.Person.update(req.context, req.person.id, req.body.user)
             .then(function (person) {
-                res.json(personToUser(person));
+                res.json(formatUser(req, person));
             })
             .catch(function (err) {
                 logger.error(err.toString());
@@ -151,6 +138,21 @@ api.route('/users/:userid')
 //
 // User emails
 //
+
+function formatEmail(req, email) {
+    if (email === undefined) {
+        return email;
+    }
+    var result = email.toJSON();
+    logger.debug('req.context.links: ' +  require('util').inspect(req.context.links));
+    result._links = {
+        self: req.context.links.userEmail(email.id)
+    };
+    delete result.personId;
+    common.formatApiOutput(result);
+    return { email: result };
+}
+
 api.route('/users/:userid/emails')
     //
     // Get email addresses of the user :userid
@@ -170,7 +172,7 @@ api.route('/users/:userid/emails')
         })
         .then(function (result) {
             res.json({
-                emails: result.rows.map(_.partial(personEmailToEmail, req.person.id)),
+                emails: result.rows.map(formatEmail.bind(null, req)),
                 meta: {
                     total: result.count
                 }});
@@ -189,7 +191,7 @@ api.route('/users/:userid/emails')
         }
         storage.Person.addEmail(req.context, req.person.id, req.body.email)
             .then(function (email) {
-                res.status(201).json(personEmailToEmail(req.person.id, email));
+                res.status(201).json(formatEmail(req, email));
             })
             .catch(function (err) {
                 logger.error(err);
@@ -208,7 +210,8 @@ api.param('email', function (req, res, next, id) {
     storage.Person.findEmail(req.context, req.person.id, id)
         .then(function (email) {
             if (!!email) {
-                req.Email = email;
+                req.email = email;
+                req.context.links.emailId = email.id;
                 next();
             } else {
                 next(new apiErrors.NotFound());
@@ -226,7 +229,7 @@ api.route('/users/:userid/emails/:email')
     // Get an email address of the user :userid
     //
     .get(function (req, res, next) {
-        res.json(personEmailToEmail(req.person.id, req.Email));
+        res.json(formatEmail(req, req.email));
     })
     //
     // Change status of the email address (pending, active)
@@ -235,9 +238,9 @@ api.route('/users/:userid/emails/:email')
         if (!req.body || !req.body.email || !req.body.email.status) {
             return next(new apiErrors.InvalidParams());
         }
-        storage.Person.changeEmailStatus(req.context, req.person.id, req.Email.id, req.body.email.status)
+        storage.Person.changeEmailStatus(req.context, req.person.id, req.email.id, req.body.email.status)
             .then(function (email) {
-                res.json(personEmailToEmail(req.person.id, email));
+                res.json(formatEmail(req, email));
             })
             .catch(function (err) {
                 logger.error(err);
@@ -248,7 +251,7 @@ api.route('/users/:userid/emails/:email')
     // Delete the email of the user
     //
     .delete(function (req, res, next) {
-        storage.Person.removeEmail(req.context, req.person.id, req.Email.id)
+        storage.Person.removeEmail(req.context, req.person.id, req.email.id)
             .then(function () {
                 res.status(204).json({});
             })
