@@ -13,7 +13,7 @@ export default Ember.Route.extend(AuthenticatedRouteMixin, {
 			console.dir('orgs : ' + orgs);
 			if (orgs.get('length') > 0) {
 				var firstOrg = orgs.get('firstObject');
-				console.log('first organization : ' + firstOrg.get('workspaces.length'));
+				console.log('first organization : ' + firstOrg.get('workspaces'));
 				// self.store.findHasMany(firstOrg, 'workspaces').then(function(workspaces) {
 				// 	console.dir('workspaces : ' + workspaces);
 				// });
