@@ -26,7 +26,7 @@ function formatOrganization(organization) {
         history: selfUrl + '/history'
     };
     delete org.secretHash;
-    return { organization: org };
+    return org;
 }
 
 api.route('/organizations')
@@ -67,7 +67,7 @@ api.route('/organizations')
         }
         storage.Organization.create(req.context, req.body.organization)
             .then(function (org) {
-                res.status(201).json(formatOrganization(org));
+                res.status(201).json({ organization: formatOrganization(org) });
             })
             .catch(function (err) {
                 logger.error(err.toString());
@@ -110,7 +110,7 @@ api.route('/organizations/:orgid')
         }
         storage.Organization.update(req.context, req.organization.id, req.body.organization)
             .then(function (org) {
-                res.json(formatOrganization(org));
+                res.json({ organization: formatOrganization(org) });
             })
             .catch(function (err) {
                 logger.error(err.toString());
