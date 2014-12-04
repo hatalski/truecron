@@ -87,7 +87,7 @@ describe('ORGANIZATIONS API',
                     expect(res.body.error).to.eql(undefined);
                     expect(res.body.organizations).to.have.length(1);
                     expect(res.body.meta.total).to.eql(1);
-                    expect(res.body.organizations[0].organization.name).to.eql(orgName);
+                    expect(res.body.organizations[0].name).to.eql(orgName);
                     done();
                 });
         });

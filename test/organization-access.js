@@ -42,7 +42,7 @@ describe('ORGANIZATIONS ACCESS',
                         expect(res.status).to.eql(200);
                         var found = false;
                         res.body.organizations.forEach(function (row) {
-                            if (row.organization.name === testdata.AjaxCorp.name) {
+                            if (row.name === testdata.AjaxCorp.name) {
                                 found = true;
                             }
                         });
@@ -76,7 +76,7 @@ describe('ORGANIZATIONS ACCESS',
                         expect(e).to.eql(null);
                         expect(res.status).to.eql(200);
                         res.body.organizations.forEach(function (row) {
-                            expect(row.organization.name).not.to.eql(testdata.AjaxCorp.name);
+                            expect(row.name).not.to.eql(testdata.AjaxCorp.name);
                         });
                         done();
                     });
