@@ -1,6 +1,5 @@
 //import Ember from 'ember';
 import DS from 'ember-data';
-//import Store from 'simple-auth/stores/base';
 
 // export default DS.FixtureAdapter.extend({
 // 	queryFixtures: function(records, query) {

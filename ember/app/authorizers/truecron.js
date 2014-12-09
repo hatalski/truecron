@@ -28,15 +28,11 @@ export default Base.extend({
     @param {jqXHR} jqXHR The XHR request to authorize (see http://api.jquery.com/jQuery.ajax/#jqXHR)
     @param {Object} requestOptions The options as provided to the `$.ajax` method (see http://api.jquery.com/jQuery.ajaxPrefilter/)
   */
-  authorize: function(jqXHR, requestOptions) {
+  authorize: function(jqXHR) {//requestOptions
     var accessToken = this.get('session.access_token');
 
-    console.dir(this.get('session.isAuthenticated'));
-    console.log('accessToken : ' + accessToken);
-    console.dir('requestOptions : ' + requestOptions);
     if (this.get('session.isAuthenticated') && !Ember.isEmpty(accessToken)) {
-      jqXHR.setRequestHeader('Authorization', 'Bearer ' + accessToken);
+        jqXHR.setRequestHeader('Authorization', 'Bearer ' + accessToken);
     }
-    console.dir(jqXHR);
   }
 });
