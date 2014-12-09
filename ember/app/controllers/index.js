@@ -17,7 +17,7 @@ export default Ember.Controller.extend(LoginControllerMixin, {
 	  	},
 	  	invite: function() {
 	  		var inviteEmail = this.get('invitationEmail');
-	  		if (inviteEmail === '') {
+	  		if (!validator.isEmail(inviteEmail)) {
 	  			console.log('email is empty');
 	  			this.set('isInvitationEmailError', true);
 	  			console.log(this.get('isInvitationEmailError'));
