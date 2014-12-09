@@ -22,10 +22,14 @@ export default Ember.Controller.extend(LoginControllerMixin, {
 	  			this.set('isInvitationEmailError', true);
 	  			console.log(this.get('isInvitationEmailError'));
 	  		} else {
+	  			Ember.$('#signup_confirm_modal').modal({});
 	  			var result = Ember.$.ajax('http://dev.truecron.com:3000/beta/signup', { type: 'POST'});
 	  			result.success(function(data) { console.log(data)});
 	  			result.error(function(error) { console.log(error)});
 	  		}
-	  	} 
+	  	},
+	  	signup: function() {
+
+	  	}
     }
 });
