@@ -5,7 +5,7 @@ var express  = require('express');
 var path     = require('path');
 var smtp     = require('../lib/smtp');
 var router   = express.Router();
-var validator = require('../node_modules/validator/validator');
+var validator = require('validator');
 
 router.post('/signup', function(req, res) {
     var email = req.body.email;
