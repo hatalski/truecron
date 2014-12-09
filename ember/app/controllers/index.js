@@ -4,11 +4,28 @@ import LoginControllerMixin from 'simple-auth/mixins/login-controller-mixin';
 
 export default Ember.Controller.extend(LoginControllerMixin, {
 	authenticator: 'authenticator:truecron',
+	invitationEmail: '',
+	isInvitationEmailError: false,
+	isInviteEmailError: function() {
+		return this.get('isInvitationEmailError');
+	}.property('isInvitationEmailError'),
     //authenticator: 'simple-auth-authenticator:oauth2-password-grant',
     actions: { 
 	  	authenticate: function(options) {
 	  		console.dir(options);
 	  		this._super(options);
-	  	}
+	  	},
+	  	invite: function() {
+	  		var inviteEmail = this.get('invitationEmail');
+	  		if (inviteEmail == '') {
+	  			console.log('email is empty');
+	  			this.set('isInvitationEmailError', true);
+	  			console.log(this.get('isInvitationEmailError'));
+	  		} else {
+	  			var result = Ember.$.ajax('http://dev.truecron.com:3000/beta/signup', { type: 'POST'});
+	  			result.success(function(data) { console.log(data)});
+	  			result.error(function(error) { console.log(error)});
+	  		}
+	  	} 
     }
 });

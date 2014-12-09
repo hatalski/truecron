@@ -44,8 +44,11 @@
                         <div class="container">
                             <h2>Interested?</h2>
                             <p>Leave your e-mail address to get notified when we are live.</p>
-                            <p>{{input class="form-control" value="email" valueBinding="email" type="email" placeholder="Email" required="required"}}</p>
-                            <p><input type="button" {{action "signup"}} class="btn btn-signup" data-toggle="modal" data-target="#signup_confirm_modal" value="SIGN UP"></p>
+                            {{isInviteEmailError}}
+                            <div {{bind-attr class=":form-group isInviteEmailError:has-error"}}>
+                                {{input class="form-control" value="email" valueBinding="invitationEmail" type="email" placeholder="Email" required="required"}}
+                            </div>
+                            <p><input type="button" {{action "invite"}} class="btn btn-signup" data-toggle="modal" data-target="#signup_confirm_modal" value="SIGN UP"></p>
                         </div>
                     </div>
                 </div>

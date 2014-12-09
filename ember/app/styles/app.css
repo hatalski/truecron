@@ -637,10 +637,10 @@ h2.pitch {
 }
 .interested_box .btn:hover, .btn:focus {
   color:#333;
-}
+}/*
 .interested_box .form-control {
   border: none;
-}
+}*/
 .top_mac {
   background: url("top_mac.png") no-repeat top right;
   height: 336px;
@@ -734,10 +734,10 @@ h2.pitch {
   padding-bottom: 15px;
 }
 
-.teaser .form-control {
+/*.teaser .form-control {
   border-color: #10accc;
   border-radius: 0px;
-}
+}*/
 
 .teaser .btn {
   border-radius: 0px;
