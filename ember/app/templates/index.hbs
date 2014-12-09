@@ -25,7 +25,6 @@
                     <div class="pitch-ext">
                         <p>Do your job.</p>
                         <p>We will do the scheduling.</p>
-                        <p>{{#link-to 'dashboard'}}test{{/link-to}}</p>
                     </div>
                 </div>
                 <div class="col-xs-9">
@@ -194,12 +193,28 @@
     </div>
 </footer>
 <!-- Modal -->
-<div class="modal fade" id="signup_confirm_modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+<div class="modal fade" id="signup_modal" tabindex="-1" role="dialog" aria-labelledby="signUpTitle" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <!--<div class="modal-header">-->
+                <!--<h4 class="modal-title" id="signUpTitle"></h4>-->
+            <!--</div>-->
+            <div class="modal-body">
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                sign up form
+            </div>
+            <!--<div class="modal-footer">-->
+                <!--<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>-->
+            <!--</div>-->
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="invite_modal" tabindex="-1" role="dialog" aria-labelledby="inviteTitle" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
-                <h4 class="modal-title" id="myModalLabel">Thank you for signing up for TrueCron!</h4>
+                <h4 class="modal-title" id="inviteTitle">Thank you for signing up for TrueCron!</h4>
             </div>
             <div class="modal-body">
               {{ successMessage }}
