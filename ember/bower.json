@@ -17,6 +17,7 @@
     "font-awesome": "4.2.0",
     "ember-simple-auth": "0.7.1",
     "rrule": "2.1.0",
-    "moment": "2.8.4"
+    "moment": "2.8.4",
+    "validator-js": "3.22.2"
   }
 }
