@@ -102,7 +102,7 @@ describe('ORGANIZATIONS API',
                     expect(res.body.organizations).to.have.length(1);
                     expect(res.body.meta.total).to.eql(1);
                     expect(res.body.organizations[0].name).to.eql(orgName);
-                    expect(res.body.organizations[0]._links.self).to.eql('/organizations/' + id_to_delete);
+                    expect(res.body.organizations[0].links.self).to.eql('/organizations/' + id_to_delete);
                     done();
                 });
         });
@@ -119,7 +119,7 @@ describe('ORGANIZATIONS API',
                     expect(res.body.organization.name).to.eql(orgName);
                     expect(validator.isDate(res.body.organization.createdAt)).to.be.ok();
                     expect(validator.isDate(res.body.organization.updatedAt)).to.be.ok();
-                    expect(res.body.organization._links.self).to.eql('/organizations/' + id_to_delete);
+                    expect(res.body.organization.links.self).to.eql('/organizations/' + id_to_delete);
                     done();
                 });
         });
