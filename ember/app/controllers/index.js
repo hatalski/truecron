@@ -6,6 +6,7 @@ export default Ember.Controller.extend(LoginControllerMixin, {
 	authenticator: 'authenticator:truecron',
 	invitationEmail: '',
 	isInvitationEmailError: false,
+	signUpNewEmail: '',
 	isInviteEmailError: function() {
 		return this.get('isInvitationEmailError');
 	}.property('isInvitationEmailError'),
@@ -32,6 +33,11 @@ export default Ember.Controller.extend(LoginControllerMixin, {
 	  	},
 	  	signup: function() {
         Ember.$('#signup_modal').modal({});
+	  	},
+	  	signUpNew: function(){
+	  		var test = this.get('signUpNewEmail');
+	  		// console.log(testEmail);
+	  		console.log('this is test');
 	  	}
     }
 });

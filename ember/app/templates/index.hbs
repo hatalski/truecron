@@ -201,25 +201,26 @@
             <!--</div>-->
             <div class="modal-body, interested_box">
                 <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
-                <form {{action "signUp" on="submit"}}>
+                <form {{action "signUpNew" on="submit"}}>
                       <h2>Sign Up</h2>
                       
                       <div class="form-group">
-                        <label for='email'>Email</label>
-                        {{input value=email id='email' class="form-control"}}
+                        <label for='email'>Email:</label>
+                        {{input value=email valueBinding="signUpNewEmail" id='signUpEmail' placeholder="Email" required="required" class="form-control"}}
                       </div>
 
                       <div class="form-group">
-                        <label for='password'>Create password</label>
-                        {{input type="password" value=password id='password' class="form-control"}}
+                        <label for='password'>Create password:</label>
+                        {{input type="password" value=password id='password' placeholder="6-20 caracters letters and numbers only
+" required="required" class="form-control"}}
                       </div>
 
                       <div class="form-group">
                         <label for='password-confirmation'>Confirm your password:</label>
-                        {{input type="password" value=passwordConfirmation id='password-confirmation' class="form-control"}}
+                        {{input type="password" value=passwordConfirmation id='password-confirmation' placeholder="Enter password again" class="form-control"}}
                       </div>
 
-                      <p><input type="button" {{action "signup"}} class="btn btn-signup" value="SIGN UP"></p>
+                      <p><input type="button" {{action "signUpNew"}} class="btn btn-signup" value="SIGN UP"></p>
                     </form>
                    
             </div>
