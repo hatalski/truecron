@@ -8,9 +8,10 @@ var Promise = require("bluebird"),
     cache = require('./cache'),
     history = require('./history'),
     logger = require('../../lib/logger'),
-    secrets = require('../../lib/secrets'),
     validator = require('../../lib/validator'),
-    errors = require('../../lib/errors');
+    errors = require('../../lib/errors'),
+    tools = require('./tools'),
+    workspaceAccess = require('./workspace-access');
 
 var using = Promise.using;
 
@@ -25,9 +26,13 @@ var getJobIdCacheKey = function(jobId) {
 // Jobs
 //
 
-var findAndCountAll = module.exports.findAndCountAll = Promise.method(function (context, options) {
-    return models.Job.findAndCountAll(options)
-        .then(function (result) {            
+var findAndCountAll = module.exports.findAndCountAll = Promise.method(function (context, workspace, options) {
+    return workspaceAccess.ensureHasAccess(context, tools.getId(workspace), workspaceAccess.WorkspaceRoles.Viewer)
+        .then(function () {
+            options = _.merge(options || {}, { where: { workspaceId: tools.getId(workspace) } });
+            return models.Job.findAndCountAll(options);
+        })
+        .then(function (result) {
             result.rows.forEach(function(job) { cache.put(getJobIdCacheKey(job.id), job); });
             return result;
         })
@@ -40,36 +45,42 @@ var findAndCountAll = module.exports.findAndCountAll = Promise.method(function (
  * Create a new job.
  */
 var create = module.exports.create = Promise.method(function (context, attributes) {
-    if (!attributes || validator.isNull(attributes.name)) {
-        throw new errors.InvalidParams();
+    attributes = tools.sanitizeAttributesForCreate(context, attributes);
+    if (!attributes.name) {
+        throw new errors.InvalidParams('Job name is not specified.');
     }
-    attributes.updatedByPersonId = context.personId;
-    var self = { attrs: attributes };
-
+    if (!attributes.workspaceId) {
+        throw new errors.InvalidParams('Workspace ID is not specified.');
+    }
+    var locals = { attrs: attributes };
     return using (models.transaction(), function (tx) {
-
-        self.tx = tx;
-        return models.Job.create(self.attrs, { transaction: tx })
-            .then(function (job) {
-                self.job = job;
-
-                return history.logCreated(context.personId, getJobIdCacheKey(job.id), job, self.tx);
+        return workspaceAccess.ensureHasAccess(context, attributes.workspaceId, workspaceAccess.WorkspaceRoles.Editor, tx)
+            .then(function() {
+                return models.Job.create(locals.attrs, { transaction: tx });
             })
-            .then(function () {
-                cache.put(getJobIdCacheKey(self.job.id), self.job);
-                return self.job;
+            .then(function (job) {
+                locals.job = job;
+                return Promise.join(
+                    history.logCreated(context.personId, context.links.job(job.id), job, tx),
+                    cache.put(getJobIdCacheKey(job.id), job),
+                    function () {
+                        return locals.job;
+                    });
             });
-    })
-
+        })
         .catch(function (err) {
             logger.error('Failed to create a job, %s.', err.toString());
             throw err;
         });
 });
+
 /**
  * Search for a single job by ID.
  */
-var findById = module.exports.findById = Promise.method(function (context, id, transaction) {
+var findById = module.exports.findById = Promise.method(function (context, id, workspaceRole, transaction) {
+    id = tools.getId(id);
+    workspaceRole = workspaceRole || workspaceAccess.WorkspaceRoles.Viewer;
+    var locals = {};
     return cache.get(getJobIdCacheKey(id))
         .then(function (result) {
             if (result.found) {
@@ -81,35 +92,54 @@ var findById = module.exports.findById = Promise.method(function (context, id, t
                     return job;
                 });
         })
+        .then(function (job) {
+            if (job === null) {
+                return null;
+            }
+            locals.job = job;
+            return workspaceAccess.ensureHasAccess(context, job.workspaceId, workspaceRole, transaction)
+                .then(function () {
+                    return locals.job;
+                });
+        })
         .catch(function (err) {
             logger.error('Failed to find a job by id %s, %s.', id, err.toString());
             throw err;
         });
 });
 
+var ensureCanView = module.exports.ensureCanView = function (context, job) {
+    return findById(context, job, workspaceAccess.WorkspaceRoles.Viewer);
+};
+
+var ensureCanEdit = module.exports.ensureCanEdit = function (context, job) {
+    return findById(context, job, workspaceAccess.WorkspaceRoles.Editor);
+};
+
+
 /**
  * Update a job.
  */
 var update = module.exports.update = Promise.method(function (context, id, attributes) {
-    attributes.updatedByPersonId = context.personId;
-    var self = { attrs: attributes };
+    attributes = tools.sanitizeAttributesForUpdate(context, attributes);
+    var locals = { attrs: attributes };
     return using (models.transaction(), function (tx) {
-        self.tx = tx;
-        return module.exports.findById(context, id, tx)
+        return module.exports.findById(context, id, workspaceAccess.WorkspaceRoles.Editor, tx)
             .then(function (job) {
                 if (job === null) {
                     throw new errors.NotFound();
                 }
-                self.oldJob = job;
-                return job.updateAttributes(self.attrs, { transaction: self.tx });
+                locals.oldJob = job;
+                return job.updateAttributes(locals.attrs, { transaction: tx });
             })
             .then(function (job) {
-                self.job = job;
-                return history.logUpdated(context.personId, getJobIdCacheKey(job.id), job, self.oldJob, self.tx);
-            })
-            .then(function () {
-                cache.put(getJobIdCacheKey(self.job.id), self.job);
-                return self.job;
+                locals.job = job;
+                return Promise.join(
+                    history.logUpdated(context.personId, context.links.job(job.id), job, locals.oldJob, tx),
+                    cache.put(getJobIdCacheKey(job.id), job),
+                    function () {
+                        return locals.job;
+                    });
             });
         })
         .catch(function (err) {
@@ -122,23 +152,22 @@ var update = module.exports.update = Promise.method(function (context, id, attri
  */
 var remove = module.exports.remove = Promise.method(function (context, id) {
     return using (models.transaction(), function (tx) {
-        var self = { tx: tx };
-        return findById(context, id)
+        var locals = { };
+        return findById(context, id, workspaceAccess.WorkspaceRoles.Editor, tx)
             .then(function (job) {
                 if (job === null) {
                     // No found, that's ok for remove() operation
                     return;
                 }
-                self.job = job;
-                return job.destroy({transaction: self.tx})
+                locals.job = job;
+                return job.destroy({transaction: tx})
                     .then(function () {
-                        return history.logRemoved(context.personId, getJobIdCacheKey(self.job.id), self.job, self.tx);
-                    })
-                    .then(function () {
-                        cache.remove(getJobIdCacheKey(self.job.id))
+                        return Promise.join(
+                            history.logRemoved(context.personId, context.links.job(locals.job.id), locals.job, tx),
+                            cache.remove(getJobIdCacheKey(locals.job.id)));
                     });
             });
-    })
+        })
         .catch(function (err) {
             logger.error('Failed to remove the job %d, %s.', id, err.toString());
             throw err;

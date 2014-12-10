@@ -6,7 +6,8 @@ var Promise = require("bluebird"),
     history = require('./history'),
     logger = require('../../lib/logger'),
     validator = require('../../lib/validator'),
-    errors = require('../../lib/errors');
+    errors = require('../../lib/errors'),
+    access = require('./organization-access');
 
 var using = Promise.using;
 
@@ -20,230 +21,6 @@ var using = Promise.using;
 var getOrganizationIdCacheKey = function(organizationId) {
     return 'org/' + organizationId;
 };
-
-/**
- * Gets an array of accessible organizations for the specific person.
- */
-var getAccessibleOrganizationsCacheKey = function(personId) {
-    return 'person-orgs/' + personId;
-};
-
-//
-// Access control
-//
-
-var OrganizationRole = function(name, value) {
-    'use strict';
-    this.name = name;
-    this.value = value;
-};
-
-OrganizationRole.prototype.includes = function (anotherRole) {
-    return (this.value & anotherRole.value) === anotherRole.value;
-};
-
-OrganizationRole.prototype.toString = function () {
-    return this.name;
-};
-
-var OrganizationRoles = Object.freeze({
-    Member: new OrganizationRole('member', 1),
-    Admin:  new OrganizationRole('admin',  1+2),
-
-    parse: function (roleName) {
-        if (!this.isValid(roleName)) {
-            throw new errors.InvalidParams('Invalid role value.');
-        }
-        return this.Admin.name === roleName
-            ? this.Admin
-            : this.Member;
-    },
-
-    isValid: function (roleName) {
-        return validator.isIn(roleName, [this.Member.name, this.Admin.name]);
-    }
-});
-
-
-/**
- * Get organizations (an { orgId1: role, orgId2: role,... } hash) accessible to the person identified by the security
- * context.
- */
-var getAccessibleOrganizations = module.exports.getAccessibleOrganizations = Promise.method(function (context, transaction) {
-    var cacheKey = getAccessibleOrganizationsCacheKey(context.personId);
-    return cache.get(cacheKey)
-        .then(function (result) {
-            if (result.found) {
-                return result.value;
-            }
-            return models.OrganizationToPerson.findAll({
-                    where: { personId: context.personId },
-                    order: 'organizationId'
-                }, { transaction: transaction })
-                .then(function (records) {
-                    var accessEntries = records.reduce(function (result, entry) {
-                        result[entry.organizationId] = OrganizationRoles.parse(entry.role);
-                        return result;
-                    }, {});
-                    cache.put(cacheKey, accessEntries);
-                    return accessEntries;
-                });
-        })
-        .catch(function (err) {
-            logger.error('Failed to get organizations accessible to the person id %s, %s.', context.personId, err.toString());
-            throw err;
-        });
-});
-
-var getId = function(idOrObject) {
-    var id = idOrObject;
-    if (typeof idOrObject === 'object') {
-        id = idOrObject.id;
-    }
-    if (!validator.isInt(id)) {
-        throw new errors.InvalidParams('Invalid ID.');
-    }
-    return +id;
-};
-
-var ensureHasAccess = module.exports.ensureHasAccess = Promise.method(function (context, organization, requiredRole, transaction) {
-    if (context.isSystem()) {
-        return true;
-    }
-    var orgId = getId(organization);
-    return getAccessibleOrganizations(context, transaction)
-        .then(function (accessEntries) {
-            var role = accessEntries[orgId];
-            var hasAccess = role && role.includes(requiredRole);
-            if (!hasAccess) {
-                throw new errors.AccessDenied(
-                    util.format('Access denied. Role "%s" is required to perform the operation on the organization %d.',
-                        requiredRole.name, orgId),
-                    {
-                        organizationId: orgId,
-                        requiredRole: requiredRole.name,
-                        personId: context.personId
-                    });
-            }
-        });
-});
-
-/**
- * Grant access to the organization.
- * @param context {Context} Current security context.
- * @param organizationId {number} ID of the organization to grant access to.
- * @param personId {number} ID of the person to grant access.
- * @param role {string} Role to assign.
- * Only admins can grant permissions. An existing role is replaced if any.
- */
-var grantAccess = module.exports.grantAccess = Promise.method(function (context, organizationId, personId, roleName) {
-    var role = OrganizationRoles.parse(roleName);
-    return using(models.transaction(), function (tx) {
-        return ensureHasAccess(context, organizationId, OrganizationRoles.Admin, tx)
-            .then(function() {
-                return models.OrganizationToPerson.find({
-                    where: { organizationId: organizationId, personId: personId }
-                }, { transaction: tx });
-            })
-            .then(function (accessEntry) {
-                if (accessEntry && accessEntry.role === role.name) {
-                    // The person already has the required role, nothing to do.
-                    return accessEntry;
-                }
-
-                return Promise.try(function() {
-                    if (!accessEntry) {
-                        return models.OrganizationToPerson.create({
-                            organizationId: organizationId,
-                            personId: personId,
-                            role: role.name,
-                            updatedByPersonId: context.personId
-                        }, { transaction: tx });
-                    } else {
-                        return accessEntry.updateAttributes({
-                            role: role.name,
-                            updatedByPersonId: context.personId
-                        }, { transaction: tx });
-                    }
-                })
-                .then(function (newAccessEntry) {
-                    return Promise.join(
-                        history.logAccessGranted(context.personId, getOrganizationIdCacheKey(organizationId), newAccessEntry, tx),
-                        cache.remove(getAccessibleOrganizationsCacheKey(personId)),
-                        function() {
-                            return newAccessEntry;
-                        });
-                });
-            });
-    })
-    .catch(function (err) {
-        logger.error('Failed to grant role %s to the person %d on the organization %d , %s.', roleName, personId, organizationId, err.toString());
-        throw err;
-    });
-});
-
-/**
- * Revoke access from the person on the organization.
- * @param context {Context} Current security context.
- * @param organizationId {number} ID of the organization to revoke access on.
- * @param personId {number} ID of the person to revoke access from.
- * Only admins can revoke permissions. The function does not fail if the specified person does not have roles assigned.
- */
-var revokeAccess = module.exports.revokeAccess = Promise.method(function (context, organizationId, personId) {
-    var locals = {};
-    return using(models.transaction(), function (tx) {
-        locals.tx = tx;
-        return ensureHasAccess(context, organizationId, OrganizationRoles.Admin, tx)
-            .then(function(){
-                return models.OrganizationToPerson.find({
-                    where: { organizationId: organizationId, personId: personId }
-                }, { transaction: locals.tx });
-            })
-            .then(function (accessEntry) {
-                if (!accessEntry) {
-                    // The person has no permissions
-                    return null;
-                }
-                locals.accessEntry = accessEntry;
-                return accessEntry.destroy({ transaction: locals.tx })
-                    .then(function() {
-                        return history.logAccessRevoked(context.personId, getOrganizationIdCacheKey(organizationId), locals.accessEntry, locals.tx);
-                    })
-                    .then(function() {
-                        cache.remove(getAccessibleOrganizationsCacheKey(personId));
-                    });
-            });
-    })
-    .catch(function (err) {
-        logger.error('Failed to revoke access from the person %d on the organization %d , %s.', personId, organizationId, err.toString());
-        throw err;
-    });
-});
-
-/**
- * Get access a paged list people and their roles for the specified organization.
- * @param context {Context} Current security context.
- * @param organizationId {number} ID of the organization to get an access list of.
- * @param options {object} See Sequelize.findAndCountAll docs for details.
- * @return
- * ```
- * {
- *    rows: [ { "entry": { personId: 1, role: 'admin' }}, { "entry": { personId: 2, role: 'member' }}, ...],
-  *   count: 10
-  *}
- * ```
- */
-var getAccessList = module.exports.getAccessList = Promise.method(function (context, organizationId, options, transaction) {
-    return ensureHasAccess(context, organizationId, OrganizationRoles.Member, transaction)
-        .then(function () {
-            options = _.merge(options || {}, { where: { organizationId: organizationId } });
-            return models.OrganizationToPerson.findAndCountAll(options, { transaction: transaction });
-        })
-        .catch(function (err) {
-            logger.error('Failed to get access list of the organization %d , %s.', organizationId, err.toString());
-            throw err;
-        });
-});
 
 //
 // ORGANIZATIONS
@@ -271,7 +48,7 @@ var findById = module.exports.findById = Promise.method(function (context, id, t
                 return null;
             }
             locals.organization = organization;
-            return ensureHasAccess(context, locals.organization.id, OrganizationRoles.Member, transaction)
+            return access.ensureHasAccess(context, locals.organization.id, access.OrganizationRoles.Member, transaction)
                 .then(function () {
                     return locals.organization;
                 });
@@ -288,7 +65,7 @@ var findById = module.exports.findById = Promise.method(function (context, id, t
  * Only organizations the current user has access to are returned.
  */
 var find = module.exports.find = Promise.method(function (context, options, transaction) {
-    return getAccessibleOrganizations(context, transaction)
+    return access.getAccessibleOrganizations(context, transaction)
         .then(function (accessEntries) {
             if (!context.isSystem()) {
                 var accessibleIds = _.keys(accessEntries);
@@ -321,7 +98,7 @@ var find = module.exports.find = Promise.method(function (context, options, tran
  * Only organizations the current user has access to are returned.
  */
 var findAndCountAll = module.exports.findAndCountAll = Promise.method(function (context, options) {
-    return getAccessibleOrganizations(context)
+    return access.getAccessibleOrganizations(context)
         .then(function (accessEntries) {
             if (!context.isSystem()) {
                 var accessibleIds = _.keys(accessEntries);
@@ -346,6 +123,9 @@ var findAndCountAll = module.exports.findAndCountAll = Promise.method(function (
  * @returns A newly created organization.
  */
 var create = module.exports.create = Promise.method(function (context, attributes) {
+    if (!context.isSystem()) {
+        throw new errors.AccessDenied('Only SYSTEM can create new organizations.');
+    }
     if (!attributes || validator.isNull(attributes.name)) {
         throw new errors.InvalidParams('name is required');
     }
@@ -356,14 +136,14 @@ var create = module.exports.create = Promise.method(function (context, attribute
         return models.Organization.create(locals.attrs, { transaction: tx })
             .then(function (organization) {
                 locals.organization = organization;
-                return history.logCreated(context.personId, getOrganizationIdCacheKey(organization.id), organization, locals.tx);
+                return history.logCreated(context.personId, context.links.organization(organization.id), organization, locals.tx);
             })
             .then(function() {
                 // Grant an 'admin' role to the current user on the newly created organization
                 return models.OrganizationToPerson.create({
                     organizationId: locals.organization.id,
                     personId: context.personId,
-                    role: 'admin',
+                    role: access.OrganizationRoles.Admin.name,
                     updatedByPersonId: context.personId
                 }, { transaction: locals.tx });
             })
@@ -396,14 +176,14 @@ var update = module.exports.update = Promise.method(function (context, id, attri
                     throw new errors.NotFound();
                 }
                 locals.oldOrganization = organization;
-                return ensureHasAccess(context, id, OrganizationRoles.Admin, locals.tx);
+                return access.ensureHasAccess(context, id, access.OrganizationRoles.Admin, locals.tx);
             })
             .then(function() {
                 return locals.oldOrganization.updateAttributes(locals.attrs, { transaction: locals.tx });
             })
             .then(function (organization) {
                 locals.organization = organization;
-                return history.logUpdated(context.personId, getOrganizationIdCacheKey(organization.id), organization, locals.oldOrganization, locals.tx);
+                return history.logUpdated(context.personId, context.links.organization(organization.id), organization, locals.oldOrganization, locals.tx);
             })
             .then(function () {
                 cache.put(getOrganizationIdCacheKey(locals.organization.id), locals.organization);
@@ -431,12 +211,12 @@ var remove = module.exports.remove = Promise.method(function (context, id) {
                     return;
                 }
                 locals.organization = organization;
-                return ensureHasAccess(context, id, OrganizationRoles.Admin, locals.tx)
+                return access.ensureHasAccess(context, id, access.OrganizationRoles.Admin, locals.tx)
                     .then(function () {
                         return locals.organization.destroy({ transaction: locals.tx });
                     })
                     .then(function () {
-                        return history.logRemoved(context.personId, getOrganizationIdCacheKey(locals.organization.id), locals.organization, locals.tx);
+                        return history.logRemoved(context.personId, context.links.organization(locals.organization.id), locals.organization, locals.tx);
                     })
                     .then(function () {
                         cache.remove(getOrganizationIdCacheKey(locals.organization.id));

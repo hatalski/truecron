@@ -14,21 +14,27 @@ module.exports = function(sequelize, DataTypes) {
                         },
         position:       { type: DataTypes.INTEGER, allowNull:false },
         taskTypeId:     { type: DataTypes.BIGINT, allowNull:false },
-        settings:       { type: DataTypes.TEXT,
-                            get: function () {
-                                var value = this.getDataValue('settings');
-                                if (!!value && typeof value === 'string') {
-                                    return JSON.parse(value);
-                                }
-                                return value;
-                            },
-                            set: function (value) {
-                                if (typeof value === 'object') {
-                                    value = JSON.stringify(value);
-                                }
-                                this.setDataValue('settings', value);
-                            }
-                        },
+        settings:       { type: DataTypes.JSON },
+                        //    get: function () {
+                        //        var value = this.getDataValue('settings');
+                        //        if (value && typeof value === 'string') {
+                        //            return JSON.parse(value);
+                        //        }
+                        //        return value;
+                        //    },
+                        //    set: function (value) {
+                        //        var logger = require('../../../lib/logger');
+                        //
+                        //        logger.info('ZZZZZZZZ');
+                        //        logger.error(value);
+                        //        if (typeof value === 'object') {
+                        //            value = JSON.stringify(value);
+                        //
+                        //            logger.error(value);
+                        //        }
+                        //        this.setDataValue('settings', value);
+                        //    }
+                        //},
         updatedByPersonId:{ type: DataTypes.BIGINT, allowNull:false},
         timeout:{ type: DataTypes.BIGINT, allowNull:false}
     }, {

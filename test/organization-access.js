@@ -16,7 +16,7 @@ describe('ORGANIZATIONS ACCESS',
         before(testdata.initdb);
 
         it('must allow an administrator to get an organization by ID', function (done) {
-            auth.getAccessToken(testdata.system.email, function (err, token) {
+            api.getAccessToken(testdata.system.email, function (err, token) {
                 if (err) return done(err);
                 superagent.get(prefix + '/organizations/' + testdata.AjaxCorp.id)
                     .set('Content-Type', 'application/json')
@@ -31,7 +31,7 @@ describe('ORGANIZATIONS ACCESS',
             });
         });
         it('must allow an administrator to find an organization', function (done) {
-            auth.getAccessToken(testdata.system.email, function (err, token) {
+            api.getAccessToken(testdata.system.email, function (err, token) {
                 if (err) return done(err);
                 superagent.get(prefix + '/organizations')
                     .query({ q: testdata.AjaxCorp.name })
@@ -52,7 +52,7 @@ describe('ORGANIZATIONS ACCESS',
             });
         });
         it('must return access denied when a user gets an organization by ID he has no access', function (done) {
-            auth.getAccessToken(testdata.BrianJohnston.email, function (err, token) {
+            api.getAccessToken(testdata.BrianJohnston.email, function (err, token) {
                 if (err) return done(err);
                 superagent.get(prefix + '/organizations/' + testdata.AjaxCorp.id)
                     .set('Content-Type', 'application/json')
@@ -67,7 +67,7 @@ describe('ORGANIZATIONS ACCESS',
             });
         });
         it('should not list an organization if a user has no access to it', function (done) {
-            auth.getAccessToken(testdata.BrianJohnston.email, function (err, token) {
+            api.getAccessToken(testdata.BrianJohnston.email, function (err, token) {
                 if (err) return done(err);
                 superagent.get(prefix + '/organizations')
                     .send()
@@ -83,7 +83,7 @@ describe('ORGANIZATIONS ACCESS',
             });
         });
         it('should not find an organization if a user has no access to it', function (done) {
-            auth.getAccessToken(testdata.BrianJohnston.email, function (err, token) {
+            api.getAccessToken(testdata.BrianJohnston.email, function (err, token) {
                 if (err) return done(err);
                 superagent.get(prefix + '/organizations')
                     .query({ q: testdata.AjaxCorp.name })
@@ -100,7 +100,7 @@ describe('ORGANIZATIONS ACCESS',
             });
         });
         it('should return access denied when a user edits an organization he has no access', function (done) {
-            auth.getAccessToken(testdata.SureshKumar.email, function (err, token) {
+            api.getAccessToken(testdata.SureshKumar.email, function (err, token) {
                 if (err) return done(err);
                 superagent.put(prefix + '/organizations/' + testdata.AcmeCorp.id)
                     .set('Content-Type', 'application/json')
@@ -115,7 +115,7 @@ describe('ORGANIZATIONS ACCESS',
             });
         });
         it('should return access denied when a user deletes an organization he has no access', function (done) {
-            auth.getAccessToken(testdata.SureshKumar.email, function (err, token) {
+            api.getAccessToken(testdata.SureshKumar.email, function (err, token) {
                 if (err) return done(err);
                 superagent.del(prefix + '/organizations/' + testdata.AcmeCorp.id)
                     .authenticate(token)
@@ -128,7 +128,7 @@ describe('ORGANIZATIONS ACCESS',
             });
         });
         it('should allow an admin to get an organization by ID', function (done) {
-            auth.getAccessToken(testdata.SureshKumar.email, function (err, token) {
+            api.getAccessToken(testdata.SureshKumar.email, function (err, token) {
                 if (err) return done(err);
                 superagent.get(prefix + '/organizations/' + testdata.AjaxCorp.id)
                     .authenticate(token)
@@ -143,7 +143,7 @@ describe('ORGANIZATIONS ACCESS',
             });
         });
         it('should allow a member to get an organization by ID', function (done) {
-            auth.getAccessToken(testdata.IvanPetrov.email, function (err, token) {
+            api.getAccessToken(testdata.IvanPetrov.email, function (err, token) {
                 if (err) return done(err);
                 superagent.get(prefix + '/organizations/' + testdata.AjaxCorp.id)
                     .authenticate(token)
@@ -156,7 +156,7 @@ describe('ORGANIZATIONS ACCESS',
             });
         });
         it('should allow an admin to edit an organization', function (done) {
-            auth.getAccessToken(testdata.SureshKumar.email, function (err, token) {
+            api.getAccessToken(testdata.SureshKumar.email, function (err, token) {
                 if (err) return done(err);
                 superagent.put(prefix + '/organizations/' + testdata.AjaxCorp.id)
                     .set('Content-Type', 'application/json')
@@ -166,13 +166,13 @@ describe('ORGANIZATIONS ACCESS',
                         expect(e).to.eql(null);
                         expect(res.status).to.eql(200);
                         expect(res.body.organization.name).to.eql(testdata.AjaxCorp.name);
-                        expect(res.body.organization.updatedByPersonId).to.eql(testdata.SureshKumar.id);
+                        expect(res.body.organization.updatedByUserId).to.eql(testdata.SureshKumar.id);
                         done();
                     });
             });
         });
         it('should not allow a member to edit an organization', function (done) {
-            auth.getAccessToken(testdata.IvanPetrov.email, function (err, token) {
+            api.getAccessToken(testdata.IvanPetrov.email, function (err, token) {
                 if (err) return done(err);
                 superagent.put(prefix + '/organizations/' + testdata.AjaxCorp.id)
                     .set('Content-Type', 'application/json')
@@ -187,7 +187,7 @@ describe('ORGANIZATIONS ACCESS',
             });
         });
         it('should not allow a member to delete an organization', function (done) {
-            auth.getAccessToken(testdata.IvanPetrov.email, function (err, token) {
+            api.getAccessToken(testdata.IvanPetrov.email, function (err, token) {
                 if (err) return done(err);
                 superagent.del(prefix + '/organizations/' + testdata.AjaxCorp.id)
                     .authenticate(token)
@@ -200,14 +200,15 @@ describe('ORGANIZATIONS ACCESS',
             });
         });
         it('should not allow a new user to get an organization by ID', function (done) {
-            auth.getAccessToken(testdata.system.email).bind({})
+            api.getAccessToken(testdata.system.email).bind({})
                 .then(function (systemToken) {
                     this.systemToken = systemToken;
                     return api.createUser(systemToken);
                 })
-                .then(function (user) {
-                    this.user = user;
-                    return auth.getAccessToken(user.email);
+                .then(function (res) {
+                    expect(res.status).to.eql(201);
+                    this.user = res.body.user;
+                    return api.getAccessToken(this.user.email);
                 })
                 .then(function (userToken) {
                     return api.getOrganization(userToken, testdata.AjaxCorp.id);
@@ -217,24 +218,29 @@ describe('ORGANIZATIONS ACCESS',
                 })
                 .finally(function(){
                     if (this.user) {
-                        api.deleteUser(this.systemToken, this.user.id).then(done);
+                        api.deleteUser(this.systemToken, this.user.id).then(function(res) {
+                            expect(res.status).to.eql(204);
+                            done();
+                        });
                     } else {
                         done();
                     }
                 });
         });
         it('should allow a new member to get an organization by ID', function (done) {
-            auth.getAccessToken(testdata.system.email).bind({})
+            api.getAccessToken(testdata.system.email).bind({})
                 .then(function (systemToken) {
                     this.systemToken = systemToken;
                     return api.createUser(systemToken);
                 })
-                .then(function (user) {
-                    this.user = user;
-                    return api.addMember(this.systemToken, testdata.AjaxCorp.id, user.id, 'member');
+                .then(function (res) {
+                    expect(res.status).to.eql(201);
+                    this.user = res.body.user;
+                    return api.addMember(this.systemToken, testdata.AjaxCorp.id, this.user.id, 'member');
                 })
-                .then(function () {
-                    return auth.getAccessToken(this.user.email);
+                .then(function (res) {
+                    expect(res.status).to.eql(201);
+                    return api.getAccessToken(this.user.email);
                 })
                 .then(function (userToken) {
                     return api.getOrganization(userToken, testdata.AjaxCorp.id);
@@ -245,7 +251,10 @@ describe('ORGANIZATIONS ACCESS',
                 })
                 .finally(function() {
                     if (this.user) {
-                        return api.deleteUser(this.systemToken, this.user.id).then(done);
+                        return api.deleteUser(this.systemToken, this.user.id).then(function(res) {
+                            expect(res.status).to.eql(204);
+                            done();
+                        });
                     } else {
                         done();
                     }

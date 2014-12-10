@@ -2,7 +2,8 @@ var Promise = require("bluebird"),
     _ = require('lodash'),
     logger = require('../../lib/logger'),
     validator = require('../../lib/validator'),
-    models = require('./db/models');
+    models = require('./db/models'),
+    links = require('../api/links'); // This is the only dependency of the Storage on the API.
 
 var log = module.exports.log = Promise.method(function (personId, objectPath, operation, newData, oldData, transaction) {
     var record = {
