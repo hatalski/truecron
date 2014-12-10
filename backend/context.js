@@ -14,8 +14,8 @@ module.exports.SystemOrgId = -2;
 
 /**
  * A call context, has information about current authenticated person, authenticated client, etc.
- * @param personId {string} ID of an authenticated person.
- * @param clientId {string} ID of an authenticated client (application).
+ * @param personId {number} ID of an authenticated person.
+ * @param clientId {number} ID of an authenticated client (application).
  * @constructor
  */
 var Context = function (personId, clientId, links) {
