@@ -3,11 +3,11 @@ import AuthenticatedRouteMixin from 'simple-auth/mixins/authenticated-route-mixi
 
 export default Ember.Route.extend(AuthenticatedRouteMixin, {
 	model: function(params) {
-		console.log('load organization model with name : ' + params.organization_name);
-		return this.store.find('organization', { name: params.organization_name });
+		console.log('load organization model with id : ' + params.organization_id);
+		return this.store.find('organization', params.organization_id);
 	},
 	serialize: function(model) {
-		return { organization_name: model.get('name') };
+		return { organization_id: model.get('id') };
 	},
 	setupController: function(controller, model) {
 		if (this.controllerFor('dashboard').get('choosenOrganization') == null) {

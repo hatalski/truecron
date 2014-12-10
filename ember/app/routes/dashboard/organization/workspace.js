@@ -3,11 +3,11 @@ import AuthenticatedRouteMixin from 'simple-auth/mixins/authenticated-route-mixi
 
 export default Ember.Route.extend(AuthenticatedRouteMixin, {
 	model: function(params) {
-		console.log('load workspace model with name : ' + params.workspace_name);
-		return this.store.find('workspace', { name: params.workspace_name });
+		console.log('load workspace model with id : ' + params.workspace_id);
+		return this.store.find('workspace', params.workspace_id);
 	},
 	serialize: function(model) {
-		return { workspace_name: model.get('name') };
+		return { workspace_id: model.get('id') };
 	},
 	setupController: function(controller, model) {
 		if (this.controllerFor('dashboard').get('choosenWorkspace') == null) {
