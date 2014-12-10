@@ -80,7 +80,7 @@ var SftpTask = function(connection, ftpCommands)
 
 SftpTask.prototype.init = function()
 {
-    task.super_.prototype.init();
+    SftpTask.super_.prototype.init();
 };
 
 util.inherits(SftpTask, task);
