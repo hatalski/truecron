@@ -35,9 +35,21 @@ export default Ember.Controller.extend(LoginControllerMixin, {
         Ember.$('#signup_modal').modal({});
 	  	},
 	  	signUpNew: function(){
-	  		var test = this.get('signUpNewEmail');
-	  		// console.log(testEmail);
+	  		var signUpNewEmail = this.get('signUpNewEmail');
+			console.log('this is mail');
+	  		console.log(signUpNewEmail);	
+	  		if (!validator.isEmail(signUpNewEmail)) {
+	  			console.log('email is empty');	  			
+	  		} else {
+	  			Ember.$('#invite_modal').modal({});
+	  			var result = Ember.$.ajax('http://dev.truecron.com:3000/beta/signup', { type: 'POST'});
+	  			result.success(function(data) {
+	  				console.log(data);
+	  			});
+	  			result.error(function(error) { console.log(error); });
+	  		}  		
 	  		console.log('this is test');
+	  		console.log(signUpNewEmail);
 	  	}
     }
 });
