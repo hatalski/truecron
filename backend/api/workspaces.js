@@ -6,7 +6,8 @@ var express = require('express'),
     validator = require('../../lib/validator'),
     storage = require('../storage'),
     apiErrors = require('./../../lib/errors'),
-    common = require('./common');
+    common = require('./common'),
+    jobs = require('./jobs');
 
 var api = express.Router();
 
@@ -39,7 +40,7 @@ api.route('/workspaces')
         if (!req.organization) {
             return next(new apiErrors.InvalidParams('Organization is not specified.'));
         }
-        var where = { organizationId: req.organizationId };
+        var where = { organizationId: req.organization.id };
         if (req.listParams.searchTerm) {
             where = _.merge(where, { name: { like: req.listParams.searchTerm } });
         }
@@ -66,12 +67,16 @@ api.route('/workspaces')
     // Add a new workspace to the req.organization.
     //
     .post(function (req, res, next) {
+        if (!req.organization) {
+            return next(new apiErrors.InvalidParams('Organization is not specified.'));
+        }
         req.checkBody('workspace.name', 'Invalid workspace name.').isLength(1, 255);
         var errors = req.validationErrors();
         if (errors) {
             return next(new apiErrors.InvalidParams(errors));
         }
-        storage.Workspace.create(req.context, req.organization.id, req.body.workspace)
+        req.body.workspace.organizationId = req.organization.id;
+        storage.Workspace.create(req.context, req.body.workspace)
             .then(function (workspace) {
                 res.status(201).json({ workspace: formatWorkspace(req, workspace) });
             })
@@ -255,5 +260,6 @@ api.route('/workspaces/:workspaceid/members/:wsmemberid')
             });
     });
 
+api.use('/workspaces/:workspaceid', jobs);
 
 module.exports = api;

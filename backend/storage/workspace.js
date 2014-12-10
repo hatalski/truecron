@@ -29,10 +29,9 @@ var getWorkspaceIdCacheKey = function(workspaceId) {
 //
 
 /**
- * Search for a single workspace by ID.
- * Organization Member role is required for this operation.
+ * Search for a single workspace by ID without security checks.
  */
-var findById = module.exports.findById = Promise.method(function (context, id, transaction) {
+var findByIdNoChecks = module.exports.findByIdNoChecks = Promise.method(function (context, id, transaction) {
     var locals = { cacheKey: getWorkspaceIdCacheKey(id) };
     return cache.get(locals.cacheKey)
         .then(function (result) {
@@ -44,22 +43,16 @@ var findById = module.exports.findById = Promise.method(function (context, id, t
                     cache.put(locals.cacheKey, workspace);
                     return workspace;
                 });
-        })
-        .then(function (workspace) {
-            if (!workspace) {
-                return null;
-            }
-            locals.workspace = workspace;
-            return workspaceAccess.ensureHasAccess(context, workspace.organizationId, workspace,
-                                                   workspaceAccess.WorkspaceRoles.Viewer, transaction)
-                .then(function () {
-                    return locals.workspace;
-                });
-        })
-        .catch(function (err) {
-            logger.error('Failed to find a workspace by id %s, %s.', id, err.toString());
-            throw err;
         });
+});
+
+/**
+ * Search for a single workspace by ID.
+ * Organization Member role is required for this operation.
+ */
+var findById = module.exports.findById = Promise.method(function (context, id, workspaceRole, transaction) {
+    workspaceRole = workspaceRole || workspaceAccess.WorkspaceRoles.Viewer;
+    return workspaceAccess.findByIdAndEnsureAccess(context, id, workspaceRole, transaction);
 });
 
 var limitQueryToAccessibleOrganizations = Promise.method(function (context, options, transaction) {
@@ -123,25 +116,27 @@ var findAndCountAll = module.exports.findAndCountAll = Promise.method(function (
         });
 });
 
+
 /**
  * Create a new workspace.
- * @param {number|object} organization ID or an instance of the organization to create a workspace in.
- * @param {object} attributes Initial attributes values. name is required.
+ * @param {object} attributes Initial attributes values. organizationId and name are required.
  * @returns A newly created workspace.
  * Organization Admin role is required.
  */
-var create = module.exports.create = Promise.method(function (context, organization, attributes) {
-    if (!attributes || validator.isNull(attributes.name)) {
+var create = module.exports.create = Promise.method(function (context, attributes) {
+    attributes = tools.sanitizeAttributesForCreate(context, attributes);
+    if (!attributes.organizationId) {
+        throw new errors.InvalidParams('organizationId is required');
+    }
+    if (!attributes.name) {
         throw new errors.InvalidParams('Workspace name is required');
     }
-    attributes.organizationId = tools.getId(organization);
-    attributes.updatedByPersonId = context.personId;
-    var locals = {attrs: attributes};
+    var locals = { attrs: attributes };
     return using(models.transaction(), function (tx) {
         locals.tx = tx;
-        return organizationAccess.ensureHasAccess(context, organization, organizationAccess.OrganizationRoles.Admin, tx)
+        return organizationAccess.ensureHasAccess(context, locals.attrs.organizationId, organizationAccess.OrganizationRoles.Admin, tx)
             .then(function () {
-                return models.Workspace.create(locals.attrs, {transaction: tx});
+                return models.Workspace.create(locals.attrs, { transaction: tx });
             })
             .then(function (workspace) {
                 locals.workspace = workspace;
@@ -167,22 +162,18 @@ var create = module.exports.create = Promise.method(function (context, organizat
  * Workspace Editor role is required for this operation.
  */
 var update = module.exports.update = Promise.method(function (context, id, attributes) {
-    attributes.updatedByPersonId = context.personId;
-    delete attributes.organizationId; // Prevent moving of a workspace between organizations.
+    attributes = tools.sanitizeAttributesForUpdate(context, attributes);
+    delete attributes.organizationId; // Prevent moving of workspaces between organizations.
     var locals = { attrs: attributes };
     return using (models.transaction(), function (tx) {
         locals.tx = tx;
-        return findById(context, id, locals.tx)
+        return findById(context, id, workspaceAccess.WorkspaceRoles.Editor, locals.tx)
             .then(function (workspace) {
                 if (workspace === null) {
                     throw new errors.NotFound();
                 }
                 locals.oldWorkspace = workspace;
-                return workspaceAccess.ensureHasAccess(context, workspace.organizationId, workspace,
-                                                       workspaceAccess.WorkspaceRoles.Editor, locals.tx);
-            })
-            .then(function () {
-                return locals.oldWorkspace.updateAttributes(locals.attrs, {transaction: locals.tx});
+                return workspace.updateAttributes(locals.attrs, { transaction: locals.tx });
             })
             .then(function (workspace) {
                 locals.workspace = workspace;
@@ -209,24 +200,20 @@ var update = module.exports.update = Promise.method(function (context, id, attri
 var remove = module.exports.remove = Promise.method(function (context, id) {
     return using (models.transaction(), function (tx) {
         var locals = { tx: tx };
-        return findById(context, id, locals.tx)
+        return findById(context, id, workspaceAccess.WorkspaceRoles.Editor, locals.tx)
             .then(function (workspace) {
                 if (workspace === null) {
                     // No found, that's ok for remove() operation
                     return;
                 }
                 locals.workspace = workspace;
-                return workspaceAccess.ensureHasAccess(context, workspace.organizationId, id,
-                                                       workspaceAccess.WorkspaceRoles.Editor, locals.tx)
-                    .then(function () {
-                        return locals.workspace.destroy({ transaction: locals.tx });
-                    })
-                    .then(function () {
-                        return Promise.join(
-                            history.logRemoved(context.personId, context.links.workspace(locals.workspace.id),
-                                               locals.workspace, locals.tx),
-                            cache.remove(getWorkspaceIdCacheKey(locals.workspace.id)));
-                    });
+                return workspace.destroy({ transaction: locals.tx });
+            })
+            .then(function () {
+                return Promise.join(
+                    history.logRemoved(context.personId, context.links.workspace(locals.workspace.id),
+                                       locals.workspace, locals.tx),
+                    cache.remove(getWorkspaceIdCacheKey(locals.workspace.id)));
             });
     })
     .catch(function (err) {

@@ -8,6 +8,7 @@ var Promise = require("bluebird"),
     validator = require('../../lib/validator'),
     errors = require('../../lib/errors'),
     organizationAccess = require('./organization-access'),
+    workspace = require('./workspace'),
     tools = require('./tools');
 
 var using = Promise.using;
@@ -86,23 +87,11 @@ var getEditableWorkspaces = module.exports.getEditableWorkspaces = Promise.metho
         });
 });
 
-/**
- * Throws 'access denied' error if a user does not have the role specified, or returns user's {WorkspaceRole}.
- * The role 'Editor' includes the 'Viewer' role, so if a 'Viewer' is requested both 'Editor' and 'Viewer' pass the check.
- * Organization roles affect this check. Organization admins can edit any workspace, organization members can view any workspace.
- * Moreover, a user needs to be at least an organization member to view workspaces.
- * @param context {Context} Current security context.
- * @param organization {object|number} An organization object or ID of the organization the workspace belongs to.
- * @param workspace {object|number} A workspace object or ID of the workspace to check access to.
- * @param requiredRole {WorkspaceRole} A role the user should have.
- * @return {WorkspaceRole} A role the user has.
- */
-var ensureHasAccess = module.exports.ensureHasAccess = Promise.method(function (context, organization, workspace, requiredRole, transaction) {
+var checkAccess =  Promise.method(function (context, workspace, requiredRole, transaction) {
     if (context.isSystem()) {
         return WorkspaceRoles.Editor;
     }
-    var orgId = tools.getId(organization);
-    return organizationAccess.ensureHasAccess(context, organization, organizationAccess.OrganizationRoles.Member, transaction)
+    return organizationAccess.ensureHasAccess(context, workspace.organizationId, organizationAccess.OrganizationRoles.Member, transaction)
         .then(function (organizationRole) {
             // Organization admins can edit any workspace
             if (organizationRole.equals(organizationAccess.OrganizationRoles.Admin)) {
@@ -114,22 +103,63 @@ var ensureHasAccess = module.exports.ensureHasAccess = Promise.method(function (
             }
             return getEditableWorkspaces(context, transaction)
                 .then(function (accessEntries) {
-                    var wsId = tools.getId(workspace);
-                    var role = accessEntries[wsId];
+                    var role = accessEntries[workspace.id];
                     var hasAccess = role && role.includes(requiredRole);
                     if (!hasAccess) {
                         throw new errors.AccessDenied(
                             util.format('Access denied. Role "%s" is required to perform the operation on the workspace %d.',
-                                requiredRole.name, wsId),
+                                requiredRole.name, workspace.id),
                             {
-                                organizationId: orgId,
-                                workspaceId: wsId,
+                                organizationId: workspace.organizationId,
+                                workspaceId: workspace.id,
                                 requiredRole: requiredRole.name,
                                 personId: context.personId
                             });
                     }
                     return role;
                 });
+        });
+});
+
+var findByIdAndEnsureAccess = module.exports.findByIdAndEnsureAccess = Promise.method(function (context, id, requiredRole, transaction) {
+    var locals = {};
+    return workspace.findByIdNoChecks(context, id, transaction)
+        .then(function (workspace) {
+            if (!workspace) {
+                return null;
+            }
+            locals.workspace = workspace;
+            return checkAccess(context, workspace, requiredRole, transaction);
+        })
+        .then(function (role) {
+            return locals.workspace;
+        })
+        .catch(function (err) {
+            logger.error('Failed to find a workspace by id %s, %s.', id, err.toString());
+            throw err;
+        });
+});
+
+/**
+ * Throws 'access denied' error if a user does not have the role specified, or returns user's {WorkspaceRole}.
+ * The role 'Editor' includes the 'Viewer' role, so if a 'Viewer' is requested both 'Editor' and 'Viewer' pass the check.
+ * Organization roles affect this check. Organization admins can edit any workspace, organization members can view any workspace.
+ * Moreover, a user needs to be at least an organization member to view workspaces.
+ * @param context {Context} Current security context.
+ * @param workspaceId {object|number} A workspace object or ID of the workspace to check access to.
+ * @param requiredRole {WorkspaceRole} A role the user should have.
+ * @return {WorkspaceRole} A role the user has.
+ */
+var ensureHasAccess = module.exports.ensureHasAccess = Promise.method(function (context, workspaceId, requiredRole, transaction) {
+    if (context.isSystem()) {
+        return WorkspaceRoles.Editor;
+    }
+    return workspace.findByIdNoChecks(context, tools.getId(workspaceId), transaction)
+        .then(function (workspace) {
+            if (workspace === null) {
+                throw new errors.NotFound();
+            }
+            return checkAccess(context, workspace, requiredRole, transaction);
         });
 });
 
@@ -146,14 +176,12 @@ var grantAccess = module.exports.grantAccess = Promise.method(function (context,
     workspaceId = tools.getId(workspaceId);
     personId = tools.getId(personId);
     var role = WorkspaceRoles.parse(roleName);
-    var locals = {};
     return using(models.transaction(), function (tx) {
-        return models.Workspace.find({ id: workspaceId }, { transaction: tx })
+        return workspace.findByIdNoChecks(context, workspaceId, tx)
             .then(function (workspace) {
                 if (!workspace) {
                     throw new errors.NotFound();
                 }
-                locals.organizationId = workspace.organizationId;
                 // A user needs to be organization's admin to modify workspace permissions
                 return organizationAccess.ensureHasAccess(context, workspace.organizationId, organizationAccess.OrganizationRoles.Admin, tx);
             })
@@ -211,20 +239,18 @@ var revokeAccess = module.exports.revokeAccess = Promise.method(function (contex
     personId = tools.getId(personId);
     var locals = {};
     return using(models.transaction(), function (tx) {
-        locals.tx = tx;
-        return models.Workspace.find({ id: workspaceId }, { transaction: tx })
+        return workspace.findByIdNoChecks(context, workspaceId, tx)
             .then(function (workspace) {
                 if (!workspace) {
                     throw new errors.NotFound();
                 }
-                locals.organizationId = workspace.organizationId;
                 // A user needs to be organization's admin to modify workspace permissions
                 return organizationAccess.ensureHasAccess(context, workspace.organizationId, organizationAccess.OrganizationRoles.Admin, tx);
             })
             .then(function(){
                 return models.WorkspaceToPerson.find({
                     where: { workspaceId: workspaceId, personId: personId }
-                }, { transaction: locals.tx });
+                }, { transaction: tx });
             })
             .then(function (accessEntry) {
                 if (!accessEntry) {
@@ -232,9 +258,9 @@ var revokeAccess = module.exports.revokeAccess = Promise.method(function (contex
                     return null;
                 }
                 locals.accessEntry = accessEntry;
-                return accessEntry.destroy({ transaction: locals.tx })
+                return accessEntry.destroy({ transaction: tx })
                     .then(function() {
-                        return history.logAccessRevoked(context.personId, context.links.workspace(workspaceId), locals.accessEntry, locals.tx);
+                        return history.logAccessRevoked(context.personId, context.links.workspace(workspaceId), locals.accessEntry, tx);
                     })
                     .then(function() {
                         cache.remove(getEditableWorkspacesCacheKey(personId));
@@ -250,7 +276,6 @@ var revokeAccess = module.exports.revokeAccess = Promise.method(function (contex
 /**
  * Get a paged list of people and their roles for the specified workspace.
  * @param context {Context} Current security context.
- * @param organization {number|object} ID or an instance of the organization the workspace belongs to.
  * @param workspace {number|object} ID or an instance of the workspace to get an access list of.
  * @param options {object} See Sequelize.findAndCountAll docs for details.
  * @return
@@ -261,8 +286,8 @@ var revokeAccess = module.exports.revokeAccess = Promise.method(function (contex
   *}
  * ```
  */
-var getAccessList = module.exports.getAccessList = Promise.method(function (context, organization, workspace, options, transaction) {
-    return ensureHasAccess(context, organization, workspace, WorkspaceRoles.Viewer, transaction)
+var getAccessList = module.exports.getAccessList = Promise.method(function (context, workspace, options, transaction) {
+    return ensureHasAccess(context, workspace, WorkspaceRoles.Viewer, transaction)
         .then(function () {
             options = _.merge(options || {}, { where: { workspaceId: tools.getId(workspace) } });
             return models.WorkspaceToPerson.findAndCountAll(options, { transaction: transaction });

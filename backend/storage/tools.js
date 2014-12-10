@@ -11,3 +11,25 @@ module.exports.getId = function (idOrObject) {
     }
     return +id;
 };
+
+module.exports.sanitizeAttributesForCreate = function (context, attributes) {
+    if (!attributes) {
+        throw new errors.InvalidParams();
+    }
+    delete attributes.id;
+    delete attributes.createdAt;
+    delete attributes.updatedAt;
+    attributes.updatedByPersonId = context.personId;
+    return attributes;
+};
+
+module.exports.sanitizeAttributesForUpdate = function (context, attributes) {
+    if (!attributes) {
+        throw new errors.InvalidParams();
+    }
+    delete attributes.id;
+    delete attributes.createdAt;
+    delete attributes.updatedAt;
+    attributes.updatedByPersonId = context.personId;
+    return attributes;
+};

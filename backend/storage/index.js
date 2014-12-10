@@ -23,7 +23,7 @@ Storage.prototype.initialize = Promise.method(function initialize() {
         host: databaseOptions.host,
         port: databaseOptions.port,
         dialect: 'postgres',
-        logging: logger.debug,
+        logging: function (message) { logger.debug(message); },
         quoteIdentifiers: false,
         omitNull: true
     };
