@@ -13,13 +13,13 @@ function formatJob(req, datajob) {
         return datajob;
     }
     var job = datajob.toJSON();
-    job._links = {
+    job.links = {
         self: req.context.links.job(job.id),
         tasks: req.context.links.tasks(job.id),
         history: req.context.links.jobHistory(job.id)
     };
     common.formatApiOutput(job);
-    return { job: job };
+    return job;
 }
 
 api.route('/jobs')
@@ -63,7 +63,7 @@ api.route('/jobs')
         req.body.job.workspaceId = req.workspace.id;
         storage.Jobs.create(req.context, req.body.job)
             .then(function (job) {
-                res.status(201).json(formatJob(req, job));
+                res.status(201).json({ job: formatJob(req, job) });
             })
             .catch(function (err) {
                 logger.error(err.toString());
@@ -114,7 +114,7 @@ api.route('/jobs/:jobid')
         }
         storage.Jobs.update(req.context, req.job.id, req.body.job)
             .then(function (job) {
-                res.json(formatJob(req, job));
+                res.json({ job: formatJob(req, job) });
             });
     })
     //
