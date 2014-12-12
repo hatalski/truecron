@@ -8,13 +8,6 @@ export default DS.RESTSerializer.extend({
 			delete hash.updatedByUserId;
 
 			return hash;
-		},
-		organizationId: function(hash) {
-			console.log(' hash : ' + hash);
-			hash.organization = hash.organizationId;
-			delete hash.organizationId;
-
-			return hash;
 		}
 	}
 });

@@ -4,12 +4,15 @@ import AuthenticatedRouteMixin from 'simple-auth/mixins/authenticated-route-mixi
 export default Ember.Route.extend(AuthenticatedRouteMixin, {
 	model: function(params) {
 		console.log('load workspace model with id : ' + params.workspace_id);
-		return this.store.find('workspace', params.workspace_id);
+		var workspace = this.store.find('workspace', params.workspace_id);
+		console.dir(workspace);
+		return workspace;
 	},
 	serialize: function(model) {
 		return { workspace_id: model.get('id') };
 	},
 	setupController: function(controller, model) {
+		console.log('setupController workspace Route');
 		if (this.controllerFor('dashboard').get('choosenWorkspace') == null) {
 	    	this.controllerFor('dashboard').set('choosenWorkspace', model.get('firstObject'));
 		}
