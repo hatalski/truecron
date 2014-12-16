@@ -5,8 +5,12 @@ import LoginControllerMixin from 'simple-auth/mixins/login-controller-mixin';
 export default Ember.Controller.extend(LoginControllerMixin, {
 	authenticator: 'authenticator:truecron',
 	invitationEmail: '',
+	globalsignupemail: '',
+	isGlobalEmailError: false, 
+	isGlobalEmailErrorFunc: function(){
+		return this.get('isGlobalEmailError');
+	}.property('isGlobalEmailError'),
 	isInvitationEmailError: false,
-	globalSignUpEmail: '',
 	isInviteEmailError: function() {
 		return this.get('isInvitationEmailError');
 	}.property('isInvitationEmailError'),
@@ -23,7 +27,6 @@ export default Ember.Controller.extend(LoginControllerMixin, {
 	  			this.set('isInvitationEmailError', true);
 	  			console.log(this.get('isInvitationEmailError'));
 	  		} else {
-	  			console.log(invitationEmail);
 	  			Ember.$('#invite_modal').modal({});
 	  			var result = Ember.$.ajax('http://dev.truecron.com:3000/beta/signup', { type: 'POST'});
 	  			result.success(function(data) {
@@ -35,22 +38,18 @@ export default Ember.Controller.extend(LoginControllerMixin, {
 	  	signup: function() {
         Ember.$('#signup_modal').modal({});
 	  	},
-	  	globalSignUp: function(){
-	  		var globalSignUpEmail = this.get('globalSignUpEmail');
-			console.log('this is mail');
-	  		console.log(globalSignUpEmail);	
-	  		if (validator.isEmail(globalSignUpEmail)) {
-	  			console.log('email is valid');	
-	  			var result = Ember.$.ajax('http://dev.truecron.com:3000/beta/signup', { type: 'POST'});
-	  			result.success(function(data) {
-	  				console.log(data);
-	  			});
-	  			result.error(function(error) { console.log(error); });  			
-	  		} else {	  			
-	  			console.log('email NOT valid');
-	  		}  		
-	  		console.log('this is test');
-	  		console.log(globalSignUpEmail);
+	  	globalsignup: function() {
+	  		var globalEmail = this.get('globalsignupemail');
+	  		if (!validator.isEmail(globalEmail)) {
+	  			console.log('email is empty');
+	  			this.set('isGlobalEmailError', true);
+	  			console.log(this.get('isGlobalEmailError'));
+	  			console.log(this.get('globalsignupemail'));
+	  			console.log('globalEmail');	  			
+	  		} else {
+	  			console.log(this.get('globalsignupemail'));
+	  			console.log('all good');
+	  		}
 	  	}
     }
 });
