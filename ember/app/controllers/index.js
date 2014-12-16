@@ -6,7 +6,7 @@ export default Ember.Controller.extend(LoginControllerMixin, {
 	authenticator: 'authenticator:truecron',
 	invitationEmail: '',
 	isInvitationEmailError: false,
-	signUpNewEmail: '',
+	globalSignUpEmail: '',
 	isInviteEmailError: function() {
 		return this.get('isInvitationEmailError');
 	}.property('isInvitationEmailError'),
@@ -23,6 +23,7 @@ export default Ember.Controller.extend(LoginControllerMixin, {
 	  			this.set('isInvitationEmailError', true);
 	  			console.log(this.get('isInvitationEmailError'));
 	  		} else {
+	  			console.log(invitationEmail);
 	  			Ember.$('#invite_modal').modal({});
 	  			var result = Ember.$.ajax('http://dev.truecron.com:3000/beta/signup', { type: 'POST'});
 	  			result.success(function(data) {
@@ -34,22 +35,22 @@ export default Ember.Controller.extend(LoginControllerMixin, {
 	  	signup: function() {
         Ember.$('#signup_modal').modal({});
 	  	},
-	  	signUpNew: function(){
-	  		var signUpNewEmail = this.get('signUpNewEmail');
+	  	globalSignUp: function(){
+	  		var globalSignUpEmail = this.get('globalSignUpEmail');
 			console.log('this is mail');
-	  		console.log(signUpNewEmail);	
-	  		if (!validator.isEmail(signUpNewEmail)) {
-	  			console.log('email is empty');	  			
-	  		} else {
-	  			Ember.$('#invite_modal').modal({});
+	  		console.log(globalSignUpEmail);	
+	  		if (validator.isEmail(globalSignUpEmail)) {
+	  			console.log('email is valid');	
 	  			var result = Ember.$.ajax('http://dev.truecron.com:3000/beta/signup', { type: 'POST'});
 	  			result.success(function(data) {
 	  				console.log(data);
 	  			});
-	  			result.error(function(error) { console.log(error); });
+	  			result.error(function(error) { console.log(error); });  			
+	  		} else {	  			
+	  			console.log('email NOT valid');
 	  		}  		
 	  		console.log('this is test');
-	  		console.log(signUpNewEmail);
+	  		console.log(globalSignUpEmail);
 	  	}
     }
 });
