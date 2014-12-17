@@ -212,8 +212,10 @@ var remove = module.exports.remove = Promise.method(function (context, id) {
                 return workspace.destroy({ transaction: locals.tx });
             })
             .then(function () {
+                var links = context.links.workspace(
+                    { organizationId: locals.workspace.organizationId, workspaceId: locals.workspace.id });
                 return Promise.join(
-                    history.logRemoved(context.personId, context.links.workspace(locals.workspace.id),
+                    history.logRemoved(context.personId, links,
                                        locals.workspace, locals.tx),
                     cache.remove(getWorkspaceIdCacheKey(locals.workspace.id)));
             });
@@ -223,4 +225,3 @@ var remove = module.exports.remove = Promise.method(function (context, id) {
         throw err;
     });
 });
-
