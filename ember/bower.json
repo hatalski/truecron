@@ -15,7 +15,7 @@
     "qunit": "1.15.0",
     "bootstrap": "3.3.1",
     "font-awesome": "4.2.0",
-    "ember-simple-auth": "0.7.1",
+    "ember-simple-auth": "0.7.2",
     "rrule": "2.1.0",
     "moment": "2.8.4",
     "validator-js": "3.22.2"

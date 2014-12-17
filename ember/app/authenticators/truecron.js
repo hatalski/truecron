@@ -221,8 +221,8 @@ export default Base.extend({
   	return Ember.$.ajax({
       url:         url,
       beforeSend: function (xhr) {
-		xhr.setRequestHeader('Authorization', 'Basic LTI6SWdkN2VuMV9WQ01QNTlwQnBtRUY=');
-	  },
+		    xhr.setRequestHeader('Authorization', 'Basic LTI6SWdkN2VuMV9WQ01QNTlwQnBtRUY=');
+	    },
       type:        'POST',
       data:        data,
       dataType:    'json',
