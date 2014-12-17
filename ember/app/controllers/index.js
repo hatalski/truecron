@@ -51,14 +51,14 @@ export default Ember.Controller.extend(LoginControllerMixin, {
 	  		}
 	  		
 	  		var globalPass = this.get('globalpassword');
-	  		if (globalPass.length < 8) {
-	  			this.set('isGlobalPassError', true);
-	  			this.set('globalpassword', null);
-	  			flagPass = false;
+	  		if (globalPass && globalPass.length > 7) {
+	  			this.set('isGlobalPassError', false);
+	  			flagPass = true;
 	  		}
 	  		else {
-	  			this.set('isGlobalPassError', false);
-	  			flagPass = true;	  			
+	  			this.set('isGlobalPassError', true);
+	  			this.set('globalpassword', null);
+	  			flagPass = false;	  				  			
 	  		}
 
 	  		if (this.get('globalpassword')===this.get('globalpasswordconfirm')) {
