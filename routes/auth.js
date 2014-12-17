@@ -144,7 +144,8 @@ router.post('/cancelaccount', function(req, res, next) {
     // 5. Remove user's workspaces
     // 6. Remove user's organizations
     // 7. Remove user's emails
-    // 8. Remove user
+    // 8. Remove user's history
+    // 9. Remove user
 });
 
 router.get('/check', function(req, res) {
