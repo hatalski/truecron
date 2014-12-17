@@ -130,7 +130,7 @@ describe('REAL SIGN UP',
 
         it('sign up should success when email and password are valid', function(done) {
             superagent.post(prefix + '/auth/signup')
-                .send({ email: 'vhatalski@naviam.com', password: 'P@ssw0rd'})
+                .send({ email: 'vhatalski@naviam.com', password: 'P@ssw0rd', sendMail: false })
                 .end(function (e, res) {
                     expect(e).to.eql(null);
                     console.dir(res.body);

@@ -3,6 +3,7 @@ var express = require('express'),
     util = require('util'),
     Promise = require("bluebird"),
     config = require('../lib/config'),
+    smtp = require('../lib/smtp'),
     validator = require('../lib/validator'),
     apiErrors = require('../lib/errors'),
     logger = require('../lib/logger'),
@@ -19,6 +20,8 @@ router.post('/signup', function(req, res, next) {
 
     var email = req.body.email;
     var password = req.body.password;
+    var shouldSendEmail = req.body.sendMail === undefined;
+
     req.checkBody('email', 'The email address you entered is not valid. Please try again.').isEmail();
     req.checkBody('password', 'The password should be minimum of 8 characters in length.').isLength(8);
     var errors = req.validationErrors();
@@ -58,6 +61,22 @@ router.post('/signup', function(req, res, next) {
             if (!wsp) logger.error('workspace was not created');
             // console.dir(wsp);
             response.workspace = wsp;
+            if (shouldSendEmail) {
+                return smtp.sendMail({
+                    from: 'welcome@truecron.com',
+                    to: email,
+                    subject: 'Thanks from TrueCron team!',
+                    html: 'Thank you for signing up for TrueCron!<br/><br/>' +
+                    'You can really help us out by sharing with your friends.<br/><br/>' +
+                    'TrueCron Team'
+                });
+            } else {
+                return new Promise(function (fulfill){
+                    fulfill();
+                });
+            }
+        })
+        .then(function() {
             res.status(200).json(response);
         })
         .catch(function (err) {
