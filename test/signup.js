@@ -139,5 +139,18 @@ describe('REAL SIGN UP',
                     done();
                 });
         });
+
+        it('cancel account should work', function(done) {
+            superagent.post(prefix + '/auth/cancelaccount')
+                .send({ email: 'vhatalski@naviam.com' })
+                .end(function (e, res) {
+                    expect(e).to.eql(null);
+                    console.dir(res.body);
+                    expect(res.status).to.eql(200);
+                    expect(res.header['content-type']).to.eql('application/json; charset=utf-8');
+                    expect(res.body.error).to.eql(undefined);
+                    done();
+                });
+        });
     }
 );
