@@ -42,7 +42,6 @@ router.post('/signup', function(req, res, next) {
         })
         .then(function (person) {
             if (!person) logger.error('person was not created');
-            //req.context = new context.Context(person.id, -2);
             response.user = person;
             req.context.personId = person.id;
             // 3. Create "Personal" organization and add user as an admin of this organization
@@ -50,17 +49,15 @@ router.post('/signup', function(req, res, next) {
         })
         .then(function (org) {
             if (!org) logger.error('organization was not created');
-            // req.organization = org;
             response.organization = org;
-            //Add "My First" workspace and add user as an "editor"
+            // 3.1 Add "My First" workspace and add user as an "editor"
             var newWorkspaceAttributes = { name: 'My First', organizationId: org.id };
-            // console.dir(newWorkspaceAttributes)
             return storage.Workspace.create(req.context, newWorkspaceAttributes);
         })
         .then(function(wsp) {
             if (!wsp) logger.error('workspace was not created');
-            // console.dir(wsp);
             response.workspace = wsp;
+            // 4. Send welcome email with email verification code in it
             if (shouldSendEmail) {
                 return smtp.sendMail({
                     from: 'welcome@truecron.com',
@@ -83,13 +80,6 @@ router.post('/signup', function(req, res, next) {
             logger.error(err.toString());
             return next(err);
         });
-    //2. Create user account
-    //In case of SSO add necessary information to link Google (or other) account with account in our database
-    //3. Create "Personal" organization and add user as an admin of this organization
-    //Add "My First" workspace and add user as an "editor"
-    //4. Send welcome email with email verification code in it
-    //5. Authenticate user
-
 });
 
 router.get('/check', function(req, res) {
