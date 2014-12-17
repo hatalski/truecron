@@ -7,10 +7,7 @@ export default Ember.Controller.extend(LoginControllerMixin, {
 	invitationEmail: '',
 	globalsignupemail: '',
 	isGlobalEmailError: false, 	
-	isInvitationEmailError: false,
-	isInviteEmailError: function() {
-		return this.get('isInvitationEmailError');
-	}.property('isInvitationEmailError'),
+	isInvitationEmailError: false,	
 	globalpassword: '',
 	isGlobalPassError: false,
 	globalpasswordconfirm: '',
@@ -25,8 +22,7 @@ export default Ember.Controller.extend(LoginControllerMixin, {
 	  		var inviteEmail = this.get('invitationEmail');
 	  		if (!validator.isEmail(inviteEmail)) {
 	  			console.log('email is empty');
-	  			this.set('isInvitationEmailError', true);
-	  			console.log(this.get('isInvitationEmailError'));
+	  			this.set('isInvitationEmailError', true);	  			
 	  		} else {
 	  			Ember.$('#invite_modal').modal({});
 	  			var result = Ember.$.ajax('http://dev.truecron.com:3000/beta/signup', { type: 'POST'});
@@ -39,41 +35,45 @@ export default Ember.Controller.extend(LoginControllerMixin, {
 	  	signup: function() {
         Ember.$('#signup_modal').modal({});
 	  	},
-	  	globalsignup: function() {	  		
+	  	globalsignup: function() {	 
+	  		var flagEmail = false;
+	  		var flagPass = false;
+	  		var flagConfPass = false; 		
 	  		var globalEmail = this.get('globalsignupemail');
 	  		if (!validator.isEmail(globalEmail)) {	  			
 	  			this.set('isGlobalEmailError', true);
-	  			console.log(globalEmail+'-not valid email');	  			
+	  			console.log(globalEmail+'-not valid email');
+	  			flagEmail = false;	  			
 	  		} else {
 	  			this.set('isGlobalEmailError', false);
 	  			console.log(globalEmail+'-valid email');
+	  			flagEmail = true;
 	  		}
 	  		
 	  		var globalPass = this.get('globalpassword');
 	  		if (globalPass.length < 8) {
 	  			this.set('isGlobalPassError', true);
 	  			this.set('globalpassword', null);
+	  			flagPass = false;
 	  		}
 	  		else {
-	  			this.set('isGlobalPassError', false);	  			
+	  			this.set('isGlobalPassError', false);
+	  			flagPass = true;	  			
 	  		}
 
 	  		if (this.get('globalpassword')===this.get('globalpasswordconfirm')) {
 	  			this.set('isGlobalPassConfirmError', false);
-	  			console.log('Password confirmed!');	  			
+	  			console.log('Password confirmed!');	 
+	  			flagConfPass = true;	
 	  		}
 	  		else {
 	  			console.log('the password is not confirmed');
 	  			this.set('isGlobalPassConfirmError', true);
 	  			this.set('globalpasswordconfirm', null);
-	  		}
-	  		var errorEmail = this.get('isGlobalEmailError');
-	  		var errorPass = this.get('isGlobalPassError');
-	  		var errorConfPass = this.get('isGlobalPassConfirmError');
-	  		console.log(this.get('isGlobalEmailError'));
-	  		console.log(this.get('isGlobalPassError'));
-	  		console.log(this.get('isGlobalPassConfirmError'));
-	  		if (!errorEmail && !errorPass && !errorConfPass) {
+	  			flagConfPass = false;
+	  		}	  		
+	  		
+	  		if (flagEmail && flagPass && flagConfPass) {
 	  			//something to do
 	  			/*var result = Ember.$.ajax('http://dev.truecron.com:3000/beta/signup', { type: 'POST'});
 	  			result.success(function(data) {
