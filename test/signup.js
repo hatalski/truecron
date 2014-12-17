@@ -99,20 +99,20 @@ describe('REAL SIGN UP',
         //        });
         //});
 
-        it('sign up should fail if email is already taken', function(done) {
-            superagent.post(prefix + '/auth/signup')
-                // 262 chars when 256 is max
-                .send({'email': 'bj@it.acme.corp', password: 'P@ssw0rd'})
-                .end(function (e, res) {
-                    expect(e).to.eql(null);
-                    expect(res.status).to.eql(400);
-                    expect(res.header['content-type']).to.eql('application/json; charset=utf-8');
-                    expect(res.body.error).to.be.an('object');
-                    expect(res.body.error.status).to.eql(400);
-                    expect(res.body.error.message).to.eql('Invalid parameters. The email address is already taken. Please choose another one.');
-                    done();
-                });
-        });
+        //it('sign up should fail if email is already taken', function(done) {
+        //    superagent.post(prefix + '/auth/signup')
+        //        // 262 chars when 256 is max
+        //        .send({'email': 'bj@it.acme.corp', password: 'P@ssw0rd'})
+        //        .end(function (e, res) {
+        //            expect(e).to.eql(null);
+        //            expect(res.status).to.eql(400);
+        //            expect(res.header['content-type']).to.eql('application/json; charset=utf-8');
+        //            expect(res.body.error).to.be.an('object');
+        //            expect(res.body.error.status).to.eql(400);
+        //            expect(res.body.error.message).to.eql('Invalid parameters. The email address is already taken. Please choose another one.');
+        //            done();
+        //        });
+        //});
 
         it('sign up should fail if password length is less than 8 characters', function(done) {
             superagent.post(prefix + '/auth/signup')
@@ -130,9 +130,10 @@ describe('REAL SIGN UP',
 
         it('sign up should success when email and password are valid', function(done) {
             superagent.post(prefix + '/auth/signup')
-                .send({'email': 'vhatalski@naviam.com', password: 'P@ssw0rd'})
+                .send({ email: 'vhatalski@naviam.com', password: 'P@ssw0rd'})
                 .end(function (e, res) {
                     expect(e).to.eql(null);
+                    console.dir(res.body);
                     expect(res.status).to.eql(200);
                     expect(res.header['content-type']).to.eql('application/json; charset=utf-8');
                     expect(res.body.error).to.eql(undefined);
