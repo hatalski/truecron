@@ -33,17 +33,23 @@ router.post('/signup', function(req, res, next) {
         .then(function(result) {
             // 1. Check if login (email) exists and if exists show message that email is already in use.
             if (result) {
-                return next(new apiErrors.InvalidParams('The email address is already taken. Please choose another one.'));
+                throw new apiErrors.InvalidParams('The email address is already taken. Please choose another one.');
+            } else {
+                // 2. Create user account
+                var attributes = { name: email, password: password};
+                return storage.Person.create(req.context, attributes);
             }
-            // 2. Create user account
-            var attributes = { name: email, password: password};
-            console.dir(attributes);
-            return storage.Person.create(req.context, attributes);
         })
         .then(function (person) {
             if (!person) logger.error('person was not created');
             response.user = person;
             req.context.personId = person.id;
+            // 2.1 Add email
+            return storage.Person.addEmail(req.context, person.id, { email: email, status: 'active' });
+        })
+        .then(function (addedEmail) {
+            console.log('added email');
+            console.dir(addedEmail);
             // 3. Create "Personal" organization and add user as an admin of this organization
             return storage.Organization.create(req.context, { name: 'Personal' });
         })
@@ -62,10 +68,12 @@ router.post('/signup', function(req, res, next) {
                 return smtp.sendMail({
                     from: 'welcome@truecron.com',
                     to: email,
-                    subject: 'Thanks from TrueCron team!',
-                    html: 'Thank you for signing up for TrueCron!<br/><br/>' +
-                    'You can really help us out by sharing with your friends.<br/><br/>' +
-                    'TrueCron Team'
+                    subject: 'Welcome to TrueCron!',
+                    html: 'Welcome to TrueCron and thanks for signing up!<hr/>' +
+                    '<b>Sign in to your account:</b><br/>' +
+                    'https://truecron.com' +
+                    '<b>User name:</b><br/>' + email + '<hr/>' +
+                    'We hope you enjoy this opportunity to take TrueCron for a spin. Feel free to kick the tires and get acquainted with no limits and no obligation during your free trial.'
                 });
             } else {
                 return new Promise(function (fulfill){
