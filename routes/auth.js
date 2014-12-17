@@ -39,7 +39,7 @@ router.post('/signup', function(req, res, next) {
         })
         .then(function (person) {
             if (!person) logger.error('person was not created');
-            console.dir(person);
+            //req.context = new context.Context(person.id, -2);
             response.user = person;
             req.context.personId = person.id;
             // 3. Create "Personal" organization and add user as an admin of this organization
@@ -47,14 +47,16 @@ router.post('/signup', function(req, res, next) {
         })
         .then(function (org) {
             if (!org) logger.error('organization was not created');
-            console.dir(org);
+            // req.organization = org;
             response.organization = org;
             //Add "My First" workspace and add user as an "editor"
-            return storage.Workspace.create(req.context, { name: 'My First'});
+            var newWorkspaceAttributes = { name: 'My First', organizationId: org.id };
+            // console.dir(newWorkspaceAttributes)
+            return storage.Workspace.create(req.context, newWorkspaceAttributes);
         })
         .then(function(wsp) {
             if (!wsp) logger.error('workspace was not created');
-            console.dir(wsp);
+            // console.dir(wsp);
             response.workspace = wsp;
             res.status(200).json(response);
         })
