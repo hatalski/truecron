@@ -41,7 +41,7 @@ router.post('/signup', function(req, res, next) {
             }
         })
         .then(function (person) {
-            if (!person) logger.error('person was not created');
+            if (!person) logger.error('person has not been created');
             response.user = person;
             req.context.personId = person.id;
             // 2.1 Add email
@@ -54,14 +54,14 @@ router.post('/signup', function(req, res, next) {
             return storage.Organization.create(req.context, { name: 'Personal' });
         })
         .then(function (org) {
-            if (!org) logger.error('organization was not created');
+            if (!org) logger.error('organization has not been created');
             response.organization = org;
             // 3.1 Add "My First" workspace and add user as an "editor"
             var newWorkspaceAttributes = { name: 'My First', organizationId: org.id };
             return storage.Workspace.create(req.context, newWorkspaceAttributes);
         })
         .then(function(wsp) {
-            if (!wsp) logger.error('workspace was not created');
+            if (!wsp) logger.error('workspace has not been created');
             response.workspace = wsp;
             // 4. Send welcome email with email verification code in it
             if (shouldSendEmail) {
@@ -88,6 +88,63 @@ router.post('/signup', function(req, res, next) {
             logger.error(err.toString());
             return next(err);
         });
+});
+
+router.post('/cancelaccount', function(req, res, next) {
+    var email = req.body.email;
+
+    req.checkBody('email', 'The email address you entered is not valid. Please try again.').isEmail();
+    var errors = req.validationErrors();
+    if (errors) return next(new apiErrors.InvalidParams(errors));
+
+    req.context = context.newSystemContext();
+
+    var response = { user: null, workspace: null };
+    storage.Person.findByEmail(req.context, email)
+        .then(function(person) {
+            if (!person) {
+                console.log('no person found for this email: ' + email);
+                return;
+            } else {
+                response.user = person;
+                // console.dir(person);
+                req.context.personId = person.id;
+                return storage.Person.removeEmail(req.context, person.id, email);
+            }
+        })
+        .then(function(removedEmail) {
+            // console.log('removed email: ');
+            // console.dir(removedEmail);
+            return storage.Workspace.find(req.context, { name: 'My First' });
+        })
+        .then(function(wsp) {
+            response.workspace = wsp;
+            return storage.Workspace.remove(req.context, wsp.id);
+        })
+        .then(function(removedWorkspace) {
+            return storage.Organization.remove(req.context, response.workspace.organizationId);
+        })
+        .then(function() {
+            return storage.Person.remove(req.context, req.context.personId);
+        })
+        .then(function() {
+            console.dir(response);
+            res.status(200).json(response);
+        })
+        .catch(function (err) {
+            logger.error(err.toString());
+            return next(err);
+        });
+
+    // 1. Archive all user data and save to S3
+    // 1.1 Send S3 link to user by email
+    // 2. Remove user's tasks
+    // 3. Remove user's jobs
+    // 4. Remove user's connections
+    // 5. Remove user's workspaces
+    // 6. Remove user's organizations
+    // 7. Remove user's emails
+    // 8. Remove user
 });
 
 router.get('/check', function(req, res) {
