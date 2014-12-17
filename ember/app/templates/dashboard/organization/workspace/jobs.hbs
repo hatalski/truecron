@@ -10,21 +10,21 @@
     </div>
 </div>
 <div class="sidebar">
-{{#each}}
+{{#each job in model}}
     <div class="menu-tabs">
-      {{#link-to "dashboard.organization.workspace.jobs.job" this tagName="div" activeClass="active-job"}}
+      {{#link-to "dashboard.organization.workspace.jobs.job" job tagName="div" activeClass="active-job"}}
         <div {{bind-attr class=":row archived:archived-job running:running-job"}}>
             <div class="col-xs-2">
-                {{#if lastRunError}}
+                {{#if job.lastRunError}}
                     <i class="fa fa-exclamation-circle fa-5"></i>
                 {{else}}
                     <span></span>
                 {{/if}}
             </div>
             <div class="col-xs-9">
-                <p class="title">{{name}}</p>
-                <p>last: {{time-from recurrence.lastRun}}</p>
-                <p>next: {{time-from recurrence.nextRun}}</p>
+                <p class="title">{{job.name}}</p>
+                <p>last: {{time-from job.recurrence.lastRun}}</p>
+                <p>next: {{time-from job.recurrence.nextRun}}</p>
             </div>
         </div>
       {{/link-to}}
