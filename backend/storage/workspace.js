@@ -140,8 +140,10 @@ var create = module.exports.create = Promise.method(function (context, attribute
             })
             .then(function (workspace) {
                 locals.workspace = workspace;
+                var workspaceLinks = context.links.workspace(
+                    { organizationId: workspace.organizationId, workspaceId: workspace.id });
                 return Promise.join(
-                    history.logCreated(context.personId, context.links.workspace(workspace.id), workspace, locals.tx),
+                    history.logCreated(context.personId, workspaceLinks, workspace, locals.tx),
                     cache.put(getWorkspaceIdCacheKey(workspace.id), workspace),
                     function () {
                         return locals.workspace;
@@ -210,8 +212,10 @@ var remove = module.exports.remove = Promise.method(function (context, id) {
                 return workspace.destroy({ transaction: locals.tx });
             })
             .then(function () {
+                var links = context.links.workspace(
+                    { organizationId: locals.workspace.organizationId, workspaceId: locals.workspace.id });
                 return Promise.join(
-                    history.logRemoved(context.personId, context.links.workspace(locals.workspace.id),
+                    history.logRemoved(context.personId, links,
                                        locals.workspace, locals.tx),
                     cache.remove(getWorkspaceIdCacheKey(locals.workspace.id)));
             });
@@ -221,4 +225,3 @@ var remove = module.exports.remove = Promise.method(function (context, id) {
         throw err;
     });
 });
-

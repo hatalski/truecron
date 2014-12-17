@@ -43,3 +43,7 @@ var getObjectLog = module.exports.getObjectLog = Promise.method(function (object
     options.where = _.extend({}, options.where, { resourceUrl: { like: objectPath + '%' } });
     return models.History.findAndCountAll(options);
 });
+
+var cleanUserLogs = module.exports.cleanUserLogs = Promise.method(function (personId, transaction) {
+    return models.History.destroy({ where: { personid: personId }}, { transaction: transaction });
+});

@@ -123,9 +123,9 @@ var findAndCountAll = module.exports.findAndCountAll = Promise.method(function (
  * @returns A newly created organization.
  */
 var create = module.exports.create = Promise.method(function (context, attributes) {
-    if (!context.isSystem()) {
-        throw new errors.AccessDenied('Only SYSTEM can create new organizations.');
-    }
+    //if (!context.isSystem()) {
+    //    throw new errors.AccessDenied('Only SYSTEM can create new organizations.');
+    //}
     if (!attributes || validator.isNull(attributes.name)) {
         throw new errors.InvalidParams('name is required');
     }

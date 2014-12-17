@@ -262,10 +262,13 @@ var remove = module.exports.remove = Promise.method(function (context, id) {
                     return;
                 }
                 self.person = person;
-                return person.destroy({transaction: self.tx})
-                    .then(function () {
-                        return history.logRemoved(context.personId, context.links.user(self.person.id), self.person, self.tx);
+                return history.cleanUserLogs(person.id, self.tx)
+                    .then(function() {
+                        return person.destroy({transaction: self.tx});
                     })
+                    //.then(function () {
+                    //    return history.logRemoved(context.personId, context.links.user(self.person.id), self.person, self.tx);
+                    //})
                     .then(function () {
                         cache.remove(getPersonIdCacheKey(self.person.id),
                             getEmailsByPersonIdCacheKey(self.person.id));
