@@ -14,26 +14,26 @@ api.route('/')
     //
     .get(common.parseListParams, function (req, res, next) {
         res.status(200).json({
-            histories: [
+            'job-histories': [
                 {
                     id: 1,
                     description: "added 'copy files to FTP' task test",
                     updatedAt: new Date('2014-09-19T00:00:00.000Z'),
-                    updatedBy: 2,
+                    updatedBy: -10,
                     job: 1
                 },
                 {
                     id: 2,
                     description: "added 'send notification' task",
                     updatedAt: new Date('2014-09-19T00:00:00.000Z'),
-                    updatedBy: 1,
+                    updatedBy: -10,
                     job: 1
                 },
                 {
                     id: 3,
                     description: "updated 'copy files to FTP' task",
                     updatedAt: new Date('2014-09-19T00:00:00.000Z'),
-                    updatedBy: 2,
+                    updatedBy: -10,
                     job: 1
                 }
             ]
