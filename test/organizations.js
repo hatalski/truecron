@@ -55,20 +55,20 @@ describe('ORGANIZATIONS API',
                     done();
                 });
         });
-        it('should allow only SYSTEM user to create organizations', function (done) {
-            auth.getAccessToken(testdata.BrianJohnston.email, function (err, userToken) {
-                expect(err).to.eql(null);
-                superagent.post(prefix + '/organizations')
-                    .set('Content-Type', 'application/json')
-                    .authenticate(userToken)
-                    .send({ 'organization': { name: orgName } })
-                    .end(function (e, res) {
-                        expect(e).to.eql(null);
-                        expect(res.status).to.eql(403);
-                        done();
-                    });
-            });
-        });
+        //it('should allow only SYSTEM user to create organizations', function (done) {
+        //    auth.getAccessToken(testdata.BrianJohnston.email, function (err, userToken) {
+        //        expect(err).to.eql(null);
+        //        superagent.post(prefix + '/organizations')
+        //            .set('Content-Type', 'application/json')
+        //            .authenticate(userToken)
+        //            .send({ 'organization': { name: orgName } })
+        //            .end(function (e, res) {
+        //                expect(e).to.eql(null);
+        //                expect(res.status).to.eql(403);
+        //                done();
+        //            });
+        //    });
+        //});
         var id_to_delete;
         it('create a new organization', function (done) {
             superagent.post(prefix + '/organizations')
