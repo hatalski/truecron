@@ -10,15 +10,15 @@
     </div>
 </div>
 <div class="sidebar">
-    {{#each}}
+    {{#each connection in model}}
         <div class="menu-tabs">
-          {{#link-to "dashboard.organization.workspace.connections.connection" this tagName="div" activeClass="active-job"}}
+          {{#link-to "dashboard.organization.workspace.connections.connection" connection tagName="div" activeClass="active-job"}}
             <div {{bind-attr class=":row archived:archived-job"}}>
                 <div class="col-xs-2">
                     <span></span>
                 </div>
                 <div class="col-xs-9">
-                    <p class="title">{{name}}</p>
+                    <p class="title">{{connection.name}}</p>
                 </div>
             </div>
           {{/link-to}}

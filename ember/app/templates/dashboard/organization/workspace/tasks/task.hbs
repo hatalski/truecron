@@ -33,8 +33,8 @@
                 <span class="sr-only">Toggle Dropdown</span>
             </button>
             <ul class="dropdown-menu" role="menu">
-                {{#each taskTypes}}
-                    <li><a href="#" {{action "changeType" this}}>{{name}}</a></li>
+                {{#each type in taskTypes}}
+                    <li><a href="#" {{action "changeType" type}}>{{type.name}}</a></li>
                 {{/each}}
             </ul>
         </div>
