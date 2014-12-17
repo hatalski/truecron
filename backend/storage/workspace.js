@@ -140,8 +140,10 @@ var create = module.exports.create = Promise.method(function (context, attribute
             })
             .then(function (workspace) {
                 locals.workspace = workspace;
+                var workspaceLinks = context.links.workspace(
+                    { organizationId: workspace.organizationId, workspaceId: workspace.id });
                 return Promise.join(
-                    history.logCreated(context.personId, context.links.workspace(workspace.id), workspace, locals.tx),
+                    history.logCreated(context.personId, workspaceLinks, workspace, locals.tx),
                     cache.put(getWorkspaceIdCacheKey(workspace.id), workspace),
                     function () {
                         return locals.workspace;
