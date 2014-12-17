@@ -69,10 +69,10 @@ router.post('/signup', function(req, res, next) {
                     from: 'welcome@truecron.com',
                     to: email,
                     subject: 'Welcome to TrueCron!',
-                    html: 'Welcome to TrueCron and thanks for signing up!<hr/>' +
+                    html: 'Welcome to TrueCron and thanks for signing up!<br/><br/><hr/><br/>' +
                     '<b>Sign in to your account:</b><br/>' +
-                    'https://truecron.com' +
-                    '<b>User name:</b><br/>' + email + '<hr/>' +
+                    'https://truecron.com<br/><br/>' +
+                    '<b>User name:</b><br/>' + email + '<br/><hr/><br/>' +
                     'We hope you enjoy this opportunity to take TrueCron for a spin. Feel free to kick the tires and get acquainted with no limits and no obligation during your free trial.'
                 });
             } else {

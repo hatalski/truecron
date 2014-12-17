@@ -84,7 +84,7 @@ describe('REAL SIGN UP',
                 });
         });
 
-        //it('sign up should fail if email length is invalid', function(done) {
+        //it.skip('sign up should fail if email length is invalid', function(done) {
         //    superagent.post(prefix + '/auth/signup')
         //        // 262 chars when 256 is max
         //        .send({password: 'P@ssw0rd', 'email': '1234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890@example.com'})
@@ -129,7 +129,7 @@ describe('REAL SIGN UP',
 
         it('sign up should success when email and password are valid', function(done) {
             superagent.post(prefix + '/auth/signup')
-                .send({ email: 'vhatalski@naviam.com', password: 'P@ssw0rd', sendMail: false })
+                .send({ email: 'vhatalski@naviam.com', password: 'P@ssw0rd' })
                 .end(function (e, res) {
                     expect(e).to.eql(null);
                     console.dir(res.body);
