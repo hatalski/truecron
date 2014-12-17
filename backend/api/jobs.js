@@ -128,6 +128,6 @@ api.route('/jobs/:jobid')
     });
 
 api.use('/jobs/:jobid', require('./tasks'));
-
+api.use('/jobs/:jobid/history', require('./job-history'));
 
 module.exports = api;
