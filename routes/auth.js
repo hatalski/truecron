@@ -20,7 +20,7 @@ router.post('/signup', function(req, res, next) {
 
     var email = req.body.email;
     var password = req.body.password;
-    var shouldSendEmail = req.body.sendMail === undefined;
+    var shouldSendEmail = req.body.sendEmail === undefined;
 
     req.checkBody('email', 'The email address you entered is not valid. Please try again.').isEmail();
     req.checkBody('password', 'The password should be minimum of 8 characters in length.').isLength(8);
@@ -72,7 +72,7 @@ router.post('/signup', function(req, res, next) {
                     html: 'Welcome to TrueCron and thanks for signing up!<br/><br/><hr/><br/>' +
                     '<b>Sign in to your account:</b><br/>' +
                     'https://truecron.com<br/><br/>' +
-                    '<b>User name:</b><br/>' + email + '<br/><hr/><br/>' +
+                    '<b>User name:</b><br/>' + email + '<br/><br/><hr/><br/>' +
                     'We hope you enjoy this opportunity to take TrueCron for a spin. Feel free to kick the tires and get acquainted with no limits and no obligation during your free trial.'
                 });
             } else {
