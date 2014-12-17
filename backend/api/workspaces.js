@@ -95,6 +95,7 @@ api.param('workspaceid', function (req, res, next, id) {
             if (workspace !== null) {
                 req.workspace = workspace;
                 req.context.links.workspaceId = workspace.id;
+                req.context.links.organizationId = workspace.organizationId;
                 next();
             } else {
                 next(new apiErrors.NotFound());
