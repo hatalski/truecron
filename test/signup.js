@@ -115,7 +115,7 @@ describe('REAL SIGN UP',
 
         it('sign up should fail if password length is less than 8 characters', function(done) {
             superagent.post(prefix + '/auth/signup')
-                .send({ email: 'vhatalski@naviam.com', password: 'P@ssw0r', sendEmail: false })
+                .send({ email: 'vhatalski@naviam.com', password: 'P@ssw0r' })
                 .end(function (e, res) {
                     expect(e).to.eql(null);
                     expect(res.status).to.eql(400);
@@ -129,7 +129,7 @@ describe('REAL SIGN UP',
 
         it('sign up should success when email and password are valid', function(done) {
             superagent.post(prefix + '/auth/signup')
-                .send({ email: 'vhatalski@naviam.com', password: 'P@ssw0rd' })
+                .send({ email: 'vhatalski@naviam.com', password: 'P@ssw0rd', sendEmail: false })
                 .end(function (e, res) {
                     expect(e).to.eql(null);
                     console.dir(res.body);
