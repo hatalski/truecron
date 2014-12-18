@@ -23,8 +23,8 @@ module.exports = function(environment) {
     authenticationRoute: 'index',
     routeAfterAuthentication: 'dashboard',
     routeIfAlreadyAuthenticated: 'dashboard',
-    //authorizer: 'simple-auth-authorizer:oauth2-bearer',
-    authorizer: 'authorizer:truecron',
+    authorizer: 'simple-auth-authorizer:oauth2-bearer',
+    //authorizer: 'authorizer:truecron',
     crossOriginWhitelist: ['http://dev.truecron.com:3000']
   }
 
