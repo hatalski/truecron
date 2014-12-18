@@ -11,8 +11,7 @@ export default Ember.Controller.extend(LoginControllerMixin, {
 		return this.get('isInvitationEmailError');
 	}.property('isInvitationEmailError'),
 	signupEmail: '',
-	isEmailError: false, 	
-	isInvitationEmailError: false,	
+	isEmailError: false,	
 	signupPassword: '',
 	isPasswordError: false,
 	signupPasswordConfirm: '',
@@ -46,7 +45,6 @@ export default Ember.Controller.extend(LoginControllerMixin, {
 
 	  		var isEmailValid = validator.isEmail(email);
 	  		this.set('isEmailError', !isEmailValid);
-	  		//console.log(email + ' - isValid: ' + isEmailValid);
 
 	  		var isPasswordValid = password.length > 7;
 	  		this.set('isPasswordError', !isPasswordValid);
@@ -55,11 +53,7 @@ export default Ember.Controller.extend(LoginControllerMixin, {
 	  		this.set('isPasswordConfirmError', !isPasswordSame);
 
 	  		if (isEmailValid && isPasswordValid && isPasswordSame) {
-
-	  			var requestData = {
-	  				email: email,
-	  				password: password
-	  			};
+				var requestData = { email: email, password: password };
 
 	  			// TODO: replace with superagent
 	  			var result = Ember.$.ajax('http://dev.truecron.com:3000/auth/signup', 
@@ -71,12 +65,11 @@ export default Ember.Controller.extend(LoginControllerMixin, {
 	  					crossDomain: true
 	  				});
 	  			result.success(function(response) {
-	  				console.log(response);
+	  				//console.log(response);
 					var options = { identification: email, password: password };
 					self.get('session').authenticate('authenticator:truecron', options);
 	  			});
 	  			result.error(function(error) { console.log(error); });
-	  			console.log('All good!');
 	  		}
 	  	}	  	
     }
