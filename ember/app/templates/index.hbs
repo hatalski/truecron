@@ -7,7 +7,7 @@
             </div>
             <div class="navbar-collapse collapse">
                 <form class="navbar-form navbar-right">
-                    <input type="button" {{action "signup"}} class="btn btn-signup" value="SIGN UP">
+                    <input type="button" {{action "signupModal"}} class="btn btn-signup" value="SIGN UP">
                 </form>
                 <form class="navbar-form navbar-right" {{action 'authenticate' on='submit'}}>
                     {{input class="form-control" type="email" value=identification placeholder="Email" required="required"}}
@@ -205,21 +205,20 @@
                       
                       <div {{bind-attr class=":form-group isGlobalEmailError:has-error"}}>
                         <label for='email'>Email:</label>
-                        {{input value=globalsignupemail valueBinding=globalsignupemail id='globalSignUpEmail' placeholder="Email" required="required" class="form-control"}}
+                        {{input value=signupEmail valueBinding=signupEmail type="email" placeholder="Email" required="required" class="form-control"}}
                       </div>
 
                       <div {{bind-attr class=":form-group isGlobalPassError:has-error"}}>
                         <label for='password'>Create password:</label>
-                        {{input type="password" value=globalpassword valueBinding=globalpassword min=8 id='password' placeholder="Should be minimum of 8 characters in length
-" required="required" class="form-control"}}
+                        {{input type="password" value=signupPassword valueBinding=signupPassword min=8 id='password' placeholder="Should be minimum of 8 characters in length" required="required" class="form-control"}}
                       </div>
 
                       <div {{bind-attr class=":form-group isGlobalPassConfirmError:has-error"}}>
                         <label for='password-confirmation'>Confirm your password:</label>
-                        {{input type="password" value=globalpasswordconfirm valueBinding=globalpasswordconfirm id='password-confirmation' placeholder="Enter password again" class="form-control"}}
+                        {{input type="password" value=signupPasswordConfirm valueBinding=signupPasswordConfirm id='password-confirmation' placeholder="Enter password again" class="form-control"}}
                       </div>
 
-                      <p><input type="button" {{action "globalsignup"}} class="btn btn-signup" value="SIGN UP"></p>
+                      <p><input type="button" {{action "signup"}} class="btn btn-signup" value="SIGN UP"></p>
                     </form>
                    
             </div>

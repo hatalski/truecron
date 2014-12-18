@@ -3,16 +3,16 @@ import LoginControllerMixin from 'simple-auth/mixins/login-controller-mixin';
 // curl -u "-2:Igd7en1_VCMP59pBpmEF" -H "Content-Type:application/x-www-form-urlencoded" --data "grant_type=http://google.com&username=system@truecron.com" http://dev.truecron.com:3000/oauth/token
 
 export default Ember.Controller.extend(LoginControllerMixin, {
+    //authenticator: 'simple-auth-authenticator:oauth2-password-grant',
 	authenticator: 'authenticator:truecron',
 	invitationEmail: '',
-	globalsignupemail: '',
-	isGlobalEmailError: false, 	
+	signupEmail: '',
+	isEmailError: false, 	
 	isInvitationEmailError: false,	
-	globalpassword: '',
-	isGlobalPassError: false,
-	globalpasswordconfirm: '',
-	isGlobalPassConfirmError: false,	
-    //authenticator: 'simple-auth-authenticator:oauth2-password-grant',
+	signupPassword: '',
+	isPasswordError: false,
+	signupPasswordConfirm: '',
+	isPasswordConfirmError: false,	
     actions: {
 	  	authenticate: function(options) {
 	  		console.dir(options);
@@ -32,58 +32,48 @@ export default Ember.Controller.extend(LoginControllerMixin, {
 	  			result.error(function(error) { console.log(error); });
 	  		}
 	  	},
-	  	signup: function() {
-        Ember.$('#signup_modal').modal({});
+	  	signupModal: function() {
+        	Ember.$('#signup_modal').modal({});
 	  	},
-	  	globalsignup: function() {	 
-	  		var flagEmail = false;
-	  		var flagPass = false;
-	  		var flagConfPass = false; 		
-	  		var globalEmail = this.get('globalsignupemail');
-	  		if (!validator.isEmail(globalEmail)) {	  			
-	  			this.set('isGlobalEmailError', true);
-	  			console.log(globalEmail+'-not valid email');
-	  			flagEmail = false;	  			
-	  		} else {
-	  			this.set('isGlobalEmailError', false);
-	  			console.log(globalEmail+'-valid email');
-	  			flagEmail = true;
-	  		}
-	  		
-	  		var globalPass = this.get('globalpassword');
-	  		if (globalPass && globalPass.length > 7) {
-	  			this.set('isGlobalPassError', false);
-	  			flagPass = true;
-	  		}
-	  		else {
-	  			this.set('isGlobalPassError', true);
-	  			this.set('globalpassword', null);
-	  			flagPass = false;	  				  			
-	  		}
+	  	signup: function() {
+	  		var self = this;
+	  		var email = this.get('signupEmail');
+	  		var password = this.get('signupPassword');
 
-	  		if (this.get('globalpassword')===this.get('globalpasswordconfirm')) {
-	  			this.set('isGlobalPassConfirmError', false);
-	  			console.log('Password confirmed!');	 
-	  			flagConfPass = true;	
-	  		}
-	  		else {
-	  			console.log('the password is not confirmed');
-	  			this.set('isGlobalPassConfirmError', true);
-	  			this.set('globalpasswordconfirm', null);
-	  			flagConfPass = false;
-	  		}	  		
-	  		
-	  		if (flagEmail && flagPass && flagConfPass) {
-	  			//something to do
-	  			/*var result = Ember.$.ajax('http://dev.truecron.com:3000/beta/signup', { type: 'POST'});
-	  			result.success(function(data) {
-	  				console.log(data);
+	  		var isEmailValid = validator.isEmail(email);
+	  		this.set('isEmailError', !isEmailValid);
+	  		//console.log(email + ' - isValid: ' + isEmailValid);
+
+	  		var isPasswordValid = password.length > 7;
+	  		this.set('isPasswordError', !isPasswordValid);
+
+	  		var isPasswordSame = password === this.get('signupPasswordConfirm');
+	  		this.set('isPasswordConfirmError', !isPasswordSame);
+
+	  		if (isEmailValid && isPasswordValid && isPasswordSame) {
+
+	  			var requestData = {
+	  				email: email,
+	  				password: password
+	  			};
+
+	  			// TODO: replace with superagent
+	  			var result = Ember.$.ajax('http://dev.truecron.com:3000/auth/signup', 
+	  				{
+	  					type: 'POST',
+	  					contentType: 'application/json',
+	  					dataType: 'json',
+	  					data: JSON.stringify(requestData),
+	  					crossDomain: true
+	  				});
+	  			result.success(function(response) {
+	  				console.log(response);
+					var options = { identification: email, password: password };
+					self.get('session').authenticate('authenticator:truecron', options);
 	  			});
 	  			result.error(function(error) { console.log(error); });
-	  			*/
 	  			console.log('All good!');
 	  		}
-
 	  	}	  	
     }
 });
