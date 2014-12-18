@@ -594,9 +594,11 @@ a {
 
 .teaser .topper .jumbotron {
   padding-bottom: 0;
+  padding-left: 0;
+  padding-right: 0;
 }
 .teaser .middle .jumbotron {
-  padding-top: 0;
+  padding: 0;
 }
 .teaser .navbar-brand {
   background: url("white-logo.png") no-repeat center;
