@@ -40,10 +40,10 @@ module.exports.errorHandler = function (err, req, res, next) {
     if (!(err instanceof OAuthError)) {
         err = module.exports.getInvalidRequest(err.message);
     }
-    if (!!err.headers) {
+    if (err.headers) {
         res.set(err.headers);
     }
-    res.status(err.status || 400);
+    res.status(err.code || 400);
     res.json({
         error: err.status,
         error_description: err.description
