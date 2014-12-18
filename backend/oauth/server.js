@@ -5,7 +5,6 @@ var express = require('express'),
     Promise = require("bluebird"),
     config = require('../../lib/config'),
     validator = require('../../lib/validator'),
-    apiErrors = require('../../lib/errors'),
     logger = require('../../lib/logger'),
     secrets = require('../../lib/secrets'),
     storage = require('../storage'),
@@ -38,7 +37,7 @@ router.post('/token', function (req, res, next) {
     } else if (req.body.grant_type === 'http://google.com') {
         return googleAuth(req, res, next); // Our grant extension, authenticates by just an email
     } else {
-        next(oauthErrors.getUnsupportedGrantType())
+        next(oauthErrors.getUnsupportedGrantType());
     }
 });
 
@@ -74,7 +73,7 @@ var passwordAuth = function(req, res, next) {
                         return token.issue(new context.Context(person.id, req.client.id), req, res, next);
                     } else {
                         logger.debug('Failed to authenticate %s with password. Invalid password.', req.body.username);
-                        next(oauthErrors.getInvalidGrant());
+                        return next(oauthErrors.getInvalidGrant());
                     }
                 });
         })

@@ -23,7 +23,8 @@ var clientId = config.get('TEST_CLIENT_ID') || -2;
 var clientSecret = config.get('TEST_CLIENT_SECRET') || 'Igd7en1_VCMP59pBpmEF';
 
 /**
- * Gets OAuth access token for the specified user (email).
+ * Gets OAuth access token for the specified user (email). It uses our own "Google" grant type for people already
+ * authenticated via Google. You basically pass an email of an existing user and you get a token. No password or other checks.
  * @param {string} [userEmail]. Optional, email of the user to authenticate. If not specified, SYSTEM user is authenticated.
  * @param {function(err,token)} callback A callback function that gets a token or an error.
  */
@@ -46,6 +47,18 @@ module.exports.getAccessToken = Promise.method(function(userEmail, callback) {
             expect(res.body.token_type).to.eql('bearer');
             return res.body.access_token;
         })
+        .nodeify(callback);
+});
+
+module.exports.getAccessTokenWithPassword = Promise.method(function(userEmail, password, callback) {
+    return superagent.post(oauthTokenUrl)
+            .type('application/x-www-form-urlencoded')
+            .send('grant_type=password')
+            .send('username=' + userEmail)
+            .send('password=' + password)
+            .auth(clientId.toString(), clientSecret)
+            .endAsync()
+        .then(dumpError)
         .nodeify(callback);
 });
 
