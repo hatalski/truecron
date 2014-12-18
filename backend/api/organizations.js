@@ -6,26 +6,27 @@ var express = require('express'),
     validator = require('../../lib/validator'),
     storage = require('../storage'),
     apiErrors = require('./../../lib/errors'),
-    common = require('./common');
+    common = require('./common'),
+    workspaces = require('./workspaces');
 
 var api = express.Router();
 
 /**
  * Format an organization object retrieved from a database to be returned from the API.
  */
-function formatOrganization(organization) {
+function formatOrganization(req, organization) {
     if (organization === undefined) {
         return organization;
     }
     var org = organization.toJSON();
-    var selfUrl = '/organizations/' + org.id;
     org._links = {
-        self: selfUrl,
-        members: selfUrl + '/members',
-        workspaces: selfUrl + '/workspaces',
-        history: selfUrl + '/history'
+        self: req.context.links.organization(org.id),
+        members: req.context.links.organizationMembers(org.id),
+        workspaces: req.context.links.workspaces(org.id),
+        history: req.context.links.organizationHistory(org.id)
     };
     delete org.secretHash;
+    common.formatApiOutput(org);
     return { organization: org };
 }
 
@@ -48,7 +49,7 @@ api.route('/organizations')
             offset: req.listParams.offset
         }).then(function (result) {
             res.json({
-                organizations: result.rows.map(formatOrganization),
+                organizations: result.rows.map(formatOrganization.bind(null, req)),
                 meta: {
                     total: result.count
                 }});
@@ -67,7 +68,7 @@ api.route('/organizations')
         }
         storage.Organization.create(req.context, req.body.organization)
             .then(function (org) {
-                res.status(201).json(formatOrganization(org));
+                res.status(201).json(formatOrganization(req, org));
             })
             .catch(function (err) {
                 logger.error(err.toString());
@@ -83,6 +84,7 @@ api.param('orgid', function (req, res, next, id) {
         .then(function (org) {
             if (org !== null) {
                 req.organization = org;
+                req.context.links.organizationId = org.id;
                 next();
             } else {
                 next(new apiErrors.NotFound());
@@ -99,7 +101,7 @@ api.route('/organizations/:orgid')
     // Get an organization
     //
     .get(function (req, res, next) {
-        res.json(formatOrganization(req.organization));
+        res.json(formatOrganization(req, req.organization));
     })
     //
     // Update an organization
@@ -110,7 +112,7 @@ api.route('/organizations/:orgid')
         }
         storage.Organization.update(req.context, req.organization.id, req.body.organization)
             .then(function (org) {
-                res.json(formatOrganization(org));
+                res.json(formatOrganization(req, org));
             })
             .catch(function (err) {
                 logger.error(err.toString());
@@ -135,24 +137,24 @@ api.route('/organizations/:orgid')
 // ORGANIZATION MEMBERS
 //
 
-function formatMember(member) {
+function formatMember(req, member) {
     if (member === undefined) {
         return member;
     }
     // TODO: Include person name/email
-    return {
-        member: {
-            userId: member.personId,
-            role: member.role,
-            createdAt: member.createdAt,
-            updatedAt: member.updatedAt,
-            updatedByUserId: member.updatedByPersonId,
-            _links: {
-                self: '/organizations/' + member.organizationId + '/members/' + member.personId,
-                user: '/users/' + member.personId
-            }
+    var result = {
+        userId: member.personId,
+        role: member.role,
+        createdAt: member.createdAt,
+        updatedAt: member.updatedAt,
+        updatedByUserId: member.updatedByPersonId,
+        _links: {
+            self: req.context.links.organizationMember(member.personId),
+            user: req.context.links.user(member.personId)
         }
     };
+    common.formatApiOutput(result);
+    return { member: result };
 }
 
 api.route('/organizations/:orgid/members')
@@ -166,14 +168,14 @@ api.route('/organizations/:orgid/members')
         }
         var sort = req.listParams.sort || 'updatedAt';
 
-        storage.Organization.getAccessList(req.context, req.organization.id, {
+        storage.OrganizationAccess.getAccessList(req.context, req.organization.id, {
             where: where,
             order: sort + ' ' + req.listParams.direction,
             limit: req.listParams.limit,
             offset: req.listParams.offset
         }).then(function (result) {
             res.json({
-                members: result.rows.map(formatMember),
+                members: result.rows.map(formatMember.bind(null, req)),
                 meta: {
                     total: result.count
                 }});
@@ -191,12 +193,11 @@ api.route('/organizations/:orgid/members')
         req.checkBody('member.role', 'Invalid role value. Must be "admin" or "member".').isIn(['admin', 'member']);
         var errors = req.validationErrors();
         if (errors) {
-            logger.error('throwing!!! ' + require('util').inspect(errors));
             return next(new apiErrors.InvalidParams(errors));
         }
-        storage.Organization.grantAccess(req.context, req.organization.id, req.body.member.userId, req.body.member.role)
+        storage.OrganizationAccess.grantAccess(req.context, req.organization.id, req.body.member.userId, req.body.member.role)
             .then(function (member) {
-                res.status(201).json(formatMember(member));
+                res.status(201).json(formatMember(req, member));
             })
             .catch(function (err) {
                 logger.error(err.toString());
@@ -209,6 +210,7 @@ api.param('memberid', function (req, res, next, id) {
         return next(new apiErrors.InvalidParams('Invalid member ID.'));
     }
     req.memberId = +id;
+    req.context.links.memberId = +id;
     next();
 });
 
@@ -228,9 +230,9 @@ api.route('/organizations/:orgid/members/:memberid')
         if (errors) {
             return next(new apiErrors.InvalidParams(errors));
         }
-        storage.Organization.grantAccess(req.context, req.organization.id, req.body.member.userId, req.body.member.role)
+        storage.OrganizationAccess.grantAccess(req.context, req.organization.id, req.memberId, req.body.member.role)
             .then(function (member) {
-                res.json(formatMember(member));
+                res.json(formatMember(req, member));
             })
             .catch(function (err) {
                 logger.error(err.toString());
@@ -241,7 +243,7 @@ api.route('/organizations/:orgid/members/:memberid')
     // Delete an member
     //
     .delete(function (req, res, next) {
-        storage.Organization.revokeAccess(req.context, req.organization.id, req.memberId)
+        storage.OrganizationAccess.revokeAccess(req.context, req.organization.id, req.memberId)
             .then(function () {
                 res.status(204).json({});
             })
@@ -250,5 +252,7 @@ api.route('/organizations/:orgid/members/:memberid')
                 next(err);
             });
     });
+
+api.use('/organizations/:orgid', workspaces);
 
 module.exports = api;

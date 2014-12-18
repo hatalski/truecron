@@ -26,18 +26,21 @@ function formatTask(task) {
     return {task:tk};
 }
 //+++++++++++++++++++++++
-api.route('/jobs/:jobid/tasks')
+api.route('/tasks')
     //
     // Get all tasks
     //
     .get(common.parseListParams, function (req, res, next) {
+        if (!req.job) {
+            return next(new apiErrors.InvalidParams('Job is not specified.'));
+        }
         var where = {};
-        if (!!req.listParams.searchTerm) {
-            where = { jobId: req.params.jobid };
+        if (req.listParams.searchTerm) {
+            where = { name: { like: req.listParams.searchTerm } };
         }
         var sort = req.listParams.sort || 'name';
 
-        storage.Tasks.findAndCountAll(req.context, {
+        storage.Tasks.findAndCountAll(req.context, req.job, {
             where: where,
             order: sort + ' ' + req.listParams.direction,
             limit: req.listParams.limit,
@@ -54,10 +57,14 @@ api.route('/jobs/:jobid/tasks')
     // Add a new task
     //
     .post(function (req, res, next) {
-        if (!req.body || !req.body.task) {
-            return next(new apiErrors.InvalidParams());
+        if (!req.job) {
+            return next(new apiErrors.InvalidParams('Job is not specified.'));
         }
-        storage.Tasks.create(req.context, req.params.jobid, req.body.task)
+        if (!req.body || !req.body.task) {
+            return next(new apiErrors.InvalidParams('Task is not specified.'));
+        }
+        req.body.task.jobId = req.job.id;
+        storage.Tasks.create(req.context, req.body.task)
             .then(function (task) {
                 res.status(201).json(formatTask(task));
             })
@@ -67,21 +74,35 @@ api.route('/jobs/:jobid/tasks')
             });
     });
 
-api.route('/jobs/:jobid/tasks/:taskid')
+api.param('taskid', function (req, res, next, id) {
+    if (!validator.isInt(id)) {
+        return next(new apiErrors.InvalidParams('Invalid task ID.'));
+    }
+
+    storage.Tasks.findById(req.context, id)
+        .then(function (task) {
+            if (task !== null) {
+                req.task = task;
+                req.context.links.taskId = task.id;
+                next();
+            } else {
+                next(new apiErrors.NotFound());
+            }
+        })
+        .catch(function (err) {
+            logger.error(err.toString());
+            next(err);
+        });
+});
+
+
+api.route('/tasks/:taskid')
 
 //
 // Get task by id
 //
     .get(common.parseListParams, function (req, res, next) {
-        var where = {};
-        if (!!req.listParams.searchTerm) {
-            where = { jobId: req.params.jobid , id:req.params.id};
-        }
-        var sort = req.listParams.sort || 'name';
-
-        storage.Tasks.findById(req.context, req.params.taskid, req.params.jobid).then(function (task) {
-            res.json(formatTask(task));
-        });
+        res.json(formatTask(req.task));
     })
 
     //
@@ -89,22 +110,21 @@ api.route('/jobs/:jobid/tasks/:taskid')
     //
     .put(function (req, res, next) {
         if (!req.body || !req.body.task) {
-            return next(new apiErrors.InvalidParams());
+            return next(new apiErrors.InvalidParams('Task is not specified.'));
         }
-        storage.Tasks.update(req.context, req.params.taskid, req.params.jobid, req.body.task)
+        storage.Tasks.update(req.context, req.task.id, req.body.task)
             .then(function (task) {
                 res.json(formatTask(task));
             });
     })
-
-//
-// Delete a task
-//
-.delete(function (req, res, next) {
-    storage.Tasks.remove(req.context, req.params.taskid)
-        .then(function () {
-            res.status(204).json({});
-        });
-});
+    //
+    // Delete a task
+    //
+    .delete(function (req, res, next) {
+        storage.Tasks.remove(req.context, req.task.id)
+            .then(function () {
+                res.status(204).json({});
+            });
+    });
 
 module.exports = api;

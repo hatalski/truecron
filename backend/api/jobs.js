@@ -8,15 +8,17 @@ var express = require('express'),
 
 var api = express.Router();
 
-function addLinks(datajob) {
+function formatJob(req, datajob) {
     if (datajob === undefined) {
         return datajob;
     }
     var job = datajob.toJSON();
-    var selfUrl = '/jobs/' + job.id;
     job._links = {
-        self: selfUrl
+        self: req.context.links.job(job.id),
+        tasks: req.context.links.tasks(job.id),
+        history: req.context.links.jobHistory(job.id)
     };
+    common.formatApiOutput(job);
     return { job: job };
 }
 
@@ -25,21 +27,23 @@ api.route('/jobs')
     // List of jobs
     //
     .get(common.parseListParams, function (req, res, next) {
-
-        var where = {};
-        if (!!req.listParams.searchTerm) {
-            where = { name: { like: req.listParams.searchTerm } };
+        if (!req.workspace) {
+            return next(new apiErrors.InvalidParams('Workspace is not specified.'));
+        }
+        var where = { };
+        if (req.listParams.searchTerm) {
+            where = _.merge(where, { name: { like: req.listParams.searchTerm } });
         }
         var sort = req.listParams.sort || 'name';
 
-        storage.Jobs.findAndCountAll(req.context, {
+        storage.Jobs.findAndCountAll(req.context, req.workspace, {
             where: where,
             order: sort + ' ' + req.listParams.direction,
             limit: req.listParams.limit,
             offset: req.listParams.offset
         }).then(function (result) {
             res.json({
-                jobs: result.rows.map(addLinks),
+                jobs: result.rows.map(formatJob.bind(null, req)),
                 meta: {
                     total: result.count
                 }});
@@ -50,12 +54,16 @@ api.route('/jobs')
     // Create a new job
     //
     .post(function (req, res, next) {
-        if (!req.body || !req.body.job) {
-            return next(new apiErrors.InvalidParams());
+        if (!req.workspace) {
+            return next(new apiErrors.InvalidParams('Workspace is not specified.'));
         }
+        if (!req.body || !req.body.job) {
+            return next(new apiErrors.InvalidParams('job is not specified.'));
+        }
+        req.body.job.workspaceId = req.workspace.id;
         storage.Jobs.create(req.context, req.body.job)
             .then(function (job) {
-                res.status(201).json(addLinks(job));
+                res.status(201).json(formatJob(req, job));
             })
             .catch(function (err) {
                 logger.error(err.toString());
@@ -75,20 +83,19 @@ api.param('jobid', function (req, res, next, id) {
         jobid = id;
     }
     else {
-        next(new apiErrors.InvalidParams());
+        return next(new apiErrors.InvalidParams());
     }
 
-    if (!!jobid) {
-        storage.Jobs.findById(req.context, id)
-            .then(function (job) {
-                if (job !== null) {
-                    req.Jobs = job;
-                    next();
-                } else {
-                    next(new apiErrors.NotFound());
-                }
-            });
-    }
+    storage.Jobs.findById(req.context, id)
+        .then(function (job) {
+            if (job) {
+                req.job = job;
+                req.context.links.jobId = job.id;
+                next();
+            } else {
+                next(new apiErrors.NotFound());
+            }
+        });
 });
 
 api.route('/jobs/:jobid')
@@ -96,7 +103,7 @@ api.route('/jobs/:jobid')
     // Get a job
     //
     .get(function (req, res, next) {
-        res.json(addLinks(req.Jobs));
+        res.json(formatJob(req, req.job));
     })
     //
     // Update a job
@@ -105,21 +112,22 @@ api.route('/jobs/:jobid')
         if (!req.body || !req.body.job) {
             return next(new apiErrors.InvalidParams());
         }
-        storage.Jobs.update(req.context, req.Jobs.id, req.body.job)
+        storage.Jobs.update(req.context, req.job.id, req.body.job)
             .then(function (job) {
-                res.json(addLinks(job));
+                res.json(formatJob(req, job));
             });
     })
     //
     // Delete a job
     //
     .delete(function (req, res, next) {
-        storage.Jobs.remove(req.context, req.Jobs.id)
+        storage.Jobs.remove(req.context, req.job.id)
             .then(function () {
                 res.status(204).json({});
             });
     });
 
+api.use('/jobs/:jobid', require('./tasks'));
 
 
 module.exports = api;

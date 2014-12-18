@@ -9,6 +9,7 @@ var smtpTask   = require('../backend/api/worker/smtptask');
 var jobRunner  = require('../backend/api/worker/jobRunner');
 var FtpTask    = require('../backend/api/worker/ftptask');
 var ArchiveTask = require('../backend/api/worker/archivetask');
+var S3logger = require('../backend/api/worker/loggers/s3Log');
 
 var mailTask;
 
@@ -16,6 +17,8 @@ describe('Email task',
     function() {
         it ('has run', function (done) {
             mailTask = new smtpTask('sergey.sokur@truecron.com', 'sergey.sokur@truecron.com', 'Test', 'Text', '<b>Html</b>');
+            var mailS3Log = new S3logger('_mailS3LogTest');
+            mailTask.logSubscribers.push(mailS3Log);
             mailTask.run(function(){
                 expect(mailTask.status).not.to.eql('waiting');
                 done();
@@ -29,7 +32,8 @@ describe('FTP task',
         it('has run', function(done)
         {
             var ftpTask = new FtpTask({host:'ftp.darvision.com', username:'anonymous', password:'@anonymous', protocol: 'ftp'}, 'ls .');
-
+            var ftpS3Log = new S3logger('_ftpS3LogTest');
+            ftpTask.logSubscribers.push(ftpS3Log);
             ftpTask.run(function(){
                 expect(ftpTask.status).not.to.eql('waiting');
                 done();

@@ -40,7 +40,7 @@ var smtpTask = function(from, to, subject, text, html) {
 
 smtpTask.prototype.init = function()
 {
-    task.super_.prototype.init();
+    smtpTask.super_.prototype.init();
 };
 
 util.inherits(smtpTask, task);

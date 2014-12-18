@@ -10,18 +10,19 @@ var taskStatusEnum =
     completed : 'completed'
 };
 
-var Task = function(name, position, timeout)
+var Task = function(name, position, timeout, subscribers)
 {
     this.name = name;
     this.position = position;
     this.timeout = timeout;
+    this.logSubscribers = subscribers;
     this.init();
 };
 
 Task.prototype.init = function()
 {
     this.status = taskStatusEnum.waiting;
-    this.outPut = [];
+    this.logSubscribers = [];
 };
 
 Task.prototype.onError = function(error)
@@ -29,7 +30,7 @@ Task.prototype.onError = function(error)
     if(error) {
         var errorText = 'Sorry ' + error;
         logger.error(errorText);
-        this.outPut.push(errorText);
+        this.logSubscribers.send(errorText);
     }
 };
 
@@ -38,7 +39,7 @@ Task.prototype.onMessage = function(message)
     if(message) {
         var messageText = 'Message sent: ' + JSON.stringify(message);
         logger.info(messageText);
-        this.outPut.push(messageText);
+        this.logSubscribers.send(message);
     }
 };
 
@@ -57,9 +58,7 @@ Task.prototype.onComplete = function(callBack)
 {
     this.status = taskStatusEnum.completed;
     this.onMessage('Completed');
-
-    if (callBack && typeof callBack === 'function')
-        callBack();
+    this.logSubscribers.stop(callBack);
 };
 
 Task.prototype.run = function() {
