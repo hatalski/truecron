@@ -55,10 +55,10 @@ api.route('/organizations')
                     total: result.count
                 }});
         })
-        .catch(function (err) {
-            logger.error(err.toString());
-            next(err);
-        });
+            .catch(function (err) {
+                logger.error(err.toString());
+                next(err);
+            });
     })
     //
     // Create a new organization

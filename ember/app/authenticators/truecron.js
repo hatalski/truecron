@@ -18,11 +18,11 @@ export default OAuth2.extend({
     @protected
   */
   makeRequest: function(url, data) {
-  	return Ember.$.ajax({
+    return Ember.$.ajax({
       url:         url,
       beforeSend: function (xhr) {
-		    xhr.setRequestHeader('Authorization', 'Basic LTI6SWdkN2VuMV9WQ01QNTlwQnBtRUY=');
-	    },
+        xhr.setRequestHeader('Authorization', 'Basic LTI6SWdkN2VuMV9WQ01QNTlwQnBtRUY=');
+      },
       type:        'POST',
       data:        data,
       dataType:    'json',

@@ -41,16 +41,16 @@ api.route('/users')
             limit: req.listParams.limit,
             offset: req.listParams.offset
         }).then(function (result) {
-                res.json({
+            res.json({
                 users: result.rows.map(formatUser.bind(null, req)),
                 meta: {
                     total: result.count
                 }});
         })
-        .catch(function (err) {
-            logger.error(err.toString());
-            next(err);
-        });
+            .catch(function (err) {
+                logger.error(err.toString());
+                next(err);
+            });
     })
     //
     // Create a new user
@@ -60,13 +60,13 @@ api.route('/users')
             return next(new apiErrors.InvalidParams());
         }
         storage.Person.create(req.context, req.body.user)
-        .then(function (person) {
-            res.status(201).json(formatUser(req, person));
-        })
-        .catch(function (err) {
-            logger.error(err.toString());
-            return next(err);
-        });
+            .then(function (person) {
+                res.status(201).json(formatUser(req, person));
+            })
+            .catch(function (err) {
+                logger.error(err.toString());
+                return next(err);
+            });
     });
 
 //
@@ -170,17 +170,17 @@ api.route('/users/:userid/emails')
             limit: req.listParams.limit,
             offset: req.listParams.offset
         })
-        .then(function (result) {
-            res.json({
-                emails: result.rows.map(formatEmail.bind(null, req)),
-                meta: {
-                    total: result.count
-                }});
-        })
-        .catch(function (err) {
-            logger.error(err.toString());
-            next(err);
-        });
+            .then(function (result) {
+                res.json({
+                    emails: result.rows.map(formatEmail.bind(null, req)),
+                    meta: {
+                        total: result.count
+                    }});
+            })
+            .catch(function (err) {
+                logger.error(err.toString());
+                next(err);
+            });
     })
     //
     // Add a new email address for the user :userid
