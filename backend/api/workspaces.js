@@ -19,13 +19,13 @@ function formatWorkspace(req, workspace) {
         return workspace;
     }
     var ws = workspace.toJSON();
-    ws._links = {
+    ws.links = {
         self: req.context.links.workspace({ workspaceId: ws.id }),
         jobs: req.context.links.jobs({ workspaceId: ws.id }),
         history: req.context.links.workspaceHistory({ workspaceId: ws.id })
     };
     common.formatApiOutput(ws);
-    return { workspace: ws };
+    return ws;
 }
 
 //
@@ -78,7 +78,7 @@ api.route('/workspaces')
         req.body.workspace.organizationId = req.organization.id;
         storage.Workspace.create(req.context, req.body.workspace)
             .then(function (workspace) {
-                res.status(201).json(formatWorkspace(req, workspace));
+                res.status(201).json({ workspace: formatWorkspace(req, workspace) });
             })
             .catch(function (err) {
                 logger.error(err.toString());
@@ -95,6 +95,7 @@ api.param('workspaceid', function (req, res, next, id) {
             if (workspace !== null) {
                 req.workspace = workspace;
                 req.context.links.workspaceId = workspace.id;
+                req.context.links.organizationId = workspace.organizationId;
                 next();
             } else {
                 next(new apiErrors.NotFound());
@@ -111,7 +112,7 @@ api.route('/workspaces/:workspaceid')
     // Get a workspace
     //
     .get(function (req, res, next) {
-        res.json(formatWorkspace(req, req.workspace));
+        res.json({ workspace: formatWorkspace(req, req.workspace) });
     })
     //
     // Update the workspace
@@ -122,7 +123,7 @@ api.route('/workspaces/:workspaceid')
         }
         storage.Workspace.update(req.context, req.workspace.id, req.body.workspace)
             .then(function (workspace) {
-                res.json(formatWorkspace(req, workspace));
+                res.json({ workspace: formatWorkspace(req, workspace) });
             })
             .catch(function (err) {
                 logger.error(err.toString());

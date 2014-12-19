@@ -20,10 +20,10 @@ function formatTask(task) {
     }
     var tk = task.toJSON();
     var selfUrl = '/jobs/' + task.jobId + '/tasks/' + task.id;
-    tk._links = {
+    tk.links = {
         self: selfUrl
     };
-    return {task:tk};
+    return tk;
 }
 //+++++++++++++++++++++++
 api.route('/tasks')
@@ -66,7 +66,7 @@ api.route('/tasks')
         req.body.task.jobId = req.job.id;
         storage.Tasks.create(req.context, req.body.task)
             .then(function (task) {
-                res.status(201).json(formatTask(task));
+                res.status(201).json({task: formatTask(task)});
             })
             .catch(function (err) {
                 logger.error(err.toString());
@@ -102,7 +102,7 @@ api.route('/tasks/:taskid')
 // Get task by id
 //
     .get(common.parseListParams, function (req, res, next) {
-        res.json(formatTask(req.task));
+        res.json({task: formatTask(req.task)});
     })
 
     //
@@ -114,7 +114,7 @@ api.route('/tasks/:taskid')
         }
         storage.Tasks.update(req.context, req.task.id, req.body.task)
             .then(function (task) {
-                res.json(formatTask(task));
+                res.json({task: formatTask(task)});
             });
     })
     //

@@ -19,15 +19,16 @@ function formatOrganization(req, organization) {
         return organization;
     }
     var org = organization.toJSON();
-    org._links = {
+    org.links = {
         self: req.context.links.organization(org.id),
         members: req.context.links.organizationMembers(org.id),
         workspaces: req.context.links.workspaces(org.id),
         history: req.context.links.organizationHistory(org.id)
     };
     delete org.secretHash;
+
     common.formatApiOutput(org);
-    return { organization: org };
+    return org;
 }
 
 api.route('/organizations')
@@ -54,10 +55,10 @@ api.route('/organizations')
                     total: result.count
                 }});
         })
-        .catch(function (err) {
-            logger.error(err.toString());
-            next(err);
-        });
+            .catch(function (err) {
+                logger.error(err.toString());
+                next(err);
+            });
     })
     //
     // Create a new organization
@@ -68,7 +69,7 @@ api.route('/organizations')
         }
         storage.Organization.create(req.context, req.body.organization)
             .then(function (org) {
-                res.status(201).json(formatOrganization(req, org));
+                res.status(201).json({ organization: formatOrganization(req, org) });
             })
             .catch(function (err) {
                 logger.error(err.toString());
@@ -101,7 +102,7 @@ api.route('/organizations/:orgid')
     // Get an organization
     //
     .get(function (req, res, next) {
-        res.json(formatOrganization(req, req.organization));
+        res.json({ organization: formatOrganization(req, req.organization) });
     })
     //
     // Update an organization
@@ -112,7 +113,7 @@ api.route('/organizations/:orgid')
         }
         storage.Organization.update(req.context, req.organization.id, req.body.organization)
             .then(function (org) {
-                res.json(formatOrganization(req, org));
+                res.json({ organization: formatOrganization(req, org) });
             })
             .catch(function (err) {
                 logger.error(err.toString());
