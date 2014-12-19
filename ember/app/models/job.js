@@ -8,7 +8,7 @@ var Job = DS.Model.extend({
     archived:  DS.attr('boolean', { defaultValue: false }),
     createdAt: DS.attr('date', { defaultValue: new Date() }),
     updatedAt: DS.attr('date', { defaultValue: new Date() }),
-    updatedBy: DS.belongsTo('person', { async: true }),
+    updatedBy: DS.belongsTo('user', { async: true }),
     workspace: DS.belongsTo('workspace', { async: true }),
     tags:      DS.hasMany('job-tag', { async: true }),
     history:   DS.hasMany('job-history', { async: true }),
