@@ -22,7 +22,7 @@
     "broccoli-asset-rev": "0.3.1",
     "broccoli-clean-css": "^0.2.0",
     "broccoli-emblem-compiler": "^0.3.19",
-    "ember-cli": "0.1.2",
+    "ember-cli": "0.1.4",
     "ember-cli-content-security-policy": "0.3.0",
     "ember-cli-htmlbars": "^0.5.3",
     "ember-cli-ic-ajax": "0.1.1",
