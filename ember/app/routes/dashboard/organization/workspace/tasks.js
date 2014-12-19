@@ -15,7 +15,7 @@ export default Ember.Route.extend(AuthenticatedRouteMixin, {
 		if (length > 0) {
 			var firstTask = tasks.get('firstObject');
 			this.store.find('task', firstTask.get('id')).then(function(fullTask) {
-				self.transitionTo('dashboard.organization.workspace.tasks.task', job.get('id'), fullTask);
+				self.transitionTo('dashboard.organization.workspace.tasks.task', job, fullTask);
 		    });
 		}
 	}

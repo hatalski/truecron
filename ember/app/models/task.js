@@ -8,7 +8,7 @@ var Task = DS.Model.extend({
   timeout:   DS.attr('number', { defaultValue: 1000 }),
   createdAt: DS.attr('date', { defaultValue: new Date() }),
   updatedAt: DS.attr('date', { defaultValue: new Date() }),
-  updatedBy: DS.belongsTo('person', { async: true }),
+  updatedBy: DS.belongsTo('user', { async: true }),
   job:       DS.belongsTo('job', { async: true }),
   taskType:  DS.belongsTo('task-type', { async: true })
 });

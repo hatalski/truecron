@@ -53,6 +53,12 @@ module.exports.verify = function(req, res, next) {
         token = req.body['access_token'];
     }
 
+    // allow OPTIONS request without authentication
+    console.log('request method : ' + req.method);
+    if (req.method == "OPTIONS") {
+        return next();
+    }
+
     if (token) {
         jwt.verify(token, settings.secret, function (err, decoded) {
             if (err) {
