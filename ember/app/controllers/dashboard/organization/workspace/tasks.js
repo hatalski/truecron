@@ -53,7 +53,7 @@ export default Ember.ObjectController.extend({
             store.find('task-type', -1).then(function(emptyTaskType) {
                 var newTask = store.createRecord('task', {
                     name: 'unnamed',
-                    settings: '{}',
+                    settings: {},
                     position: job.get('tasks.length') + 1,
                     job: job,
                     taskType: emptyTaskType

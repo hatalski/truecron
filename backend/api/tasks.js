@@ -77,7 +77,7 @@ api.route('/tasks')
             });
     });
 
-api.param('taskid', function (req, res, next, id) {
+api.param('taskId', function (req, res, next, id) {
     if (!validator.isInt(id)) {
         return next(new apiErrors.InvalidParams('Invalid task ID.'));
     }
@@ -99,7 +99,7 @@ api.param('taskid', function (req, res, next, id) {
 });
 
 
-api.route('/tasks/:taskid')
+api.route('/tasks/:taskId')
 
 //
 // Get task by id
@@ -115,6 +115,8 @@ api.route('/tasks/:taskid')
         if (!req.body || !req.body.task) {
             return next(new apiErrors.InvalidParams('Task is not specified.'));
         }
+        delete req.body.task.settings;
+        delete req.body.task.timeout;
         storage.Tasks.update(req.context, req.task.id, req.body.task)
             .then(function (task) {
                 res.json({task: formatTask(task)});

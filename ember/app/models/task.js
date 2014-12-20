@@ -7,7 +7,7 @@ var Task = DS.Model.extend({
   active:    DS.attr('boolean', { defaultValue: true }),
   settings:  DS.attr('string'),
   position:  DS.attr('number'),
-  timeout:   DS.attr('number', { defaultValue: 1000 }),
+  timeout:   DS.attr('string', { defaultValue: '30 seconds' }),
   createdAt: DS.attr('date', { defaultValue: new Date() }),
   updatedAt: DS.attr('date', { defaultValue: new Date() }),
   updatedBy: DS.belongsTo('user', { async: true }),

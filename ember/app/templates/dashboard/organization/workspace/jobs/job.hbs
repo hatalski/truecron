@@ -99,7 +99,6 @@
   <table class="table table-striped lastrowborder">
       <tbody>
       {{#each task in tasks}}
-      {{model.id}}
         {{#link-to "dashboard.organization.workspace.tasks.task" id task tagName="tr" activeClass="active-task" class="clickable"}}
             <td class="icon-row"><i class="fa fa-arrows-alt"></i></td>
             <td>{{task.position}}.</td>
