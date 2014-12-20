@@ -78,7 +78,7 @@ api.route('/workspaces')
         req.body.workspace.organizationId = req.organization.id;
         storage.Workspace.create(req.context, req.body.workspace)
             .then(function (workspace) {
-                res.status(201).json(formatWorkspace(req, workspace));
+                res.status(201).json({ workspace: formatWorkspace(req, workspace)});
             })
             .catch(function (err) {
                 logger.error(err.toString());
@@ -123,7 +123,7 @@ api.route('/workspaces/:workspaceid')
         }
         storage.Workspace.update(req.context, req.workspace.id, req.body.workspace)
             .then(function (workspace) {
-                res.json(formatWorkspace(req, workspace));
+                res.json({ workspace: formatWorkspace(req, workspace)});
             })
             .catch(function (err) {
                 logger.error(err.toString());

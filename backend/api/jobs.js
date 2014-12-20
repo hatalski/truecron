@@ -13,10 +13,11 @@ function formatJob(req, datajob) {
         return datajob;
     }
     var job = datajob.toJSON();
+    var selfUrl = req.url.indexOf(job.id) >= 0 ? req.url : req.url + '/' + job.id;
     job.links = {
-        self: req.url + '/' + job.id,
-        tasks: req.url + '/' + job.id + '/tasks',
-        history: req.url + '/' + job.id + '/history'
+        self:    selfUrl,
+        tasks:   selfUrl + '/tasks',
+        history: selfUrl + '/history'
     };
     common.formatApiOutput(job);
     return job;
@@ -114,6 +115,7 @@ api.route('/jobs/:jobid')
         if (!req.body || !req.body.job) {
             return next(new apiErrors.InvalidParams());
         }
+        req.context.url = req.url;
         storage.Jobs.update(req.context, req.job.id, req.body.job)
             .then(function (job) {
                 res.json({ job: formatJob(req, job) });
@@ -123,6 +125,7 @@ api.route('/jobs/:jobid')
     // Delete a job
     //
     .delete(function (req, res, next) {
+        req.context.url = req.url;
         storage.Jobs.remove(req.context, req.job.id)
             .then(function () {
                 res.status(204).json({});
