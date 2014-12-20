@@ -82,12 +82,42 @@ insert into tc.Job (id, workspaceId, name, createdAt, updatedAt, updatedByPerson
     where id = -13);
 
 insert into tc.TaskType (id, name)
-    select -100, 'TestType'
+    select -1, 'default'
         where not exists (select * from tc.TaskType
-    where id = -100);
+    where id = -1);
+
+insert into tc.TaskType (id, name)
+    select 1, 'file'
+        where not exists (select * from tc.TaskType
+    where id = 1);
+
+insert into tc.TaskType (id, name)
+    select 2, 'execute'
+        where not exists (select * from tc.TaskType
+    where id = 2);
+
+insert into tc.TaskType (id, name)
+    select 3, 'archive'
+        where not exists (select * from tc.TaskType
+    where id = 3);
+
+insert into tc.TaskType (id, name)
+    select 4, 'sftp'
+        where not exists (select * from tc.TaskType
+    where id = 4);
+
+insert into tc.TaskType (id, name)
+    select 5, 'smtp'
+        where not exists (select * from tc.TaskType
+    where id = 5);
+
+insert into tc.TaskType (id, name)
+    select 6, 'http'
+        where not exists (select * from tc.TaskType
+    where id = 6);
 
 insert into tc.Task (id, jobId, name, position, taskTypeId, settings, timeout, createdAt, updatedAt, updatedByPersonId)
-    select -14, -13, 'My workspace test job task', 1, -100, '{}', '30 seconds', 'now', 'now', -10
+    select -14, -13, 'My workspace test job task', 1, 5, '{}', '30 seconds', 'now', 'now', -10
     where not exists (select * from tc.Task
     where id = -14);
 

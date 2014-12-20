@@ -39,8 +39,21 @@ var create = module.exports.create = Promise.method(function (context, attribute
     if (!attributes.timeout) {
         throw new errors.InvalidParams('Task timeout is not specified.');
     }
+
+    var locals = { attrs: attributes };
+    attributes.timeout = attributes.timeout.toString();
     return using(models.transaction(), function (tx) {
-            return models.Task.create(attributes, { transaction: tx });
+        return models.Task.create(attributes, { transaction: tx })
+            .then(function(task) {
+                locals.task = task;
+                var link = context.url + '/' + task.id;
+                return Promise.join(
+                    history.logCreated(context.personId, link, task, tx), // context.links.job(job.id)
+                    cache.put(getTaskIdCacheKey(task.id), task),
+                    function () {
+                        return locals.task;
+                    });
+            });
     })
     .catch(function (err) {
         logger.error('Failed create task. %s.', err.toString());

@@ -23,6 +23,7 @@ function formatTask(task) {
     tk.links = {
         self: selfUrl
     };
+    common.formatApiOutput(tk);
     return tk;
 }
 //+++++++++++++++++++++++
@@ -57,13 +58,15 @@ api.route('/tasks')
     // Add a new task
     //
     .post(function (req, res, next) {
-        if (!req.job) {
-            return next(new apiErrors.InvalidParams('Job is not specified.'));
-        }
         if (!req.body || !req.body.task) {
             return next(new apiErrors.InvalidParams('Task is not specified.'));
         }
-        req.body.task.jobId = req.job.id;
+        var jobId = req.job ? req.job.id : req.body.task.jobId;
+        if (!jobId) {
+            return next(new apiErrors.InvalidParams('Job is not specified.'));
+        }
+        req.context.url = req.url;
+        req.body.task.jobId = jobId;
         storage.Tasks.create(req.context, req.body.task)
             .then(function (task) {
                 res.status(201).json({task: formatTask(task)});
@@ -74,7 +77,7 @@ api.route('/tasks')
             });
     });
 
-api.param('taskid', function (req, res, next, id) {
+api.param('taskId', function (req, res, next, id) {
     if (!validator.isInt(id)) {
         return next(new apiErrors.InvalidParams('Invalid task ID.'));
     }
@@ -96,7 +99,7 @@ api.param('taskid', function (req, res, next, id) {
 });
 
 
-api.route('/tasks/:taskid')
+api.route('/tasks/:taskId')
 
 //
 // Get task by id
@@ -112,6 +115,8 @@ api.route('/tasks/:taskid')
         if (!req.body || !req.body.task) {
             return next(new apiErrors.InvalidParams('Task is not specified.'));
         }
+        delete req.body.task.settings;
+        delete req.body.task.timeout;
         storage.Tasks.update(req.context, req.task.id, req.body.task)
             .then(function (task) {
                 res.json({task: formatTask(task)});

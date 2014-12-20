@@ -6,7 +6,7 @@ module.exports = function(sequelize, DataTypes) {
         name:           { type: DataTypes.STRING(255), allowNull: false },
         active:         { type: DataTypes.INTEGER, allowNull: false, defaultValue: 1,
                             set: function (value) {
-                                this.setDataValue('active', value ? value : 1);
+                                this.setDataValue('active', value ? 1 : 0);
                             },
                             get: function () {
                                 return this.getDataValue('active') != 0;

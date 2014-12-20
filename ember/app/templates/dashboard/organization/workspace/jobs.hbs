@@ -10,10 +10,10 @@
     </div>
 </div>
 <div class="sidebar">
-{{#each job in model}}
+{{#each job in controller}}
     <div class="menu-tabs">
       {{#link-to "dashboard.organization.workspace.jobs.job" job tagName="div" activeClass="active-job"}}
-        <div {{bind-attr class=":row archived:archived-job running:running-job"}}>
+        <div {{bind-attr class=":row job.archived:archived-job job.running:running-job"}}>
             <div class="col-xs-2">
                 {{#if job.lastRunError}}
                     <i class="fa fa-exclamation-circle fa-5"></i>

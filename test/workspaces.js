@@ -35,7 +35,7 @@ describe('WORKSPACES API',
                     expect(res.body.workspace.name).to.be.eql(testdata.MyWorkspace.name);
                     expect(validator.isDate(res.body.workspace.createdAt)).to.be.ok();
                     expect(validator.isDate(res.body.workspace.updatedAt)).to.be.ok();
-                    expect(res.body.workspace.updatedByUserId).to.be.eql(testdata.BrianJohnston.id);
+                    expect(res.body.workspace.updatedBy).to.be.eql(testdata.BrianJohnston.id);
                     expect(res.body.workspace.links.self).to.be.eql('/organizations/' + testdata.AcmeCorp.id + '/workspaces/' + testdata.MyWorkspace.id);
                     expect(res.body.workspace.links.jobs).to.be.eql('/organizations/' + testdata.AcmeCorp.id + '/workspaces/' + testdata.MyWorkspace.id + '/jobs');
                     expect(res.body.workspace.links.history).to.be.eql('/organizations/' + testdata.AcmeCorp.id + '/workspaces/' + testdata.MyWorkspace.id + '/history');
@@ -59,7 +59,7 @@ describe('WORKSPACES API',
                     expect(workspace.name).to.be.eql(testdata.MyWorkspace.name);
                     expect(validator.isDate(workspace.createdAt)).to.be.ok();
                     expect(validator.isDate(workspace.updatedAt)).to.be.ok();
-                    expect(workspace.updatedByUserId).to.be.eql(testdata.BrianJohnston.id);
+                    expect(workspace.updatedBy).to.be.eql(testdata.BrianJohnston.id);
                     expect(workspace.links.self).to.be.eql('/organizations/' + testdata.AcmeCorp.id + '/workspaces/' + testdata.MyWorkspace.id);
                     expect(workspace.links.jobs).to.be.eql('/organizations/' + testdata.AcmeCorp.id + '/workspaces/' + testdata.MyWorkspace.id + '/jobs');
                     expect(workspace.links.history).to.be.eql('/organizations/' + testdata.AcmeCorp.id + '/workspaces/' + testdata.MyWorkspace.id + '/history');
@@ -98,13 +98,14 @@ describe('WORKSPACES API',
                 workspaceId = null;
             api.createWorkspace(accessToken, testdata.AcmeCorp.id, workspaceName)
                 .then(function (res) {
+                    console.dir(res.body);
                     expect(res.status).to.eql(201);
                     workspaceId = res.body.workspace.id;
                     expect(res.body.workspace.organizationId).to.eql(testdata.AcmeCorp.id);
                     expect(res.body.workspace.name).to.eql(workspaceName);
                     expect(validator.isDate(res.body.workspace.createdAt)).to.be.ok();
                     expect(validator.isDate(res.body.workspace.updatedAt)).to.be.ok();
-                    expect(res.body.workspace.updatedByUserId).to.eql(testdata.BrianJohnston.id);
+                    expect(res.body.workspace.updatedBy).to.eql(testdata.BrianJohnston.id);
                     expect(res.body.workspace.links.self).to.eql('/organizations/' + testdata.AcmeCorp.id + '/workspaces/' + res.body.workspace.id);
                     expect(res.body.workspace.links.jobs).to.eql('/organizations/' + testdata.AcmeCorp.id + '/workspaces/' + res.body.workspace.id + '/jobs');
                     expect(res.body.workspace.links.history).to.eql('/organizations/' + testdata.AcmeCorp.id + '/workspaces/' + res.body.workspace.id + '/history');
