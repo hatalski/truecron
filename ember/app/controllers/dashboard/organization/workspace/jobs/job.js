@@ -15,14 +15,8 @@ export default Ember.ObjectController.extend({
                 return [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30];
         }
     }.property('selectedRepeatRule'),
-    // running and lastRunError are for demo only, 
-    // should be replaced by real job state property
-    running: function() {
-        return this.get('model.id') === "2";
-    }.property('model.id'),
-    lastRunError: function() {
-        return this.get('model.id') === "3";
-    }.property('model.id'),
+    running: false,
+    lastRunError: null,
     recurrence: function() {
         var o = RRule.parseString(this.get('model.rrule'));
         var startsAt = this.get('model.startsAt');
@@ -41,41 +35,80 @@ export default Ember.ObjectController.extend({
         };
     }.property('model.rrule', 'model.startsAt'),
     actions: {
+        run: function(job) {
+            console.log('runnning job ' + job.name);
+            this.set('running', true);
+        },
         rename: function(job) {
             console.log('rename to : ' + job.get('name'));
-            job.save();
+            job.save().then(function(result) {
+                console.log('job renamed:');
+                console.dir(result);
+            }, function(error) {
+                console.log('job rename error:');
+                console.dir(error);
+            });
         },
         reschedule: function(job) {
             var recurrence = job.get('recurrence');
             console.dir('reschedule has been called', recurrence);
         },
         addtask: function(job) {
-            var self = this;
-            var store = this.store;
             console.log('create new task for job : ' + job.get('name'));
-            store.find('task-type', 7).then(function(emptyTaskType) {
-                var newTask = store.createRecord('task', {
+            var self = this;
+            var user = self.get('session.user');
+            self.store.find('task-type', 7).then(function(emptyTaskType) {
+                var newTask = self.store.createRecord('task', {
                     name: 'unnamed',
                     settings: '{}',
                     position: job.get('tasks.length') + 1,
                     job: job,
-                    taskType: emptyTaskType
+                    taskType: emptyTaskType,
+                    updatedBy: user
                 });
-                console.dir('new task is created: ' + newTask);
-                self.transitionToRoute('dashboard.organization.workspace.tasks.task', newTask.get('job.id'), newTask);
+                newTask.save().then(function(result) {
+                    console.log('new task is created:');
+                    console.dir(result);
+                    self.transitionToRoute('dashboard.organization.workspace.tasks.task', result.get('job.id'), result);
+                }, function(error) {
+                    console.log('new task creation error');
+                    console.dir(error);
+                });
             });
         },
         archive: function(job) {
-            //job.deleteRecord();
-            var archived = job.get('archived');
-            job.set('archived', !archived);
-            job.save();
-            //this.transitionToRoute('dashboard.organization.workspace.jobs', job.get('workspace'));
+            var self = this;
+            job.set('archived', !job.get('archived'));
+            job.save().then(function(result) {
+                console.log('new task is created:');
+                console.dir(result);
+                self.transitionToRoute('dashboard.organization.workspace.tasks.task', result.get('job.id'), result);
+            }, function(error) {
+                console.log('new task creation error');
+                console.dir(error);
+            });
         },
         suspend: function(job) {
-            var active = job.get('active');
-            job.set('active', !active);
-            job.save();
+            job.set('active', !job.get('active'));
+            job.save().then(function(result) {
+                console.log('job successfully suspended: ');
+                console.dir(result);
+            }, function(error) {
+                console.log('job suspend failed: ');
+                console.dir(error);
+            });
+        },
+        remove: function(job) {
+            var self = this;
+            job.deleteRecord();
+            job.save().then(function(result) {
+                console.log('job successfully deleted: ');
+                console.dir(result);
+                self.transitionToRoute('dashboard.organization.workspace.jobs', result.get('workspace'));
+            }, function(error) {
+                console.log('job removal failed: ');
+                console.dir(error);
+            });
         }
     }
 });
