@@ -20,7 +20,7 @@ api.route('/taskTypes')
                     name: 'file'
                 },
                 {
-                    id: 2,
+                    id: -100,
                     name: 'execute'
                 },
                 {

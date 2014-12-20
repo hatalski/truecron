@@ -1,7 +1,8 @@
 import DS from 'ember-data';
 
 var TaskType = DS.Model.extend({
-    name: DS.attr('string')
+    name: DS.attr('string'),
+    task: DS.belongsTo('task', { async: true })
 });
 
 TaskType.reopenClass({
