@@ -36,7 +36,7 @@ module.exports.formatApiOutput = function(result) {
         return result;
     }
     if (result.updatedByPersonId) {
-        result.updatedByUserId = result.updatedByPersonId;
+        result.updatedBy = result.updatedByPersonId;
         delete result.updatedByPersonId;
     }
     return result;

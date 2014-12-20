@@ -8,7 +8,8 @@ var Organization = DS.Model.extend({
     updatedAt:  DS.attr('date', { defaultValue: new Date() }),
     updatedBy:  DS.belongsTo('user', { async: true }),
     workspaces: DS.hasMany('workspace', { async: true }),
-    users:      DS.hasMany('user', { async: true, inverse: 'organizations' })
+    members:    DS.hasMany('user', { async: true })
+    // history: DS.hasMany('history-record', { async: true })
 });
 
 Organization.reopenClass({
@@ -22,7 +23,7 @@ Organization.reopenClass({
       updatedAt: new Date(),
       updatedBy: 1,
       workspaces: [1,2],
-      users: [1]
+      members: [1]
     },
     {
       id: 2,
@@ -33,7 +34,7 @@ Organization.reopenClass({
       updatedAt: new Date(),
       updatedBy: 1,
       workspaces: [3,4,5],
-      users: [1]
+      members: [1]
     }
   ]
 });

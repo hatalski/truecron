@@ -23,6 +23,7 @@ function formatTask(task) {
     tk.links = {
         self: selfUrl
     };
+    common.formatApiOutput(tk);
     return tk;
 }
 //+++++++++++++++++++++++

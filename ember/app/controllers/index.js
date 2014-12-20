@@ -17,10 +17,6 @@ export default Ember.Controller.extend(LoginControllerMixin, {
 	signupPasswordConfirm: '',
 	isPasswordConfirmError: false,
     actions: {
-	  	authenticate: function(options) {
-	  		console.dir(options);
-	  		this._super(options);
-	  	},
 	  	invite: function() {
 	  		var inviteEmail = this.get('invitationEmail');
 	  		if (!validator.isEmail(inviteEmail)) {

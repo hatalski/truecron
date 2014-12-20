@@ -98,18 +98,19 @@ describe('WORKSPACES API',
                 workspaceId = null;
             api.createWorkspace(accessToken, testdata.AcmeCorp.id, workspaceName)
                 .then(function (res) {
+                    console.dir(res.body);
                     expect(res.status).to.eql(201);
-                    workspaceId = res.body.workspace.id;
-                    expect(res.body.workspace.organizationId).to.eql(testdata.AcmeCorp.id);
-                    expect(res.body.workspace.name).to.eql(workspaceName);
-                    expect(validator.isDate(res.body.workspace.createdAt)).to.be.ok();
-                    expect(validator.isDate(res.body.workspace.updatedAt)).to.be.ok();
-                    expect(res.body.workspace.updatedByUserId).to.eql(testdata.BrianJohnston.id);
-                    expect(res.body.workspace.links.self).to.eql('/organizations/' + testdata.AcmeCorp.id + '/workspaces/' + res.body.workspace.id);
-                    expect(res.body.workspace.links.jobs).to.eql('/organizations/' + testdata.AcmeCorp.id + '/workspaces/' + res.body.workspace.id + '/jobs');
-                    expect(res.body.workspace.links.history).to.eql('/organizations/' + testdata.AcmeCorp.id + '/workspaces/' + res.body.workspace.id + '/history');
+                    workspaceId = res.body.id;
+                    expect(res.body.organizationId).to.eql(testdata.AcmeCorp.id);
+                    expect(res.body.name).to.eql(workspaceName);
+                    expect(validator.isDate(res.body.createdAt)).to.be.ok();
+                    expect(validator.isDate(res.body.updatedAt)).to.be.ok();
+                    expect(res.body.updatedByUserId).to.eql(testdata.BrianJohnston.id);
+                    expect(res.body.links.self).to.eql('/organizations/' + testdata.AcmeCorp.id + '/workspaces/' + res.body.id);
+                    expect(res.body.links.jobs).to.eql('/organizations/' + testdata.AcmeCorp.id + '/workspaces/' + res.body.id + '/jobs');
+                    expect(res.body.links.history).to.eql('/organizations/' + testdata.AcmeCorp.id + '/workspaces/' + res.body.id + '/history');
 
-                    return api.getWorkspace(accessToken, testdata.AcmeCorp.id, res.body.workspace.id);
+                    return api.getWorkspace(accessToken, testdata.AcmeCorp.id, res.body.id);
                 })
                 .then(function (res) {
                     expect(res.status).to.eql(200);
@@ -134,13 +135,13 @@ describe('WORKSPACES API',
             api.createWorkspace(accessToken, testdata.AcmeCorp.id, name1)
                 .then(function (res) {
                     expect(res.status).to.eql(201);
-                    expect(res.body.workspace.name).to.be.eql(name1);
-                    return api.updateWorkspace(accessToken, testdata.AcmeCorp.id, res.body.workspace.id, { workspace: {name: name2 }});
+                    expect(res.body.name).to.be.eql(name1);
+                    return api.updateWorkspace(accessToken, testdata.AcmeCorp.id, res.body.id, { workspace: {name: name2 }});
                 })
                 .then(function (res) {
                     expect(res.status).to.eql(200);
-                    expect(res.body.workspace.name).to.be.eql(name2);
-                    return api.deleteWorkspace(accessToken, testdata.AcmeCorp.id, res.body.workspace.id);
+                    expect(res.body.name).to.be.eql(name2);
+                    return api.deleteWorkspace(accessToken, testdata.AcmeCorp.id, res.body.id);
                 })
                 .then(function(res) {
                     expect(res.status).to.eql(204);

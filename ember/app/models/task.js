@@ -1,6 +1,8 @@
 import DS from 'ember-data';
 
 var Task = DS.Model.extend({
+  jobId:     DS.attr(),
+  taskTypeId:DS.attr(),
   name:      DS.attr('string'),
   active:    DS.attr('boolean', { defaultValue: true }),
   settings:  DS.attr('string'),
