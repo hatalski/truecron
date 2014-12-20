@@ -77,14 +77,12 @@ export default Ember.ObjectController.extend({
             });
         },
         archive: function(job) {
-            var self = this;
             job.set('archived', !job.get('archived'));
             job.save().then(function(result) {
-                console.log('new task is created:');
+                console.log('job successfully archived :');
                 console.dir(result);
-                self.transitionToRoute('dashboard.organization.workspace.tasks.task', result.get('job.id'), result);
             }, function(error) {
-                console.log('new task creation error');
+                console.log('job archive error');
                 console.dir(error);
             });
         },
