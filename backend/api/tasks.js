@@ -58,13 +58,15 @@ api.route('/tasks')
     // Add a new task
     //
     .post(function (req, res, next) {
-        if (!req.job) {
-            return next(new apiErrors.InvalidParams('Job is not specified.'));
-        }
         if (!req.body || !req.body.task) {
             return next(new apiErrors.InvalidParams('Task is not specified.'));
         }
-        req.body.task.jobId = req.job.id;
+        var jobId = req.job ? req.job.id : req.body.task.jobId;
+        if (!jobId) {
+            return next(new apiErrors.InvalidParams('Job is not specified.'));
+        }
+        req.context.url = req.url;
+        req.body.task.jobId = jobId;
         storage.Tasks.create(req.context, req.body.task)
             .then(function (task) {
                 res.status(201).json({task: formatTask(task)});

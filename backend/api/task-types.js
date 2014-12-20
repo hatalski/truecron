@@ -16,11 +16,15 @@ api.route('/taskTypes')
         res.status(200).json({
             'task-types': [
                 {
+                    id: -1,
+                    name: 'empty'
+                },
+                {
                     id: 1,
                     name: 'file'
                 },
                 {
-                    id: -100,
+                    id: 2,
                     name: 'execute'
                 },
                 {
@@ -38,10 +42,6 @@ api.route('/taskTypes')
                 {
                     id: 6,
                     name: 'http'
-                },
-                {
-                    id: 7,
-                    name: 'empty'
                 }
             ]
         });

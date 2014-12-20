@@ -1,12 +1,15 @@
 import DS from 'ember-data';
 
 var TaskType = DS.Model.extend({
-    name: DS.attr('string'),
-    task: DS.belongsTo('task', { async: true })
+    name: DS.attr('string')
 });
 
 TaskType.reopenClass({
   FIXTURES: [
+    {
+      id: -1,
+      name: 'empty'
+    },
     {
       id: 1,
       name: 'file'
@@ -30,10 +33,6 @@ TaskType.reopenClass({
     {
       id: 6,
       name: 'http'
-    },
-    {
-      id: 7,
-      name: 'empty'
     }
   ]
 });

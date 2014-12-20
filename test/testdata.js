@@ -12,7 +12,7 @@ var brian = module.exports.BrianJohnston = { id: -10, name: 'Brian Johnston', em
 var acme = module.exports.AcmeCorp = { id: -11, name: 'Acme Corporation', email: 'bj@it.acme.corp', updatedByUserId: brian.id };
 var myWorkspace = module.exports.MyWorkspace = { id: -12, name: 'My workspace', organizationId: acme.id, updatedByUserId: brian.id };
 var testJob = module.exports.MyWorkspaceTestJob = { id: -13, name: 'My workspace test job', updatedByUserId: brian.id };
-var testTaskType = module.exports.TestTaskType = { id: -100, name: 'TestType' };
+var testTaskType = module.exports.TestTaskType = { id: -1, name: 'default' };
 var testTask = module.exports.MyWorkspaceTestTask = { id: -14, name: 'My workspace test job task', jobId: testJob.id, taskTypeId: testTaskType.id, updatedByUserId: brian.id };
 
 var suresh = module.exports.SureshKumar = { id: -20, name: 'Suresh Kumar', email: 'skumar@ajax.corp', password: 'P@ssw0rd' };

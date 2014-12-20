@@ -106,7 +106,7 @@ api.route('/jobs/:jobid')
     // Get a job
     //
     .get(function (req, res, next) {
-        res.json(formatJob(req, req.job));
+        res.json({ job: formatJob(req, req.job) });
     })
     //
     // Update a job

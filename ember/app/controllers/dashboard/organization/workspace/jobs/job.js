@@ -36,7 +36,7 @@ export default Ember.ObjectController.extend({
     }.property('model.rrule', 'model.startsAt'),
     actions: {
         run: function(job) {
-            console.log('runnning job ' + job.name);
+            console.log('runnning job ' + job.get('name'));
             this.set('running', true);
         },
         rename: function(job) {
@@ -57,7 +57,7 @@ export default Ember.ObjectController.extend({
             console.log('create new task for job : ' + job.get('name'));
             var self = this;
             var user = self.get('session.user');
-            self.store.find('task-type', 7).then(function(emptyTaskType) {
+            self.store.find('task-type', -1).then(function(emptyTaskType) {
                 var newTask = self.store.createRecord('task', {
                     name: 'unnamed',
                     settings: '{}',
@@ -69,7 +69,7 @@ export default Ember.ObjectController.extend({
                 newTask.save().then(function(result) {
                     console.log('new task is created:');
                     console.dir(result);
-                    self.transitionToRoute('dashboard.organization.workspace.tasks.task', result.get('job.id'), result);
+                    self.transitionToRoute('dashboard.organization.workspace.tasks.task', result.get('jobId'), result);
                 }, function(error) {
                     console.log('new task creation error');
                     console.dir(error);

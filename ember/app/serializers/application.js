@@ -1,12 +1,9 @@
-import Ember from 'ember';
+//import Ember from 'ember';
 import DS from 'ember-data';
 
 export default DS.RESTSerializer.extend({
 	keyForRelationship: function(key, relationship) {
-		//console.log('relationship: ' + relationship);
-		var _key = Ember.String.underscore(key);
-		//console.log(_key);
-		return relationship === "belongsTo" ? _key + "Id" : _key;
+		return relationship === "belongsTo" ? key + "Id" : key;
     },
     normalizeHash: {
 		organizationId: function(hash) {

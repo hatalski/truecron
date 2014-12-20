@@ -23,7 +23,7 @@ var id_task_to_delete;
 var id_run_to_delete;
 var testDataIdJob=-222;
 
-describe.only('RUNS API',
+describe('RUNS API',
     function() {
         var accessToken = null;
         var orgName = random.generate(10) + ' Corp';
