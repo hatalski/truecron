@@ -1,12 +1,10 @@
 import Ember from 'ember';
+import AuthenticatedRouteMixin from 'simple-auth/mixins/authenticated-route-mixin';
 
-export default Ember.Route.extend({
+export default Ember.Route.extend(AuthenticatedRouteMixin, {
 	model: function(params) {
-		console.log('load organization model with name : ' + params.organization_name);
-		return this.store.find('organization', { name: params.organization_name });
-	},
-	serialize: function(model) {
-		return { organization_name: model.get('name') };
+		console.log('load organization model with id : ' + params.organization_id);
+		return this.store.find('organization', params.organization_id);
 	},
 	setupController: function(controller, model) {
 		if (this.controllerFor('dashboard').get('choosenOrganization') == null) {
@@ -14,12 +12,12 @@ export default Ember.Route.extend({
 		}
 	    this._super(controller, model);
     },
-	afterModel: function(organization) {
-		console.log('afterModel' + organization);
-		// if (organization.get('firstObject') === undefined) {
-		// 	this.controllerFor('dashboard').set('choosenOrganization', organization.get('name'));
-		// } else {
-		// 	this.controllerFor('dashboard').set('choosenOrganization', organization.get('firstObject'));
-		// }
-	}
+    afterModel: function(organization) {
+    	var workspaces = organization.get('workspaces');
+    	if (workspaces.get('length') > 0) {
+    		console.log('there are workspaces');
+    		var workspace = workspaces.get('firstObject');
+    		this.transitionTo('dashboard.organization.workspace', organization, workspace);
+    	}
+    }
 });

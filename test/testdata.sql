@@ -71,6 +71,55 @@ insert into tc.History (id, resourceUrl, personId, operation, change, oldValue)
     where not exists (select * from tc.History
     where id = -56);
 
+insert into tc.Job (id, workspaceId, name, createdAt, updatedAt, updatedByPersonId, rrule)
+    select -13, -12, 'My workspace test job', 'now', 'now', -10, 'FREQ=WEEKLY;COUNT=30;WKST=MO'
+    where not exists (select * from tc.Job
+    where id = -13);
+
+insert into tc.Job (id, workspaceId, name, createdAt, updatedAt, updatedByPersonId, rrule)
+    select -13, -12, 'My workspace test job', 'now', 'now', -10, 'FREQ=WEEKLY;COUNT=30;WKST=MO'
+    where not exists (select * from tc.Job
+    where id = -13);
+
+insert into tc.TaskType (id, name)
+    select -1, 'default'
+        where not exists (select * from tc.TaskType
+    where id = -1);
+
+insert into tc.TaskType (id, name)
+    select 1, 'file'
+        where not exists (select * from tc.TaskType
+    where id = 1);
+
+insert into tc.TaskType (id, name)
+    select 2, 'execute'
+        where not exists (select * from tc.TaskType
+    where id = 2);
+
+insert into tc.TaskType (id, name)
+    select 3, 'archive'
+        where not exists (select * from tc.TaskType
+    where id = 3);
+
+insert into tc.TaskType (id, name)
+    select 4, 'sftp'
+        where not exists (select * from tc.TaskType
+    where id = 4);
+
+insert into tc.TaskType (id, name)
+    select 5, 'smtp'
+        where not exists (select * from tc.TaskType
+    where id = 5);
+
+insert into tc.TaskType (id, name)
+    select 6, 'http'
+        where not exists (select * from tc.TaskType
+    where id = 6);
+
+insert into tc.Task (id, jobId, name, position, taskTypeId, settings, timeout, createdAt, updatedAt, updatedByPersonId)
+    select -14, -13, 'My workspace test job task', 1, 5, '{}', '30 seconds', 'now', 'now', -10
+    where not exists (select * from tc.Task
+    where id = -14);
 
 --
 -- Suresh Kumar from AJAX
@@ -191,3 +240,13 @@ insert into tc.History (id, resourceUrl, personId, operation, change, oldValue)
     select -67, '/organizations/-21', -20, 'member-add', '{ "personId": "-24", "role": "member" }', null
     where not exists (select * from tc.History
     where id = -67);
+
+insert into tc.Job (id, workspaceId, name, updatedByPersonId, rrule)
+    select -222, -22, 'TestDataName1', -1, 'rruleTextTralala'
+        where not exists (select * from tc.Job
+    where id = -222);
+
+insert into tc.Run (id, jobId, status, elapsed)
+    select -200, -222, 15, '1 day -01:00:00'
+        where not exists (select * from tc.Run
+    where id = -200);

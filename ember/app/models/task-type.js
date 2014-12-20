@@ -7,6 +7,10 @@ var TaskType = DS.Model.extend({
 TaskType.reopenClass({
   FIXTURES: [
     {
+      id: -1,
+      name: 'empty'
+    },
+    {
       id: 1,
       name: 'file'
     },

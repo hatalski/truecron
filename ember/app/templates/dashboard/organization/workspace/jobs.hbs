@@ -4,27 +4,27 @@
         {{#link-to "dashboard.organization.workspace.connections" tagName="li"}}<span>Connections</span>{{/link-to}}
     </ul>
     <div class="btn-group">
-        {{#link-to "dashboard.organization.workspace.jobs.new" classNames="btn btn-default"}}<i class="fa fa-plus"></i>Add Job{{/link-to}}
+        <a href="#" class="btn btn-default" {{action "addjob"}}><i class="fa fa-plus"></i>Add Job</a>
         <button type="button" class="btn btn-default"><i class="fa fa-filter"></i></button>
         <button type="button" class="btn btn-default"><i class="fa fa-search"></i></button>
     </div>
 </div>
 <div class="sidebar">
-{{#each}}
+{{#each job in controller}}
     <div class="menu-tabs">
-      {{#link-to "dashboard.organization.workspace.jobs.job" this tagName="div" activeClass="active-job"}}
-        <div {{bind-attr class=":row archived:archived-job running:running-job"}}>
+      {{#link-to "dashboard.organization.workspace.jobs.job" job tagName="div" activeClass="active-job"}}
+        <div {{bind-attr class=":row job.archived:archived-job job.running:running-job"}}>
             <div class="col-xs-2">
-                {{#if lastRunError}}
+                {{#if job.lastRunError}}
                     <i class="fa fa-exclamation-circle fa-5"></i>
                 {{else}}
                     <span></span>
                 {{/if}}
             </div>
             <div class="col-xs-9">
-                <p class="title">{{name}}</p>
-                <p>Last run: {{time-from recurrence.lastRun}}</p>
-                <p>Next run: {{time-from recurrence.nextRun}}</p>
+                <p class="title">{{job.name}}</p>
+                <p>last: {{time-from job.recurrence.lastRun}}</p>
+                <p>next: {{time-from job.recurrence.nextRun}}</p>
             </div>
         </div>
       {{/link-to}}
@@ -34,7 +34,7 @@
 {{/each}}
 </div>
 <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2">
-    <div class="main" style="padding: 0">
+    <div class="main cron-main">
       {{outlet}}
     </div>
 </div>

@@ -12,10 +12,6 @@ var auth       = require('./auth');
 var testdata   = require('./testdata');
 var prefix     = config.get('API_HOST') || 'http://localhost:3000/api/v1';
 
-var workspaceIdMaster=-12;
-
-log.info('API tests prefix: ' + prefix);
-
 describe('JOBS API',
     function() {
         var accessToken = null;
@@ -31,13 +27,11 @@ describe('JOBS API',
         });
         var id_to_delete;
         it('create a new job', function (done) {
-            superagent.post(prefix + '/jobs')
+            superagent.post(prefix + '/organizations/' + testdata.AcmeCorp.id + '/workspaces/' + testdata.MyWorkspace.id + '/jobs')
                 .set('Content-Type', 'application/json')
                 .send({ 'job': {
-                    'workspaceId':workspaceIdMaster,
                     'name': 'TestName',
                     'tags': ["edi", "production"],
-                    'updatedByPersonId':'-1',
                     'startsAt': '2014-08-21T10:00:11Z',
                     'rrule': 'FREQ=DAILY;INTERVAL=1;BYDAY=MO;BYHOUR=12;BYMINUTE=0;BYSECOND=0'
                 }
@@ -76,7 +70,7 @@ describe('JOBS API',
 //        });
 
         it('get all jobs', function (done) {
-            superagent.get(prefix + '/jobs')
+            superagent.get(prefix + '/organizations/' + testdata.AcmeCorp.id + '/workspaces/' + testdata.MyWorkspace.id + '/jobs')
                 .set('Content-Type', 'application/json')
                 .send()
                 .authenticate(accessToken)
@@ -89,7 +83,7 @@ describe('JOBS API',
         });
 
         it('get job by id', function (done) {
-            superagent.get(prefix + '/jobs/' + id_to_delete)
+            superagent.get(prefix + '/organizations/' + testdata.AcmeCorp.id + '/workspaces/' + testdata.MyWorkspace.id + '/jobs/' + id_to_delete)
                 .send()
                 .authenticate(accessToken)
                 .end(function (e, res) {
@@ -105,7 +99,7 @@ describe('JOBS API',
         });
 
         it('update job', function (done) {
-            superagent.put(prefix + '/jobs/'+ id_to_delete)
+            superagent.put(prefix + '/organizations/' + testdata.AcmeCorp.id + '/workspaces/' + testdata.MyWorkspace.id + '/jobs/' + id_to_delete)
                 .set('Content-Type', 'application/json')
                 .send({ 'job':  {
                     'startsAt': '2014-08-21T10:00:11Z',
@@ -123,7 +117,7 @@ describe('JOBS API',
         });
 
         it('delete job', function (done) {
-            superagent.del(prefix + '/jobs/'+ id_to_delete)
+            superagent.del(prefix + '/organizations/' + testdata.AcmeCorp.id + '/workspaces/' + testdata.MyWorkspace.id + '/jobs/' + id_to_delete)
                 .send()
                 .authenticate(accessToken)
                 .end(function (e, res) {

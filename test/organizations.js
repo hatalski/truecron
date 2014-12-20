@@ -20,7 +20,7 @@ describe('ORGANIZATIONS API',
         before(function (done) {
             testdata.initdb(function (err) {
                 if (err) done(err);
-                auth.getAccessToken(testdata.BrianJohnston.email, function (err, token) {
+                auth.getAccessToken(testdata.system.email, function (err, token) {
                     if (err) return done(err);
                     accessToken = token;
                     done();
@@ -55,6 +55,20 @@ describe('ORGANIZATIONS API',
                     done();
                 });
         });
+        //it('should allow only SYSTEM user to create organizations', function (done) {
+        //    auth.getAccessToken(testdata.BrianJohnston.email, function (err, userToken) {
+        //        expect(err).to.eql(null);
+        //        superagent.post(prefix + '/organizations')
+        //            .set('Content-Type', 'application/json')
+        //            .authenticate(userToken)
+        //            .send({ 'organization': { name: orgName } })
+        //            .end(function (e, res) {
+        //                expect(e).to.eql(null);
+        //                expect(res.status).to.eql(403);
+        //                done();
+        //            });
+        //    });
+        //});
         var id_to_delete;
         it('create a new organization', function (done) {
             superagent.post(prefix + '/organizations')
@@ -69,7 +83,7 @@ describe('ORGANIZATIONS API',
                     id_to_delete = res.body.organization.id;
                     expect(res.body.organization.id).to.be.a('string');
                     expect(res.body.organization.name).to.eql(orgName);
-                    expect(res.body.organization.updatedByPersonId).to.eql(testdata.BrianJohnston.id);
+                    expect(res.body.organization.updatedBy).to.eql(testdata.system.id);
                     expect(validator.isDate(res.body.organization.createdAt)).to.be.ok();
                     expect(validator.isDate(res.body.organization.updatedAt)).to.be.ok();
                     done();
@@ -87,7 +101,8 @@ describe('ORGANIZATIONS API',
                     expect(res.body.error).to.eql(undefined);
                     expect(res.body.organizations).to.have.length(1);
                     expect(res.body.meta.total).to.eql(1);
-                    expect(res.body.organizations[0].organization.name).to.eql(orgName);
+                    expect(res.body.organizations[0].name).to.eql(orgName);
+                    expect(res.body.organizations[0].links.self).to.eql('/organizations/' + id_to_delete);
                     done();
                 });
         });
@@ -104,6 +119,7 @@ describe('ORGANIZATIONS API',
                     expect(res.body.organization.name).to.eql(orgName);
                     expect(validator.isDate(res.body.organization.createdAt)).to.be.ok();
                     expect(validator.isDate(res.body.organization.updatedAt)).to.be.ok();
+                    expect(res.body.organization.links.self).to.eql('/organizations/' + id_to_delete);
                     done();
                 });
         });

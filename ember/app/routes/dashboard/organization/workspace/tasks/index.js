@@ -1,7 +1,8 @@
 import Ember from 'ember';
+import AuthenticatedRouteMixin from 'simple-auth/mixins/authenticated-route-mixin';
 
-export default Ember.Route.extend({
-    beforeModel: function() {
-    	this.transitionTo('dashboard.organization.workspace.tasks.rrule');
-    }
+export default Ember.Route.extend(AuthenticatedRouteMixin, {
+    // beforeModel: function() {
+    // 	this.transitionTo('dashboard.organization.workspace.tasks.rrule');
+    // }
 });

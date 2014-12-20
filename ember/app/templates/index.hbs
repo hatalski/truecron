@@ -7,10 +7,12 @@
             </div>
             <div class="navbar-collapse collapse">
                 <form class="navbar-form navbar-right">
-                    {{input class="form-control" value="login" valueBinding="login" type="email" placeholder="Email" required="required"}}
-                    {{input class="form-control" value="password" valueBinding="password" type="password" placeholder="Password" required="required"}}
-                    <input type="button" {{action "signin"}} class="btn btn-signin" value="SIGN IN">
-                    <input type="button" {{action "signup"}} class="btn btn-signup" value="SIGN UP">
+                    <input type="button" {{action "signupModal"}} class="btn btn-signup" value="SIGN UP">
+                </form>
+                <form class="navbar-form navbar-right" {{action 'authenticate' on='submit'}}>
+                    {{input class="form-control" type="email" value=identification placeholder="Email" required="required"}}
+                    {{input class="form-control" type="password" value=password placeholder="Password" required="required"}}
+                    <button type="submit" class="btn btn-signin">SIGN IN</button>
                 </form>
             </div>
         </div>
@@ -23,7 +25,6 @@
                     <div class="pitch-ext">
                         <p>Do your job.</p>
                         <p>We will do the scheduling.</p>
-                        <p>{{#link-to 'dashboard'}}test{{/link-to}}</p>
                     </div>
                 </div>
                 <div class="col-xs-9">
@@ -41,9 +42,11 @@
                     <div class="interested_box">
                         <div class="container">
                             <h2>Interested?</h2>
-                            <p>Leave your e-mail address to get notified when we are live.</p>
-                            <p>{{input class="form-control" value="email" valueBinding="email" type="email" placeholder="Email" required="required"}}</p>
-                            <p><input type="button" {{action "signup"}} class="btn btn-signup" data-toggle="modal" data-target="#signup_confirm_modal" value="SIGN UP"></p>
+                            <p>Leave your e-mail address to get notified when we are live.</p>                            
+                            <div {{bind-attr class=":form-group isInvitationEmailError:has-error"}}>
+                                {{input class="form-control" value="email" valueBinding="invitationEmail" type="email" placeholder="Email" required="required"}}
+                            </div>
+                            <p><input type="button" {{action "invite"}} class="btn btn-signup" value="SIGN UP"></p>
                         </div>
                     </div>
                 </div>
@@ -189,12 +192,48 @@
     </div>
 </footer>
 <!-- Modal -->
-<div class="modal fade" id="signup_confirm_modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+<div class="modal fade" id="signup_modal" tabindex="-1" role="dialog" aria-labelledby="signUpTitle" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <!--<div class="modal-header">-->
+                <!--<h4 class="modal-title" id="signUpTitle"></h4>-->
+            <!--</div>-->
+            <div class="modal-body, interested_box">
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                <form {{action "signup" on="submit"}}>
+                      <h2>Sign Up</h2>                      
+                      
+                      <div {{bind-attr class=":form-group isEmailError:has-error"}}>
+                        <label for='email'>Email:</label>
+                        {{input value=signupEmail valueBinding="signupEmail" type="email" placeholder="Email" required="required" class="form-control"}}
+                      </div>
+
+                      <div {{bind-attr class=":form-group isPasswordError:has-error"}}>
+                        <label for='password'>Create password:</label>
+                        {{input title="Password must contain at least 8 characters, including UPPER/lowercase and numbers." type="password" value=signupPassword valueBinding="signupPassword" placeholder="Should be minimum of 8 characters in length" required="required" class="form-control" pattern="(?=^.{8,}$)(?=.*\d)(?![.\n])(?=.*[A-Z])(?=.*[a-z]).*$" }}
+                      </div>
+
+                      <div {{bind-attr class=":form-group isPasswordConfirmError:has-error"}}>
+                        <label for='password-confirmation'>Confirm your password:</label>
+                        {{input type="password" value=signupPasswordConfirm valueBinding="signupPasswordConfirm" placeholder="Enter password again" class="form-control"}}
+                      </div>
+
+                      <p><input type="submit" class="btn btn-signup" value="SIGN UP"></p>
+                    </form>
+                   
+            </div>
+            <!--<div class="modal-footer">-->
+                <!--<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>-->
+            <!--</div>-->
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="invite_modal" tabindex="-1" role="dialog" aria-labelledby="inviteTitle" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
-                <h4 class="modal-title" id="myModalLabel">Thank you for signing up for TrueCron!</h4>
+                <h4 class="modal-title" id="inviteTitle">Thank you for signing up for TrueCron!</h4>
             </div>
             <div class="modal-body">
               {{ successMessage }}

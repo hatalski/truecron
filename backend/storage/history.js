@@ -2,7 +2,8 @@ var Promise = require("bluebird"),
     _ = require('lodash'),
     logger = require('../../lib/logger'),
     validator = require('../../lib/validator'),
-    models = require('./db/models');
+    models = require('./db/models'),
+    links = require('../api/links'); // This is the only dependency of the Storage on the API.
 
 var log = module.exports.log = Promise.method(function (personId, objectPath, operation, newData, oldData, transaction) {
     var record = {
@@ -41,4 +42,8 @@ var getObjectLog = module.exports.getObjectLog = Promise.method(function (object
     options = _.extend({ order: [['createdAt', 'desc']] }, options);
     options.where = _.extend({}, options.where, { resourceUrl: { like: objectPath + '%' } });
     return models.History.findAndCountAll(options);
+});
+
+var cleanUserLogs = module.exports.cleanUserLogs = Promise.method(function (personId, transaction) {
+    return models.History.destroy({ where: { personid: personId }}, { transaction: transaction });
 });

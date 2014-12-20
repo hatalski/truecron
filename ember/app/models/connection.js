@@ -6,7 +6,7 @@ var Connection = DS.Model.extend({
     createdAt: DS.attr('date', { defaultValue: new Date() }),
     updatedAt: DS.attr('date', { defaultValue: new Date() }),
     archived:  DS.attr('boolean'),
-    updatedBy: DS.belongsTo('person', { async: true })
+    updatedBy: DS.belongsTo('user', { async: true })
 });
 
 Connection.reopenClass({

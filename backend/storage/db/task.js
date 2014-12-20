@@ -6,7 +6,7 @@ module.exports = function(sequelize, DataTypes) {
         name:           { type: DataTypes.STRING(255), allowNull: false },
         active:         { type: DataTypes.INTEGER, allowNull: false, defaultValue: 1,
                             set: function (value) {
-                                this.setDataValue('active', value ? value : 1);
+                                this.setDataValue('active', value ? 1 : 0);
                             },
                             get: function () {
                                 return this.getDataValue('active') != 0;
@@ -14,22 +14,29 @@ module.exports = function(sequelize, DataTypes) {
                         },
         position:       { type: DataTypes.INTEGER, allowNull:false },
         taskTypeId:     { type: DataTypes.BIGINT, allowNull:false },
-        settings:       { type: DataTypes.TEXT,
-                            get: function () {
-                                var value = this.getDataValue('settings');
-                                if (!!value && typeof value === 'string') {
-                                    return JSON.parse(value);
-                                }
-                                return value;
-                            },
-                            set: function (value) {
-                                if (typeof value === 'object') {
-                                    value = JSON.stringify(value);
-                                }
-                                this.setDataValue('settings', value);
-                            }
-                        },
-        updatedByPersonId:{ type: DataTypes.BIGINT, allowNull:false}
+        settings:       { type: DataTypes.JSON },
+                        //    get: function () {
+                        //        var value = this.getDataValue('settings');
+                        //        if (value && typeof value === 'string') {
+                        //            return JSON.parse(value);
+                        //        }
+                        //        return value;
+                        //    },
+                        //    set: function (value) {
+                        //        var logger = require('../../../lib/logger');
+                        //
+                        //        logger.info('ZZZZZZZZ');
+                        //        logger.error(value);
+                        //        if (typeof value === 'object') {
+                        //            value = JSON.stringify(value);
+                        //
+                        //            logger.error(value);
+                        //        }
+                        //        this.setDataValue('settings', value);
+                        //    }
+                        //},
+        updatedByPersonId:{ type: DataTypes.BIGINT, allowNull:false},
+        timeout:{ type: DataTypes.BIGINT, allowNull:false}
     }, {
         schema: 'tc',
         tableName: 'task',

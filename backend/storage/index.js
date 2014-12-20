@@ -23,7 +23,7 @@ Storage.prototype.initialize = Promise.method(function initialize() {
         host: databaseOptions.host,
         port: databaseOptions.port,
         dialect: 'postgres',
-        logging: logger.debug,
+        logging: function (message) { logger.debug(message); },
         quoteIdentifiers: false,
         omitNull: true
     };
@@ -34,8 +34,12 @@ Storage.prototype.initialize = Promise.method(function initialize() {
 
     this.Person = require('./person');
     this.Organization = require('./organization');
+    this.OrganizationAccess = require('./organization-access');
     this.Jobs = require('./jobs');
-    //this.Workspace = require('./workspace');
+    this.Workspace = require('./workspace');
+    this.WorkspaceAccess = require('./workspace-access');
+    this.Tasks = require('./tasks');
+    this.Runs = require('./runs');
 
     return db.upgradeDatabaseIfNeeded(databaseOptions);
 });

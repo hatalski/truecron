@@ -4,21 +4,21 @@
         {{#link-to "dashboard.organization.workspace.connections" tagName="li"}}<span>Connections</span>{{/link-to}}
     </ul>
     <div class="btn-group">
-        {{#link-to "dashboard.organization.workspace.connections.new" classNames="btn btn-default"}}<i class="fa fa-plus"></i>Add Connection{{/link-to}}
+        {{#link-to "dashboard.organization.workspace.connections.index" classNames="btn btn-default"}}<i class="fa fa-plus"></i>Add Connection{{/link-to}}
         <button type="button" class="btn btn-default"><i class="fa fa-filter"></i></button>
         <button type="button" class="btn btn-default"><i class="fa fa-search"></i></button>
     </div>
 </div>
 <div class="sidebar">
-    {{#each}}
+    {{#each connection in model}}
         <div class="menu-tabs">
-          {{#link-to "dashboard.organization.workspace.connections.connection" this tagName="div" activeClass="active-job"}}
+          {{#link-to "dashboard.organization.workspace.connections.connection" connection tagName="div" activeClass="active-job"}}
             <div {{bind-attr class=":row archived:archived-job"}}>
                 <div class="col-xs-2">
                     <span></span>
                 </div>
                 <div class="col-xs-9">
-                    <p class="title">{{name}}</p>
+                    <p class="title">{{connection.name}}</p>
                 </div>
             </div>
           {{/link-to}}
