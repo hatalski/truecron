@@ -83,7 +83,7 @@ describe('ORGANIZATIONS API',
                     id_to_delete = res.body.organization.id;
                     expect(res.body.organization.id).to.be.a('string');
                     expect(res.body.organization.name).to.eql(orgName);
-                    expect(res.body.organization.updatedByUserId).to.eql(testdata.system.id);
+                    expect(res.body.organization.updatedBy).to.eql(testdata.system.id);
                     expect(validator.isDate(res.body.organization.createdAt)).to.be.ok();
                     expect(validator.isDate(res.body.organization.updatedAt)).to.be.ok();
                     done();

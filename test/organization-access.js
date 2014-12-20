@@ -166,7 +166,7 @@ describe('ORGANIZATIONS ACCESS',
                         expect(e).to.eql(null);
                         expect(res.status).to.eql(200);
                         expect(res.body.organization.name).to.eql(testdata.AjaxCorp.name);
-                        expect(res.body.organization.updatedByUserId).to.eql(testdata.SureshKumar.id);
+                        expect(res.body.organization.updatedBy).to.eql(testdata.SureshKumar.id);
                         done();
                     });
             });
