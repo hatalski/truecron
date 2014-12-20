@@ -9,18 +9,22 @@ export default Ember.ArrayController.extend({
 	actions: {
 		addjob: function() {
 		    var self = this;
-		    var store = this.store;
-		    var workspace = this.get('workspace');
-		    console.dir('found workspace : ' + workspace);
-		    var newJob = store.createRecord('job', {
+		    var workspace = self.get('workspace');
+		    var user = self.get('session.user');
+		    var newJob = self.store.createRecord('job', {
 		    	name: ' unnamed job',
 	            workspace: workspace,
 		    	startsAt: new Date(),
 	            rrule: 'FREQ=MONTHLY;BYDAY=+3TU',
 	            active: true,
-	            archived: false
+	            archived: false,
+	            updatedBy: user
 		    });
-		    self.transitionToRoute('dashboard.organization.workspace.jobs.job', newJob);
+		    newJob.save().then(function(result) {
+		    	self.transitionToRoute('dashboard.organization.workspace.jobs.job', result);
+		    }, function(error) {
+		    	console.log(error);
+		    });
 		}
 	}
 });

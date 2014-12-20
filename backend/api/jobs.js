@@ -14,9 +14,9 @@ function formatJob(req, datajob) {
     }
     var job = datajob.toJSON();
     job.links = {
-        self: req.context.links.job(job.id),
-        tasks: req.context.links.tasks(job.id),
-        history: req.context.links.jobHistory(job.id)
+        self: req.url + '/' + job.id,
+        tasks: req.url + '/' + job.id + '/tasks',
+        history: req.url + '/' + job.id + '/history'
     };
     common.formatApiOutput(job);
     return job;
@@ -54,13 +54,15 @@ api.route('/jobs')
     // Create a new job
     //
     .post(function (req, res, next) {
-        if (!req.workspace) {
-            return next(new apiErrors.InvalidParams('Workspace is not specified.'));
-        }
         if (!req.body || !req.body.job) {
             return next(new apiErrors.InvalidParams('job is not specified.'));
         }
-        req.body.job.workspaceId = req.workspace.id;
+        var workspaceId = req.workspace ? req.workspace.id : req.body.job.workspaceId;
+        if (!workspaceId) {
+            return next(new apiErrors.InvalidParams('Workspace is not specified.'));
+        }
+        req.context.url = req.url;
+        req.body.job.workspaceId = workspaceId;
         storage.Jobs.create(req.context, req.body.job)
             .then(function (job) {
                 res.status(201).json({ job: formatJob(req, job) });

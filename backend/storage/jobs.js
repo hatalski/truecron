@@ -60,8 +60,9 @@ var create = module.exports.create = Promise.method(function (context, attribute
             })
             .then(function (job) {
                 locals.job = job;
+                var link = context.url + '/' + job.id;
                 return Promise.join(
-                    history.logCreated(context.personId, context.links.job(job.id), job, tx),
+                    history.logCreated(context.personId, link, job, tx), // context.links.job(job.id)
                     cache.put(getJobIdCacheKey(job.id), job),
                     function () {
                         return locals.job;
