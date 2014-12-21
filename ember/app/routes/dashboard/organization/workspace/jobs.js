@@ -21,6 +21,7 @@ export default Ember.Route.extend(AuthenticatedRouteMixin, {
 	    this._super(controller, model);
     },
 	afterModel: function(jobs) {
+		Ember.Logger.log('afterModel jobs');
 		if (jobs.get('length') > 0) {
 			this.transitionTo('dashboard.organization.workspace.jobs.job', jobs.get('firstObject'));
 		} else {
