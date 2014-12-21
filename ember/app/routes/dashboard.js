@@ -3,23 +3,20 @@ import AuthenticatedRouteMixin from 'simple-auth/mixins/authenticated-route-mixi
 
 export default Ember.Route.extend(AuthenticatedRouteMixin, {
 	model: function() {
-		console.log('load dashboard route model');
-		var orgs = this.store.find('organization');
 		var user = this.store.find('user', 'current');
 		this.get('session').set('user', user);
-		console.dir(this.get('session.user'));
-		this.controllerFor('dashboard').set('organizations', orgs);
-		//var workspaces = this.store.find('workspace');
+		// var orgs = this.store.find('organization');
 		return user;
 	},
-	afterModel: function(user) {
+	afterModel: function() {
 		var self = this;
-		//this.controllerFor('dashboard').set('organizations', orgs);
-		var organizations = this.controllerFor('dashboard').get('organizations');
-		Ember.Logger.log('organizations length: %d', organizations.get('length'));
-		if (organizations.get('length') > 0) {
-			var firstOrg = organizations.get('firstObject');
-			self.transitionTo('dashboard.organization', firstOrg);
-		}
+		self.store.find('organization').then(function(organizations) {
+			self.controllerFor('dashboard').set('organizations', organizations);
+			Ember.Logger.log('organizations length: %d', organizations.get('length'));
+			if (organizations.get('length') > 0) {
+				var firstOrg = organizations.get('firstObject');
+				self.transitionTo('dashboard.organization', firstOrg);
+			}
+		});
 	}
 });
