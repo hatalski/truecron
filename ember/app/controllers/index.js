@@ -1,8 +1,10 @@
 import Ember from 'ember';
+import Notify from 'ember-notify';
 import LoginControllerMixin from 'simple-auth/mixins/login-controller-mixin';
 // curl -u "-2:Igd7en1_VCMP59pBpmEF" -H "Content-Type:application/x-www-form-urlencoded" --data "grant_type=http://google.com&username=system@truecron.com" http://dev.truecron.com:3000/oauth/token
 
 export default Ember.Controller.extend(LoginControllerMixin, {
+	//notify: Notify.Container.create(),
     //authenticator: 'simple-auth-authenticator:oauth2-password-grant',
 	authenticator: 'authenticator:truecron',
 	invitationEmail: '',
@@ -17,6 +19,13 @@ export default Ember.Controller.extend(LoginControllerMixin, {
 	signupPasswordConfirm: '',
 	isPasswordConfirmError: false,
     actions: {
+    	authenticate: function(options) {
+	  		console.log('authenticate called');
+	  		console.dir(options);
+	  		//if (options) {
+	  			this._super(options);
+	  		//}
+	  	},
 	  	invite: function() {
 	  		var inviteEmail = this.get('invitationEmail');
 	  		if (!validator.isEmail(inviteEmail)) {
@@ -30,6 +39,12 @@ export default Ember.Controller.extend(LoginControllerMixin, {
 	  			});
 	  			result.error(function(error) { console.log(error); });
 	  		}
+	  	},
+	  	sample: function() {
+	  		Notify.info({raw: '<div class="my-div">Hooray!</div>'});
+	  		Notify.error('Authentication failed. Please check your credntials and try again.', {
+	  			radius: true
+	  		});
 	  	},
 	  	signupModal: function() {
         	Ember.$('#signup_modal').modal({});
@@ -61,7 +76,7 @@ export default Ember.Controller.extend(LoginControllerMixin, {
 	  					crossDomain: true
 	  				});
 	  			result.success(function(response) {
-	  				//console.log(response);
+	  				console.log(response);
 					var options = { identification: email, password: password };
 					self.get('session').authenticate('authenticator:truecron', options);
 	  			});
