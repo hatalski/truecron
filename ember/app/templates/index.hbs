@@ -211,7 +211,7 @@
                       
                       <div {{bind-attr class=":form-group isEmailError:has-error"}}>
                         <label for='email'>Email:</label>
-                        {{input value=signupEmail valueBinding="signupEmail" type="email" placeholder="Email" required="required" class="form-control"}}
+                        {{input id="signupEmail" value=signupEmail valueBinding="signupEmail" type="email" placeholder="Email" required="required" class="form-control"}}
                       </div>
 
                       <div {{bind-attr class=":form-group isPasswordError:has-error"}}>

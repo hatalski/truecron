@@ -16,12 +16,14 @@ export default Ember.Route.extend(ApplicationRouteMixin, {
 				trigger: 'manual'
 			});
 			Ember.$('#loginPassword').popover('show');
+			setTimeout(function(){
+				Ember.$('#loginPassword').popover('hide');
+			}, 5000);
 			this._super();
 		},
 		sessionAuthenticationSucceeded: function() {
 			console.log('sessionAuthenticationSucceeded : ');
 			console.dir(this.get('session'));
-			Ember.$('#loginPassword').popover('hide');
 			this._super();
 		}
 	}
