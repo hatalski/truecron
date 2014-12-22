@@ -50,6 +50,8 @@ export default OAuth2.extend({
         });
       }, function(xhr, status, error) {
         console.log('authentication request is rejected');
+        console.log('status: ' + status);
+        console.log('error: ' + error);
         Ember.run(function() {
           reject(xhr.responseJSON || xhr.responseText);
         });
