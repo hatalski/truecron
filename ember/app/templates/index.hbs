@@ -40,14 +40,16 @@
             <div class="row">
                 <div class="col-xs-3">
                     <div class="interested_box">
-                        <div class="container">
-                            <h2>Interested?</h2>
-                            <p>Leave your e-mail address to get notified when we are live.</p>                            
-                            <div {{bind-attr class=":form-group isInvitationEmailError:has-error"}}>
-                                {{input class="form-control" value="email" valueBinding="invitationEmail" type="email" placeholder="Email" required="required"}}
-                            </div>
-                            <p><input type="button" {{action "invite"}} class="btn btn-signup" value="SIGN UP"></p>
-                        </div>
+                        <form {{action 'invite' on='submit'}}>
+                          <div class="container">
+                              <h2>Interested?</h2>
+                              <p>Leave your e-mail address to get notified when we are live.</p>
+                              <div {{bind-attr class=":form-group isInvitationEmailError:has-error"}}>
+                                  {{input class="form-control" value="email" valueBinding="invitationEmail" type="email" placeholder="Email" required="required"}}
+                              </div>
+                              <p><input type="submit" class="btn btn-signup" value="SIGN UP"></p>
+                          </div>
+                        </form>
                     </div>
                 </div>
                 <div class="col-xs-9">
@@ -201,8 +203,8 @@
             <div class="modal-body, interested_box">
                 <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
                 <form {{action "signup" on="submit"}}>
-                      <h2>Sign Up</h2>                      
-                      
+                      <h2>Sign Up</h2>
+
                       <div {{bind-attr class=":form-group isEmailError:has-error"}}>
                         <label for='email'>Email:</label>
                         {{input value=signupEmail valueBinding="signupEmail" type="email" placeholder="Email" required="required" class="form-control"}}
@@ -220,7 +222,7 @@
 
                       <p><input type="submit" class="btn btn-signup" value="SIGN UP"></p>
                     </form>
-                   
+
             </div>
             <!--<div class="modal-footer">-->
                 <!--<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>-->
