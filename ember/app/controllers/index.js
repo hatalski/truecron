@@ -45,6 +45,9 @@ export default Ember.Controller.extend(LoginControllerMixin, {
 	  		Notify.error('Authentication failed. Please check your credntials and try again.', {
 	  			radius: true
 	  		});
+
+			Ember.$('[data-toggle="popover"]').popover('show');
+
 	  	},
 	  	signupModal: function() {
         	Ember.$('#signup_modal').modal({});
