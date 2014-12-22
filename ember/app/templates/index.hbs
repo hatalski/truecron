@@ -10,8 +10,10 @@
                     <input type="button" {{action "signupModal"}} class="btn btn-signup" value="SIGN UP">
                 </form>
                 <form class="navbar-form navbar-right" {{action 'authenticate' on='submit'}} style="border-right: solid 1px #ff9719">
-                    {{input class="form-control" type="email" value=identification placeholder="Email" required="required"}}
-                    {{input class="form-control" type="password" value=password placeholder="Password" required="required"}}
+                    <div {{bind-attr class=":form-group isLoginError:has-error"}}>
+                        {{input id="loginEmail" class="form-control" type="email" value=identification placeholder="Email" required="required"}}
+                        {{input id="loginPassword" class="form-control" type="password" value=password placeholder="Password" required="required"}}
+                    </div>
                     <button type="submit" class="btn btn-signin">SIGN IN</button>
                 </form>
             </div>
@@ -19,7 +21,7 @@
     </div>
     <div class="container-fluid">
         <div class="jumbotron">
-            <h2 class="pitch">Enterprise Strength Scheduling for your Startup</h2>
+            <h2 class="pitch">Enterprise Strength Scheduling for your Growing Business</h2>
             <div class="row">
                 <div class="col-xs-3">
                     <div class="pitch-ext">
@@ -209,7 +211,7 @@
                       
                       <div {{bind-attr class=":form-group isEmailError:has-error"}}>
                         <label for='email'>Email:</label>
-                        {{input value=signupEmail valueBinding="signupEmail" type="email" placeholder="Email" required="required" class="form-control"}}
+                        {{input id="signupEmail" value=signupEmail valueBinding="signupEmail" type="email" placeholder="Email" required="required" class="form-control"}}
                       </div>
 
                       <div {{bind-attr class=":form-group isPasswordError:has-error"}}>
