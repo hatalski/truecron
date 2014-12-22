@@ -736,10 +736,10 @@ h2.pitch {
   padding-bottom: 15px;
 }
 
-/*.teaser .form-control {
-  border-color: #10accc;
+.teaser .interested_box .form-control {
+  border-color: #ff9818;
   border-radius: 0px;
-}*/
+}
 
 .teaser .btn {
   border-radius: 0px;
