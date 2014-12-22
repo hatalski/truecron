@@ -631,7 +631,7 @@ h2.pitch {
   font-size: 16px;
 }
 
-.teaser .interested_box .btn-signup {
+.teaser .interested_box .btn-signup{
   background-image: none;
   background-color: #fff;
   color: #ff9719;
@@ -793,4 +793,60 @@ h2.pitch {
   text-align: left;
   background-color: white;
   border: 0px;
+}
+
+.modal-content {
+  border-radius: 0;
+  background-color: #ff9818;
+}
+
+.modal-content .container-fluid{
+  padding: 10px 100px;
+}
+
+.signup label {
+  color: #fff;
+  text-align: center;
+  font-size: 10pt;
+}
+
+.signup h2 {
+  color: #fff;
+  text-align: center;
+  margin-top: 10px;
+}
+.signup_logo {
+  background: url("signup_logo.png") no-repeat center;
+  height: 50px;
+}
+
+.signup .btn-signup {
+  background-image: none;
+  background-color: #fff;
+  color: #ff9719;
+  text-shadow: none;
+}
+.signup .form-control {
+  border-color: #ff9818;
+  border-radius: 0px;
+  font-style: italic;
+}
+
+.signup .form-group {
+  margin-bottom: 10px;
+}
+
+.signup .close {
+  color: #fff;
+  opacity: 0.9;
+}
+
+.signup p {
+  color: #fff;
+  text-align: center;
+  font-size: 25px;
+}
+
+.modal-footer, .modal-header {
+  border: none;
 }
