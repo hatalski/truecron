@@ -27,6 +27,16 @@ module.exports = function(environment) {
     crossOriginWhitelist: ['http://dev.truecron.com:3000']
   }
 
+  ENV['torii'] = {
+    providers: {
+      'google-oauth2': {
+        apiKey: 'AIzaSyDeLid5HCkg5-dT3R4vUN0Bx59Jt4v04Ak',
+        scope: 'profile email',
+        redirectUri: 'http://localhost:4200'
+      }
+    }
+  };
+
   if (environment === 'development') {
     // ENV.APP.LOG_RESOLVER = true;
     ENV.APP.LOG_ACTIVE_GENERATION = true;

@@ -7,6 +7,7 @@
             </div>
             <div class="navbar-collapse collapse">
                 <form class="navbar-form navbar-right">
+                    <button {{action 'googleLogin'}}>Sign in with Google</button>
                     <input type="button" {{action "signupModal"}} class="btn btn-signup" value="SIGN UP">
                 </form>
                 <form class="navbar-form navbar-right" {{action 'authenticate' on='submit'}} style="border-right: solid 1px #ff9719">

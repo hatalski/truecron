@@ -3,6 +3,10 @@ import ApplicationRouteMixin from 'simple-auth/mixins/application-route-mixin';
 
 export default Ember.Route.extend(ApplicationRouteMixin, {
 	actions: {
+		googleLogin: function() {
+			this.get('session').authenticate('simple-auth-authenticator:torii', 'google-token');
+			return;
+		},
 		authenticateSession: function() {
 			console.log('authenticateSession called');
 			this._super();
