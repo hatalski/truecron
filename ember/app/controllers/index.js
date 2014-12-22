@@ -4,7 +4,6 @@ import LoginControllerMixin from 'simple-auth/mixins/login-controller-mixin';
 // curl -u "-2:Igd7en1_VCMP59pBpmEF" -H "Content-Type:application/x-www-form-urlencoded" --data "grant_type=http://google.com&username=system@truecron.com" http://dev.truecron.com:3000/oauth/token
 
 export default Ember.Controller.extend(LoginControllerMixin, {
-	//notify: Notify.Container.create(),
     //authenticator: 'simple-auth-authenticator:oauth2-password-grant',
 	authenticator: 'authenticator:truecron',
 	invitationEmail: '',
@@ -22,9 +21,7 @@ export default Ember.Controller.extend(LoginControllerMixin, {
     	authenticate: function(options) {
 	  		console.log('authenticate called');
 	  		console.dir(options);
-	  		//if (options) {
-	  			this._super(options);
-	  		//}
+	  		this._super(options);
 	  	},
 	  	invite: function() {
 	  		var inviteEmail = this.get('invitationEmail');
@@ -39,15 +36,6 @@ export default Ember.Controller.extend(LoginControllerMixin, {
 	  			});
 	  			result.error(function(error) { console.log(error); });
 	  		}
-	  	},
-	  	sample: function() {
-	  		Notify.info({raw: '<div class="my-div">Hooray!</div>'});
-	  		Notify.error('Authentication failed. Please check your credntials and try again.', {
-	  			radius: true
-	  		});
-
-			Ember.$('[data-toggle="popover"]').popover('show');
-
 	  	},
 	  	signupModal: function() {
         	Ember.$('#signup_modal').modal({});
@@ -70,14 +58,13 @@ export default Ember.Controller.extend(LoginControllerMixin, {
 				var requestData = { email: email, password: password };
 
 	  			// TODO: replace with superagent
-	  			var result = Ember.$.ajax('http://dev.truecron.com:3000/auth/signup', 
-	  				{
-	  					type: 'POST',
-	  					contentType: 'application/json',
-	  					dataType: 'json',
-	  					data: JSON.stringify(requestData),
-	  					crossDomain: true
-	  				});
+	  			var result = Ember.$.ajax('http://dev.truecron.com:3000/auth/signup', {
+						type: 'POST',
+						contentType: 'application/json',
+						dataType: 'json',
+						data: JSON.stringify(requestData),
+						crossDomain: true
+					});
 	  			result.success(function(response) {
 	  				console.log(response);
 					var options = { identification: email, password: password };

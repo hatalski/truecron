@@ -1,5 +1,4 @@
 import Ember from 'ember';
-import Notify from 'ember-notify';
 import ApplicationRouteMixin from 'simple-auth/mixins/application-route-mixin';
 
 export default Ember.Route.extend(ApplicationRouteMixin, {
@@ -10,16 +9,19 @@ export default Ember.Route.extend(ApplicationRouteMixin, {
 	    },
 		sessionAuthenticationFailed: function() {
 			console.log('sessionAuthenticationFailed called');
-			//console.dir(error);
-			this._super();
-			Notify.alert("You can control how long it's displayed.", {
-			  closeAfter: 10000 // or set to null to disable auto-hiding
+			Ember.$('#loginPassword').popover({
+				title: 'Authentication failed.',
+				content: 'Please check your credentials and try again.',
+				placement: 'bottom',
+				trigger: 'manual'
 			});
-			this.controllerFor('application').set('isLoginError', true);
+			Ember.$('#loginPassword').popover('show');
+			this._super();
 		},
 		sessionAuthenticationSucceeded: function() {
 			console.log('sessionAuthenticationSucceeded : ');
 			console.dir(this.get('session'));
+			Ember.$('#loginPassword').popover('hide');
 			this._super();
 		}
 	}

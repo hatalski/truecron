@@ -11,8 +11,8 @@
                 </form>
                 <form class="navbar-form navbar-right" {{action 'authenticate' on='submit'}} style="border-right: solid 1px #ff9719">
                     <div {{bind-attr class=":form-group isLoginError:has-error"}}>
-                        {{input class="form-control" type="email" value=identification placeholder="Email" required="required"}}
-                        {{input class="form-control" type="password" value=password placeholder="Password" required="required"}}
+                        {{input id="loginEmail" class="form-control" type="email" value=identification placeholder="Email" required="required"}}
+                        {{input id="loginPassword" class="form-control" type="password" value=password placeholder="Password" required="required"}}
                     </div>
                     <button type="submit" class="btn btn-signin">SIGN IN</button>
                 </form>
@@ -27,8 +27,6 @@
                     <div class="pitch-ext">
                         <p>Do your job.</p>
                         <p>We will do the scheduling.</p>
-                        <button type="button" class="btn btn-lg btn-danger" data-toggle="popover" title="Popover title" data-content="And here's some amazing content. It's very engaging. Right?">Click to toggle popover</button>
-                        <button {{action "sample"}}>Click me!</button>
                     </div>
                 </div>
                 <div class="col-xs-9">
