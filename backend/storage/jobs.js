@@ -60,8 +60,9 @@ var create = module.exports.create = Promise.method(function (context, attribute
             })
             .then(function (job) {
                 locals.job = job;
+                var link = context.url + '/' + job.id;
                 return Promise.join(
-                    history.logCreated(context.personId, context.links.job(job.id), job, tx),
+                    history.logCreated(context.personId, link, job, tx), // context.links.job(job.id)
                     cache.put(getJobIdCacheKey(job.id), job),
                     function () {
                         return locals.job;
@@ -134,8 +135,9 @@ var update = module.exports.update = Promise.method(function (context, id, attri
             })
             .then(function (job) {
                 locals.job = job;
+                var link = context.url;
                 return Promise.join(
-                    history.logUpdated(context.personId, context.links.job(job.id), job, locals.oldJob, tx),
+                    history.logUpdated(context.personId, link, job, locals.oldJob, tx),
                     cache.put(getJobIdCacheKey(job.id), job),
                     function () {
                         return locals.job;
@@ -160,10 +162,11 @@ var remove = module.exports.remove = Promise.method(function (context, id) {
                     return;
                 }
                 locals.job = job;
+                var link = context.url;
                 return job.destroy({transaction: tx})
                     .then(function () {
                         return Promise.join(
-                            history.logRemoved(context.personId, context.links.job(locals.job.id), locals.job, tx),
+                            history.logRemoved(context.personId, link, locals.job, tx),
                             cache.remove(getJobIdCacheKey(locals.job.id)));
                     });
             });

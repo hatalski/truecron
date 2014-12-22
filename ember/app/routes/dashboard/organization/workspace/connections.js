@@ -12,5 +12,13 @@ export default Ember.Route.extend(AuthenticatedRouteMixin, {
 		//controller.set('current', this.get('params'));
 	    //this.controllerFor('dashboard').set('test', this.get('params'));
 	    this._super(controller, model);
-    }
+    },
+	afterModel: function(connections) {
+		var self = this;
+		if (connections.get('length') > 0) {
+			self.transitionTo('dashboard.organization.workspace.connections.connection', connections.get('firstObject'));
+		} else {
+			self.transitionTo('dashboard.organization.workspace.connections');
+		}
+	}
 });

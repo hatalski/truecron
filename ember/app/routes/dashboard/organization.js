@@ -3,11 +3,8 @@ import AuthenticatedRouteMixin from 'simple-auth/mixins/authenticated-route-mixi
 
 export default Ember.Route.extend(AuthenticatedRouteMixin, {
 	model: function(params) {
-		console.log('load organization model with name : ' + params.organization_name);
-		return this.store.find('organization', { name: params.organization_name });
-	},
-	serialize: function(model) {
-		return { organization_name: model.get('name') };
+		console.log('load organization model with id : ' + params.organization_id);
+		return this.store.find('organization', params.organization_id);
 	},
 	setupController: function(controller, model) {
 		if (this.controllerFor('dashboard').get('choosenOrganization') == null) {
@@ -15,17 +12,11 @@ export default Ember.Route.extend(AuthenticatedRouteMixin, {
 		}
 	    this._super(controller, model);
     },
-	afterModel: function(organization) {
-		console.log('organization afterModel : ' + organization);
-		// var self = this;
-		// var length = organization.get('workspaces.length');
-		// var workspaces = organization.get('workspaces');
-		// console.dir('redirect to workspace if any exist : ' + length);
-		// if (length > 0) {
-		// 	var firstObject = workspaces.get('firstObject');
-		// 	self.store.find('workspace', firstObject.get('id')).then(function(workspace) {
-		// 		self.transitionTo('dashboard.organization.workspace.jobs', organization, workspace);
-		//     });
-		// }
-	}
+    afterModel: function(organization) {
+    	var self = this;
+    	organization.get('workspaces').then(function(workspaces) {
+    		Ember.Logger.log('workspaces length: %d', workspaces.get('length'));
+    		self.transitionTo('dashboard.organization.workspace.jobs', organization, workspaces.get('firstObject'));
+    	});
+    }
 });

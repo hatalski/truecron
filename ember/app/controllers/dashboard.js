@@ -1,6 +1,7 @@
 import Ember from 'ember';
 
 export default Ember.ObjectController.extend({
+	organizations: null,
 	choosenOrganization: null,
 	choosenWorkspace: null,
 	choosen: function() {

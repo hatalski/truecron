@@ -30,3 +30,6 @@ ember/node-modules
 
 # Users Environment Variables
 .lock-wscript
+
+# MAC
+.DS_Store

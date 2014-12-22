@@ -88,6 +88,7 @@
         {{active}}
         <button {{action "archive" this}} type="button" class="chok"><i class="fa fa-archive"></i> Archive</button>
         {{archived}}
+        <button {{action "remove" this}} type="button" class="chok"><i class="fa fa-remove"></i> Remove</button>
     </div>
     <div class="col-sm-3" align="right">
         <button {{action "addtask" this}} type="button" class="chok"><i class="fa fa-plus"></i> Add Task</button>
@@ -98,7 +99,7 @@
   <table class="table table-striped lastrowborder">
       <tbody>
       {{#each task in tasks}}
-        {{#link-to "dashboard.organization.workspace.tasks.task" task.job.id task tagName="tr" activeClass="active-task" class="clickable"}}
+        {{#link-to "dashboard.organization.workspace.tasks.task" id task tagName="tr" activeClass="active-task" class="clickable"}}
             <td class="icon-row"><i class="fa fa-arrows-alt"></i></td>
             <td>{{task.position}}.</td>
             <td>{{task.taskType.name}}</td>
@@ -118,8 +119,8 @@
     <h3>Revision history</h3>
     <div class="checkbox inline">
         <span>by:</span>
-        <label>{{input type="checkbox" id="filterRecentChangesByMe" value="me"}} me</label>
-        <label>{{input type="checkbox" id="filterRecentChangesByOthers" value="others"}} others</label>
+        <label>{{input type="checkbox" value="me"}} me</label>
+        <label>{{input type="checkbox" value="others"}} others</label>
     </div>
     <div class="table-responsive">
         <table class="table table-striped lastrowborder ">

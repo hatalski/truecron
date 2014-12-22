@@ -1,14 +1,16 @@
 import DS from 'ember-data';
 
 var Task = DS.Model.extend({
+  jobId:     DS.attr(),
+  taskTypeId:DS.attr(),
   name:      DS.attr('string'),
   active:    DS.attr('boolean', { defaultValue: true }),
   settings:  DS.attr('string'),
   position:  DS.attr('number'),
-  timeout:   DS.attr('number', { defaultValue: 1000 }),
+  timeout:   DS.attr('string', { defaultValue: '30 seconds' }),
   createdAt: DS.attr('date', { defaultValue: new Date() }),
   updatedAt: DS.attr('date', { defaultValue: new Date() }),
-  updatedBy: DS.belongsTo('person', { async: true }),
+  updatedBy: DS.belongsTo('user', { async: true }),
   job:       DS.belongsTo('job', { async: true }),
   taskType:  DS.belongsTo('task-type', { async: true })
 });

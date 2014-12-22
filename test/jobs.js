@@ -70,14 +70,14 @@ describe('JOBS API',
 //        });
 
         it('get all jobs', function (done) {
-                        superagent.get(prefix + '/organizations/' + testdata.AcmeCorp.id + '/workspaces/' + testdata.MyWorkspace.id + '/jobs')
-                            .set('Content-Type', 'application/json')
-                            .send()
-                            .authenticate(accessToken)
-                            .end(function (e, res) {
-                                expect(e).to.eql(null);
-                                expect(res.header['content-type']).to.eql('application/json; charset=utf-8');
-                                expect(res.status).to.eql(200);
+            superagent.get(prefix + '/organizations/' + testdata.AcmeCorp.id + '/workspaces/' + testdata.MyWorkspace.id + '/jobs')
+                .set('Content-Type', 'application/json')
+                .send()
+                .authenticate(accessToken)
+                .end(function (e, res) {
+                    expect(e).to.eql(null);
+                    expect(res.header['content-type']).to.eql('application/json; charset=utf-8');
+                    expect(res.status).to.eql(200);
                     done();
                 });
         });

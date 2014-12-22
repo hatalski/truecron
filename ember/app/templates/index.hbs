@@ -9,7 +9,7 @@
                 <form class="navbar-form navbar-right">
                     <input type="button" {{action "signupModal"}} class="btn btn-signup" value="SIGN UP">
                 </form>
-                <form class="navbar-form navbar-right" {{action 'authenticate' on='submit'}}>
+                <form class="navbar-form navbar-right" {{action 'authenticate' on='submit'}} style="border-right: solid 1px #ff9719">
                     {{input class="form-control" type="email" value=identification placeholder="Email" required="required"}}
                     {{input class="form-control" type="password" value=password placeholder="Password" required="required"}}
                     <button type="submit" class="btn btn-signin">SIGN IN</button>
@@ -40,14 +40,16 @@
             <div class="row">
                 <div class="col-xs-3">
                     <div class="interested_box">
-                        <div class="container">
-                            <h2>Interested?</h2>
-                            <p>Leave your e-mail address to get notified when we are live.</p>
-                            <div {{bind-attr class=":form-group isInvitationEmailError:has-error"}}>
-                                {{input class="form-control" value="email" valueBinding="invitationEmail" type="email" placeholder="Email" required="required"}}
+                        <form {{action "invite" on="submit"}}>
+                            <div class="container">
+                                <h2>Interested?</h2>
+                                <p>Leave your e-mail address to get notified when we are live.</p>                            
+                                <div {{bind-attr class=":form-group isInvitationEmailError:has-error"}}>
+                                    {{input class="form-control" value="email" valueBinding="invitationEmail" type="email" placeholder="Email" required="required"}}
+                                </div>
+                                <p><input type="submit" class="btn btn-signup" value="SIGN UP"></p>
                             </div>
-                            <p><input type="button" {{action "invite"}} class="btn btn-signup" value="SIGN UP"></p>
-                        </div>
+                        </form>
                     </div>
                 </div>
                 <div class="col-xs-9">
@@ -202,25 +204,25 @@
                 <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
                 <div class="container-fluid">
                     <div class="signup_logo"></div>
-                    <form {{action "globalsignup" on="submit"}}>
+                	<form {{action "signup" on="submit"}}>
                       <h2>Sign Up</h2>
-
+                      
                       <div {{bind-attr class=":form-group isEmailError:has-error"}}>
                         <label for='email'>Email:</label>
-                        {{input value=signupEmail valueBinding=signupEmail type="email" placeholder="Email" required="required" class="form-control"}}
+                        {{input value=signupEmail valueBinding="signupEmail" type="email" placeholder="Email" required="required" class="form-control"}}
                       </div>
 
                       <div {{bind-attr class=":form-group isPasswordError:has-error"}}>
                         <label for='password'>Create password:</label>
-                        {{input type="password" value=signupPassword valueBinding=signupPassword min=8 id='password' placeholder="Should be minimum of 8 characters in length" required="required" class="form-control"}}
+                        {{input title="Password must contain at least 8 characters, including UPPER/lowercase and numbers." type="password" value=signupPassword valueBinding="signupPassword" placeholder="Should be minimum of 8 characters in length" required="required" class="form-control" pattern="(?=^.{8,}$)(?=.*\d)(?![.\n])(?=.*[A-Z])(?=.*[a-z]).*$" }}
                       </div>
 
                       <div {{bind-attr class=":form-group isPasswordConfirmError:has-error"}}>
                         <label for='password-confirmation'>Confirm your password:</label>
-                        {{input type="password" value=signupPasswordConfirm valueBinding=signupPasswordConfirm id='password-confirmation' placeholder="Enter password again" class="form-control"}}
+                        {{input type="password" value=signupPasswordConfirm valueBinding="signupPasswordConfirm" placeholder="Enter password again" class="form-control"}}
                       </div>
 
-                      <p><input type="button" {{action "signup"}} class="btn btn-signup" value="SIGN UP"></p>
+                      <p><input type="submit" class="btn btn-signup" value="SIGN UP"></p>
                     </form>
                 </div>
             </div>

@@ -20,7 +20,7 @@ var api = express.Router();
 //
 // Authenticate all API requests.
 // Successful authentication will set req.clientId and req.personId fields.
-// Unsuccessful with fail with 401 error.
+// Unsuccessful will fail with 401 error.
 api.use(oauth.authenticate);
 
 //
@@ -28,6 +28,11 @@ api.use(oauth.authenticate);
 //
 api.use(require('./users'));
 api.use(require('./organizations'));
+api.use(require('./workspaces'));
+api.use(require('./jobs'));
+api.use(require('./tasks'));
+api.use(require('./connections'));
+api.use(require('./task-types'));
 api.use(require('./runs'));
 
 
