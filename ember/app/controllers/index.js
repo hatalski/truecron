@@ -11,7 +11,7 @@ export default Ember.Controller.extend(LoginControllerMixin, {
 		return this.get('isInvitationEmailError');
 	}.property('isInvitationEmailError'),
 	signupEmail: '',
-	isEmailError: false,	
+	isEmailError: false,
 	signupPassword: '',
 	isPasswordError: false,
 	signupPasswordConfirm: '',
@@ -21,11 +21,11 @@ export default Ember.Controller.extend(LoginControllerMixin, {
 	  		var inviteEmail = this.get('invitationEmail');
 	  		if (!validator.isEmail(inviteEmail)) {
 	  			console.log('email is empty');
-	  			this.set('isInvitationEmailError', true);	  			
+	  			this.set('isInvitationEmailError', true);
 	  		} else {
-	  			Ember.$('#invite_modal').modal({});
 	  			var result = Ember.$.ajax('http://dev.truecron.com:3000/beta/signup', { type: 'POST'});
 	  			result.success(function(data) {
+            Ember.$('#invite_modal').modal({});
 	  				console.log(data);
 	  			});
 	  			result.error(function(error) { console.log(error); });
@@ -52,7 +52,7 @@ export default Ember.Controller.extend(LoginControllerMixin, {
 				var requestData = { email: email, password: password };
 
 	  			// TODO: replace with superagent
-	  			var result = Ember.$.ajax('http://dev.truecron.com:3000/auth/signup', 
+	  			var result = Ember.$.ajax('http://dev.truecron.com:3000/auth/signup',
 	  				{
 	  					type: 'POST',
 	  					contentType: 'application/json',
@@ -67,6 +67,6 @@ export default Ember.Controller.extend(LoginControllerMixin, {
 	  			});
 	  			result.error(function(error) { console.log(error); });
 	  		}
-	  	}	  	
+	  	}
     }
 });
