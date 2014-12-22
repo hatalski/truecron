@@ -9,7 +9,7 @@
                 <form class="navbar-form navbar-right">
                     <input type="button" {{action "signupModal"}} class="btn btn-signup" value="SIGN UP">
                 </form>
-                <form class="navbar-form navbar-right" {{action 'authenticate' on='submit'}}>
+                <form class="navbar-form navbar-right" {{action 'authenticate' on='submit'}} style="border-right: solid 1px #ff9719">
                     {{input class="form-control" type="email" value=identification placeholder="Email" required="required"}}
                     {{input class="form-control" type="password" value=password placeholder="Password" required="required"}}
                     <button type="submit" class="btn btn-signin">SIGN IN</button>
@@ -40,14 +40,16 @@
             <div class="row">
                 <div class="col-xs-3">
                     <div class="interested_box">
-                        <div class="container">
-                            <h2>Interested?</h2>
-                            <p>Leave your e-mail address to get notified when we are live.</p>                            
-                            <div {{bind-attr class=":form-group isInvitationEmailError:has-error"}}>
-                                {{input class="form-control" value="email" valueBinding="invitationEmail" type="email" placeholder="Email" required="required"}}
+                        <form {{action "invite" on="submit"}}>
+                            <div class="container">
+                                <h2>Interested?</h2>
+                                <p>Leave your e-mail address to get notified when we are live.</p>                            
+                                <div {{bind-attr class=":form-group isInvitationEmailError:has-error"}}>
+                                    {{input class="form-control" value="email" valueBinding="invitationEmail" type="email" placeholder="Email" required="required"}}
+                                </div>
+                                <p><input type="submit" class="btn btn-signup" value="SIGN UP"></p>
                             </div>
-                            <p><input type="button" {{action "invite"}} class="btn btn-signup" value="SIGN UP"></p>
-                        </div>
+                        </form>
                     </div>
                 </div>
                 <div class="col-xs-9">
