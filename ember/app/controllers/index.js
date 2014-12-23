@@ -1,4 +1,5 @@
 import Ember from 'ember';
+import Notify from 'ember-notify';
 import LoginControllerMixin from 'simple-auth/mixins/login-controller-mixin';
 // curl -u "-2:Igd7en1_VCMP59pBpmEF" -H "Content-Type:application/x-www-form-urlencoded" --data "grant_type=http://google.com&username=system@truecron.com" http://dev.truecron.com:3000/oauth/token
 
@@ -17,6 +18,11 @@ export default Ember.Controller.extend(LoginControllerMixin, {
 	signupPasswordConfirm: '',
 	isPasswordConfirmError: false,
     actions: {
+    	authenticate: function(options) {
+	  		console.log('authenticate called');
+	  		console.dir(options);
+	  		this._super(options);
+	  	},
 	  	invite: function() {
 	  		var inviteEmail = this.get('invitationEmail');
 	  		if (!validator.isEmail(inviteEmail)) {
@@ -69,11 +75,23 @@ export default Ember.Controller.extend(LoginControllerMixin, {
 	  					crossDomain: true
 	  				});
 	  			result.success(function(response) {
-	  				//console.log(response);
+	  				console.log(response);
 					var options = { identification: email, password: password };
 					self.get('session').authenticate('authenticator:truecron', options);
 	  			});
-	  			result.error(function(error) { console.log(error); });
+	  			result.error(function(error) {
+	  				console.log(error);
+	  				Ember.$('#signupEmail').popover({
+						title: 'Email address is taken.',
+						content: 'The email address is already taken. Please choose another one.',
+						placement: 'bottom',
+						trigger: 'manual'
+					});
+					Ember.$('#signupEmail').popover('show');
+					setTimeout(function(){
+						Ember.$('#signupEmail').popover('hide');
+					}, 5000);
+	  			});
 	  		}
 	  	}
     }
