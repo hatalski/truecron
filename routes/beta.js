@@ -11,7 +11,8 @@ router.post('/signup', function(req, res) {
     var email = req.body.email;
     var validEmail = validator.isEmail(email);
 
-    console.log(email);
+    console.log('email:'+email);
+    console.log('TEST-'+req.body.test);
 
     if (req.body.test) {
         if (validEmail){

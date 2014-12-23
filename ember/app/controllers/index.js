@@ -11,7 +11,7 @@ export default Ember.Controller.extend(LoginControllerMixin, {
 		return this.get('isInvitationEmailError');
 	}.property('isInvitationEmailError'),
 	signupEmail: '',
-	isEmailError: false,	
+	isEmailError: false,
 	signupPassword: '',
 	isPasswordError: false,
 	signupPasswordConfirm: '',
@@ -23,11 +23,19 @@ export default Ember.Controller.extend(LoginControllerMixin, {
 	  	invite: function() {
 	  		var inviteEmail = this.get('invitationEmail');
 	  		if (!validator.isEmail(inviteEmail)) {
-	  			this.set('isInvitationEmailError', true);	  			
+	  			this.set('isInvitationEmailError', true);
 	  		} else {
-	  			Ember.$('#invite_modal').modal({});
-	  			var result = Ember.$.ajax('http://dev.truecron.com:3000/beta/signup', { type: 'POST'});
+          		var requestData = { email: inviteEmail };
+	  			var result = Ember.$.ajax('http://dev.truecron.com:3000/beta/signup',
+            	{
+                	type: 'POST',
+                	contentType: 'application/json',
+                	dataType: 'json',
+                	data: JSON.stringify(requestData),
+                	crossDomain: true
+            	});
 	  			result.success(function(data) {
+            		Ember.$('#invite_modal').modal({});
 	  				console.log(data);
 	  			});
 	  			result.error(function(error) { console.log(error); });
@@ -55,12 +63,12 @@ export default Ember.Controller.extend(LoginControllerMixin, {
 
 	  			// TODO: replace with superagent
 	  			var result = Ember.$.ajax('http://dev.truecron.com:3000/auth/signup', {
-					type: 'POST',
-					contentType: 'application/json',
-					dataType: 'json',
-					data: JSON.stringify(requestData),
-					crossDomain: true
-				});
+	  					type: 'POST',
+	  					contentType: 'application/json',
+	  					dataType: 'json',
+	  					data: JSON.stringify(requestData),
+	  					crossDomain: true
+	  				});
 	  			result.success(function(response) {
 	  				console.log(response);
 					var options = { identification: email, password: password };
@@ -80,6 +88,6 @@ export default Ember.Controller.extend(LoginControllerMixin, {
 					}, 5000);
 	  			});
 	  		}
-	  	}	  	
+	  	}
     }
 });
