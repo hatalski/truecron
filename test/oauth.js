@@ -5,7 +5,7 @@ var expect     = require('expect.js');
 var testdata   = require('./testdata');
 var api        = require('./api');
 
-describe.only('OAUTH API',
+describe('OAUTH API',
     function() {
         before(function (done) {
             testdata.initdb(function (err) {
