@@ -17,6 +17,7 @@ var GoogleToken = Oauth2Bearer.extend({
                             'http://localhost:4200/oauth2callback'),
 
   open: function(){
+    console.log('open');
       var name        = this.get('name'),
           url         = this.buildUrl(),
           redirectUri = this.get('redirectUri'),
