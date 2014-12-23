@@ -8,7 +8,7 @@ var Promise    = require('bluebird'),
     log        = require('../lib/logger.js'),
     testdata   = require('./testdata') ;
 
-var prefix     = config.get('API_HOST') || 'http://localhost:3000/api/v1';
+var prefix = module.exports.prefix = config.get('API_HOST') || 'http://localhost:3000/api/v1';
 
 function dumpError(res) {
     if (res && res.body && res.body.error) {
@@ -17,10 +17,10 @@ function dumpError(res) {
     return res;
 }
 
-var oauthTokenUrl = url.resolve(config.get('API_HOST'), '/oauth/token');
+var oauthTokenUrl = module.exports.oauthTokenUrl = url.resolve(config.get('API_HOST'), '/oauth/token');
 var defaultUserEmail = config.get('TEST_DEFAILT_USER_EMAIL') || testdata.system.email; // authenticate as SYSTEM user if not specified
-var clientId = config.get('TEST_CLIENT_ID') || -2;
-var clientSecret = config.get('TEST_CLIENT_SECRET') || 'Igd7en1_VCMP59pBpmEF';
+var clientId = module.exports.clientId = config.get('TEST_CLIENT_ID') || -2;
+var clientSecret = module.exports.clientSecret = config.get('TEST_CLIENT_SECRET') || 'Igd7en1_VCMP59pBpmEF';
 
 /**
  * Gets OAuth access token for the specified user (email). It uses our own "Google" grant type for people already
