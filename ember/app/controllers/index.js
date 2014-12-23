@@ -23,7 +23,15 @@ export default Ember.Controller.extend(LoginControllerMixin, {
 	  			console.log('email is empty');
 	  			this.set('isInvitationEmailError', true);
 	  		} else {
-	  			var result = Ember.$.ajax('http://dev.truecron.com:3000/beta/signup', { type: 'POST'});
+          var requestData = { email: inviteEmail };
+	  			var result = Ember.$.ajax('http://dev.truecron.com:3000/beta/signup',
+            {
+              type: 'POST',
+              contentType: 'application/json',
+              dataType: 'json',
+              data: JSON.stringify(requestData),
+              crossDomain: true
+            });
 	  			result.success(function(data) {
             Ember.$('#invite_modal').modal({});
 	  				console.log(data);
