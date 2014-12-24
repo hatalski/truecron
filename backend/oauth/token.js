@@ -4,9 +4,10 @@ var jwt = require('jsonwebtoken'),
     context = require('../context');
 
 var settings = {
-    secret:           config.get('OAUTH_SECRET'),
-    expiresInMinutes: config.get('OAUTH_TOKEN_EXPIRATION_MINUTES') || 60,
-    scope:            config.get('OAUTH_TOKEN_SCOPE') || 'all'
+    secret:                  config.get('OAUTH_SECRET'),
+    expiresInMinutes:        config.get('OAUTH_TOKEN_EXPIRATION_MINUTES') || 60, // an hour
+    refreshExpiresInMinutes: config.get('OAUTH_REFRESH_TOKEN_EXPIRATION_MINUTES') || 7 * 24 * 60, // a week
+    scope:                   config.get('OAUTH_TOKEN_SCOPE') || 'all'
 };
 
 /**
@@ -18,12 +19,14 @@ module.exports.issue = function(context, req, res, next) {
         cid: context.clientId
     };
     var token = jwt.sign(data, settings.secret, { expiresInMinutes: settings.expiresInMinutes });
+    var refreshToken = jwt.sign(data, settings.secret, { expiresInMinutes: settings.refreshExpiresInMinutes });
     res.set({
         'Cache-Control': 'no-store',
         'Pragma': 'no-cache'
     });
     res.json({
             access_token: token,
+            refresh_token: refreshToken,
             token_type: 'bearer',
             expires_in: settings.expiresInMinutes * 60,
             scope: settings.scope,
@@ -54,17 +57,31 @@ module.exports.verify = function(req, res, next) {
     }
 
     if (token) {
-        jwt.verify(token, settings.secret, function (err, decoded) {
+        module.exports.verifyAndDecodeToken(token, function (err, context) {
             if (err) {
                return next(err);
             }
-            if (!decoded.uid || !decoded.cid) {
-                next(new errors.NotAuthenticated('Invalid token.'));
-            }
-            req.context = new context.Context(decoded.uid, decoded.cid);
+            req.context = context;
             return next();
         });
     } else {
         next(new errors.NotAuthenticated());
     }
+};
+
+/**
+ * Decodes and validates a token string. Returns a decoded Context.
+ * @param token Token string to decode and validate.
+ * @param callback A function (err, context) that gets a decoded context or an error if a token is invalid or expired.
+ */
+module.exports.verifyAndDecodeToken = function(token, callback) {
+    jwt.verify(token, settings.secret, function (err, decoded) {
+        if (err) {
+            return callback(err);
+        }
+        if (!decoded.uid || !decoded.cid) {
+            return callback(new errors.NotAuthenticated('Invalid token.'));
+        }
+        return callback(null, new context.Context(decoded.uid, decoded.cid));
+    });
 };
