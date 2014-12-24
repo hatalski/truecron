@@ -21,23 +21,22 @@ export default Ember.Controller.extend(LoginControllerMixin, {
 	  		this._super(options);
 	  	},
 	  	invite: function() {
-	  		var inviteEmail = this.get('invitationEmail');
-	  		if (!validator.isEmail(inviteEmail)) {
-	  			this.set('isInvitationEmailError', true);
-	  		} else {
-          		var requestData = { email: inviteEmail };
-	  			var result = Ember.$.ajax('http://dev.truecron.com:3000/beta/signup',
-            	{
-                	type: 'POST',
-                	contentType: 'application/json',
-                	dataType: 'json',
-                	data: JSON.stringify(requestData),
-                	crossDomain: true
-            	});
-	  			result.success(function(data) {
-            		Ember.$('#invite_modal').modal({});
-	  				console.log(data);
-	  			});
+			var inviteEmail = this.get('invitationEmail');
+			if (!validator.isEmail(inviteEmail)) {
+				this.set('isInvitationEmailError', true);
+			} else {
+				var requestData = { email: inviteEmail };
+				var result = Ember.$.ajax('http://dev.truecron.com:3000/beta/signup', {
+					type: 'POST',
+					contentType: 'application/json',
+					dataType: 'json',
+					data: JSON.stringify(requestData),
+					crossDomain: true
+				});
+				result.success(function(data) {
+					Ember.$('#invite_modal').modal({});
+					console.log(data);
+				});
 	  			result.error(function(error) { console.log(error); });
 	  		}
 	  	},
