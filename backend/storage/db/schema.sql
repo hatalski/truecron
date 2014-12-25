@@ -374,6 +374,46 @@ if not HasSchemaVersion(9) then
 end if;
 end $$;
 
+do $$
+begin
+if not HasSchemaVersion(10) then
+
+    create table tc.Connection
+    (
+        id              bigserial,
+        organizationId  bigint not null,
+        name            varchar(255) not null,
+        settings        json not null,
+        createdAt       timestamp(0) with time zone not null default 'now',
+        updatedAt       timestamp(0) with time zone not null default 'now',
+        updatedByPersonId bigint not null,
+        constraint      Connection_Pk primary key(id),
+        constraint      Connection_Organization_Fk foreign key (organizationId) references tc.Organization (id),
+        constraint      Connection_UpdatedBy_Person_Fk foreign key (updatedByPersonId) references tc.Person (id)
+    );
+
+    drop index if exists History_ResourceUrl_Index ;
+    delete from tc.History;
+    alter table tc.History drop column resourceUrl;
+    alter table tc.History rename column personId to updatedByPersonId;
+    alter table tc.History rename constraint History_Person_Fk to History_UpdatedByPerson_Fk;
+    alter table tc.History add column organizationId bigint;
+    alter table tc.History add column workspaceId bigint;
+    alter table tc.History add column jobId bigint;
+    alter table tc.History add column taskId bigint;
+    alter table tc.History add column connectionId bigint;
+    alter table tc.History add column personId bigint;
+    alter table tc.History add constraint History_Organization_Fk foreign key (organizationId) references tc.Organization (id);
+    alter table tc.History add constraint History_Workspace_Fk foreign key (workspaceId) references tc.Workspace (id);
+    alter table tc.History add constraint History_Job_Fk foreign key (jobId) references tc.Job (id);
+    alter table tc.History add constraint History_Task_Fk foreign key (taskId) references tc.Task (id);
+    alter table tc.History add constraint History_Connection_Fk foreign key (connectionId) references tc.Connection (id);
+    alter table tc.History add constraint History_Person_Fk foreign key (personId) references tc.Person (id);
+
+    perform CommitSchemaVersion(10, 'Added Connection. Changed History: an object is identified by a set of IDs instead of a single URL.');
+end if;
+end $$;
+
 -- Use the snippet as a template:
 --
 -- do $$
