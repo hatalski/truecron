@@ -115,8 +115,6 @@ api.route('/tasks/:taskId')
         if (!req.body || !req.body.task) {
             return next(new apiErrors.InvalidParams('Task is not specified.'));
         }
-        delete req.body.task.settings;
-        delete req.body.task.timeout;
         storage.Tasks.update(req.context, req.task.id, req.body.task)
             .then(function (task) {
                 res.json({task: formatTask(task)});
