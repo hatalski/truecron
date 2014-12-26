@@ -145,7 +145,6 @@ describe.only('REAL SIGN UP',
                 .send({
                     email:         'vitali.hatalski@perklab.com',
                     name:          'Vitali Hatalski',
-                    avatarUrl:     'https://lh3.googleusercontent.com/-XdUIqdMkCWA/AAAAAAAAAAI/AAAAAAAAAAA/4252rscbv5M/photo.jpg?sz=50',
                     extensionData: {
                         provider: 'google',
                         token: 'ya29.5wCicj5L7eK6j6c8sF_3_3yMjiTogCMrinF7kbyQAwqHh3VDq8H6QMQkeLivbOJPahuz1ga3Y4ygpg',

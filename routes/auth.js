@@ -49,7 +49,7 @@ router.post('/signup', function(req, res, next) {
                 // 1.1 or if it is a google sign in / up then update google profile
                 if (req.body.extensionData && req.body.extensionData.provider === 'google') {
                     var attributes = { extensionData: req.body.extensionData };
-                    storage.Person.update(req.context, attributes)
+                    storage.Person.update(req.context, result.id, attributes)
                         .then(function(person) {
                             res.status(200).json(person);
                         });
