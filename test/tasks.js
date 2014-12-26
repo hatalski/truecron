@@ -48,7 +48,7 @@ describe('TASK API',
                         "timeout": null,
                         "size": null
                     },
-                    "timeout": "10"
+                    "timeout": 10
                 }
                 })
                 .end(function (e, res) {
@@ -59,6 +59,8 @@ describe('TASK API',
                     id_task_to_delete = res.body.task.id;
                     expect(res.body.task.id).to.be.a('string');
                     expect(res.body.task.name).to.eql('TaskTestname');
+                    expect(res.body.task.settings.count).to.eql(5);
+                    expect(res.body.task.timeout).to.eql(10);
                     expect(validator.isDate(res.body.task.createdAt)).to.be.ok();
                     expect(validator.isDate(res.body.task.updatedAt)).to.be.ok();
                     done();
@@ -97,9 +99,14 @@ describe('TASK API',
         it('update task', function (done) {
             superagent.put(JOB_URL + '/tasks/' + id_task_to_delete)
                 .set('Content-Type', 'application/json')
-                .send({ "task":  {
+                .send({ "task": {
 
-                    "position": 10
+                    "position": 10,
+                    "settings": {
+                        "target": "updated company",
+                        "count": "15"
+                    },
+                    "timeout": 101
                 }
                 })
                 .authenticate(accessToken)
@@ -107,6 +114,8 @@ describe('TASK API',
                     expect(e).to.eql(null);
                     expect(res.header['content-type']).to.eql('application/json; charset=utf-8');
                     //expect(validator.isDate(res.body.task.startsAt)).to.be.ok();
+                    expect(res.body.task.settings.count).to.eql(15);
+                    expect(res.body.task.timeout).to.eql(101);
                     expect(res.status).to.eql(200);
                     done();
                 });
