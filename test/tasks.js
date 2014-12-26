@@ -16,7 +16,7 @@ describe('TASK API',
     function() {
         var accessToken = null;
         var JOB_URL = prefix + '/organizations/' + testdata.AcmeCorp.id + '/workspaces/' + testdata.MyWorkspace.id
-                        + '/jobs/' + testdata.MyWorkspaceTestJob.id;
+            + '/jobs/' + testdata.MyWorkspaceTestJob.id;
 
         before(function (done) {
             testdata.initdb(function (err) {
@@ -100,11 +100,15 @@ describe('TASK API',
             superagent.put(JOB_URL + '/tasks/' + id_task_to_delete)
                 .set('Content-Type', 'application/json')
                 .send({ "task":  {
-
-                    "position": 10,
+                    "name": "UpdatedTaskTestname",
+                    "active": 0,
+                    "position": 21,
+                    "position": 110,
                     "settings": {
-                        "setting1": "value1",
-                        "setting2": "value2"
+                        "target": "Updated mycompany.com",
+                        "connection": null,
+                        "count": 15,
+                        "size": null
                     },
                     "timeout": 101
                 }
@@ -113,9 +117,11 @@ describe('TASK API',
                 .end(function (e, res) {
                     expect(e).to.eql(null);
                     expect(res.header['content-type']).to.eql('application/json; charset=utf-8');
-                    expect(res.body.task.position).to.eql(10);
-                    expect(res.body.task.settings.setting1).to.eql('value1');
-                    expect(res.body.task.settings.setting2).to.eql('value2');
+                    expect(res.body.task.name).to.eql('UpdatedTaskTestname');
+                    expect(res.body.task.active).to.eql(0);
+                    expect(res.body.task.position).to.eql(110);
+                    expect(res.body.task.settings.target).to.eql('Updated mycompany.com');
+                    expect(res.body.task.settings.count).to.eql(15);
                     expect(res.body.task.timeout).to.eql(101);
                     expect(res.status).to.eql(200);
                     done();
