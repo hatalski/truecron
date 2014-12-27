@@ -6,7 +6,14 @@ import {
 
 moduleForModel('task', 'Task', {
   // Specify the other units that are required for this test.
-  needs: ['model:job', 'model:person', 'model:organization', 'model:workspace', 'model:job-tag', 'model:task-type']
+  needs: [
+    'model:job', 
+    'model:user', 
+    'model:organization', 
+    'model:workspace', 
+    'model:job-tag', 
+    'model:job-history', 
+    'model:task-type']
 });
 
 test('it exists', function() {

@@ -5,7 +5,7 @@ import {
 
 moduleForModel('job-history', 'JobHistory', {
   // Specify the other units that are required for this test.
-  needs: []
+  needs: ['model:user', 'model:job', 'model:job-tag', 'model:task', 'model:workspace']
 });
 
 test('it exists', function() {
