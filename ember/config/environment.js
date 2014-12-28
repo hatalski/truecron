@@ -32,7 +32,8 @@ module.exports = function(environment) {
       'google-token': {
         apiKey: '182911798819-t360tlk839gij3m46pgo4noticrqi4s3.apps.googleusercontent.com',
         scope: 'openid profile email',
-        redirectUri: 'http://localhost:4200'
+        redirectUri: 'http://localhost:4200',
+        serverSignUpEndpoint: 'http://dev.truecron.com:3000/auth/signup'
       }
     }
   };

@@ -14,14 +14,19 @@ var GoogleToken = Oauth2Bearer.extend({
   scope: configurable('scope', 'email'),
   state: configurable('state', 'STATE'),
   redirectUri: configurable('redirectUri',
-                            'http://localhost:4200/oauth2callback'),
+                            'http://localhost:4200'),
+  serverSignUpEndpoint: configurable('serverSignUpEndpoint', 
+                                     'http://dev.truecron.com:3000/auth/signup'),
 
-  open: function(){
-    console.log('open');
+  open: function(options) {
+      // var self = this;
+      console.log('open');
+      console.dir(options);
       var name        = this.get('name'),
           url         = this.buildUrl(),
           redirectUri = this.get('redirectUri'),
-          responseParams = this.get('responseParams');
+          responseParams = this.get('responseParams'),
+          signupEndpoint = this.get('serverSignUpEndpoint');
 
       var client_id = this.get('client_id');
 
@@ -42,12 +47,46 @@ var GoogleToken = Oauth2Bearer.extend({
         return Ember.$.get("https://www.googleapis.com/plus/v1/people/me", {
             access_token: authData.token
           }).then(function(user) {
-            return {
-              userName: user.displayName,
-              userEmail: user.emails[0].value,
-              provider: name,
-              redirectUri: redirectUri
-            };
+            if (user) {
+              return {
+                  userName: user.displayName,
+                  userEmail: user.emails[0].value,
+                  //profile: user,
+                  provider: name,
+                  redirectUri: redirectUri
+                };
+              // var email = user.emails[0].value;
+              // user.provider = 'google';
+              // var requestData = {
+              //   email: email, 
+              //   name: user.displayName, 
+              //   extensionData: user
+              // };
+
+              // // TODO: replace with superagent
+              // var result = Ember.$.ajax(signupEndpoint, {
+              //   type: 'POST',
+              //   contentType: 'application/json',
+              //   dataType: 'json',
+              //   data: JSON.stringify(requestData),
+              //   crossDomain: true
+              // });
+              // result.success(function(response) {
+              //   console.log('sign up success');
+              //   console.log(response);
+              //   return {
+              //     userName: user.displayName,
+              //     userEmail: user.emails[0].value,
+              //     profile: user,
+              //     provider: name,
+              //     redirectUri: redirectUri
+              //   };
+              // });
+              // result.error(function(error) {
+              //   console.log('sign up error');
+              //   console.log(error);
+              // });
+            }
         });
       });
     }
