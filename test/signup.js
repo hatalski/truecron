@@ -53,7 +53,7 @@ describe('BETA SIGN UP',
     }
 );
 
-describe.only('REAL SIGN UP',
+describe('REAL SIGN UP',
     function() {
         it('sign up should fail if email is invalid', function(done) {
             superagent.post(prefix + '/auth/signup')
