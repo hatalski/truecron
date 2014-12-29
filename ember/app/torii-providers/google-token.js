@@ -20,8 +20,8 @@ var GoogleToken = Oauth2Bearer.extend({
 
   open: function(options) {
       // var self = this;
-      console.log('open');
-      console.dir(options);
+      Ember.Logger.log('google-token provider open method entered with options: ');
+      Ember.Logger.log(options);
       var name        = this.get('name'),
           url         = this.buildUrl(),
           redirectUri = this.get('redirectUri'),
@@ -29,8 +29,12 @@ var GoogleToken = Oauth2Bearer.extend({
           signupEndpoint = this.get('serverSignUpEndpoint');
 
       var client_id = this.get('client_id');
+      Ember.Logger.log('client_id is: ' + client_id);
 
-      return this.get('popup').open(url, responseParams).then(function(authData){
+      return this.get('popup').open(url, responseParams).then(function(authData) {
+        Ember.Logger.log('on popup auth data triggered with authData: ');
+        Ember.Logger.log(authData);
+
         var missingResponseParams = [];
 
         responseParams.forEach(function(param){
@@ -47,45 +51,40 @@ var GoogleToken = Oauth2Bearer.extend({
         return Ember.$.get("https://www.googleapis.com/plus/v1/people/me", {
             access_token: authData.token
           }).then(function(user) {
+            Ember.Logger.log('retrieved user profile from Google:');
+            Ember.Logger.log(user);
             if (user) {
-              return {
+              var email = user.emails[0].value;
+              user.provider = 'google';
+              var requestData = {
+                email: email, 
+                name: user.displayName, 
+                extensionData: user
+              };
+
+              var result = Ember.$.ajax(signupEndpoint, {
+                type: 'POST',
+                contentType: 'application/json',
+                dataType: 'json',
+                data: JSON.stringify(requestData),
+                crossDomain: true
+              });
+              result.success(function(response) {
+                Ember.Logger.log('sign up success');
+                Ember.Logger.log(response);
+                return {
                   userName: user.displayName,
                   userEmail: user.emails[0].value,
-                  //profile: user,
+                  profile: user,
                   provider: name,
                   redirectUri: redirectUri
                 };
-              // var email = user.emails[0].value;
-              // user.provider = 'google';
-              // var requestData = {
-              //   email: email, 
-              //   name: user.displayName, 
-              //   extensionData: user
-              // };
-
-              // // TODO: replace with superagent
-              // var result = Ember.$.ajax(signupEndpoint, {
-              //   type: 'POST',
-              //   contentType: 'application/json',
-              //   dataType: 'json',
-              //   data: JSON.stringify(requestData),
-              //   crossDomain: true
-              // });
-              // result.success(function(response) {
-              //   console.log('sign up success');
-              //   console.log(response);
-              //   return {
-              //     userName: user.displayName,
-              //     userEmail: user.emails[0].value,
-              //     profile: user,
-              //     provider: name,
-              //     redirectUri: redirectUri
-              //   };
-              // });
-              // result.error(function(error) {
-              //   console.log('sign up error');
-              //   console.log(error);
-              // });
+              });
+              result.error(function(error) {
+                Ember.Logger.log('sign up error');
+                Ember.Logger.log(error);
+                return { error: error };
+              });
             }
         });
       });

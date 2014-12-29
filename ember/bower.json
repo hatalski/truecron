@@ -18,6 +18,7 @@
     "ember-simple-auth": "0.7.2",
     "rrule": "2.1.0",
     "moment": "2.8.4",
-    "validator-js": "3.26.0"
+    "validator-js": "3.26.0",
+    "torii": "~0.2.2"
   }
 }

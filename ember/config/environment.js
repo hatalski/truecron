@@ -28,6 +28,7 @@ module.exports = function(environment) {
   }
 
   ENV['torii'] = {
+    sessionServiceName: 'session',
     providers: {
       'google-token': {
         apiKey: '182911798819-t360tlk839gij3m46pgo4noticrqi4s3.apps.googleusercontent.com',

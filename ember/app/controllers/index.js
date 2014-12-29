@@ -17,16 +17,6 @@ export default Ember.Controller.extend(LoginControllerMixin, {
 	signupPasswordConfirm: '',
 	isPasswordConfirmError: false,
     actions: {
-		googleLogin: function() {
-			var self = this;
-			this.get('session').authenticate('simple-auth-authenticator:torii', 'google-token')
-			.then(function(data) {
-				Ember.Logger.log(data);
-				Ember.Logger.log('SUCCESS ' + self.get('session.token'));
-				//var options = { identification: email, password: '007' };
-                //self.get('session').authenticate('authenticator:truecron', options);
-			});
-		},
     	authenticate: function(options) {
 	  		this._super(options);
 	  	},
