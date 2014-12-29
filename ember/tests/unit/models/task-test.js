@@ -12,8 +12,7 @@ moduleForModel('task', 'Task', {
     'model:organization', 
     'model:workspace', 
     'model:job-tag', 
-    'model:job-history', 
-    'model:task-type']
+    'model:job-history']
 });
 
 test('it exists', function() {
@@ -56,12 +55,5 @@ test('belongs to job relationship', function() {
     var Task = this.store().modelFor('task');
     var relationship = Ember.get(Task, 'relationshipsByName').get('job');
     equal(relationship.key, 'job');
-    equal(relationship.kind, 'belongsTo');
-});
-
-test('belongs to task type relationship', function() {
-    var Task = this.store().modelFor('task');
-    var relationship = Ember.get(Task, 'relationshipsByName').get('taskType');
-    equal(relationship.key, 'taskType');
     equal(relationship.kind, 'belongsTo');
 });
