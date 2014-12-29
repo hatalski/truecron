@@ -14,8 +14,7 @@ moduleForModel('job', 'Job', {
     'model:organization', 
     'model:job-tag', 
     'model:job-history', 
-    'model:connection', 
-    'model:task-type']
+    'model:connection']
 });
 
 test('it exists', function() {

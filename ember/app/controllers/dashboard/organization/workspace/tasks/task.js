@@ -13,24 +13,20 @@ export default Ember.ObjectController.extend({
 	}.property('currentTaskType'),
 	actions: {
         changeType: function(taskType) {
-            this.set('currentTaskType', taskType.get('name'));
-            this.model.set('taskType', taskType);
+            this.set('currentTaskType', taskType.name);
+            this.model.set('taskTypeId', taskType.id);
             this.model.save().then(function(result) {
-            	console.log('task type has been changed');
-            	console.dir(result);
+            	Ember.Logger.info('task type has been changed: ', result);
             }, function(error) {
-            	console.log('task type change error');
-            	console.dir(error);
+            	Ember.Logger.error('task type change error: ', error);
             });
         },
         rename: function(task) {
-	      console.log('rename to : ' + task.get('name'));
+	      Ember.Logger.debug('rename to : ', task.get('name'));
 	      task.save().then(function(result) {
-            	console.log('task renamed to: ');
-            	console.dir(result);
+            	Ember.Logger.info('task renamed to: ', result);
             }, function(error) {
-            	console.log('task rename error');
-            	console.dir(error);
+            	Ember.Logger.error('task rename error: ', error);
             });
 	    },
 	    delete: function(task) {
@@ -38,23 +34,19 @@ export default Ember.ObjectController.extend({
 	      console.dir('task to remove : ' + job.get('name'));
 	      task.deleteRecord();
 	      task.save().then(function(result) {
-            	console.log('task removed: ');
-            	console.dir(result);
+                Ember.Logger.info('task removed: ', result);
 	      		this.transitionToRoute('dashboard.organization.workspace.tasks', job.get('workspace'), job);
             }, function(error) {
-            	console.log('task remove error');
-            	console.dir(error);
+                Ember.Logger.error('task remove error: ', error);
             });
 	    },
 	    suspend: function(task) {
 	      var active = task.get('active');
 	      task.set('active', !active);
 	      task.save().then(function(result) {
-            	console.log('task suspend result: ');
-            	console.dir(result);
+                Ember.Logger.info('task suspend result: ', result);
             }, function(error) {
-            	console.log('task suspend error');
-            	console.dir(error);
+                Ember.Logger.error('task suspend error: ', error);
             });
 	    }
     }
