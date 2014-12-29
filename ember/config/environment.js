@@ -27,6 +27,18 @@ module.exports = function(environment) {
     crossOriginWhitelist: ['http://dev.truecron.com:3000']
   }
 
+  ENV['torii'] = {
+    sessionServiceName: 'session',
+    providers: {
+      'google-token': {
+        apiKey: '182911798819-t360tlk839gij3m46pgo4noticrqi4s3.apps.googleusercontent.com',
+        scope: 'openid profile email',
+        redirectUri: 'http://localhost:4200',
+        serverSignUpEndpoint: 'http://dev.truecron.com:3000/auth/signup'
+      }
+    }
+  };
+
   if (environment === 'development') {
     // ENV.APP.LOG_RESOLVER = true;
     ENV.APP.LOG_ACTIVE_GENERATION = true;
@@ -42,7 +54,7 @@ module.exports = function(environment) {
       'default-src': "'none'",
       'script-src': "'self' 'unsafe-inline' 'unsafe-eval' use.typekit.net connect.facebook.net maps.googleapis.com maps.gstatic.com",
       'font-src': "'self' data: use.typekit.net",
-      'connect-src': "'self' dev.truecron.com:3000",
+      'connect-src': "'self' dev.truecron.com:3000 www.googleapis.com",
       'img-src': "'self' www.facebook.com p.typekit.net data:",
       'style-src': "'self' 'unsafe-inline' use.typekit.net",
       'frame-src': "s-static.ak.facebook.com static.ak.facebook.com www.facebook.com"
@@ -52,7 +64,7 @@ module.exports = function(environment) {
   if (environment === 'test') {
     // Testem prefers this...
     ENV.baseURL = '/';
-    ENV.locationType = 'auto';
+    ENV.locationType = 'none';
 
     // keep test console output quieter
     ENV.APP.LOG_ACTIVE_GENERATION = false;

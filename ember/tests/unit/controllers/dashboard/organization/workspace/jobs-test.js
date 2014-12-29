@@ -3,9 +3,9 @@ import {
   test
 } from 'ember-qunit';
 
-moduleFor('controller:jobs', 'JobsController', {
+moduleFor('controller:dashboard/organization/workspace/jobs', 'DashboardOrganizationWorkspaceJobsController', {
   // Specify the other units that are required for this test.
-  // needs: ['controller:foo']
+  needs: [ 'controller:dashboard', 'controller:dashboard/organization', 'controller:dashboard/organization/workspace' ]
 });
 
 // Replace this with your real tests.
