@@ -25,12 +25,15 @@ var GoogleToken = Oauth2Bearer.extend({
       var name        = this.get('name'),
           url         = this.buildUrl(),
           redirectUri = this.get('redirectUri'),
-          responseParams = this.get('responseParams'),
-          signupEndpoint = this.get('serverSignUpEndpoint');
+          responseParams = this.get('responseParams');//,
+          //signupEndpoint = this.get('serverSignUpEndpoint');
 
       var client_id = this.get('client_id');
       Ember.Logger.log('client_id is: ' + client_id);
 
+      Ember.Logger.log('adapter:');
+      Ember.Logger.log(this.get('adapter'));
+      
       return this.get('popup').open(url, responseParams).then(function(authData) {
         Ember.Logger.log('on popup auth data triggered with authData: ');
         Ember.Logger.log(authData);
@@ -53,39 +56,13 @@ var GoogleToken = Oauth2Bearer.extend({
           }).then(function(user) {
             Ember.Logger.log('retrieved user profile from Google:');
             Ember.Logger.log(user);
-            if (user) {
-              var email = user.emails[0].value;
-              user.provider = 'google';
-              var requestData = {
-                email: email, 
-                name: user.displayName, 
-                extensionData: user
-              };
-
-              var result = Ember.$.ajax(signupEndpoint, {
-                type: 'POST',
-                contentType: 'application/json',
-                dataType: 'json',
-                data: JSON.stringify(requestData),
-                crossDomain: true
-              });
-              result.success(function(response) {
-                Ember.Logger.log('sign up success');
-                Ember.Logger.log(response);
-                return {
-                  userName: user.displayName,
-                  userEmail: user.emails[0].value,
-                  profile: user,
-                  provider: name,
-                  redirectUri: redirectUri
-                };
-              });
-              result.error(function(error) {
-                Ember.Logger.log('sign up error');
-                Ember.Logger.log(error);
-                return { error: error };
-              });
-            }
+            return {
+              userName: user.displayName,
+              userEmail: user.emails[0].value,
+              provider: name,
+              profile: user,
+              redirectUri: redirectUri
+            };
         });
       });
     }

@@ -6,13 +6,15 @@ export default Ember.Route.extend(UnauthenticatedRouteMixin, {
 		googleLogin: function() {
 			Ember.Logger.log('google login initiated');
 			var self = this;
-			this.get('session').authenticate('simple-auth-authenticator:torii', 'google-token')
-			.then(function(data) {
-				Ember.Logger.log(data);
-				Ember.Logger.log('SUCCESS ' + self.get('session.token'));
-				//var options = { identification: email, password: '007' };
-				//self.get('session').authenticate('authenticator:truecron', options);
-			});
+			self.get('session').authenticate('simple-auth-authenticator:torii', 'google-token')
+			.then(function() {
+				var session = self.get('session');
+				if (session.get('authenticator') === 'authenticator:truecron') {
+					self.transitionTo('dashboard');
+				}
+				Ember.Logger.log('SUCCESS ' + session);
+			}).catch(Ember.Logger.error);
+			return;
 		}
 	}
 });

@@ -61,13 +61,14 @@ export default Ember.Controller.extend(LoginControllerMixin, {
 				var requestData = { email: email, password: password };
 
 	  			// TODO: replace with superagent
-	  			var result = Ember.$.ajax('http://dev.truecron.com:3000/auth/signup', {
-	  					type: 'POST',
-	  					contentType: 'application/json',
-	  					dataType: 'json',
-	  					data: JSON.stringify(requestData),
-	  					crossDomain: true
-	  				});
+	  			var result = Ember.$.ajax({
+	  				url: 'http://dev.truecron.com:3000/auth/signup',
+  					type: 'POST',
+  					contentType: 'application/json',
+  					dataType: 'json',
+  					data: JSON.stringify(requestData),
+  					crossDomain: true
+  				});
 	  			result.success(function(response) {
 	  				console.log(response);
 					var options = { identification: email, password: password };
