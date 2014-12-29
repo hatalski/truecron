@@ -26,7 +26,7 @@ describe('JOBS API',
             });
         });
         var id_to_delete;
-        it('create a new job', function (done) {
+        it.only('create a new job', function (done) {
             superagent.post(prefix + '/organizations/' + testdata.AcmeCorp.id + '/workspaces/' + testdata.MyWorkspace.id + '/jobs')
                 .set('Content-Type', 'application/json')
                 .send({ 'job': {
