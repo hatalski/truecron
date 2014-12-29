@@ -46,7 +46,7 @@ describe('JOBS API',
                     expect(res.body.job.name).to.eql('TestName1');
                     expect(res.body.job.active).to.eql(1);
                     expect(res.body.job.archived).to.eql(0);
-                    //expect(res.body.job.startsAt).to.eql('2014-08-21T10:00:11Z');
+                    expect(res.body.job.startsAt).to.eql('2014-08-21T10:00:11.000Z');
                     expect(res.body.job.rrule).to.eql('FREQ=DAILY;INTERVAL=1;BYDAY=MO;BYHOUR=12;BYMINUTE=0;BYSECOND=0');
                     expect(validator.isDate(res.body.job.createdAt)).to.be.ok();
                     expect(validator.isDate(res.body.job.updatedAt)).to.be.ok();
