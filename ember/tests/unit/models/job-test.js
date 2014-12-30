@@ -7,7 +7,15 @@ import {
 
 moduleForModel('job', 'Job', {
   // Specify the other units that are required for this test.
-  needs: ['model:task', 'model:person', 'model:workspace', 'model:organization', 'model:job-tag', 'model:task-type']
+  needs: [
+    'model:task', 
+    'model:user', 
+    'model:workspace', 
+    'model:organization', 
+    'model:job-tag', 
+    'model:job-history', 
+    'model:connection', 
+    'model:task-type']
 });
 
 test('it exists', function() {
@@ -24,7 +32,6 @@ test('store create and find job by id', function() {
         store.createRecord('job', { id: 1, name: 'Job A', startsAt: new Date("2014-09-20T00:00:00.000Z"), rrule: 'FREQ=WEEKLY;COUNT=30;WKST=MO', active: true, archived: false, createdAt: new Date('2014-09-19T00:00:00.000Z'), updatedAt: new Date('2014-09-20T00:00:00.000Z') });
         record = store.find('job', 1);
     });
-    console.log(record.get('name'));
     equal(record.get('name'), 'Job A');
 });
 
@@ -42,7 +49,7 @@ test('has many job tags relationship', function() {
     equal(relationship.kind, 'hasMany');
 });
 
-test('updated by person relationship', function() {
+test('belongs to user relationship', function() {
     var Job = this.store().modelFor('job');
     var relationship = Ember.get(Job, 'relationshipsByName').get('updatedBy');
     equal(relationship.key, 'updatedBy');

@@ -33,7 +33,8 @@ export default OAuth2.extend({
     console.log('we are inside authenticator authenticate method');
     var _this = this;
     return new Ember.RSVP.Promise(function(resolve, reject) {
-      var data = { grant_type: 'password', username: options.identification, password: options.password };
+      var grant_type = options.grant_type || 'password';
+      var data = { grant_type: grant_type, username: options.identification, password: options.password };
       if (!Ember.isEmpty(options.scope)) {
         var scopesString = Ember.makeArray(options.scope).join(' ');
         Ember.merge(data, { scope: scopesString });
@@ -50,6 +51,8 @@ export default OAuth2.extend({
         });
       }, function(xhr, status, error) {
         console.log('authentication request is rejected');
+        console.log('status: ' + status);
+        console.log('error: ' + error);
         Ember.run(function() {
           reject(xhr.responseJSON || xhr.responseText);
         });
