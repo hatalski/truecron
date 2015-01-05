@@ -61,31 +61,32 @@ var create = module.exports.create = Promise.method(function (context, attribute
     return using (models.transaction(), function (tx) {
         return workspaceAccess.ensureHasAccess(context, attributes.workspaceId, workspaceAccess.WorkspaceRoles.Editor, tx)
             .then(function() {
+                console.log('1 function');
                 return models.Job.create(locals.attrs, { transaction: tx });
             })
             .then(function (job) {
+                console.log('2 function');
                 locals.job = job;
-
-                var tags = {
-                    jobId: job.id,
-                    tag: local.attrs.tags[1]
-                }
-                models.JobTag.create(tags);
-                //tags.forEach(AddTags);
-                //-----------code to test DB
-
-
-
                 var link = context.url + '/' + job.id;
                 return Promise.join(
                     history.logCreated(context.personId, link, job, tx), // context.links.job(job.id)
                     cache.put(getJobIdCacheKey(job.id), job),
                     function () {
+                        console.log('3 function');
                         return locals.job;
                     });
-            });
+            })
+            .then(function() {
+                console.log('4 my function');
+                var tags = {
+                    jobId: 41,
+                    tag: "a"
+                }
+                return models.JobTag.create(tags);
+            })
         })
         .catch(function (err) {
+            console.log('catch function');
             logger.error('Failed to create a job, %s.', err.toString());
             throw err;
         });
