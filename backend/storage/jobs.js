@@ -53,6 +53,11 @@ var create = module.exports.create = Promise.method(function (context, attribute
         throw new errors.InvalidParams('Workspace ID is not specified.');
     }
     var locals = { attrs: attributes };
+
+    //function AddTags(value, index, ar) {
+    //    models.JobTag.create(job.id, value);
+    //}
+
     return using (models.transaction(), function (tx) {
         return workspaceAccess.ensureHasAccess(context, attributes.workspaceId, workspaceAccess.WorkspaceRoles.Editor, tx)
             .then(function() {
@@ -60,6 +65,17 @@ var create = module.exports.create = Promise.method(function (context, attribute
             })
             .then(function (job) {
                 locals.job = job;
+
+                var tags = {
+                    jobId: job.id,
+                    tag: local.attrs.tags[1]
+                }
+                models.JobTag.create(tags);
+                //tags.forEach(AddTags);
+                //-----------code to test DB
+
+
+
                 var link = context.url + '/' + job.id;
                 return Promise.join(
                     history.logCreated(context.personId, link, job, tx), // context.links.job(job.id)
