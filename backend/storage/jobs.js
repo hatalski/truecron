@@ -54,10 +54,6 @@ var create = module.exports.create = Promise.method(function (context, attribute
     }
     var locals = { attrs: attributes };
 
-    //function AddTags(value, index, ar) {
-    //    models.JobTag.create(job.id, value);
-    //}
-
     return using (models.transaction(), function (tx) {
         return workspaceAccess.ensureHasAccess(context, attributes.workspaceId, workspaceAccess.WorkspaceRoles.Editor, tx)
             .then(function() {
@@ -68,10 +64,7 @@ var create = module.exports.create = Promise.method(function (context, attribute
                 var link = context.url + '/' + job.id;
                 return Promise.join(
                     history.logCreated(context.personId, link, job, tx), // context.links.job(job.id)
-                    cache.put(getJobIdCacheKey(job.id), job),
-                    function () {
-                        return locals.job;
-                    });
+                    cache.put(getJobIdCacheKey(job.id), job));
             })
         })
         .catch(function (err) {
@@ -88,9 +81,9 @@ var create = module.exports.create = Promise.method(function (context, attribute
                     jobId: locals.job.dataValues.id,
                     tag: tag.toString()
                 }
-                return models.JobTag.create(tags);
+                models.JobTag.create(tags);
                 });
-
+            return locals.job;
         })
         .catch(function (err) {
             logger.error('Failed to create a JobTag, %s.', err.toString());
