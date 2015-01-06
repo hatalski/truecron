@@ -5,8 +5,9 @@
 module.exports = function(sequelize, DataTypes) {
 
     var JobTag = sequelize.define('JobTag', {
-        id: { type: DataTypes.BIGINT, primaryKey: true, allowNull: false, autoIncrement: true },
-        jobId: { type: DataTypes.BIGINT}
+        id:     { type: DataTypes.BIGINT, primaryKey: true, allowNull: false, autoIncrement: true },
+        jobId:  { type: DataTypes.BIGINT},
+        tag:    { type: DataTypes.STRING}
     }, {
         schema: 'tc',
         tableName: 'jobtag',

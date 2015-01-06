@@ -76,20 +76,22 @@ var create = module.exports.create = Promise.method(function (context, attribute
                         return locals.job;
                     });
             })
-            .then(function() {
-                console.log('4 my function');
-                var tags = {
-                    jobId: 41,
-                    tag: "a"
-                }
-                return models.JobTag.create(tags);
-            })
         })
         .catch(function (err) {
             console.log('catch function');
             logger.error('Failed to create a job, %s.', err.toString());
             throw err;
-        });
+        })
+        .then(function() {
+            console.log('4 my function');
+            var tags = {
+                jobId: locals.job.dataValues.id,
+                tag: 'fhgfh'
+            }
+            return models.JobTag.create(tags);
+        })
+
+        ;
 });
 
 /**
