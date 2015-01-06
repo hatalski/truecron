@@ -61,37 +61,42 @@ var create = module.exports.create = Promise.method(function (context, attribute
     return using (models.transaction(), function (tx) {
         return workspaceAccess.ensureHasAccess(context, attributes.workspaceId, workspaceAccess.WorkspaceRoles.Editor, tx)
             .then(function() {
-                console.log('1 function');
                 return models.Job.create(locals.attrs, { transaction: tx });
             })
             .then(function (job) {
-                console.log('2 function');
                 locals.job = job;
                 var link = context.url + '/' + job.id;
                 return Promise.join(
                     history.logCreated(context.personId, link, job, tx), // context.links.job(job.id)
                     cache.put(getJobIdCacheKey(job.id), job),
                     function () {
-                        console.log('3 function');
                         return locals.job;
                     });
             })
         })
         .catch(function (err) {
-            console.log('catch function');
             logger.error('Failed to create a job, %s.', err.toString());
             throw err;
         })
-        .then(function() {
-            console.log('4 my function');
-            var tags = {
-                jobId: locals.job.dataValues.id,
-                tag: 'fhgfh'
-            }
-            return models.JobTag.create(tags);
-        })
 
-        ;
+        //-----This code breaks tests.--->
+        .then(function() {
+            var tags;
+            var arrayData = locals.attrs.tags;
+            arrayData.forEach(function(tag) {
+                tags = {
+                    jobId: locals.job.dataValues.id,
+                    tag: tag.toString()
+                }
+                return models.JobTag.create(tags);
+                });
+
+        })
+        .catch(function (err) {
+            logger.error('Failed to create a JobTag, %s.', err.toString());
+            throw err;
+        });
+    //<---------
 });
 
 /**
