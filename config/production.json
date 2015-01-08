@@ -1,9 +1,9 @@
 {
-    "BASE_URL": "http://www.truecron.com",
+    "BASE_URL": "https://www.truecron.com",
     "SESSION_SECRET": "production-truecron-Hhe34Jls0J04",
     "SECURE_PORT": 443,
-    "PRIVATE_KEY_PATH": "../shared/config/ssl.key",
-    "CERTIFICATE_PATH": "../shared/config/ssl.crt",
+    "PRIVATE_KEY_PATH": "/srv/www/stweb/shared/config/ssl.key",
+    "CERTIFICATE_PATH": "/srv/www/stweb/shared/config/ssl.crt",
     "POSTGRE_HOST": "prdb.truecron.com",
     "POSTGRE_PORT": 5432,
     "POSTGRE_DATABASE": "truecron",
@@ -14,6 +14,6 @@
     "GOOGLE_SSO_CLIENT_SECRET": "1knEKUzLSqEot7pElvyxA84i",
     "GOOGLE_SSO_CALLBACK_URL": "https://www.truecron.com/auth/google/callback",
     "GOOGLE_ANALYTICS_TRACKING_ID": "",
-    "API_HOST": "http://www.truecron.com/api/v1",
+    "API_HOST": "https://www.truecron.com/api/v1",
     "LOGENTRIES_TOKEN": "54025f13-1a10-4bc8-b00a-5ba6271be949"
 }
