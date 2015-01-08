@@ -52,6 +52,9 @@ var create = module.exports.create = Promise.method(function (context, attribute
     if (!attributes.workspaceId) {
         throw new errors.InvalidParams('Workspace ID is not specified.');
     }
+    if (!attributes.tags) {
+        throw new errors.InvalidParams('Tags is not specified.');
+    }
     var locals = { attrs: attributes };
 
     return using (models.transaction(), function (tx) {
@@ -71,8 +74,6 @@ var create = module.exports.create = Promise.method(function (context, attribute
             logger.error('Failed to create a job, %s.', err.toString());
             throw err;
         })
-
-        //-----This code breaks tests.--->
         .then(function() {
             var tags;
             var arrayData = locals.attrs.tags;
@@ -89,7 +90,6 @@ var create = module.exports.create = Promise.method(function (context, attribute
             logger.error('Failed to create a JobTag, %s.', err.toString());
             throw err;
         });
-    //<---------
 });
 
 /**
@@ -192,4 +192,5 @@ var remove = module.exports.remove = Promise.method(function (context, id) {
             logger.error('Failed to remove the job %d, %s.', id, err.toString());
             throw err;
         });
+
 });
