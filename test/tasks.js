@@ -102,7 +102,6 @@ describe('TASK API',
                 .send({ "task":  {
                     "name": "UpdatedTaskTestname",
                     "active": 0,
-                    "position": 21,
                     "position": 110,
                     "settings": {
                         "target": "Updated mycompany.com",
@@ -128,17 +127,17 @@ describe('TASK API',
                 });
         });
         //id_task_to_delete=2;
-        it('delete task', function (done) {
-            superagent.del(JOB_URL + '/tasks/' + id_task_to_delete)
-                .send()
-                .authenticate(accessToken)
-                .end(function (e, res) {
-                    expect(e).to.eql(null);
-                    expect(res.body.error).to.eql(undefined);
-                    expect(res.status).to.eql(204);
-                    done();
-                });
-        });
+        //it('delete task', function (done) {
+        //    superagent.del(JOB_URL + '/tasks/' + id_task_to_delete)
+        //        .send()
+        //        .authenticate(accessToken)
+        //        .end(function (e, res) {
+        //            expect(e).to.eql(null);
+        //            expect(res.body.error).to.eql(undefined);
+        //            expect(res.status).to.eql(204);
+        //            done();
+        //        });
+        //});
 
     }
 );
