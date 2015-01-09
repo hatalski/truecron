@@ -8,7 +8,7 @@ var Promise    = require('bluebird'),
     log        = require('../lib/logger.js'),
     testdata   = require('./testdata') ;
 
-var prefix = module.exports.prefix = config.get('API_HOST') || 'http://localhost:3000/api/v1';
+var prefix = module.exports.prefix = config.get('API_HOST') || 'https://localhost:3000/api/v1';
 
 function dumpError(res) {
     if (res && res.body && res.body.error) {
