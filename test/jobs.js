@@ -106,7 +106,7 @@ describe('JOBS API',
                     done();
                 });
         });
-
+        //id_to_delete = 154;
         it('update job', function (done) {
             superagent.put(prefix + '/organizations/' + testdata.AcmeCorp.id + '/workspaces/' + testdata.MyWorkspace.id + '/jobs/' + id_to_delete)
                 .set('Content-Type', 'application/json')
@@ -125,7 +125,6 @@ describe('JOBS API',
                     done();
                 });
         });
-
         it('delete job', function (done) {
             superagent.del(prefix + '/organizations/' + testdata.AcmeCorp.id + '/workspaces/' + testdata.MyWorkspace.id + '/jobs/' + id_to_delete)
                 .send()
