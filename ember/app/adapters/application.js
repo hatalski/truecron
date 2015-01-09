@@ -1,7 +1,7 @@
 import DS from 'ember-data';
 
 export default DS.RESTAdapter.extend({
-    host: 'http://dev.truecron.com:3000',
+    host: 'https://dev.truecron.com',
     namespace: 'api/v1',
     findHasMany: function(store, record, url) { //relationship
         var host = this.get('host');

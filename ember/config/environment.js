@@ -24,7 +24,7 @@ module.exports = function(environment) {
     routeAfterAuthentication: 'dashboard',
     routeIfAlreadyAuthenticated: 'dashboard',
     authorizer: 'simple-auth-authorizer:oauth2-bearer',
-    crossOriginWhitelist: ['http://dev.truecron.com:3000']
+    crossOriginWhitelist: ['https://dev.truecron.com']
   }
 
   ENV['torii'] = {
@@ -34,7 +34,7 @@ module.exports = function(environment) {
         apiKey: '182911798819-t360tlk839gij3m46pgo4noticrqi4s3.apps.googleusercontent.com',
         scope: 'openid profile email',
         redirectUri: 'http://localhost:4200',
-        serverSignUpEndpoint: 'http://dev.truecron.com:3000/auth/signup'
+        serverSignUpEndpoint: 'https://dev.truecron.com/auth/signup'
       }
     }
   };
@@ -47,14 +47,14 @@ module.exports = function(environment) {
     ENV.APP.LOG_VIEW_LOOKUPS = true;
     
     ENV['simple-auth-oauth2'] = {
-      serverTokenEndpoint: 'http://dev.truecron.com:3000/oauth/token'
+      serverTokenEndpoint: 'https://dev.truecron.com/oauth/token'
     }
 
     ENV.contentSecurityPolicy = {
       'default-src': "'none'",
       'script-src': "'self' 'unsafe-inline' 'unsafe-eval' use.typekit.net connect.facebook.net maps.googleapis.com maps.gstatic.com",
       'font-src': "'self' data: use.typekit.net",
-      'connect-src': "'self' dev.truecron.com:3000 www.googleapis.com",
+      'connect-src': "'self' dev.truecron.com www.googleapis.com",
       'img-src': "'self' www.facebook.com p.typekit.net data:",
       'style-src': "'self' 'unsafe-inline' use.typekit.net",
       'frame-src': "s-static.ak.facebook.com static.ak.facebook.com www.facebook.com"
