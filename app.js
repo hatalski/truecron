@@ -41,6 +41,17 @@ require('handlebars-helper-rawinclude').register(hbs.handlebars, {}, {assemble: 
 app.engine('handlebars', hbs.engine);
 app.set('view engine', 'handlebars');
 
+// redirect to https if accessing over http
+app.use(function(req, res, next) {
+    if((config.https) && (!req.secure) && (req.protocol !== 'https')) {
+        res.redirect('https://' + req.get('Host') + req.url);
+    } else if((!req.secure) && (req.get('X-Forwarded-Proto') !== 'https')) {
+        res.redirect('https://' + req.get('Host') + req.url);
+    } else {
+        next();
+    }
+}
+
 app.use(logger.requestLogger);
 app.use(favicon(__dirname + '/public/favicon.ico'));
 app.use(bodyParser.json({ type: 'application/json' }));
