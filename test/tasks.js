@@ -102,7 +102,6 @@ describe('TASK API',
                 .send({ "task":  {
                     "name": "UpdatedTaskTestname",
                     "active": 0,
-                    "position": 21,
                     "position": 110,
                     "settings": {
                         "target": "Updated mycompany.com",

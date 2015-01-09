@@ -26,13 +26,13 @@ export default DS.RESTSerializer.extend({
 			//delete hash.jobId;
 
 			return hash;
-		},
-		taskTypeId: function(hash) {
-			//console.log(' hash : ' + hash);
-			hash.taskType = hash.taskTypeId;
-			//delete hash.taskTypeId;
+		}//,
+		// taskTypeId: function(hash) {
+		// 	//console.log(' hash : ' + hash);
+		// 	hash.taskType = hash.taskTypeId;
+		// 	//delete hash.taskTypeId;
 
-			return hash;
-		}
+		// 	return hash;
+		// }
 	}
 });
