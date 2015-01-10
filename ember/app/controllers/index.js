@@ -27,7 +27,7 @@ export default Ember.Controller.extend(LoginControllerMixin, {
 				this.set('isInvitationEmailError', true);
 			} else {
 				var requestData = { email: inviteEmail };
-				var result = Ember.$.ajax('https://dev.truecron.com/beta/signup', {
+				var result = Ember.$.ajax(ENV.APP.BETA_SIGNUP_HOST, {
 					type: 'POST',
 					contentType: 'application/json',
 					dataType: 'json',
@@ -63,7 +63,7 @@ export default Ember.Controller.extend(LoginControllerMixin, {
 
 	  			// TODO: replace with superagent
 	  			var result = Ember.$.ajax({
-	  				url: 'https://dev.truecron.com/auth/signup',
+	  				url: ENV.APP.SIGNUP_HOST,
   					type: 'POST',
   					contentType: 'application/json',
   					dataType: 'json',
