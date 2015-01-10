@@ -1,4 +1,5 @@
 import Ember from 'ember';
+import ENV from 'true-cron/config/environment';
 import LoginControllerMixin from 'simple-auth/mixins/login-controller-mixin';
 // curl -u "-2:Igd7en1_VCMP59pBpmEF" -H "Content-Type:application/x-www-form-urlencoded" --data "grant_type=http://google.com&username=system@truecron.com" http://dev.truecron.com:3000/oauth/token
 
@@ -26,7 +27,7 @@ export default Ember.Controller.extend(LoginControllerMixin, {
 				this.set('isInvitationEmailError', true);
 			} else {
 				var requestData = { email: inviteEmail };
-				var result = Ember.$.ajax('http://dev.truecron.com:3000/beta/signup', {
+				var result = Ember.$.ajax('https://dev.truecron.com/beta/signup', {
 					type: 'POST',
 					contentType: 'application/json',
 					dataType: 'json',
@@ -62,7 +63,7 @@ export default Ember.Controller.extend(LoginControllerMixin, {
 
 	  			// TODO: replace with superagent
 	  			var result = Ember.$.ajax({
-	  				url: 'http://dev.truecron.com:3000/auth/signup',
+	  				url: 'https://dev.truecron.com/auth/signup',
   					type: 'POST',
   					contentType: 'application/json',
   					dataType: 'json',

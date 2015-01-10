@@ -3,8 +3,7 @@ import {configurable} from 'torii/configuration';
 import ApplicationRouteMixin from 'simple-auth/mixins/application-route-mixin';
 
 export default Ember.Route.extend(ApplicationRouteMixin, {
-	serverSignUpEndpoint: configurable('serverSignUpEndpoint', 
-                                     'http://dev.truecron.com:3000/auth/signup'),
+	serverSignUpEndpoint: configurable('serverSignUpEndpoint'),
 	actions: {
 		authenticateSession: function() {
 			Ember.Logger.log('authenticateSession called');

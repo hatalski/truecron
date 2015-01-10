@@ -1,7 +1,8 @@
 import DS from 'ember-data';
+import ENV from 'true-cron/config/environment';
 
 export default DS.RESTAdapter.extend({
-    host: 'https://dev.truecron.com',
+    host: ENV.APP.SERVER_HOST,
     namespace: 'api/v1',
     findHasMany: function(store, record, url) { //relationship
         var host = this.get('host');
