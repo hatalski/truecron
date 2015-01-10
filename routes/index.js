@@ -3,6 +3,10 @@ var path = require('path');
 var router = express.Router();
 
 router.get('/', function (req, res) {
+    res.redirect('/app');
+});
+
+router.use('/app', function (req, res) {
     //res.render('index');
     res.sendfile(path.join(__dirname, '../ember/dist/index.html'));
 });

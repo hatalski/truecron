@@ -4,8 +4,8 @@ module.exports = function(environment) {
   var ENV = {
     modulePrefix: 'true-cron',
     environment: environment,
-    baseURL: '/',
-    locationType: 'hash',
+    baseURL: '/app',
+    locationType: 'auto',
     EmberENV: {
       FEATURES: {
         // Here you can enable experimental features on an ember canary build
@@ -16,7 +16,7 @@ module.exports = function(environment) {
     APP: {
       // Here you can pass flags/options to your application instance
       // when it is created
-      HOST: 'http://localhost:4200',
+      HOST: 'http://localhost:4200/app/',
       SERVER_HOST: 'https://dev.truecron.com',
       API_HOST: 'https://dev.truecron.com/api/v1',
       SIGNUP_HOST: 'https://dev.truecron.com/auth/signup',
@@ -47,7 +47,7 @@ module.exports = function(environment) {
     ENV.baseURL = '/';
     ENV.locationType = 'none';
 
-    ENV.APP.SERVER_HOST      = 'https://localhost';
+    ENV.APP.SERVER_HOST      = 'https://localhost:4443';
     ENV.APP.API_HOST         = ENV.APP.HOST + '/api/v1';
     ENV.APP.SIGNUP_HOST      = ENV.APP.SERVER_HOST + '/auth/signup';
     ENV.APP.BETA_SIGNUP_HOST = ENV.APP.SERVER_HOST + '/beta/signup';
