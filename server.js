@@ -9,6 +9,7 @@ var config = require('./lib/config');
 http.createServer(app).listen(config.get('PORT'), function() {
 	log.info('Express http server listening on port ' + this.address().port);
 });
+
 var certExists = fs.existsSync(config.get('CERTIFICATE_PATH'));
 log.info(config.get('CERTIFICATE_PATH') + ' : ' + certExists);
 
