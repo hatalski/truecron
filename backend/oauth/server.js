@@ -20,7 +20,7 @@ var router = express.Router();
 //
 router.use(clientAuth);
 
-var supportedGrantTypes = ['password', 'client_credentials', 'http://google.com'];
+var supportedGrantTypes = ['refresh_token', 'password', 'client_credentials', 'http://google.com'];
 
 router.post('/token', function (req, res, next) {
     if (!req.is('application/x-www-form-urlencoded')) {
@@ -36,6 +36,8 @@ router.post('/token', function (req, res, next) {
         return clientCredentialsAuth(req, res, next);
     } else if (req.body.grant_type === 'http://google.com') {
         return googleAuth(req, res, next); // Our grant extension, authenticates by just an email
+    } else if (req.body.grant_type === 'refresh_token') {
+        return refreshToken(req, res, next);
     } else {
         next(oauthErrors.getUnsupportedGrantType());
     }
@@ -48,6 +50,25 @@ var ensureClientCanAuthenticate = Promise.method(function(clientId, personId, gr
     }
     throw oauthErrors.getUnauthorizedClient();
 });
+
+var refreshToken = function(req, res, next) {
+    req.checkBody('refresh_token', 'Missing token.').isLength(1);
+    var errors = req.validationErrors();
+    if (errors) {
+        return next(oauthErrors.getInvalidRequest());
+    }
+    token.verifyAndDecodeToken(req.body.refresh_token, function (err, refreshContext) {
+        if (err) {
+            return next(oauthErrors.getInvalidGrant(err.message));
+        }
+        if (+req.client.id !== +refreshContext.clientId) {
+            logger.error('Refreshing token failure. Client in refresh token %d, current client %d.', refreshContext.clientId, req.client.id);
+            return next(oauthErrors.getInvalidGrant('Wrong client.'));
+        }
+        logger.debug('Refreshing token for person %d, client %d.', refreshContext.personId, refreshContext.clientId);
+        return token.issue(refreshContext, req, res, next);
+    });
+};
 
 var passwordAuth = function(req, res, next) {
     req.checkBody('username', 'Missing username.').isLength(1, 256).isEmail();

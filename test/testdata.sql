@@ -117,7 +117,7 @@ insert into tc.TaskType (id, name)
     where id = 6);
 
 insert into tc.Task (id, jobId, name, position, taskTypeId, settings, timeout, createdAt, updatedAt, updatedByPersonId)
-    select -14, -13, 'My workspace test job task', 1, 5, '{}', '30 seconds', 'now', 'now', -10
+    select -14, -13, 'My workspace test job task', 1, 5, '{}', 30000, 'now', 'now', -10
     where not exists (select * from tc.Task
     where id = -14);
 
@@ -247,6 +247,6 @@ insert into tc.Job (id, workspaceId, name, updatedByPersonId, rrule)
     where id = -222);
 
 insert into tc.Run (id, jobId, status, elapsed)
-    select -200, -222, 15, '1 day -01:00:00'
+    select -200, -222, 15, 24*60*60*1000
         where not exists (select * from tc.Run
     where id = -200);

@@ -3,8 +3,6 @@ import AuthenticatedRouteMixin from 'simple-auth/mixins/authenticated-route-mixi
 
 export default Ember.Route.extend(AuthenticatedRouteMixin, {
 	model: function() {
-		var orgs = this.store.find('organization');
-		var types = this.store.find('task-type');
 	    var wsp = this.modelFor('dashboard.organization.workspace').get('firstObject');
 	    if (wsp === undefined) {
 	    	wsp = this.modelFor('dashboard.organization.workspace');
@@ -21,6 +19,7 @@ export default Ember.Route.extend(AuthenticatedRouteMixin, {
 	    this._super(controller, model);
     },
 	afterModel: function(jobs) {
+		Ember.Logger.log('afterModel jobs');
 		if (jobs.get('length') > 0) {
 			this.transitionTo('dashboard.organization.workspace.jobs.job', jobs.get('firstObject'));
 		} else {

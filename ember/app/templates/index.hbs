@@ -9,9 +9,11 @@
                 <form class="navbar-form navbar-right">
                     <input type="button" {{action "signupModal"}} class="btn btn-signup" value="SIGN UP">
                 </form>
-                <form class="navbar-form navbar-right" {{action 'authenticate' on='submit'}}>
-                    {{input class="form-control" type="email" value=identification placeholder="Email" required="required"}}
-                    {{input class="form-control" type="password" value=password placeholder="Password" required="required"}}
+                <form class="navbar-form navbar-right" {{action 'authenticate' on='submit'}} style="border-right: solid 1px #ff9719">
+                    <div {{bind-attr class=":form-group isLoginError:has-error"}}>
+                        {{input id="loginEmail" class="form-control" type="email" value=identification placeholder="Email" required="required"}}
+                        {{input id="loginPassword" class="form-control" type="password" value=password placeholder="Password" required="required"}}
+                    </div>
                     <button type="submit" class="btn btn-signin">SIGN IN</button>
                 </form>
             </div>
@@ -19,12 +21,13 @@
     </div>
     <div class="container-fluid">
         <div class="jumbotron">
-            <h2 class="pitch">Enterprise Strength Scheduling for your Startup</h2>
+            <h2 class="pitch">Enterprise Strength Scheduling for your Growing Business</h2>
             <div class="row">
                 <div class="col-xs-3">
                     <div class="pitch-ext">
                         <p>Do your job.</p>
                         <p>We will do the scheduling.</p>
+                        <a class="btn btn-large btn-primary" {{action 'googleLogin'}}>Sign in with Google</a>
                     </div>
                 </div>
                 <div class="col-xs-9">
@@ -40,14 +43,16 @@
             <div class="row">
                 <div class="col-xs-3">
                     <div class="interested_box">
-                        <div class="container">
-                            <h2>Interested?</h2>
-                            <p>Leave your e-mail address to get notified when we are live.</p>                            
-                            <div {{bind-attr class=":form-group isInvitationEmailError:has-error"}}>
-                                {{input class="form-control" value="email" valueBinding="invitationEmail" type="email" placeholder="Email" required="required"}}
+                        <form {{action "invite" on="submit"}}>
+                            <div class="container">
+                                <h2>Interested?</h2>
+                                <p>Leave your e-mail address to get notified when we are live.</p>                            
+                                <div {{bind-attr class=":form-group isInvitationEmailError:has-error"}}>
+                                    {{input class="form-control" value="email" valueBinding="invitationEmail" type="email" placeholder="Email" required="required"}}
+                                </div>
+                                <p><input type="submit" class="btn btn-signup" value="SIGN UP"></p>
                             </div>
-                            <p><input type="button" {{action "invite"}} class="btn btn-signup" value="SIGN UP"></p>
-                        </div>
+                        </form>
                     </div>
                 </div>
                 <div class="col-xs-9">
@@ -198,14 +203,16 @@
             <!--<div class="modal-header">-->
                 <!--<h4 class="modal-title" id="signUpTitle"></h4>-->
             <!--</div>-->
-            <div class="modal-body, interested_box">
+            <div class="modal-body signup">
                 <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
-                <form {{action "signup" on="submit"}}>
-                      <h2>Sign Up</h2>                      
+                <div class="container-fluid">
+                    <div class="signup_logo"></div>
+                	<form {{action "signup" on="submit"}}>
+                      <h2>Sign Up</h2>
                       
                       <div {{bind-attr class=":form-group isEmailError:has-error"}}>
                         <label for='email'>Email:</label>
-                        {{input value=signupEmail valueBinding="signupEmail" type="email" placeholder="Email" required="required" class="form-control"}}
+                        {{input id="signupEmail" value=signupEmail valueBinding="signupEmail" type="email" placeholder="Email" required="required" class="form-control"}}
                       </div>
 
                       <div {{bind-attr class=":form-group isPasswordError:has-error"}}>
@@ -220,7 +227,7 @@
 
                       <p><input type="submit" class="btn btn-signup" value="SIGN UP"></p>
                     </form>
-                   
+                </div>
             </div>
             <!--<div class="modal-footer">-->
                 <!--<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>-->
@@ -229,17 +236,18 @@
     </div>
 </div>
 <div class="modal fade" id="invite_modal" tabindex="-1" role="dialog" aria-labelledby="inviteTitle" aria-hidden="true">
-    <div class="modal-dialog">
+    <div class="modal-dialog signup">
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
-                <h4 class="modal-title" id="inviteTitle">Thank you for signing up for TrueCron!</h4>
+                <h2 class="modal-title" id="inviteTitle">THANK YOU</h2>
             </div>
             <div class="modal-body">
-              {{ successMessage }}
+                <div class="signup_logo"></div>
+                <p>Share this page to spread the world</p>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-signup" data-dismiss="modal">Close</button>
             </div>
         </div>
     </div>

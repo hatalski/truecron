@@ -52,7 +52,11 @@ var create = module.exports.create = Promise.method(function (context, attribute
     if (!attributes.workspaceId) {
         throw new errors.InvalidParams('Workspace ID is not specified.');
     }
+    if (!attributes.tags) {
+        throw new errors.InvalidParams('Tags is not specified.');
+    }
     var locals = { attrs: attributes };
+
     return using (models.transaction(), function (tx) {
         return workspaceAccess.ensureHasAccess(context, attributes.workspaceId, workspaceAccess.WorkspaceRoles.Editor, tx)
             .then(function() {
@@ -63,14 +67,27 @@ var create = module.exports.create = Promise.method(function (context, attribute
                 var link = context.url + '/' + job.id;
                 return Promise.join(
                     history.logCreated(context.personId, link, job, tx), // context.links.job(job.id)
-                    cache.put(getJobIdCacheKey(job.id), job),
-                    function () {
-                        return locals.job;
-                    });
-            });
+                    cache.put(getJobIdCacheKey(job.id), job));
+            })
         })
         .catch(function (err) {
             logger.error('Failed to create a job, %s.', err.toString());
+            throw err;
+        })
+        .then(function() {
+            var tags;
+            var arrayData = locals.attrs.tags;
+            arrayData.forEach(function(tag) {
+                tags = {
+                    jobId: locals.job.dataValues.id,
+                    tag: tag.toString()
+                }
+                models.JobTag.create(tags);
+                });
+            return locals.job;
+        })
+        .catch(function (err) {
+            logger.error('Failed to create a JobTag, %s.', err.toString());
             throw err;
         });
 });
@@ -175,4 +192,5 @@ var remove = module.exports.remove = Promise.method(function (context, id) {
             logger.error('Failed to remove the job %d, %s.', id, err.toString());
             throw err;
         });
+
 });

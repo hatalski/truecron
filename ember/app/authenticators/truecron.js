@@ -28,5 +28,35 @@ export default OAuth2.extend({
       dataType:    'json',
       contentType: 'application/x-www-form-urlencoded'
     });
-  }
+  },
+  authenticate: function(options) {
+    console.log('we are inside authenticator authenticate method');
+    var _this = this;
+    return new Ember.RSVP.Promise(function(resolve, reject) {
+      var grant_type = options.grant_type || 'password';
+      var data = { grant_type: grant_type, username: options.identification, password: options.password };
+      if (!Ember.isEmpty(options.scope)) {
+        var scopesString = Ember.makeArray(options.scope).join(' ');
+        Ember.merge(data, { scope: scopesString });
+      }
+      _this.makeRequest(_this.serverTokenEndpoint, data).then(function(response) {
+        console.log('authentication request is resolved');
+        Ember.run(function() {
+          var expiresAt = _this.absolutizeExpirationTime(response.expires_in);
+          _this.scheduleAccessTokenRefresh(response.expires_in, expiresAt, response.refresh_token);
+          if (!Ember.isEmpty(expiresAt)) {
+            response = Ember.merge(response, { expires_at: expiresAt });
+          }
+          resolve(response);
+        });
+      }, function(xhr, status, error) {
+        console.log('authentication request is rejected');
+        console.log('status: ' + status);
+        console.log('error: ' + error);
+        Ember.run(function() {
+          reject(xhr.responseJSON || xhr.responseText);
+        });
+      });
+    });
+  },
 });

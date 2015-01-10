@@ -1,6 +1,6 @@
 /**
- * Created by Andrew on 26.11.2014.
- */
+* Created by Andrew on 26.11.2014.
+*/
 var superagent = require('superagent');
 var expect     = require('expect.js');
 var validator  = require('validator');
@@ -168,17 +168,17 @@ describe('RUNS API',
         //        });
         //});
 
-        //it('delete job', function (done) {
-        //    superagent.del(prefix + '/jobs/'+ id_to_delete)
-        //        .send()
-        //        .authenticate(accessToken)
-        //        .end(function (e, res) {
-        //            expect(e).to.eql(null);
-        //            expect(res.body.error).to.eql(undefined);
-        //            expect(res.status).to.eql(204);
-        //            done();
-        //        });
-        //});
+        it('delete job', function (done) {
+            superagent.del(prefix + '/jobs/'+ id_to_delete)
+                .send()
+                .authenticate(accessToken)
+                .end(function (e, res) {
+                    expect(e).to.eql(null);
+                    expect(res.body.error).to.eql(undefined);
+                    expect(res.status).to.eql(204);
+                    done();
+                });
+        });
 
     }
 );

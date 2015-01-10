@@ -13,11 +13,10 @@ export default Ember.Route.extend(AuthenticatedRouteMixin, {
 	    this._super(controller, model);
     },
     afterModel: function(organization) {
-    	var workspaces = organization.get('workspaces');
-    	if (workspaces.get('length') > 0) {
-    		console.log('there are workspaces');
-    		var workspace = workspaces.get('firstObject');
-    		this.transitionTo('dashboard.organization.workspace', organization, workspace);
-    	}
+    	var self = this;
+    	organization.get('workspaces').then(function(workspaces) {
+    		Ember.Logger.log('workspaces length: %d', workspaces.get('length'));
+    		self.transitionTo('dashboard.organization.workspace.jobs', organization, workspaces.get('firstObject'));
+    	});
     }
 });
