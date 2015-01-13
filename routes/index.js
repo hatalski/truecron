@@ -2,16 +2,25 @@ var express = require('express');
 var path = require('path');
 var router = express.Router();
 
-/* GET home page. */
-router.get('/', function(req, res) {
-    res.render('index', { title: 'TrueCron', user: req.user });
+router.get('/', function (req, res) {
+    res.redirect('/app');
 });
 
-// vh+dv: teaser page
-router.get('/teaser', function(req, res) {
-    res.redirect(301, '/#/teaser');
-    //res.render('pages/teaser', { pages: true, title: 'TrueCron', user: req.user });
+router.use('/app', function (req, res) {
+    //res.render('index');
+    res.sendfile(path.join(__dirname, '../ember/dist/index.html'));
 });
+
+/* GET home page. */
+//router.get('/', function(req, res) {
+//    res.render('index', { title: 'TrueCron', user: req.user });
+//});
+
+// vh+dv: teaser page
+//router.get('/teaser', function(req, res) {
+//    res.redirect(301, '/#/teaser');
+//    //res.render('pages/teaser', { pages: true, title: 'TrueCron', user: req.user });
+//});
 
 function validTokenProvided(req, res) {
     // dv: support for session
