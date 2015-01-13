@@ -5,8 +5,8 @@ var superagent = require('superagent');
 var expect     = require('expect.js');
 var config     = require('../lib/config.js');
 var log        = require('../lib/logger.js');
-var prefix     = config.get('BASE_URL') + ':' + config.get('PORT');
-prefix         = prefix || 'http://localhost:3000';
+var prefix     = config.get('BASE_URL');
+prefix         = prefix || 'https://dev.truecron.com';
 
 log.info('BETA SING UP url prefix: ' + prefix);
 

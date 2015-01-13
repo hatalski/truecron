@@ -13,13 +13,12 @@ var GoogleToken = Oauth2Bearer.extend({
   responseParams: ['token'],
   scope: configurable('scope', 'email'),
   state: configurable('state', 'STATE'),
-  redirectUri: configurable('redirectUri',
-                            'http://localhost:4200'),
-  serverSignUpEndpoint: configurable('serverSignUpEndpoint', 
-                                     'http://dev.truecron.com:3000/auth/signup'),
+  redirectUri: configurable('redirectUri'),
+  serverSignUpEndpoint: configurable('serverSignUpEndpoint'),
+  profileMethodEndpoint: configurable('profileMethod'),
 
   open: function(options) {
-      // var self = this;
+      var self = this;
       Ember.Logger.log('google-token provider open method entered with options: ');
       Ember.Logger.log(options);
       var name        = this.get('name'),
@@ -51,7 +50,7 @@ var GoogleToken = Oauth2Bearer.extend({
                 "these required response params: " + responseParams.join(', ');
         }
 
-        return Ember.$.get("https://www.googleapis.com/plus/v1/people/me", {
+        return Ember.$.get(self.get('profileMethodEndpoint'), {
             access_token: authData.token
           }).then(function(user) {
             Ember.Logger.log('retrieved user profile from Google:');
