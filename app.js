@@ -222,4 +222,19 @@ storage.initialize()
 
 app.storage = storage;
 
+
+//Sockets.io
+
+app.registerSockets = function(server)
+{
+    app.io = require('socket.io')(server);
+    logger.info('socket.io started');
+    app.io.on('connection', function(socket){
+        logger.info('socket client connected');
+        socket.on('disconnect', function(){
+            logger.info('socket client disconnected');
+        });
+    });
+};
+
 module.exports = app;

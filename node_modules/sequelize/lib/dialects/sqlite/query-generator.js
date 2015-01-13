@@ -28,6 +28,10 @@ module.exports = (function() {
       return "SELECT name FROM `sqlite_master` WHERE type='table' and name!='sqlite_sequence';";
     },
 
+    versionQuery: function() {
+      return "SELECT sqlite_version() as `version`";
+    },
+
     createTableQuery: function(tableName, attributes, options) {
       options = options || {};
 
@@ -369,39 +373,63 @@ module.exports = (function() {
     },
 
     removeColumnQuery: function(tableName, attributes) {
+      var backupTableName
+        , query;
+
       attributes = this.attributesToSQL(attributes);
 
-      var backupTableName = tableName + "_backup";
-      var query = [
+      if (typeof tableName === 'object') {
+        backupTableName = {
+          tableName: tableName.tableName + "_backup",
+          schema: tableName.schema
+        };
+      } else {
+        backupTableName = tableName + "_backup";
+      }
+
+      query = [
         this.createTableQuery(backupTableName, attributes).replace('CREATE TABLE', 'CREATE TEMPORARY TABLE'),
-        "INSERT INTO <%= tableName %>_backup SELECT <%= attributeNames %> FROM <%= tableName %>;",
+        "INSERT INTO <%= backupTableName %> SELECT <%= attributeNames %> FROM <%= tableName %>;",
         "DROP TABLE <%= tableName %>;",
         this.createTableQuery(tableName, attributes),
-        "INSERT INTO <%= tableName %> SELECT <%= attributeNames %> FROM <%= tableName %>_backup;",
-        "DROP TABLE <%= tableName %>_backup;"
+        "INSERT INTO <%= tableName %> SELECT <%= attributeNames %> FROM <%= backupTableName %>;",
+        "DROP TABLE <%= backupTableName %>;"
       ].join("");
 
       return Utils._.template(query, {
-        tableName: tableName,
+        tableName: this.quoteTable(tableName),
+        backupTableName: this.quoteTable(backupTableName),
         attributeNames: Utils._.keys(attributes).join(', ')
       });
     },
 
     renameColumnQuery: function(tableName, attrNameBefore, attrNameAfter, attributes) {
+      var backupTableName
+        , query;
+
       attributes = this.attributesToSQL(attributes);
 
-      var backupTableName = tableName + "_backup";
-      var query = [
+      if (typeof tableName === 'object') {
+        backupTableName = {
+          tableName: tableName.tableName + "_backup",
+          schema: tableName.schema
+        };
+      } else {
+        backupTableName = tableName + "_backup";
+      }
+
+      query = [
         this.createTableQuery(backupTableName, attributes).replace('CREATE TABLE', 'CREATE TEMPORARY TABLE'),
-        "INSERT INTO <%= tableName %>_backup SELECT <%= attributeNamesImport %> FROM <%= tableName %>;",
+        "INSERT INTO <%= backupTableName %> SELECT <%= attributeNamesImport %> FROM <%= tableName %>;",
         "DROP TABLE <%= tableName %>;",
         this.createTableQuery(tableName, attributes),
-        "INSERT INTO <%= tableName %> SELECT <%= attributeNamesExport %> FROM <%= tableName %>_backup;",
-        "DROP TABLE <%= tableName %>_backup;"
+        "INSERT INTO <%= tableName %> SELECT <%= attributeNamesExport %> FROM <%= backupTableName %>;",
+        "DROP TABLE <%= backupTableName %>;"
       ].join("");
 
       return Utils._.template(query, {
-        tableName: tableName,
+        tableName: this.quoteTable(tableName),
+        backupTableName: this.quoteTable(backupTableName),
         attributeNamesImport: Utils._.keys(attributes).map(function(attr) {
           return (attrNameAfter === attr) ? this.quoteIdentifier(attrNameBefore) + ' AS ' + this.quoteIdentifier(attr) : this.quoteIdentifier(attr);
         }.bind(this)).join(', '),

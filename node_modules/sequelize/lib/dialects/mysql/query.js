@@ -67,6 +67,10 @@ module.exports = (function() {
 
     if (this.isInsertQuery(data)) {
       this.handleInsertQuery(data);
+
+      if (!this.callee) {
+        result = data[this.getInsertIdField()];
+      }
     }
 
     if (this.isSelectQuery()) {
@@ -93,6 +97,8 @@ module.exports = (function() {
       result = data[0];
     } else if (this.isBulkUpdateQuery() || this.isBulkDeleteQuery() || this.isUpsertQuery()) {
       result = data.affectedRows;
+    } else if (this.isVersionQuery()) {
+      result = data[0].version;
     }
 
     return result;

@@ -60,6 +60,10 @@ module.exports = (function() {
                   // add the inserted row id to the instance
                   if (self.isInsertQuery(results, metaData)) {
                     self.handleInsertQuery(results, metaData);
+
+                    if (!self.callee) {
+                      result = metaData[self.getInsertIdField()];
+                    }
                   }
 
                   if (self.sql.indexOf('sqlite_master') !== -1) {
@@ -133,6 +137,8 @@ module.exports = (function() {
                     result = metaData.changes;
                   } else if (self.options.type === QueryTypes.UPSERT) {
                     result = undefined;
+                  } else if (self.options.type === QueryTypes.VERSION) {
+                    result = results[0].version;
                   }
 
                   resolve(result);

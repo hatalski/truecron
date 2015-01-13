@@ -4,7 +4,9 @@ export default Ember.ObjectController.extend({
     selectedRepeatRule: 'Daily',
     repeatRules: ['Minutely', 'Hourly', 'Daily', 'Weekly', 'Monthly', 'Yearly'],
     selectedRepeatEvery: 1,
+  chatRoomInputText: null,
     repeatEvery: function() {
+
         // console.log('repeatEvery called');
         switch (this.get('selectedRepeatRule')) {
             case 'Minutely':
@@ -36,8 +38,25 @@ export default Ember.ObjectController.extend({
     }.property('model.rrule', 'model.startsAt'),
     actions: {
         run: function(job) {
-            console.log('runnning job ' + job.get('name'));
-            this.set('running', true);
+          var socket = window.io('ws://dev.truecron.com:3000');
+          if(this.get('running') !== true)
+          {
+            socket.connect();
+            socket.on('connect', function(){
+              console.log('client connected');
+              socket.on('tco' + job.get('id'), function(msg){
+                console.log('response message: ' + msg);
+              });
+            });
+          }
+          else
+          {
+            socket.disconnect();
+          }
+
+          this.set('running', !this.get('running'));
+          console.log((this.get('running') ? 'runnning':'stop running') + ' job ' + job.get('name'));
+
         },
         rename: function(job) {
             console.log('rename to : ' + job.get('name'));
@@ -97,16 +116,28 @@ export default Ember.ObjectController.extend({
             });
         },
         remove: function(job) {
-            var self = this;
-            job.deleteRecord();
-            job.save().then(function(result) {
-                console.log('job successfully deleted: ');
-                console.dir(result);
-                self.transitionToRoute('dashboard.organization.workspace.jobs', result.get('workspace'));
-            }, function(error) {
-                console.log('job removal failed: ');
-                console.dir(error);
-            });
-        }
+          var self = this;
+          job.deleteRecord();
+          job.save().then(function (result) {
+            console.log('job successfully deleted: ');
+            console.dir(result);
+            self.transitionToRoute('dashboard.organization.workspace.jobs', result.get('workspace'));
+          }, function (error) {
+            console.log('job removal failed: ');
+            console.dir(error);
+          });
+        },
+      onopen: function(socketEvent) {
+        console.log('On open has been called!' + socketEvent);
+      },
+      onmessage: function(socketEvent) {
+        console.log('On message has been called!' + socketEvent);
+      },
+      onclose: function(socketEvent) {
+        console.log('On close has been called!' + socketEvent);
+      },
+      onerror: function(socketEvent) {
+        console.log('On error has been called! :-(' + socketEvent);
+      }
     }
 });

@@ -81,6 +81,19 @@ Task.reopenClass({
       updatedBy: 1,
       job: 1,
       taskType: 5
+    },
+    {
+      id: 6,
+      name: 'ftp ls command',
+      active:true,
+      settings:'{ connection: {host:"ftp.darvision.com", username:"anonymous", password:"@anonymous", protocol: "ftp"}, commands: ["ls ."]}',
+      position: 6,
+      timeout: 10000,
+      createdAt: new Date('2014-09-19T00:00:00.000Z'),
+      updatedAt: new Date('2014-09-20T00:00:00.000Z'),
+      updatedBy: 1,
+      job: 1,
+      taskType: 6
     }
   ]
 });

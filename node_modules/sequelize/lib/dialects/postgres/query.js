@@ -233,7 +233,9 @@ module.exports = (function() {
           }
         }
 
-        return self.callee;
+        return self.callee || (rows && rows[0]) || undefined;
+      } else if (self.isVersionQuery()) {
+        return results[0].version;
       } else {
         return results;
       }
