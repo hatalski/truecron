@@ -30,6 +30,7 @@ app.import('bower_components/rrule/lib/rrule.js');
 app.import('bower_components/rrule/lib/nlp.js');
 app.import('bower_components/moment/moment.js');
 app.import('bower_components/validator-js/validator.js');
+app.import('bower_components/socket.io-client/socket.io.js');
 
 // Use `app.import` to add additional libraries to the generated
 // output files.
