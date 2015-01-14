@@ -36,8 +36,24 @@ export default Ember.ObjectController.extend({
     }.property('model.rrule', 'model.startsAt'),
     actions: {
         run: function(job) {
-            console.log('runnning job ' + job.get('name'));
-            this.set('running', true);
+          var socket = window.io('ws://dev.truecron.com:3000');
+          if(this.get('running') !== true)
+          {
+            socket.connect();
+            socket.on('connect', function(){
+              console.log('client connected');
+              socket.on('tco' + job.get('id'), function(msg){
+                console.log('response message: ' + msg);
+              });
+            });
+          }
+          else
+          {
+            socket.disconnect();
+          }
+
+          this.set('running', !this.get('running'));
+          console.log((this.get('running') ? 'runnning':'stop running') + ' job ' + job.get('name'));
         },
         rename: function(job) {
             console.log('rename to : ' + job.get('name'));
