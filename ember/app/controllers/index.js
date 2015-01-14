@@ -1,5 +1,5 @@
 import Ember from 'ember';
-import Notify from 'ember-notify';
+import ENV from 'true-cron/config/environment';
 import LoginControllerMixin from 'simple-auth/mixins/login-controller-mixin';
 // curl -u "-2:Igd7en1_VCMP59pBpmEF" -H "Content-Type:application/x-www-form-urlencoded" --data "grant_type=http://google.com&username=system@truecron.com" http://dev.truecron.com:3000/oauth/token
 
@@ -19,29 +19,25 @@ export default Ember.Controller.extend(LoginControllerMixin, {
 	isPasswordConfirmError: false,
     actions: {
     	authenticate: function(options) {
-	  		console.log('authenticate called');
-	  		console.dir(options);
 	  		this._super(options);
 	  	},
 	  	invite: function() {
-	  		var inviteEmail = this.get('invitationEmail');
-	  		if (!validator.isEmail(inviteEmail)) {
-	  			console.log('email is empty');
-	  			this.set('isInvitationEmailError', true);
-	  		} else {
-          var requestData = { email: inviteEmail };
-	  			var result = Ember.$.ajax('http://dev.truecron.com:3000/beta/signup',
-            {
-              type: 'POST',
-              contentType: 'application/json',
-              dataType: 'json',
-              data: JSON.stringify(requestData),
-              crossDomain: true
-            });
-	  			result.success(function(data) {
-            Ember.$('#invite_modal').modal({});
-	  				console.log(data);
-	  			});
+			var inviteEmail = this.get('invitationEmail');
+			if (!validator.isEmail(inviteEmail)) {
+				this.set('isInvitationEmailError', true);
+			} else {
+				var requestData = { email: inviteEmail };
+				var result = Ember.$.ajax(ENV.APP.BETA_SIGNUP_HOST, {
+					type: 'POST',
+					contentType: 'application/json',
+					dataType: 'json',
+					data: JSON.stringify(requestData),
+					crossDomain: true
+				});
+				result.success(function(data) {
+					Ember.$('#invite_modal').modal({});
+					console.log(data);
+				});
 	  			result.error(function(error) { console.log(error); });
 	  		}
 	  	},
@@ -66,14 +62,14 @@ export default Ember.Controller.extend(LoginControllerMixin, {
 				var requestData = { email: email, password: password };
 
 	  			// TODO: replace with superagent
-	  			var result = Ember.$.ajax('http://dev.truecron.com:3000/auth/signup',
-	  				{
-	  					type: 'POST',
-	  					contentType: 'application/json',
-	  					dataType: 'json',
-	  					data: JSON.stringify(requestData),
-	  					crossDomain: true
-	  				});
+	  			var result = Ember.$.ajax({
+	  				url: ENV.APP.SIGNUP_HOST,
+  					type: 'POST',
+  					contentType: 'application/json',
+  					dataType: 'json',
+  					data: JSON.stringify(requestData),
+  					crossDomain: true
+  				});
 	  			result.success(function(response) {
 	  				console.log(response);
 					var options = { identification: email, password: password };

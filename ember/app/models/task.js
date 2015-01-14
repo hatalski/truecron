@@ -1,18 +1,24 @@
 import DS from 'ember-data';
+import TaskTypes from 'true-cron/models/task-type';
 
 var Task = DS.Model.extend({
   jobId:     DS.attr(),
-  taskTypeId:DS.attr(),
   name:      DS.attr('string'),
   active:    DS.attr('boolean', { defaultValue: true }),
   settings:  DS.attr('string'),
   position:  DS.attr('number'),
-  timeout:   DS.attr('string', { defaultValue: '30 seconds' }),
+  timeout:   DS.attr('number', { defaultValue: 30000 }),
   createdAt: DS.attr('date', { defaultValue: new Date() }),
   updatedAt: DS.attr('date', { defaultValue: new Date() }),
   updatedBy: DS.belongsTo('user', { async: true }),
   job:       DS.belongsTo('job', { async: true }),
-  taskType:  DS.belongsTo('task-type', { async: true })
+  taskTypeId:DS.attr('number', { defaultValue: 0 }),
+  taskType:  function() {
+    return {
+      id:   this.get('taskTypeId'),
+      name: TaskTypes[this.get('taskTypeId')].name
+    };
+  }.property('taskTypeId')
 });
 
 Task.reopenClass({
@@ -28,7 +34,7 @@ Task.reopenClass({
       updatedAt: new Date('2014-09-20T00:00:00.000Z'),
       updatedBy: 1,
       job: 1,
-      taskType: 1
+      taskTypeId: 1
     },
     {
       id: 2,
@@ -41,7 +47,7 @@ Task.reopenClass({
       updatedAt: new Date('2014-09-20T00:00:00.000Z'),
       updatedBy: 1,
       job: 1,
-      taskType: 2
+      taskTypeId: 2
     },
     {
       id: 3,
@@ -54,7 +60,7 @@ Task.reopenClass({
       updatedAt: new Date('2014-09-20T00:00:00.000Z'),
       updatedBy: 1,
       job: 1,
-      taskType: 3
+      taskTypeId: 3
     },
     {
       id: 4,
@@ -67,7 +73,7 @@ Task.reopenClass({
       updatedAt: new Date('2014-09-20T00:00:00.000Z'),
       updatedBy: 1,
       job: 1,
-      taskType: 4
+      taskTypeId: 4
     },
     {
       id: 5,
@@ -80,7 +86,7 @@ Task.reopenClass({
       updatedAt: new Date('2014-09-20T00:00:00.000Z'),
       updatedBy: 1,
       job: 1,
-      taskType: 5
+      taskTypeId: 5
     }
   ]
 });

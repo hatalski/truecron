@@ -376,6 +376,16 @@ end $$;
 
 do $$
 begin
+if not HasSchemaVersion(10) then
+    -- Convert to milliseconds
+    alter table tc.Task alter column timeout type bigint using (extract(epoch from (timeout))*1000)::int;
+    alter table tc.Run alter column elapsed type bigint using (extract(epoch from (elapsed))*1000)::int;
+    perform CommitSchemaVersion(10, 'Replaced an interval type with number of milliseconds..');
+end if;
+end $$;
+
+do $$
+begin
 if not HasSchemaVersion(11) then
 
     create table tc.Connection
@@ -454,7 +464,6 @@ if not HasSchemaVersion(12) then
     perform CommitSchemaVersion(12, 'Added organizationId and workspaceId to all child tables to simplify security checks.');
 end if;
 end $$;
-
 
 -- Use the snippet as a template:
 --

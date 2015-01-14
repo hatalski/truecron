@@ -6,7 +6,6 @@ var Router = Ember.Router.extend({
 });
 
 Router.map(function() {
-  this.route('login');
   this.route('profile');
   this.resource('dashboard', function() { 
     this.route('organization', { path: '/:organization_id' }, function() {

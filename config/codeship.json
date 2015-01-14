@@ -1,6 +1,7 @@
 {
-    "BASE_URL": "http://localhost",
+    "BASE_URL": "https://localhost:4443",
     "PORT": 3000,
+    "SECURE_PORT": 4443,
     "SESSION_SECRET": "codeship-truecron-kkirijio393j",
     "POSTGRE_HOST": "localhost",
     "POSTGRE_PORT": 5433,
@@ -12,6 +13,6 @@
     "GOOGLE_SSO_CLIENT_SECRET": "bDkjQsNY_7xoSeEF7tI97mq2",
     "GOOGLE_SSO_CALLBACK_URL": "http://codeship.truecron.com/auth/google/callback",
     "GOOGLE_ANALYTICS_TRACKING_ID": "",
-    "API_HOST": "http://localhost:3000/api/v1",
+    "API_HOST": "https://localhost:4443/api/v1",
     "LOGENTRIES_TOKEN": "54025f13-1a10-4bc8-b00a-5ba6271be949"
 }
