@@ -160,7 +160,7 @@ var grantAccess = module.exports.grantAccess = Promise.method(function (context,
                 })
                     .then(function (newAccessEntry) {
                         return Promise.join(
-                            history.logAccessGranted(context.personId, context.links.organization(organizationId), newAccessEntry, tx),
+                            history.logAccessGranted(context.personId, { organizationId: organizationId }, newAccessEntry, tx),
                             cache.remove(getAccessibleOrganizationsCacheKey(personId)),
                             function() {
                                 return newAccessEntry;
@@ -199,7 +199,7 @@ var revokeAccess = module.exports.revokeAccess = Promise.method(function (contex
                 locals.accessEntry = accessEntry;
                 return accessEntry.destroy({ transaction: locals.tx })
                     .then(function() {
-                        return history.logAccessRevoked(context.personId, context.links.organization(organizationId), locals.accessEntry, locals.tx);
+                        return history.logAccessRevoked(context.personId, { organizationId: organizationId }, locals.accessEntry, locals.tx);
                     })
                     .then(function() {
                         cache.remove(getAccessibleOrganizationsCacheKey(personId));

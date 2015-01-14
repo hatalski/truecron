@@ -140,10 +140,9 @@ var create = module.exports.create = Promise.method(function (context, attribute
             })
             .then(function (workspace) {
                 locals.workspace = workspace;
-                var workspaceLinks = context.links.workspace(
-                    { organizationId: workspace.organizationId, workspaceId: workspace.id });
                 return Promise.join(
-                    history.logCreated(context.personId, workspaceLinks, workspace, locals.tx),
+                    history.logCreated(context.personId, { organizationId: workspace.organizationId, workspaceId: workspace.id },
+                                       workspace, locals.tx),
                     cache.put(getWorkspaceIdCacheKey(workspace.id), workspace),
                     function () {
                         return locals.workspace;
@@ -180,8 +179,8 @@ var update = module.exports.update = Promise.method(function (context, id, attri
             .then(function (workspace) {
                 locals.workspace = workspace;
                 return Promise.join(
-                    history.logUpdated(context.personId, context.links.workspace(workspace.id), workspace,
-                                       locals.oldWorkspace, locals.tx),
+                    history.logUpdated(context.personId, { organizationId: workspace.organizationId, workspaceId: workspace.id },
+                                       workspace, locals.oldWorkspace, locals.tx),
                     cache.put(getWorkspaceIdCacheKey(locals.workspace.id), locals.workspace),
                     function () {
                         return locals.workspace;
@@ -212,10 +211,8 @@ var remove = module.exports.remove = Promise.method(function (context, id) {
                 return workspace.destroy({ transaction: locals.tx });
             })
             .then(function () {
-                var links = context.links.workspace(
-                    { organizationId: locals.workspace.organizationId, workspaceId: locals.workspace.id });
                 return Promise.join(
-                    history.logRemoved(context.personId, links,
+                    history.logRemoved(context.personId, { organizationId: locals.workspace.organizationId, workspaceId: locals.workspace.id },
                                        locals.workspace, locals.tx),
                     cache.remove(getWorkspaceIdCacheKey(locals.workspace.id)));
             });

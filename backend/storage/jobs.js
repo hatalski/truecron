@@ -54,18 +54,19 @@ var create = module.exports.create = Promise.method(function (context, attribute
     }
     var locals = { attrs: attributes };
     return using (models.transaction(), function (tx) {
+
         return workspaceAccess.ensureHasAccess(context, attributes.workspaceId, workspaceAccess.WorkspaceRoles.Editor, tx)
-            .then(function() {
-                return models.Job.create(locals.attrs, { transaction: tx });
-            })
-            .then(function (job) {
-                locals.job = job;
-                var link = context.url + '/' + job.id;
-                return Promise.join(
-                    history.logCreated(context.personId, link, job, tx), // context.links.job(job.id)
-                    cache.put(getJobIdCacheKey(job.id), job),
-                    function () {
-                        return locals.job;
+                            .then(function() {
+                                return models.Job.create(locals.attrs, { transaction: tx });
+                            })
+                            .then(function (job) {
+                                locals.job = job;
+                                var link = context.url + '/' + job.id;
+                                return Promise.join(
+                                    history.logCreated(context.personId, link, job, tx), // context.links.job(job.id)
+                                    cache.put(getJobIdCacheKey(job.id), job),
+                                    function () {
+                                        return locals.job;
                     });
             });
         })

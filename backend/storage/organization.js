@@ -136,7 +136,7 @@ var create = module.exports.create = Promise.method(function (context, attribute
         return models.Organization.create(locals.attrs, { transaction: tx })
             .then(function (organization) {
                 locals.organization = organization;
-                return history.logCreated(context.personId, context.links.organization(organization.id), organization, locals.tx);
+                return history.logCreated(context.personId, { organizationId: organization.id }, organization, locals.tx);
             })
             .then(function() {
                 // Grant an 'admin' role to the current user on the newly created organization
@@ -183,7 +183,7 @@ var update = module.exports.update = Promise.method(function (context, id, attri
             })
             .then(function (organization) {
                 locals.organization = organization;
-                return history.logUpdated(context.personId, context.links.organization(organization.id), organization, locals.oldOrganization, locals.tx);
+                return history.logUpdated(context.personId, { organizationId: organization.id }, organization, locals.oldOrganization, locals.tx);
             })
             .then(function () {
                 cache.put(getOrganizationIdCacheKey(locals.organization.id), locals.organization);
@@ -216,7 +216,7 @@ var remove = module.exports.remove = Promise.method(function (context, id) {
                         return locals.organization.destroy({ transaction: locals.tx });
                     })
                     .then(function () {
-                        return history.logRemoved(context.personId, context.links.organization(locals.organization.id), locals.organization, locals.tx);
+                        return history.logRemoved(context.personId, { organizationId: locals.organization.id }, locals.organization, locals.tx);
                     })
                     .then(function () {
                         cache.remove(getOrganizationIdCacheKey(locals.organization.id));
