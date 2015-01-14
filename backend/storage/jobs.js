@@ -149,7 +149,7 @@ var update = module.exports.update = Promise.method(function (context, id, attri
                 if (job === null) {
                     throw new errors.NotFound();
                 }
-                locals.oldJob = job;
+                locals.oldJob = job;  
                 return job.updateAttributes(locals.attrs, { transaction: tx });
             })
             .then(function (job) {
