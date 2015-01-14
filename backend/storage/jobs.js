@@ -84,6 +84,8 @@ var create = module.exports.create = Promise.method(function (context, attribute
                 }
                 models.JobTag.create(tags);
                 });
+        })
+        .then(function(){
             return locals.job;
         })
         .catch(function (err) {
@@ -159,12 +161,29 @@ var update = module.exports.update = Promise.method(function (context, id, attri
                     function () {
                         return locals.job;
                     });
+            })
+            .then(function() {
+                return models.JobTag.destroy({where:{ jobId: locals.job.dataValues.id}, transaction: tx});
+            })
+            .then(function(){
+                var tags;
+                var arrayData = locals.attrs.tags;
+                arrayData.forEach(function(tag) {
+                    tags = {
+                        jobId: locals.job.dataValues.id,
+                        tag: tag.toString()
+                    }
+                    models.JobTag.create(tags);
+                });
             });
         })
         .catch(function (err) {
             logger.error('Failed to update the job %d, %s.', id, err.toString());
             throw err;
-        });
+        })
+        .then (function(){
+        return locals.job;
+    })
 });
 /**
  * Remove a job.

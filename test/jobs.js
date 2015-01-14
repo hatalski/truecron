@@ -112,6 +112,7 @@ describe('JOBS API',
                 .set('Content-Type', 'application/json')
                 .send({ 'job':  {
                     'startsAt': '2014-08-21T10:00:11Z',
+                    'tags': ["updatededi", "updatedproduction"],
                     'rrule': 'updatedFREQ=DAILY;INTERVAL=1;BYDAY=MO;BYHOUR=12;BYMINUTE=0;BYSECOND=0'
                 }
                 })
