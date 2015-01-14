@@ -52,9 +52,7 @@ var create = module.exports.create = Promise.method(function (context, attribute
     if (!attributes.workspaceId) {
         throw new errors.InvalidParams('Workspace ID is not specified.');
     }
-    if (!attributes.tags) {
-        throw new errors.InvalidParams('Tags is not specified.');
-    }
+
     var locals = { attrs: attributes };
 
     return using (models.transaction(), function (tx) {
@@ -75,15 +73,17 @@ var create = module.exports.create = Promise.method(function (context, attribute
             throw err;
         })
         .then(function() {
-            var tags;
-            var arrayData = locals.attrs.tags;
-            arrayData.forEach(function(tag) {
-                tags = {
-                    jobId: locals.job.dataValues.id,
-                    tag: tag.toString()
-                }
-                models.JobTag.create(tags);
+            if (locals.attrs.tags) {
+                var tags;
+                var arrayData = locals.attrs.tags;
+                arrayData.forEach(function (tag) {
+                    tags = {
+                        jobId: locals.job.dataValues.id,
+                        tag: tag.toString()
+                    }
+                    models.JobTag.create(tags);
                 });
+            }
         })
         .then(function(){
             return locals.job;
@@ -163,18 +163,22 @@ var update = module.exports.update = Promise.method(function (context, id, attri
                     });
             })
             .then(function() {
-                return models.JobTag.destroy({where:{ jobId: locals.job.dataValues.id}, transaction: tx});
+                if (locals.attrs.tags) {
+                    return models.JobTag.destroy({where: {jobId: locals.job.dataValues.id}, transaction: tx});
+                }
             })
             .then(function(){
-                var tags;
-                var arrayData = locals.attrs.tags;
-                arrayData.forEach(function(tag) {
-                    tags = {
-                        jobId: locals.job.dataValues.id,
-                        tag: tag.toString()
-                    }
-                    models.JobTag.create(tags);
-                });
+                if (locals.attrs.tags) {
+                    var tags;
+                    var arrayData = locals.attrs.tags;
+                    arrayData.forEach(function (tag) {
+                        tags = {
+                            jobId: locals.job.dataValues.id,
+                            tag: tag.toString()
+                        }
+                        models.JobTag.create(tags);
+                    });
+                }
             });
         })
         .catch(function (err) {

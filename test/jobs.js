@@ -26,6 +26,7 @@ describe('JOBS API',
             });
         });
         var id_to_delete;
+        var id_to_delete2;
         it('create a new job', function (done) {
             superagent.post(prefix + '/organizations/' + testdata.AcmeCorp.id + '/workspaces/' + testdata.MyWorkspace.id + '/jobs')
                 .set('Content-Type', 'application/json')
@@ -43,6 +44,34 @@ describe('JOBS API',
                     expect(e).to.eql(null);
                     expect(res.header['content-type']).to.eql('application/json; charset=utf-8');
                     id_to_delete = res.body.job.id;
+                    expect(res.body.job.name).to.eql('TestName1');
+                    expect(res.body.job.active).to.eql(1);
+                    expect(res.body.job.archived).to.eql(0);
+                    expect(res.body.job.startsAt).to.eql('2014-08-21T10:00:11.000Z');
+                    expect(res.body.job.rrule).to.eql('FREQ=DAILY;INTERVAL=1;BYDAY=MO;BYHOUR=12;BYMINUTE=0;BYSECOND=0');
+                    expect(validator.isDate(res.body.job.createdAt)).to.be.ok();
+                    expect(validator.isDate(res.body.job.updatedAt)).to.be.ok();
+                    expect(res.status).to.eql(201);
+                    done();
+                });
+        });
+
+        it('create a new job without tags', function (done) {
+            superagent.post(prefix + '/organizations/' + testdata.AcmeCorp.id + '/workspaces/' + testdata.MyWorkspace.id + '/jobs')
+                .set('Content-Type', 'application/json')
+                .send({ 'job': {
+                    'name': 'TestName1',
+                    'active': 1,
+                    'archived': 0,
+                    'startsAt': '2014-08-21T10:00:11Z',
+                    'rrule': 'FREQ=DAILY;INTERVAL=1;BYDAY=MO;BYHOUR=12;BYMINUTE=0;BYSECOND=0'
+                }
+                })
+                .authenticate(accessToken)
+                .end(function (e, res) {
+                    expect(e).to.eql(null);
+                    expect(res.header['content-type']).to.eql('application/json; charset=utf-8');
+                    id_to_delete2 = res.body.job.id;
                     expect(res.body.job.name).to.eql('TestName1');
                     expect(res.body.job.active).to.eql(1);
                     expect(res.body.job.archived).to.eql(0);
@@ -106,13 +135,30 @@ describe('JOBS API',
                     done();
                 });
         });
-
-        it('update job', function (done) {
+        it('update job with tags', function (done) {
             superagent.put(prefix + '/organizations/' + testdata.AcmeCorp.id + '/workspaces/' + testdata.MyWorkspace.id + '/jobs/' + id_to_delete)
                 .set('Content-Type', 'application/json')
                 .send({ 'job':  {
                     'startsAt': '2014-08-21T10:00:11Z',
-                    'tags': ["updatededi", "updatedproduction"],
+                    'tags': ["updated edi"],
+                    'rrule': 'updatedFREQ=DAILY;INTERVAL=1;BYDAY=MO;BYHOUR=12;BYMINUTE=0;BYSECOND=0'
+                }
+                })
+                .authenticate(accessToken)
+                .end(function (e, res) {
+                    expect(e).to.eql(null);
+                    expect(res.header['content-type']).to.eql('application/json; charset=utf-8');
+                    expect(validator.isDate(res.body.job.startsAt)).to.be.ok();
+                    expect(res.status).to.eql(200);
+                    done();
+                });
+        });
+
+        it('update job without tags', function (done) {
+            superagent.put(prefix + '/organizations/' + testdata.AcmeCorp.id + '/workspaces/' + testdata.MyWorkspace.id + '/jobs/' + id_to_delete)
+                .set('Content-Type', 'application/json')
+                .send({ 'job':  {
+                    'startsAt': '2014-08-21T10:00:11Z',
                     'rrule': 'updatedFREQ=DAILY;INTERVAL=1;BYDAY=MO;BYHOUR=12;BYMINUTE=0;BYSECOND=0'
                 }
                 })
@@ -128,6 +174,18 @@ describe('JOBS API',
 
         it('delete job', function (done) {
             superagent.del(prefix + '/organizations/' + testdata.AcmeCorp.id + '/workspaces/' + testdata.MyWorkspace.id + '/jobs/' + id_to_delete)
+                .send()
+                .authenticate(accessToken)
+                .end(function (e, res) {
+                    expect(e).to.eql(null);
+                    expect(res.body.error).to.eql(undefined);
+                    expect(res.status).to.eql(204);
+                    done();
+                });
+        });
+
+        it('delete job2', function (done) {
+            superagent.del(prefix + '/organizations/' + testdata.AcmeCorp.id + '/workspaces/' + testdata.MyWorkspace.id + '/jobs/' + id_to_delete2)
                 .send()
                 .authenticate(accessToken)
                 .end(function (e, res) {
