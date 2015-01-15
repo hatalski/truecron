@@ -35,7 +35,7 @@ module.exports = function(environment) {
       'default-src': "'none'",
       'script-src': "'self' 'unsafe-inline' 'unsafe-eval' use.typekit.net connect.facebook.net maps.googleapis.com maps.gstatic.com",
       'font-src': "'self' data: use.typekit.net",
-      'connect-src': "'self' dev.truecron.com www.googleapis.com",
+      'connect-src': "'self' dev.truecron.com ws://dev.truecron.com www.googleapis.com",
       'img-src': "'self' www.facebook.com p.typekit.net data:",
       'style-src': "'self' 'unsafe-inline' use.typekit.net",
       'frame-src': "s-static.ak.facebook.com static.ak.facebook.com www.facebook.com"
@@ -64,6 +64,16 @@ module.exports = function(environment) {
     ENV.APP.API_HOST         = ENV.APP.HOST + '/api/v1';
     ENV.APP.SIGNUP_HOST      = ENV.APP.SERVER_HOST + '/auth/signup';
     ENV.APP.BETA_SIGNUP_HOST = ENV.APP.SERVER_HOST + '/beta/signup';
+
+    ENV.contentSecurityPolicy = {
+      'default-src': "'none'",
+      'script-src': "'self' 'unsafe-inline' 'unsafe-eval' use.typekit.net connect.facebook.net maps.googleapis.com maps.gstatic.com",
+      'font-src': "'self' data: use.typekit.net",
+      'connect-src': "'self' staging.truecron.com ws://staging.truecron.com www.googleapis.com",
+      'img-src': "'self' www.facebook.com p.typekit.net data:",
+      'style-src': "'self' 'unsafe-inline' use.typekit.net",
+      'frame-src': "s-static.ak.facebook.com static.ak.facebook.com www.facebook.com"
+    }
   }
 
   if (environment === 'production') {
@@ -71,6 +81,16 @@ module.exports = function(environment) {
     ENV.APP.API_HOST         = ENV.APP.HOST + '/api/v1';
     ENV.APP.SIGNUP_HOST      = ENV.APP.SERVER_HOST + '/auth/signup';
     ENV.APP.BETA_SIGNUP_HOST = ENV.APP.SERVER_HOST + '/beta/signup';
+
+    ENV.contentSecurityPolicy = {
+      'default-src': "'none'",
+      'script-src': "'self' 'unsafe-inline' 'unsafe-eval' use.typekit.net connect.facebook.net maps.googleapis.com maps.gstatic.com",
+      'font-src': "'self' data: use.typekit.net",
+      'connect-src': "'self' www.truecron.com ws://www.truecron.com www.googleapis.com",
+      'img-src': "'self' www.facebook.com p.typekit.net data:",
+      'style-src': "'self' 'unsafe-inline' use.typekit.net",
+      'frame-src': "s-static.ak.facebook.com static.ak.facebook.com www.facebook.com"
+    }
   }
 
   ENV['simple-auth'] = {
