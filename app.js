@@ -247,6 +247,10 @@ app.registerSockets = function(server)
         socket.on('disconnect', function(){
             logger.info('socket client disconnected');
         });
+        socket.on('ping', function(){
+            logger.info('ping received');
+            socket.emit('pong');
+        });
     });
 };
 module.exports = app;
