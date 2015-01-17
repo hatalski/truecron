@@ -1,4 +1,5 @@
 import Ember from 'ember';
+import ENV from 'true-cron/config/environment';
 
 export default Ember.ObjectController.extend({
     selectedRepeatRule: 'Daily',
@@ -36,7 +37,7 @@ export default Ember.ObjectController.extend({
     }.property('model.rrule', 'model.startsAt'),
     actions: {
         run: function(job) {
-          var socket = window.io('https://dev.truecron.com:443', {secure: true});
+          var socket = window.io(ENV.APP.SERVER_HOST + ':443', {secure: true});
           if(this.get('running') !== true)
           {
             socket.connect();
