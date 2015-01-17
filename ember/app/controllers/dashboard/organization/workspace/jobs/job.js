@@ -36,14 +36,15 @@ export default Ember.ObjectController.extend({
     }.property('model.rrule', 'model.startsAt'),
     actions: {
         run: function(job) {
-          var socket = window.io('ws://dev.truecron.com:3000');
+          var socket = window.io('https://dev.truecron.com:443', {secure: true});
           if(this.get('running') !== true)
           {
             socket.connect();
             socket.on('connect', function(){
               console.log('client connected');
-              socket.on('tco' + job.get('id'), function(msg){
-                console.log('response message: ' + msg);
+              socket.emit('ping');
+              socket.on('pong', function(){
+                console.log('pong received');
               });
             });
           }
