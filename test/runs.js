@@ -61,29 +61,29 @@ describe('RUNS API',
                 });
         });
 
-        //it('create a new run', function (done) {
-        //    superagent.post(prefix + '/jobs/'+id_to_delete+'/runs')
-        //        .set('Content-Type', 'application/json')
-        //        .authenticate(accessToken)
-        //        .send({ 'run': {
-        //            "jobId": id_to_delete,
-        //            'startedAt': '2014-08-21T10:00:11Z',
-        //            "startedByPersonId": updatedByPersonId,
-        //            "status": 5,
-        //            "elapsed": '1 day -01:00:00',
-        //            "message": "Hello World!"
-        //        }
-        //        })
-        //        .end(function (e, res) {
-        //            expect(e).to.eql(null);
-        //            expect(res.status).to.eql(201);
-        //            expect(res.header['content-type']).to.eql('application/json; charset=utf-8');
-        //            expect(res.body.error).to.eql(undefined);
-        //            id_run_to_delete = res.body.run.id;
-        //            expect(res.body.run.id).to.be.a('string');
-        //            done();
-        //        });
-        //});
+        it('create a new run', function (done) {
+            superagent.post(prefix + '/jobs/'+id_to_delete+'/runs')
+                .set('Content-Type', 'application/json')
+                .authenticate(accessToken)
+                .send({ 'run': {
+                    "jobId": id_to_delete,
+                    'startedAt': '2014-08-21T10:00:11Z',
+                    "startedByPersonId": updatedByPersonId,
+                    "status": 5,
+                    "elapsed": '10000',
+                    "message": "Hello World!"
+                }
+                })
+                .end(function (e, res) {
+                    expect(e).to.eql(null);
+                    expect(res.status).to.eql(201);
+                    expect(res.header['content-type']).to.eql('application/json; charset=utf-8');
+                    expect(res.body.error).to.eql(undefined);
+                    id_run_to_delete = res.body.run.id;
+                    expect(res.body.run.id).to.be.a('string');
+                    done();
+                });
+        });
 
         it('get all runs', function (done) {
             superagent.get(prefix + '/jobs/'+id_to_delete+'/runs')
