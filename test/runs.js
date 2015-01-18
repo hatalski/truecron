@@ -98,34 +98,32 @@ describe('RUNS API',
                 });
         });
 
-        //it('get run by id', function (done) {
-        //    var testDataIdJob=-222;
-        //    var testDataIdRun=-200;
-        //    superagent.get(prefix + '/jobs/' + testDataIdJob+'/runs/'+testDataIdRun)
-        //        .send()
-        //        .authenticate(accessToken)
-        //        .end(function (e, res) {
-        //            expect(e).to.eql(null);
-        //            expect(res.header['content-type']).to.eql('application/json; charset=utf-8');
-        //            expect(res.body.error).to.eql(undefined);
-        //            expect(res.body.run.id).to.be.a('string');
-        //            expect(validator.isDate(res.body.run.startedAt)).to.be.ok();
-        //            expect(res.status).to.eql(200);
-        //            done();
-        //        });
-        //});
-        //
-        //it('get non-existent run by id  should fail with 404', function (done) {
-        //    superagent.get(prefix + '/jobs/' + testDataIdJob+'/runs/-34654651')
-        //        .send()
-        //        .authenticate(accessToken)
-        //        .end(function (e, res) {
-        //            expect(e).to.eql(null);
-        //            expect(res.status).to.eql(404);
-        //            expect(res.body.error.status).to.eql(404);
-        //            done();
-        //        });
-        //});
+        it('get run by id', function (done) {
+            superagent.get(prefix + '/jobs/' + id_to_delete + '/runs/'+id_run_to_delete)
+                .send()
+                .authenticate(accessToken)
+                .end(function (e, res) {
+                    expect(e).to.eql(null);
+                    expect(res.header['content-type']).to.eql('application/json; charset=utf-8');
+                    expect(res.body.error).to.eql(undefined);
+                    expect(res.body.run.id).to.be.a('string');
+                    expect(validator.isDate(res.body.run.startedAt)).to.be.ok();
+                    expect(res.status).to.eql(200);
+                    done();
+                });
+        });
+
+        it('get non-existent run by id  should fail with 404', function (done) {
+            superagent.get(prefix + '/jobs/' + id_to_delete+'/runs/-34654651')
+                .send()
+                .authenticate(accessToken)
+                .end(function (e, res) {
+                    expect(e).to.eql(null);
+                    expect(res.status).to.eql(404);
+                    expect(res.body.error.status).to.eql(404);
+                    done();
+                });
+        });
 
         //it('update run', function (done) {
         //    superagent.put(prefix + '/jobs/' + id_to_delete+'/runs/'+id_run_to_delete)
