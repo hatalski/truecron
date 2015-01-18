@@ -35,7 +35,7 @@ module.exports = function(environment) {
       'default-src': "'none'",
       'script-src': "'self' 'unsafe-inline' 'unsafe-eval' use.typekit.net connect.facebook.net maps.googleapis.com maps.gstatic.com",
       'font-src': "'self' data: use.typekit.net",
-      'connect-src': "'self' dev.truecron.com wss://dev.truecron.com/ www.googleapis.com",
+      'connect-src': "'self' https://dev.truecron.com wss://dev.truecron.com/ www.googleapis.com",
       'img-src': "'self' www.facebook.com p.typekit.net data:",
       'style-src': "'self' 'unsafe-inline' use.typekit.net",
       'frame-src': "s-static.ak.facebook.com static.ak.facebook.com www.facebook.com"
@@ -48,7 +48,7 @@ module.exports = function(environment) {
     ENV.locationType = 'none';
 
     ENV.APP.SERVER_HOST      = 'https://localhost';
-    ENV.APP.API_HOST         = ENV.APP.HOST + '/api/v1';
+    ENV.APP.API_HOST         = ENV.APP.SERVER_HOST + '/api/v1';
     ENV.APP.SIGNUP_HOST      = ENV.APP.SERVER_HOST + '/auth/signup';
     ENV.APP.BETA_SIGNUP_HOST = ENV.APP.SERVER_HOST + '/beta/signup';
 
@@ -60,8 +60,9 @@ module.exports = function(environment) {
   }
 
   if (environment === 'staging') {
+    ENV.APP.HOST             = 'https://appstaging.truecron.com';
     ENV.APP.SERVER_HOST      = 'https://staging.truecron.com';
-    ENV.APP.API_HOST         = ENV.APP.HOST + '/api/v1';
+    ENV.APP.API_HOST         = ENV.APP.SERVER_HOST + '/api/v1';
     ENV.APP.SIGNUP_HOST      = ENV.APP.SERVER_HOST + '/auth/signup';
     ENV.APP.BETA_SIGNUP_HOST = ENV.APP.SERVER_HOST + '/beta/signup';
 
@@ -69,7 +70,7 @@ module.exports = function(environment) {
       'default-src': "'none'",
       'script-src': "'self' 'unsafe-inline' 'unsafe-eval' use.typekit.net connect.facebook.net maps.googleapis.com maps.gstatic.com",
       'font-src': "'self' data: use.typekit.net",
-      'connect-src': "'self' staging.truecron.com ws://staging.truecron.com wss://staging.truecron.com www.googleapis.com",
+      'connect-src': "'self' https://staging.truecron.com ws://staging.truecron.com wss://staging.truecron.com www.googleapis.com",
       'img-src': "'self' www.facebook.com p.typekit.net data:",
       'style-src': "'self' 'unsafe-inline' use.typekit.net",
       'frame-src': "s-static.ak.facebook.com static.ak.facebook.com www.facebook.com"
@@ -77,8 +78,9 @@ module.exports = function(environment) {
   }
 
   if (environment === 'production') {
+    ENV.APP.HOST             = 'https://app.truecron.com';
     ENV.APP.SERVER_HOST      = 'https://www.truecron.com';
-    ENV.APP.API_HOST         = ENV.APP.HOST + '/api/v1';
+    ENV.APP.API_HOST         = ENV.APP.SERVER_HOST + '/api/v1';
     ENV.APP.SIGNUP_HOST      = ENV.APP.SERVER_HOST + '/auth/signup';
     ENV.APP.BETA_SIGNUP_HOST = ENV.APP.SERVER_HOST + '/beta/signup';
 
@@ -86,7 +88,7 @@ module.exports = function(environment) {
       'default-src': "'none'",
       'script-src': "'self' 'unsafe-inline' 'unsafe-eval' use.typekit.net connect.facebook.net maps.googleapis.com maps.gstatic.com",
       'font-src': "'self' data: use.typekit.net",
-      'connect-src': "'self' www.truecron.com ws://www.truecron.com wss://www.truecron.com www.googleapis.com",
+      'connect-src': "'self' https://www.truecron.com ws://www.truecron.com wss://www.truecron.com www.googleapis.com",
       'img-src': "'self' www.facebook.com p.typekit.net data:",
       'style-src': "'self' 'unsafe-inline' use.typekit.net",
       'frame-src': "s-static.ak.facebook.com static.ak.facebook.com www.facebook.com"
@@ -116,7 +118,7 @@ module.exports = function(environment) {
         profileMethod: 'https://www.googleapis.com/plus/v1/people/me'
       }
     }
-  };
+  }
 
   return ENV;
 };
