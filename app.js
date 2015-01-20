@@ -235,4 +235,22 @@ storage.initialize()
 
 app.storage = storage;
 
+//
+// Register sockets
+//
+app.registerSockets = function(server)
+{
+    app.io = require('socket.io')(server);
+    logger.info('socket.io started');
+    app.io.on('connection', function(socket){
+        logger.info('socket client connected');
+        socket.on('disconnect', function(){
+            logger.info('socket client disconnected');
+        });
+        socket.on('ping', function(){
+            logger.info('ping received');
+            socket.emit('pong');
+        });
+    });
+};
 module.exports = app;

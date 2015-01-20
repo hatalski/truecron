@@ -1,4 +1,5 @@
 import Ember from 'ember';
+import ENV from 'true-cron/config/environment';
 
 export default Ember.ObjectController.extend({
     selectedRepeatRule: 'Daily',
@@ -36,8 +37,25 @@ export default Ember.ObjectController.extend({
     }.property('model.rrule', 'model.startsAt'),
     actions: {
         run: function(job) {
-            console.log('runnning job ' + job.get('name'));
-            this.set('running', true);
+          var socket = window.io(ENV.APP.SERVER_HOST + ':443', {secure: true});
+          if(this.get('running') !== true)
+          {
+            socket.connect();
+            socket.on('connect', function(){
+              console.log('client connected');
+              socket.emit('ping');
+              socket.on('pong', function(){
+                console.log('pong received');
+              });
+            });
+          }
+          else
+          {
+            socket.disconnect();
+          }
+
+          this.set('running', !this.get('running'));
+          console.log((this.get('running') ? 'runnning':'stop running') + ' job ' + job.get('name'));
         },
         rename: function(job) {
             console.log('rename to : ' + job.get('name'));
