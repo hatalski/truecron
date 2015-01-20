@@ -29,7 +29,6 @@ We will work with Ubuntu Server so we should download ubuntu box:
 
     vagrant box add ubuntu/trusty64
     git clone git@github.com:PerksLab/truecron.git
-    git clone git@github.com:PerksLab/vagrant.git
   
 It will take for about 2-10 minutes depends on your internenet connection. 
 

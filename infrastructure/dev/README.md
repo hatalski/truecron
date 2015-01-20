@@ -5,7 +5,7 @@ Instruction
 
 To create virtual servers you should run these commands:
 
-    cd vagrant/dev
+    cd truecron\infrastructure\dev\
     vagrant up
 
 Now you have new just created application and database servers. 
@@ -36,7 +36,7 @@ Database should be already to use. Two ways to use.
 ####From application host
 To connecto to database from application host just start psql with database host address:
 
-     psql -h 192.168.3.20
+     psql -h 192.168.3.10
 
 ####From database host
 To connecto to database from application host just start psql:
@@ -49,7 +49,6 @@ Please be sure you create project for all TrueCron folder. Not only for truecron
 So you should have such directories in your WebStorm project:
     .idea
     truecron
-    vagrant
 
 Ensure you correct setup VSC configuration for project. Go File -> Settings -> Version control and click all red "Add root" for "Unregistered Git root"
 
