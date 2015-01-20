@@ -1,0 +1,29 @@
+# -*- mode: ruby -*-
+# vi: set ft=ruby :
+
+VAGRANTFILE_API_VERSION = "2"
+
+Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
+  config.vm.box = "ubuntu/trusty64"
+#  config.vm.synced_folder ".", "/vagrant", disabled: true
+  config.vm.provision :shell, path: "provision/default.sh"
+
+  config.vm.define "application" do |application|
+    application.vm.hostname = "www.truecron.local"
+    application.vm.network :private_network, ip: "192.168.3.10"
+    application.vm.provision :shell, path: "provision/postgresql.sh"
+    application.vm.provision :shell, path: "provision/nodejs.sh"
+    application.vm.provision :shell, path: "provision/rabbitmq.sh"
+    application.vm.provision :shell, path: "provision/redis.sh"
+    application.vm.provision :shell, path: "provision/nodejs-psql.sh"
+    application.vm.provision :shell, path: "provision/nodejs-bower.sh"
+    application.vm.provision :shell, path: "provision/nodejs-truecron.sh"
+    application.vm.provision :shell, path: "provision/debugproxy.sh", run: "always"
+    application.vm.provision :shell, path: "provision/nodejs-truecron-start.sh", run: "always"
+
+    # dv: no more sync via vagrant magic. use webstorm
+    #application.vm.synced_folder "./../../", "/var/www/truecron"
+    #application.vm.synced_folder "./server", "/var/www/server"
+  end
+
+end
