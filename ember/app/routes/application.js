@@ -1,9 +1,8 @@
 import Ember from 'ember';
-import {configurable} from 'torii/configuration';
+import ENV from 'true-cron/config/environment';
 import ApplicationRouteMixin from 'simple-auth/mixins/application-route-mixin';
 
 export default Ember.Route.extend(ApplicationRouteMixin, {
-	serverSignUpEndpoint: configurable('serverSignUpEndpoint'),
 	actions: {
 		authenticateSession: function() {
 			Ember.Logger.log('authenticateSession called');
@@ -38,8 +37,8 @@ export default Ember.Route.extend(ApplicationRouteMixin, {
 					name: profile.displayName, 
 					extensionData: profile
 				};
-
-				var result = Ember.$.ajax(self.get('serverSignUpEndpoint'), {
+				Ember.Logger.log('serverSignUpEndpoint : ' + ENV.APP.SIGNUP_HOST);
+				var result = Ember.$.ajax(ENV.APP.SIGNUP_HOST, {
 					type: 'POST',
 					contentType: 'application/json',
 					dataType: 'json',
