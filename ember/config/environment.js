@@ -16,11 +16,12 @@ module.exports = function(environment) {
     APP: {
       // Here you can pass flags/options to your application instance
       // when it is created
-      HOST: 'http://localhost:4200',
-      SERVER_HOST: 'https://dev.truecron.com',
-      API_HOST: 'https://dev.truecron.com/api/v1',
-      SIGNUP_HOST: 'https://dev.truecron.com/auth/signup',
-      BETA_SIGNUP_HOST: 'https://dev.truecron.com/beta/signup'
+      HOST:             'http://localhost:4200',
+      SERVER_HOST:      'https://dev.truecron.com',
+      API_HOST:         'https://dev.truecron.com/api/v1',
+      SIGNUP_HOST:      'https://dev.truecron.com/auth/signup',
+      BETA_SIGNUP_HOST: 'https://dev.truecron.com/beta/signup',
+      GOOGLE_API_KEY:   '182911798819-t360tlk839gij3m46pgo4noticrqi4s3.apps.googleusercontent.com'
     }
   };
 
@@ -51,6 +52,7 @@ module.exports = function(environment) {
     ENV.APP.API_HOST         = ENV.APP.SERVER_HOST + '/api/v1';
     ENV.APP.SIGNUP_HOST      = ENV.APP.SERVER_HOST + '/auth/signup';
     ENV.APP.BETA_SIGNUP_HOST = ENV.APP.SERVER_HOST + '/beta/signup';
+    ENV.APP.GOOGLE_API_KEY   = '411638818068-g7l3kh9pifo0jbsauepb5sa9tt855a0s.apps.googleusercontent.com';
 
     // keep test console output quieter
     ENV.APP.LOG_ACTIVE_GENERATION = false;
@@ -65,6 +67,7 @@ module.exports = function(environment) {
     ENV.APP.API_HOST         = ENV.APP.SERVER_HOST + '/api/v1';
     ENV.APP.SIGNUP_HOST      = ENV.APP.SERVER_HOST + '/auth/signup';
     ENV.APP.BETA_SIGNUP_HOST = ENV.APP.SERVER_HOST + '/beta/signup';
+    ENV.APP.GOOGLE_API_KEY   = '640877791996-juctck3aimf9f2i99vf3aa3lo9597dbq.apps.googleusercontent.com';
 
     ENV.contentSecurityPolicy = {
       'default-src': "'none'",
@@ -83,6 +86,7 @@ module.exports = function(environment) {
     ENV.APP.API_HOST         = ENV.APP.SERVER_HOST + '/api/v1';
     ENV.APP.SIGNUP_HOST      = ENV.APP.SERVER_HOST + '/auth/signup';
     ENV.APP.BETA_SIGNUP_HOST = ENV.APP.SERVER_HOST + '/beta/signup';
+    ENV.APP.GOOGLE_API_KEY   = '584720647348-sfa16c6nriakjntd90qh05togeigs6co.apps.googleusercontent.com';
 
     ENV.contentSecurityPolicy = {
       'default-src': "'none'",
@@ -111,7 +115,7 @@ module.exports = function(environment) {
     sessionServiceName: 'session',
     providers: {
       'google-token': {
-        apiKey: '182911798819-t360tlk839gij3m46pgo4noticrqi4s3.apps.googleusercontent.com',
+        apiKey: ENV.APP.GOOGLE_API_KEY,
         scope: 'openid profile email',
         redirectUri: ENV.APP.HOST,
         serverSignUpEndpoint: ENV.APP.SIGNUP_HOST,

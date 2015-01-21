@@ -14,7 +14,7 @@ var GoogleToken = Oauth2Bearer.extend({
   scope: configurable('scope', 'email'),
   state: configurable('state', 'STATE'),
   redirectUri: configurable('redirectUri'),
-  serverSignUpEndpoint: configurable('serverSignUpEndpoint'),
+  //serverSignUpEndpoint: configurable('serverSignUpEndpoint'),
   profileMethodEndpoint: configurable('profileMethod'),
 
   open: function(options) {
