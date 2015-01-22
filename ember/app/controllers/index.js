@@ -17,6 +17,7 @@ export default Ember.Controller.extend(LoginControllerMixin, {
 	isPasswordError: false,
 	signupPasswordConfirm: '',
 	isPasswordConfirmError: false,
+	hideSignUpButton: ENV.APP.HIDE_SIGNUP,
     actions: {
     	authenticate: function(options) {
 	  		this._super(options);

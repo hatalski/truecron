@@ -21,7 +21,8 @@ module.exports = function(environment) {
       API_HOST:         'https://dev.truecron.com/api/v1',
       SIGNUP_HOST:      'https://dev.truecron.com/auth/signup',
       BETA_SIGNUP_HOST: 'https://dev.truecron.com/beta/signup',
-      GOOGLE_API_KEY:   '182911798819-t360tlk839gij3m46pgo4noticrqi4s3.apps.googleusercontent.com'
+      GOOGLE_API_KEY:   '182911798819-t360tlk839gij3m46pgo4noticrqi4s3.apps.googleusercontent.com',
+      HIDE_SIGNUP:      false
     }
   };
 
@@ -87,6 +88,7 @@ module.exports = function(environment) {
     ENV.APP.SIGNUP_HOST      = ENV.APP.SERVER_HOST + '/auth/signup';
     ENV.APP.BETA_SIGNUP_HOST = ENV.APP.SERVER_HOST + '/beta/signup';
     ENV.APP.GOOGLE_API_KEY   = '584720647348-sfa16c6nriakjntd90qh05togeigs6co.apps.googleusercontent.com';
+    ENV.APP.HIDE_SIGNUP      = true;
 
     ENV.contentSecurityPolicy = {
       'default-src': "'none'",
