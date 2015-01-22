@@ -8,18 +8,23 @@ export default Ember.Route.extend(ApplicationRouteMixin, {
 			Ember.Logger.log('authenticateSession called');
 			this._super();
 	    },
-		sessionAuthenticationFailed: function() {
+		sessionAuthenticationFailed: function(error) {
+			Ember.Logger.log(error);
 			Ember.Logger.log('sessionAuthenticationFailed called');
-			Ember.$('#loginPassword').popover({
-				title: 'Authentication failed.',
-				content: 'Please check your credentials and try again.',
-				placement: 'bottom',
-				trigger: 'manual'
-			});
-			Ember.$('#loginPassword').popover('show');
-			setTimeout(function(){
-				Ember.$('#loginPassword').popover('hide');
-			}, 5000);
+			// invalid_grant error returned from server when credentials are incorrect
+			if (error.error === 'invalid_grant') {
+				Ember.Logger.log('authenticator: authenticator:truecron');
+				Ember.$('#loginPassword').popover({
+					title: 'Authentication failed.',
+					content: 'Please check your credentials and try again.',
+					placement: 'bottom',
+					trigger: 'manual'
+				});
+				Ember.$('#loginPassword').popover('show');
+				setTimeout(function(){
+					Ember.$('#loginPassword').popover('hide');
+				}, 5000);
+			}
 			this._super();
 		},
 		sessionAuthenticationSucceeded: function() {
@@ -69,7 +74,7 @@ export default Ember.Route.extend(ApplicationRouteMixin, {
 					return { error: error };
 				});
 			} else {
-				Ember.Logger.log('authenticator: authenticator:application');
+				Ember.Logger.log('authenticator: authenticator:truecron');
 				this._super();
 			}
 		}
