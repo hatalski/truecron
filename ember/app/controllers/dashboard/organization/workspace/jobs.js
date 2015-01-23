@@ -1,24 +1,38 @@
-import Ember from 'ember';
+/*App = Ember.Application.create();
+App.ApplicationController = Ember.Controller.extend({
+  ishidesidebar: true,
+  actions: {
+    hidesidebar: function () {
+      this.toggleProperty('ishidesidebar');
+    }
+  }
 
+});
+*/
+import Ember from 'ember';
 export default Ember.ArrayController.extend({
 	needs: ['dashboard', 'dashboard/organization', 'dashboard/organization/workspace'],
-    sortProperties: ['name'],
-    sortAscending: true,
-    itemController: 'dashboard.organization.workspace.jobs.job',
-    workspace: null,
+  sortProperties: ['name'],
+  sortAscending: true,
+  itemController: 'dashboard.organization.workspace.jobs.job',
+  workspace: null,
+  ishidesidebar: true,
 	actions: {
+    hidesidebar: function () {
+      this.toggleProperty('ishidesidebar');
+    }, 
 		addjob: function() {
 		    var self = this;
 		    var workspace = self.get('workspace');
 		    var user = self.get('session.user');
 		    var newJob = self.store.createRecord('job', {
 		    	name: ' unnamed job',
-	            workspace: workspace,
-		    	startsAt: new Date(),
-	            rrule: 'FREQ=MONTHLY;BYDAY=+3TU',
-	            active: true,
-	            archived: false,
-	            updatedBy: user
+          workspace: workspace,
+          startsAt: new Date(),
+          rrule: 'FREQ=MONTHLY;BYDAY=+3TU',
+          active: true,
+          archived: false,
+          updatedBy: user
 		    });
 		    newJob.save().then(function(result) {
 		    	self.transitionToRoute('dashboard.organization.workspace.jobs.job', result);
