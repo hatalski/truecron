@@ -17,26 +17,12 @@ var routes = require('./routes/index');
 var users = require('./routes/users');
 var auth = require('./routes/auth');
 var beta = require('./routes/beta');
-//var api = require('./routes/api');
 
 var oauth = require('./backend/oauth');
 var api = require('./backend/api/api');
 var storage = require('./backend/storage');
 
-//var exphbs  = require('express-handlebars');
-
 var app = express();
-
-//// view engine setup
-//var hbs = exphbs.create({
-//    defaultLayout: 'default',
-//    helpers: require("./public/js/lib/handlebars-helpers.js").helpers
-//});
-//// dv: adding new helper "rawinclude" to handlebars
-//require('handlebars-helper-rawinclude').register(hbs.handlebars, {}, {assemble: null});
-//
-//app.engine('handlebars', hbs.engine);
-//app.set('view engine', 'handlebars');
 
 // redirect to https if accessing over http
 app.use(function(req, res, next) {
