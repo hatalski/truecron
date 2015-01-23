@@ -18,7 +18,7 @@ var options = {
 	cert: fs.readFileSync(config.get('CERTIFICATE_PATH'))
 };
 var secureServer = https.createServer(options, app).listen(config.get('SECURE_PORT'), function() {
-	log.info('Express http server listening on port ' + this.address().port);
+	log.info('Express https server listening on port ' + this.address().port);
 });
 
 app.registerSockets(secureServer);
