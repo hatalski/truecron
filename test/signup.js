@@ -129,7 +129,7 @@ describe('REAL SIGN UP',
 
         it('sign up should success when email and password are valid', function(done) {
             superagent.post(prefix + '/auth/signup')
-                .send({ email: 'vhatalski@naviam.com', password: 'P@ssw0rd', sendEmail: false })
+                .send({ email: 'vhatalski2@naviam.com', password: 'P@ssw0rd', sendEmail: false })
                 .end(function (e, res) {
                     expect(e).to.eql(null);
                     //console.dir(res.body);
@@ -188,7 +188,7 @@ describe('REAL SIGN UP',
 
         it('cancel account should work', function(done) {
             superagent.post(prefix + '/auth/cancelaccount')
-                .send({ email: 'vhatalski@naviam.com' })
+                .send({ email: 'vhatalski2@naviam.com' })
                 .end(function (e, res) {
                     expect(e).to.eql(null);
                     console.dir(res.body);
