@@ -1,5 +1,6 @@
 {
     "BASE_URL": "https://staging.truecron.com",
+    "CLIENT_URL": "https://appstaging.truecron.com",
     "SESSION_SECRET": "staging-truecron-Hhe34Jls0J04",
     "SECURE_PORT": 443,
     "PRIVATE_KEY_PATH": "/srv/www/stweb/shared/config/ssl.key",
