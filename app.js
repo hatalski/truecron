@@ -14,7 +14,6 @@ var redisClient = require('./lib/redis');
 var RedisStore = require('connect-redis')(session);
 
 var routes = require('./routes/index');
-var users = require('./routes/users');
 var auth = require('./routes/auth');
 var beta = require('./routes/beta');
 
@@ -97,7 +96,6 @@ app.get('/configs', function(req,res) {
 app.use('/', routes);
 app.use('/auth', auth);
 app.use('/beta', beta);
-app.use('/users', users);
 app.use('/oauth', oauth.oAuthServer); // OAuth2 server, handles password and "google" authentication
 app.use('/api/v1', api); // REST API endpoint
 
