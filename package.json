@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "start": "supervisor -i public --debug server.js",
-    "test": "mocha backend/test -R spec --timeout 10000"
+    "test": "mocha server/test -R spec --timeout 10000"
   },
   "dependencies": {
     "archiver": "^0.12.0",

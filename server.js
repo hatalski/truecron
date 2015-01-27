@@ -2,9 +2,9 @@
 var https = require('https');
 var http = require('http');
 var fs = require('fs');
-var log = require('./backend/lib/logger');
-var app = require('./backend/app');
-var config = require('./backend/lib/config');
+var log = require('./server/lib/logger');
+var app = require('./server/app');
+var config = require('./server/lib/config');
 
 var server = http.createServer(app).listen(config.get('PORT'), function() {
 	log.info('Express http server listening on port ' + this.address().port);
