@@ -71,8 +71,8 @@ insert into tc.History (id, updatedByPersonId, organizationId, workspaceId, jobI
     where not exists (select * from tc.History
     where id = -56);
 
-insert into tc.Job (id, workspaceId, name, createdAt, updatedAt, updatedByPersonId, rrule)
-    select -13, -12, 'My workspace test job', 'now', 'now', -10, 'FREQ=WEEKLY;COUNT=30;WKST=MO'
+insert into tc.Job (id, organizationId, workspaceId, name, createdAt, updatedAt, updatedByPersonId, rrule)
+    select -13, -11, -12, 'My workspace test job', 'now', 'now', -10, 'FREQ=WEEKLY;COUNT=30;WKST=MO'
     where not exists (select * from tc.Job
     where id = -13);
 
@@ -116,8 +116,8 @@ insert into tc.TaskType (id, name)
     where not exists (select * from tc.TaskType
     where id = 6);
 
-insert into tc.Task (id, jobId, name, position, taskTypeId, settings, timeout, createdAt, updatedAt, updatedByPersonId)
-    select -14, -13, 'My workspace test job task', 1, 5, '{}', 30000, 'now', 'now', -10
+insert into tc.Task (id, organizationId, workspaceId, jobId, name, position, taskTypeId, settings, timeout, createdAt, updatedAt, updatedByPersonId)
+    select -14, -11, -12, -13, 'My workspace test job task', 1, 5, '{}', 30000, 'now', 'now', -10
     where not exists (select * from tc.Task
     where id = -14);
 
@@ -247,8 +247,8 @@ insert into tc.History (id, updatedByPersonId, organizationId, workspaceId, jobI
     where not exists (select * from tc.History
     where id = -67);
 
-insert into tc.Job (id, workspaceId, name, updatedByPersonId, rrule)
-    select -222, -22, 'TestDataName1', -1, 'rruleTextTralala'
+insert into tc.Job (id, organizationId, workspaceId, name, updatedByPersonId, rrule)
+    select -222, -21, -22, 'TestDataName1', -1, 'rruleTextTralala'
     where not exists (select * from tc.Job
     where id = -222);
 
@@ -257,7 +257,7 @@ insert into tc.History (id, updatedByPersonId, organizationId, workspaceId, jobI
     where not exists (select * from tc.History
     where id = -68);
 
-insert into tc.Run (id, jobId, status, elapsed)
-    select -200, -222, 15, 24*60*60*1000
+insert into tc.Run (id, organizationId, workspaceId, jobId, status, elapsed)
+    select -200, -21, -22, -222, 15, 24*60*60*1000
     where not exists (select * from tc.Run
     where id = -200);
