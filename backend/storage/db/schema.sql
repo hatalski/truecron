@@ -465,6 +465,14 @@ if not HasSchemaVersion(12) then
 end if;
 end $$;
 
+do $$
+begin
+if not HasSchemaVersion(12) then
+    alter table tc.Person add column deleted smallint not null default 0;
+    perform CommitSchemaVersion(12, 'Users are not deleted anymore, instead they are marked deleted.');
+end if;
+end $$;
+
 -- Use the snippet as a template:
 --
 -- do $$

@@ -191,17 +191,18 @@ var create = module.exports.create = Promise.method(function (context, attribute
     attributes.updatedByPersonId = context.personId;
     return processPassword(attributes).bind({})
         .then(function (attrs) {
-            var self = { attrs: attrs };
+            var locals = { attrs: attrs };
             return using (models.transaction(), function (tx) {
-                self.tx = tx;
-                return models.Person.create(self.attrs, { transaction: tx })
+                locals.tx = tx;
+                return models.Person.create(locals.attrs, { transaction: tx })
                     .then(function (person) {
-                        self.person = person;
-                        return history.logCreated(context.personId, context.links.user(person.id), person, self.tx);
-                    })
-                    .then(function () {
-                        cache.put(getPersonIdCacheKey(self.person.id), self.person);
-                        return self.person;
+                        locals.person = person;
+                        return Promise.join(
+                            history.logCreated(context.personId, { personId: person.id }, person, locals.tx),
+                            cache.put(getPersonIdCacheKey(locals.person.id), locals.person),
+                            function () {
+                                return locals.person;
+                            });
                     });
             });
         })
@@ -221,24 +222,26 @@ var update = module.exports.update = Promise.method(function (context, id, attri
     attributes.updatedByPersonId = context.personId;
     return processPassword(attributes).bind({})
         .then(function (attrs) {
-            var self = { attrs: attrs };
+            var locals = { attrs: attrs };
             return using (models.transaction(), function (tx) {
-                self.tx = tx;
+                locals.tx = tx;
                 return findById(context, id, tx)
                     .then(function (person) {
                         if (person === null) {
                             throw new errors.NotFound();
                         }
-                        self.oldPerson = person;
-                        return person.updateAttributes(self.attrs, { transaction: self.tx });
+                        locals.oldPerson = person;
+                        return person.updateAttributes(locals.attrs, { transaction: locals.tx });
                     })
                     .then(function (person) {
-                        self.person = person;
-                        return history.logUpdated(context.personId, context.links.user(person.id), person, self.oldPerson, self.tx);
-                    })
-                    .then(function () {
-                        cache.put(getPersonIdCacheKey(self.person.id), self.person);
-                        return self.person;
+                        locals.person = person;
+                        return Promise.join(
+                            history.logUpdated(context.personId, { personId: person.id }, person, locals.oldPerson, locals.tx),
+                            cache.put(getPersonIdCacheKey(locals.person.id), locals.person),
+                            function() {
+                                return locals.person;
+                            }
+                        );
                     });
             });
         })
@@ -251,28 +254,34 @@ var update = module.exports.update = Promise.method(function (context, id, attri
 /**
  * Remove a person.
  * @param {int} id Person ID.
+ * @param {boolean} force If false, the person is marked as deleted. If true, the person is actually removed.
  */
-var remove = module.exports.remove = Promise.method(function (context, id) {
-    return using (models.transaction(), function (tx) {
-        var self = { tx: tx };
+var remove = module.exports.remove = Promise.method(function (context, id, force) {
+    return using(models.transaction(), function (tx) {
+        var locals = { tx: tx };
         return findById(context, id)
             .then(function (person) {
                 if (person === null) {
                     // No found, that's ok for remove() operation
                     return;
                 }
-                self.person = person;
-                return history.cleanUserLogs(person.id, self.tx)
-                    .then(function() {
-                        return person.destroy({transaction: self.tx});
-                    })
-                    //.then(function () {
-                    //    return history.logRemoved(context.personId, context.links.user(self.person.id), self.person, self.tx);
-                    //})
-                    .then(function () {
-                        cache.remove(getPersonIdCacheKey(self.person.id),
-                            getEmailsByPersonIdCacheKey(self.person.id));
-                    });
+                locals.person = person;
+                if (force) {
+                    return history.cleanUserLogs(person.id, locals.tx)
+                        .then(function() {
+                            return person.destroy({transaction: locals.tx});
+                        });
+                } else {
+                    return person.updateAttributes({ deleted: true }, { transaction: locals.tx });
+                }
+            })
+            .then(function () {
+                return Promise.join(
+                    history.logRemoved(context.personId, { personId: locals.person.id }, locals.person, locals.tx),
+                    cache.remove(getPersonIdCacheKey(locals.person.id), getEmailsByPersonIdCacheKey(locals.person.id)),
+                    function() {
+                    }
+                );
             });
     })
     .catch(function (err) {
@@ -335,25 +344,27 @@ var addEmail = module.exports.addEmail = Promise.method(function (context, perso
         throw new errors.InvalidParams('Invalid status');
     }
     return using (models.transaction(), function (tx) {
-        var self = { tx: tx };
+        var locals = { tx: tx };
         return models.PersonEmail.create({
                 personId: personId,
                 email: email,
                 status: status
             }, {transaction: tx})
             .then(function (result) {
-                self.result = result;
-                cache.remove(getEmailsByPersonIdCacheKey(personId));
-                cache.put(getPersonIdByEmailCacheKey(email), personId);
-                return history.log(context.personId, context.links.user(personId), 'email-add', { email: email, status: status }, {}, self.tx);
-            })
-            .then(function () {
-                return self.result;
-            })
-            .catch(function (err) {
-                logger.error('Failed to add a email for person %d, %s.', personId, err.toString());
-                throw err;
+                locals.result = result;
+                return Promise.join(
+                    history.log(context.personId, { personId: personId }, 'email-add', { email: email, status: status }, {}, locals.tx),
+                    cache.remove(getEmailsByPersonIdCacheKey(personId)),
+                    cache.put(getPersonIdByEmailCacheKey(email), personId),
+                    function () {
+                        return locals.result;
+                    }
+                );
             });
+    })
+    .catch(function (err) {
+        logger.error('Failed to add a email for person %d, %s.', personId, err.toString());
+        throw err;
     });
 });
 
@@ -389,48 +400,76 @@ var changeEmailStatus = module.exports.changeEmailStatus = Promise.method(functi
         throw new errors.InvalidParams('Invalid status');
     }
     return using(models.transaction(), function (tx) {
-        var self = { tx: tx };
-        return findEmail(context, personId, emailIdOrValue, self.tx)
+        var locals = { tx: tx };
+        return findEmail(context, personId, emailIdOrValue, locals.tx)
             .then(function (email) {
                 if (email === null) {
                     throw new errors.NotFound();
                 }
-                return email.updateAttributes({ status: newStatus }, { transaction: self.tx });
+                return email.updateAttributes({ status: newStatus }, { transaction: locals.tx });
             })
             .then(function (email) {
-                self.email = email;
-                return history.log(context.personId, context.links.user(personId), 'email-change-status',
-                                    { email: email, status: newStatus }, email, self.tx);
+                locals.email = email;
+                return history.log(context.personId, { personId: personId }, 'email-change-status',
+                                    { email: email, status: newStatus }, email, locals.tx);
             })
             .then(function () {
-                return self.email;
-            })
-            .catch(function (err) {
-                logger.error('Failed to update a status of email %s of the person %d, %s.', emailIdOrValue, personId, err.toString());
-                throw err;
+                return locals.email;
             });
+    })
+    .catch(function (err) {
+        logger.error('Failed to update a status of email %s of the person %d, %s.', emailIdOrValue, personId, err.toString());
+        throw err;
     });
+});
+
+var removePersonEmails = Promise.method(function (context, personId, transaction) {
+    return models.PersonEmail.findAll({ personId: personId })
+        .each(function (email) {
+            var personEmail = email;
+            return personEmail.destroy({ transaction: transaction })
+                .then(function () {
+                    return Promise.join(
+                        history.log(context.personId, { personId: personId }, 'email-remove',
+                            { email: personEmail.email }, personEmail, transaction),
+                        cache.remove(getEmailsByPersonIdCacheKey(personId), getPersonIdByEmailCacheKey(personEmail.email)),
+                        function() {
+                        }
+                    );
+                });
+        })
+        .then(function () {
+            return cache.remove(getEmailsByPersonIdCacheKey(personId));
+        })
+        .catch(function (err) {
+            logger.error('Failed to remove emails of the person %d, %s.', personId, err.toString());
+            throw err;
+        });
 });
 
 var removeEmail = module.exports.removeEmail = Promise.method(function (context, personId, emailIdOrValue) {
     return using(models.transaction(), function (tx) {
-        var self = { tx: tx };
+        var locals = { tx: tx };
         return findEmail(context, personId, emailIdOrValue, tx)
             .then(function (personEmail) {
                 if (personEmail === null) {
                     return; // Ok, nothing to delete
                 }
-                self.personEmail = personEmail;
-                return personEmail.destroy({transaction: self.tx})
+                locals.personEmail = personEmail;
+                return personEmail.destroy({transaction: locals.tx})
                     .then(function () {
-                        cache.remove(getEmailsByPersonIdCacheKey(personId), getPersonIdByEmailCacheKey(self.personEmail.email));
-                        return history.log(context.personId, context.links.user(personId), 'email-remove',
-                                            {email: self.personEmail.email}, self.personEmail, self.tx);
+                        return Promise.join(
+                            history.log(context.personId, { personId: personId }, 'email-remove',
+                                { email: locals.personEmail.email }, locals.personEmail, locals.tx),
+                            cache.remove(getEmailsByPersonIdCacheKey(personId), getPersonIdByEmailCacheKey(locals.personEmail.email)),
+                            function() {
+                            }
+                        );
                     });
-            })
-            .catch(function (err) {
-                logger.error('Failed to remove the email %s from person %d, %s.', emailIdOrValue, personId, err.toString());
-                throw err;
             });
+    })
+    .catch(function (err) {
+        logger.error('Failed to remove the email %s from person %d, %s.', emailIdOrValue, personId, err.toString());
+        throw err;
     });
 });
