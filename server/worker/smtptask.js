@@ -2,9 +2,9 @@
  * Created by estet on 10/23/14.
  */
 var task = require('./task'),
-    transporter = require('../../lib/smtp'),
+    transporter = require('../lib/smtp'),
     util = require('util'),
-    logger = require('../../lib/logger');
+    logger = require('../lib/logger');
 
 
 

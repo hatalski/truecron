@@ -1,7 +1,7 @@
 /**
  * Created by estet on 10/23/14.
  */
-var logger = require('../../lib/logger');
+var logger = require('../lib/logger');
 
 var taskStatusEnum =
 {
