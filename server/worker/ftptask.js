@@ -12,9 +12,9 @@
  */
 
 var task = require('./task'),
-    transporter = require('../../lib/smtp'),
+    transporter = require('../lib/smtp'),
     util = require('util'),
-    logger = require('../../lib/logger');
+    logger = require('../lib/logger');
 var FTPS = require('ftps');
 
 var SftpTask = function(connection, ftpCommands)

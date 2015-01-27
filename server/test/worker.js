@@ -5,11 +5,11 @@ var expect     = require('expect.js');
 var validator  = require('validator');
 var config     = require('../lib/config.js');
 var log        = require('../lib/logger.js');
-var smtpTask   = require('../api/worker/smtptask');
-var jobRunner  = require('../api/worker/jobRunner');
-var FtpTask    = require('../api/worker/ftptask');
-var ArchiveTask = require('../api/worker/archivetask');
-var S3logger = require('../api/worker/loggers/s3Log');
+var smtpTask   = require('../worker/smtptask');
+var jobRunner  = require('../worker/jobRunner');
+var FtpTask    = require('../worker/ftptask');
+var ArchiveTask = require('../worker/archivetask');
+var S3logger = require('../worker/loggers/s3Log');
 
 var mailTask;
 
