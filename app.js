@@ -13,33 +13,15 @@ var session = require('express-session');
 var redisClient = require('./lib/redis');
 var RedisStore = require('connect-redis')(session);
 
-var passport = require('passport'),
-    GoogleStrategy = require('passport-google-oauth').OAuth2Strategy;
-
 var routes = require('./routes/index');
-var users = require('./routes/users');
 var auth = require('./routes/auth');
 var beta = require('./routes/beta');
-//var api = require('./routes/api');
 
 var oauth = require('./backend/oauth');
 var api = require('./backend/api/api');
 var storage = require('./backend/storage');
 
-var exphbs  = require('express-handlebars');
-
 var app = express();
-
-// view engine setup
-var hbs = exphbs.create({
-    defaultLayout: 'default',
-    helpers: require("./public/js/lib/handlebars-helpers.js").helpers
-});
-// dv: adding new helper "rawinclude" to handlebars
-require('handlebars-helper-rawinclude').register(hbs.handlebars, {}, {assemble: null});
-
-app.engine('handlebars', hbs.engine);
-app.set('view engine', 'handlebars');
 
 // redirect to https if accessing over http
 app.use(function(req, res, next) {
@@ -86,52 +68,6 @@ app.use(function(req, res, next) {
     }
 });
 
-// passport initialization
-app.use(passport.initialize());
-app.use(passport.session());
-
-passport.serializeUser(function(user, done) {
-    console.log('serializeUser');
-    console.log(user);
-    done(null, user);
-});
-
-passport.deserializeUser(function(user, done) {
-    console.log('deserializeUser');
-    console.log(user);
-    done(null, user);
-});
-
-passport.use('google', new GoogleStrategy({
-        clientID: config.get('GOOGLE_SSO_CLIENT_ID') || '182911798819-t360tlk839gij3m46pgo4noticrqi4s3.apps.googleusercontent.com',
-        clientSecret: config.get('GOOGLE_SSO_CLIENT_SECRET') || '1gcqd1YRgD-Ui3vYyYu7z926',
-        callbackURL: config.get('GOOGLE_SSO_CALLBACK_URL') || 'http://dev.truecron.com/auth/google/callback'
-    },
-    function(accessToken, refreshToken, profile, done) {
-        // asynchronous verification, for effect...
-        process.nextTick(function () {
-            // console.log(profile);
-            // To keep the example simple, the user's Google profile is returned to represent the logged-in user
-            return done(null, profile);
-        });
-    }
-));
-
-app.get('/auth/google', passport.authenticate('google', { scope: [
-    'https://www.googleapis.com/auth/userinfo.profile',
-    'https://www.googleapis.com/auth/userinfo.email'
-]}));
-
-app.get('/auth/google/callback',
-    passport.authenticate('google', { failureRedirect: '/#/signin' }),
-    function(req, res) {
-        // dv: TODO: save token to storage
-        // console.log(req.user);
-
-        // Successful authentication, redirect home.
-        res.redirect('/');
-});
-
 app.get('/configs', function(req,res) {
    res.json(
        {
@@ -160,35 +96,10 @@ app.get('/configs', function(req,res) {
 app.use('/', routes);
 app.use('/auth', auth);
 app.use('/beta', beta);
-app.use('/users', users);
 app.use('/oauth', oauth.oAuthServer); // OAuth2 server, handles password and "google" authentication
 app.use('/api/v1', api); // REST API endpoint
 
 app.use(logger.errorLogger);
-
-app.get('/taskdetails', function (req, res) {
-    res.sendfile('taskdetails.html');
-});
-
-app.get('/smtptask', function (req, res) {
-    res.sendfile('smtptask.html');
-});
-
-app.get('/archivetask', function (req, res) {
-    res.sendfile('archivetask.html');
-});
-
-app.get('/executetask', function (req, res) {
-    res.sendfile('executetask.html');
-});
-
-app.get('/manageorganization', function (req, res) {
-    res.sendfile('manageorganization.html');
-});
-
-app.get('/manageorganizationws', function (req, res) {
-    res.sendfile('manageorganizationws.html');
-});
 
 /// catch 404 and forward to error handler
 app.use(function(req, res, next) {
@@ -235,4 +146,22 @@ storage.initialize()
 
 app.storage = storage;
 
+//
+// Register sockets
+//
+app.registerSockets = function(server)
+{
+    app.io = require('socket.io')(server);
+    logger.info('socket.io started');
+    app.io.on('connection', function(socket){
+        logger.info('socket client connected');
+        socket.on('disconnect', function(){
+            logger.info('socket client disconnected');
+        });
+        socket.on('ping', function(){
+            logger.info('ping received');
+            socket.emit('pong');
+        });
+    });
+};
 module.exports = app;

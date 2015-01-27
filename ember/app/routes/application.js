@@ -1,26 +1,30 @@
 import Ember from 'ember';
-import {configurable} from 'torii/configuration';
+import ENV from 'true-cron/config/environment';
 import ApplicationRouteMixin from 'simple-auth/mixins/application-route-mixin';
 
 export default Ember.Route.extend(ApplicationRouteMixin, {
-	serverSignUpEndpoint: configurable('serverSignUpEndpoint'),
 	actions: {
 		authenticateSession: function() {
 			Ember.Logger.log('authenticateSession called');
 			this._super();
 	    },
-		sessionAuthenticationFailed: function() {
+		sessionAuthenticationFailed: function(error) {
+			Ember.Logger.log(error);
 			Ember.Logger.log('sessionAuthenticationFailed called');
-			Ember.$('#loginPassword').popover({
-				title: 'Authentication failed.',
-				content: 'Please check your credentials and try again.',
-				placement: 'bottom',
-				trigger: 'manual'
-			});
-			Ember.$('#loginPassword').popover('show');
-			setTimeout(function(){
-				Ember.$('#loginPassword').popover('hide');
-			}, 5000);
+			// invalid_grant error returned from server when credentials are incorrect
+			if (error.error === 'invalid_grant') {
+				Ember.Logger.log('authenticator: authenticator:truecron');
+				Ember.$('#loginPassword').popover({
+					title: 'Authentication failed.',
+					content: 'Please check your credentials and try again.',
+					placement: 'bottom',
+					trigger: 'manual'
+				});
+				Ember.$('#loginPassword').popover('show');
+				setTimeout(function(){
+					Ember.$('#loginPassword').popover('hide');
+				}, 5000);
+			}
 			this._super();
 		},
 		sessionAuthenticationSucceeded: function() {
@@ -38,8 +42,8 @@ export default Ember.Route.extend(ApplicationRouteMixin, {
 					name: profile.displayName, 
 					extensionData: profile
 				};
-
-				var result = Ember.$.ajax(self.get('serverSignUpEndpoint'), {
+				Ember.Logger.log('serverSignUpEndpoint : ' + ENV.APP.SIGNUP_HOST);
+				var result = Ember.$.ajax(ENV.APP.SIGNUP_HOST, {
 					type: 'POST',
 					contentType: 'application/json',
 					dataType: 'json',
@@ -70,7 +74,7 @@ export default Ember.Route.extend(ApplicationRouteMixin, {
 					return { error: error };
 				});
 			} else {
-				Ember.Logger.log('authenticator: authenticator:application');
+				Ember.Logger.log('authenticator: authenticator:truecron');
 				this._super();
 			}
 		}

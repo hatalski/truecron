@@ -17,11 +17,13 @@ export default Ember.Controller.extend(LoginControllerMixin, {
 	isPasswordError: false,
 	signupPasswordConfirm: '',
 	isPasswordConfirmError: false,
+	hideSignUpButton: ENV.APP.HIDE_SIGNUP,
     actions: {
     	authenticate: function(options) {
 	  		this._super(options);
 	  	},
 	  	invite: function() {
+	  		var self = this;
 			var inviteEmail = this.get('invitationEmail');
 			if (!validator.isEmail(inviteEmail)) {
 				this.set('isInvitationEmailError', true);
@@ -36,6 +38,7 @@ export default Ember.Controller.extend(LoginControllerMixin, {
 				});
 				result.success(function(data) {
 					Ember.$('#invite_modal').modal({});
+					self.set('invitationEmail', '');
 					console.log(data);
 				});
 	  			result.error(function(error) { console.log(error); });
