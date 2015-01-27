@@ -1,9 +1,9 @@
 var express = require('express'),
     _ = require('lodash'),
-    logger = require('../../lib/logger'),
-    validator = require('../../lib/validator'),
+    logger = require('./logger'),
+    validator = require('./validator'),
     storage = require('../storage'),
-    apiErrors = require('./../../lib/errors'),
+    apiErrors = require('././errors'),
     common = require('./common');
 
 var api = express.Router();

@@ -1,8 +1,8 @@
 var basicAuth = require('basic-auth'),
     Promise = require("bluebird"),
-    validator = require('../../lib/validator'),
-    logger = require('../../lib/logger'),
-    secrets = require('../../lib/secrets'),
+    validator = require('../lib/validator'),
+    logger = require('../lib/logger'),
+    secrets = require('../lib/secrets'),
     storage = require('../storage'),
     context = require('../context'),
     oauthErrors = require('./oautherrors');

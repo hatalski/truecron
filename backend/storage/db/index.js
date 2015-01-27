@@ -2,8 +2,8 @@ var Promise = require("bluebird"),
     pg = Promise.promisifyAll(require("pg")),
     fs = Promise.promisifyAll(require("fs")),
     path = require("path"),
-    logger = require("../../../lib/logger"),
-    dbutils = require("../../../lib/database");
+    logger = require("../../lib/logger"),
+    dbutils = require("../../lib/database");
 
 //
 // Database connections and upgrades

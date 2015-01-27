@@ -1,6 +1,6 @@
 var util = require('util'),
-    validator = require('../../lib/validator'),
-    logger = require('../../lib/logger');
+    validator = require('../lib/validator'),
+    logger = require('../lib/logger');
 
 function Links(url) {
     'use strict';

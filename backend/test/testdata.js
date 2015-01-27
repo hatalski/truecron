@@ -4,7 +4,7 @@ var Promise = require('bluebird'),
     logger = require('../lib/logger'),
     config = require('../lib/config'),
     dbutils = require('../lib/database'),
-    context = require('../backend/context');
+    context = require('../context');
 
 var system = module.exports.system = { id: context.SystemPersonId, name: 'SYSTEM', email: 'system@truecron.com' };
 

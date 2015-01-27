@@ -1,7 +1,7 @@
 var Promise = require("bluebird"),
     _ = require('lodash'),
-    logger = require('../../lib/logger'),
-    validator = require('../../lib/validator'),
+    logger = require('../lib/logger'),
+    validator = require('../lib/validator'),
     models = require('./db/models'),
     tools = require('./tools');
 

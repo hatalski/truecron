@@ -3,10 +3,10 @@ var Promise = require("bluebird"),
     models = require('./db/models'),
     cache = require('./cache'),
     history = require('./history'),
-    logger = require('../../lib/logger'),
-    secrets = require('../../lib/secrets'),
-    validator = require('../../lib/validator'),
-    errors = require('../../lib/errors');
+    logger = require('../lib/logger'),
+    secrets = require('../lib/secrets'),
+    validator = require('../lib/validator'),
+    errors = require('../lib/errors');
 
 var using = Promise.using;
 

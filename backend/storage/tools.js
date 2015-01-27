@@ -1,7 +1,7 @@
 var Promise = require("bluebird"),
     _ = require('lodash'),
-    validator = require('../../lib/validator'),
-    errors = require('../../lib/errors'),
+    validator = require('../lib/validator'),
+    errors = require('../lib/errors'),
     organizationAccess = require('./organization-access');
 
 module.exports.getId = function (idOrObject) {

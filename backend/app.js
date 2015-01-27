@@ -17,9 +17,9 @@ var routes = require('./routes/index');
 var auth = require('./routes/auth');
 var beta = require('./routes/beta');
 
-var oauth = require('./backend/oauth');
-var api = require('./backend/api/api');
-var storage = require('./backend/storage');
+var oauth = require('./oauth/index');
+var api = require('./api/api');
+var storage = require('./storage/index');
 
 var app = express();
 

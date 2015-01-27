@@ -1,6 +1,6 @@
 var jwt = require('jsonwebtoken'),
-    config = require('../../lib/config'),
-    errors = require('../../lib/errors'),
+    config = require('../lib/config'),
+    errors = require('../lib/errors'),
     context = require('../context');
 
 var settings = {

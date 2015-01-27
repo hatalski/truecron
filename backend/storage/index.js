@@ -2,8 +2,8 @@
 
 var Promise = require("bluebird"),
     Sequelize = require('sequelize'),
-    config = require('../../lib/config'),
-    logger = require("../../lib/logger"),
+    config = require('../lib/config'),
+    logger = require("../lib/logger"),
     db = require('./db'),
     cache = require('./cache'),
     models = require('./db/models');

@@ -1,4 +1,4 @@
-var logger = require("../../../lib/logger");
+var logger = require("../../lib/logger");
 var path = require("path");
 
 var models = Object.create(null);

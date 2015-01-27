@@ -7,9 +7,9 @@ var Promise = require("bluebird"),
     models = require('./db/models'),
     cache = require('./cache'),
     history = require('./history'),
-    logger = require('../../lib/logger'),
-    validator = require('../../lib/validator'),
-    errors = require('../../lib/errors'),
+    logger = require('../lib/logger'),
+    validator = require('../lib/validator'),
+    errors = require('../lib/errors'),
     tools = require('./tools'),
     workspaceAccess = require('./workspace-access');
 

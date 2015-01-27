@@ -2,8 +2,8 @@
 
 var Promise = require("bluebird"),
     redis = Promise.promisifyAll(require('redis')),
-    config = require('../../lib/config'),
-    logger = require("../../lib/logger");
+    config = require('../lib/config'),
+    logger = require("../lib/logger");
 
 function Cache() {
     this.initialize();

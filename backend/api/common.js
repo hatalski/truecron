@@ -1,5 +1,5 @@
-var apiErrors = require('./../../lib/errors'),
-    validator = require('../../lib/validator');
+var apiErrors = require('../lib/errors'),
+    validator = require('../lib/validator');
 
 module.exports.parseListParams  = function (req, res, next) {
     req.checkParams('offset', 'Invalid offset value.').optional().isInt().isGreaterOrEqual(0);
