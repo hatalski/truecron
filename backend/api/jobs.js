@@ -8,12 +8,9 @@ var express = require('express'),
 
 var api = express.Router();
 
-function formatJob(req, datajob) {
-    if (datajob === undefined) {
-        return datajob;
-    }
+function formatJob(datajob) {
     var job = datajob.toJSON();
-    var selfUrl = req.url.indexOf(job.id) >= 0 ? req.url : req.url + '/' + job.id;
+    var selfUrl = '/jobs/' + job.id;
     job.links = {
         self:    selfUrl,
         tasks:   selfUrl + '/tasks',
@@ -44,7 +41,7 @@ api.route('/jobs')
             offset: req.listParams.offset
         }).then(function (result) {
             res.json({
-                jobs: result.rows.map(formatJob.bind(null, req)),
+                jobs: result.rows.map(formatJob),
                 meta: {
                     total: result.count
                 }});
@@ -58,15 +55,19 @@ api.route('/jobs')
         if (!req.body || !req.body.job) {
             return next(new apiErrors.InvalidParams('job is not specified.'));
         }
+        var organizationId = req.organization ? req.organization.id : req.body.job.organizationId;
+        if (!organizationId) {
+            return next(new apiErrors.InvalidParams('Organization is not specified.'));
+        }
         var workspaceId = req.workspace ? req.workspace.id : req.body.job.workspaceId;
         if (!workspaceId) {
             return next(new apiErrors.InvalidParams('Workspace is not specified.'));
         }
-        req.context.url = req.url;
+        req.body.job.organizationId = organizationId;
         req.body.job.workspaceId = workspaceId;
         storage.Jobs.create(req.context, req.body.job)
             .then(function (job) {
-                res.status(201).json({ job: formatJob(req, job) });
+                res.status(201).json({ job: formatJob(job) });
             })
             .catch(function (err) {
                 logger.error(err.toString());
@@ -84,8 +85,7 @@ api.param('jobid', function (req, res, next, id) {
 
     if (validator.isInt(id)) {
         jobid = id;
-    }
-    else {
+    } else {
         return next(new apiErrors.InvalidParams());
     }
 
@@ -93,7 +93,6 @@ api.param('jobid', function (req, res, next, id) {
         .then(function (job) {
             if (job) {
                 req.job = job;
-                req.context.links.jobId = job.id;
                 next();
             } else {
                 next(new apiErrors.NotFound());
@@ -106,7 +105,7 @@ api.route('/jobs/:jobid')
     // Get a job
     //
     .get(function (req, res, next) {
-        res.json({ job: formatJob(req, req.job) });
+        res.json({ job: formatJob(req.job) });
     })
     //
     // Update a job
@@ -115,17 +114,15 @@ api.route('/jobs/:jobid')
         if (!req.body || !req.body.job) {
             return next(new apiErrors.InvalidParams());
         }
-        req.context.url = req.url;
         storage.Jobs.update(req.context, req.job.id, req.body.job)
             .then(function (job) {
-                res.json({ job: formatJob(req, job) });
+                res.json({ job: formatJob(job) });
             });
     })
     //
     // Delete a job
     //
     .delete(function (req, res, next) {
-        req.context.url = req.url;
         storage.Jobs.remove(req.context, req.job.id)
             .then(function () {
                 res.status(204).json({});
@@ -133,6 +130,8 @@ api.route('/jobs/:jobid')
     });
 
 api.use('/jobs/:jobid', require('./tasks'));
-api.use('/jobs/:jobid/history', require('./job-history'));
+api.use('/jobs/:jobid', require('./runs'));
+api.use('/jobs/:connectionid', require('./history'));
+api.use('/jobs', require('./history'));
 
 module.exports = api;

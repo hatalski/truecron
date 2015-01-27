@@ -8,19 +8,17 @@ var express = require('express'),
 
 var api = express.Router();
 
-function formatUser(req, person) {
-    if (person === undefined) {
-        return person;
-    }
+function formatUser(person) {
     var user = person.toJSON();
+    var selfUri = '/users/' + user.id;
     user.links = {
-        self: req.context.links.user(user.id),
-        emails: req.context.links.userEmails(user.id),
-        history: req.context.links.userHistory(user.id)
+        self:       selfUri,
+        emails:     selfUri + '/emails',
+        history:    selfUri + '/history'
     };
     delete user.passwordHash;
     common.formatApiOutput(user);
-    return { user: user };
+    return user;
 }
 
 api.route('/users')
@@ -29,6 +27,7 @@ api.route('/users')
     //
     .get(common.parseListParams, function (req, res, next) {
 
+        // TODO: Restrict access. Only admin can list all users?
         var where = {};
         if (req.listParams.searchTerm) {
             where = { name: { like: req.listParams.searchTerm } };
@@ -42,7 +41,7 @@ api.route('/users')
             offset: req.listParams.offset
         }).then(function (result) {
             res.json({
-                users: result.rows.map(formatUser.bind(null, req)),
+                users: result.rows.map(formatUser),
                 meta: {
                     total: result.count
                 }});
@@ -59,9 +58,15 @@ api.route('/users')
         if (!req.body || !req.body.user) {
             return next(new apiErrors.InvalidParams());
         }
+        req.checkBody('user.name', 'Invalid user name.').isLength(1, 128);
+        req.checkBody('user.password', 'Password must be at least 8 characters long.').isLength(8, 256);
+        var errors = req.validationErrors();
+        if (errors) {
+            return next(new apiErrors.InvalidParams(errors));
+        }
         storage.Person.create(req.context, req.body.user)
             .then(function (person) {
-                res.status(201).json(formatUser(req, person));
+                res.status(201).json({ user: formatUser(person) });
             })
             .catch(function (err) {
                 logger.error(err.toString());
@@ -74,19 +79,18 @@ api.route('/users')
 //
 api.param('userid', function (req, res, next, id) {
     // Allow to specify both ID and email
-    if (!validator.isInt(id) && !validator.isEmail(id)&& id!='current') {
+    if (!validator.isInt(id) && !validator.isEmail(id) && id !== 'current') {
         next(new apiErrors.InvalidParams());
     }
 
-    if (id=='current'){
-        id=req.context.personId;
+    if (id === 'current') {
+        id = req.context.personId;
     }
 
     storage.Person.findByIdOrEmail(req.context, id)
         .then(function (person) {
             if (person !== null) {
                 req.person = person;
-                req.context.links.userId = +person.id;
                 next();
             } else {
                 next(new apiErrors.NotFound());
@@ -103,7 +107,7 @@ api.route('/users/:userid')
     // Get a user
     //
     .get(function (req, res, next) {
-        res.json(formatUser(req, req.person));
+        res.json({ user: formatUser(req.person) });
     })
     //
     // Update a user
@@ -114,7 +118,7 @@ api.route('/users/:userid')
         }
         storage.Person.update(req.context, req.person.id, req.body.user)
             .then(function (person) {
-                res.json(formatUser(req, person));
+                res.json({ user: formatUser(person) });
             })
             .catch(function (err) {
                 logger.error(err.toString());
@@ -139,18 +143,17 @@ api.route('/users/:userid')
 // User emails
 //
 
-function formatEmail(req, email) {
+function formatEmail(email) {
     if (email === undefined) {
         return email;
     }
     var result = email.toJSON();
-    logger.debug('req.context.links: ' +  require('util').inspect(req.context.links));
     result.links = {
-        self: req.context.links.userEmail(email.id)
+        self: '/users/' + email.personId + '/emails/' + email.id
     };
     delete result.personId;
     common.formatApiOutput(result);
-    return { email: result };
+    return result;
 }
 
 api.route('/users/:userid/emails')
@@ -159,7 +162,7 @@ api.route('/users/:userid/emails')
     //
     .get(common.parseListParams, function (req, res, next) {
         var where = {};
-        if (!!req.listParams.searchTerm) {
+        if (req.listParams.searchTerm) {
             where = { email: { like: req.listParams.searchTerm } };
         }
         var sort = req.listParams.sort || 'id';
@@ -172,7 +175,7 @@ api.route('/users/:userid/emails')
         })
             .then(function (result) {
                 res.json({
-                    emails: result.rows.map(formatEmail.bind(null, req)),
+                    emails: result.rows.map(formatEmail),
                     meta: {
                         total: result.count
                     }});
@@ -191,7 +194,7 @@ api.route('/users/:userid/emails')
         }
         storage.Person.addEmail(req.context, req.person.id, req.body.email)
             .then(function (email) {
-                res.status(201).json(formatEmail(req, email));
+                res.status(201).json({ email: formatEmail(email) });
             })
             .catch(function (err) {
                 logger.error(err);
@@ -209,9 +212,8 @@ api.param('email', function (req, res, next, id) {
     }
     storage.Person.findEmail(req.context, req.person.id, id)
         .then(function (email) {
-            if (!!email) {
+            if (email) {
                 req.email = email;
-                req.context.links.emailId = email.id;
                 next();
             } else {
                 next(new apiErrors.NotFound());
@@ -229,7 +231,7 @@ api.route('/users/:userid/emails/:email')
     // Get an email address of the user :userid
     //
     .get(function (req, res, next) {
-        res.json(formatEmail(req, req.email));
+        res.json({ email: formatEmail(req.email) });
     })
     //
     // Change status of the email address (pending, active)
@@ -240,7 +242,7 @@ api.route('/users/:userid/emails/:email')
         }
         storage.Person.changeEmailStatus(req.context, req.person.id, req.email.id, req.body.email.status)
             .then(function (email) {
-                res.json(formatEmail(req, email));
+                res.json({ email: formatEmail(email) });
             })
             .catch(function (err) {
                 logger.error(err);
@@ -260,5 +262,7 @@ api.route('/users/:userid/emails/:email')
                 next(err);
             });
     });
+
+api.use('users/:userid', require('./history'));
 
 module.exports = api;

@@ -121,6 +121,23 @@ var ensureHasAccess = module.exports.ensureHasAccess = Promise.method(function (
 });
 
 /**
+ * Throws 'access denied' error if a user does cannot edit the organization.
+ * This is a shortcut for ensureHasAccess with the Admin role.
+ */
+var ensureCanEdit = module.exports.ensureCanEdit = Promise.method(function (context, organization, transaction) {
+    return ensureHasAccess(context, organization, OrganizationRoles.Admin, transaction);
+});
+
+/**
+ * Throws 'access denied' error if a user does cannot view the organization.
+ * This is a shortcut for ensureHasAccess with the Member role.
+ */
+var ensureCanView = module.exports.ensureCanView = Promise.method(function (context, organization, transaction) {
+    return ensureHasAccess(context, organization, OrganizationRoles.Member, transaction);
+});
+
+
+/**
  * Grant access to the organization.
  * @param context {Context} Current security context.
  * @param organizationId {number} ID of the organization to grant access to.

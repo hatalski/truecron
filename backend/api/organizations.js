@@ -6,27 +6,23 @@ var express = require('express'),
     validator = require('../../lib/validator'),
     storage = require('../storage'),
     apiErrors = require('./../../lib/errors'),
-    common = require('./common'),
-    workspaces = require('./workspaces');
+    common = require('./common');
 
 var api = express.Router();
 
 /**
  * Format an organization object retrieved from a database to be returned from the API.
  */
-function formatOrganization(req, organization) {
-    if (organization === undefined) {
-        return organization;
-    }
+function formatOrganization(organization) {
     var org = organization.toJSON();
+    var selfUri = '/organizations/' + org.id;
     org.links = {
-        self: req.context.links.organization(org.id),
-        members: req.context.links.organizationMembers(org.id),
-        workspaces: req.context.links.workspaces(org.id),
-        history: req.context.links.organizationHistory(org.id)
+        self:       selfUri,
+        members:    selfUri + '/members',
+        workspaces: selfUri + '/workspaces',
+        history:    selfUri + '/history'
     };
     delete org.secretHash;
-
     common.formatApiOutput(org);
     return org;
 }
@@ -38,7 +34,7 @@ api.route('/organizations')
     .get(common.parseListParams, function (req, res, next) {
 
         var where = {};
-        if (!!req.listParams.searchTerm) {
+        if (req.listParams.searchTerm) {
             where = { name: { like: req.listParams.searchTerm } };
         }
         var sort = req.listParams.sort || 'name';
@@ -50,7 +46,7 @@ api.route('/organizations')
             offset: req.listParams.offset
         }).then(function (result) {
             res.json({
-                organizations: result.rows.map(formatOrganization.bind(null, req)),
+                organizations: result.rows.map(formatOrganization),
                 meta: {
                     total: result.count
                 }});
@@ -69,7 +65,7 @@ api.route('/organizations')
         }
         storage.Organization.create(req.context, req.body.organization)
             .then(function (org) {
-                res.status(201).json({ organization: formatOrganization(req, org) });
+                res.status(201).json({ organization: formatOrganization(org) });
             })
             .catch(function (err) {
                 logger.error(err.toString());
@@ -85,7 +81,6 @@ api.param('orgid', function (req, res, next, id) {
         .then(function (org) {
             if (org !== null) {
                 req.organization = org;
-                req.context.links.organizationId = org.id;
                 next();
             } else {
                 next(new apiErrors.NotFound());
@@ -102,7 +97,7 @@ api.route('/organizations/:orgid')
     // Get an organization
     //
     .get(function (req, res, next) {
-        res.json({ organization: formatOrganization(req, req.organization) });
+        res.json({ organization: formatOrganization(req.organization) });
     })
     //
     // Update an organization
@@ -113,7 +108,7 @@ api.route('/organizations/:orgid')
         }
         storage.Organization.update(req.context, req.organization.id, req.body.organization)
             .then(function (org) {
-                res.json({ organization: formatOrganization(req, org) });
+                res.json({ organization: formatOrganization(org) });
             })
             .catch(function (err) {
                 logger.error(err.toString());
@@ -138,10 +133,7 @@ api.route('/organizations/:orgid')
 // ORGANIZATION MEMBERS
 //
 
-function formatMember(req, member) {
-    if (member === undefined) {
-        return member;
-    }
+function formatMember(member) {
     // TODO: Include person name/email
     var result = {
         userId: member.personId,
@@ -150,8 +142,8 @@ function formatMember(req, member) {
         updatedAt: member.updatedAt,
         updatedByUserId: member.updatedByPersonId,
         _links: {
-            self: req.context.links.organizationMember(member.personId),
-            user: req.context.links.user(member.personId)
+            self: '/organizations/' + member.organizationId + '/members/' + member.personId,
+            user: '/users/' + member.personId
         }
     };
     common.formatApiOutput(result);
@@ -164,7 +156,7 @@ api.route('/organizations/:orgid/members')
     //
     .get(common.parseListParams, function (req, res, next) {
         var where = {};
-        if (!!req.listParams.searchTerm) {
+        if (req.listParams.searchTerm) {
             where = { role: { like: req.listParams.searchTerm } };
         }
         var sort = req.listParams.sort || 'updatedAt';
@@ -176,7 +168,7 @@ api.route('/organizations/:orgid/members')
             offset: req.listParams.offset
         }).then(function (result) {
             res.json({
-                members: result.rows.map(formatMember.bind(null, req)),
+                members: result.rows.map(formatMember),
                 meta: {
                     total: result.count
                 }});
@@ -198,7 +190,7 @@ api.route('/organizations/:orgid/members')
         }
         storage.OrganizationAccess.grantAccess(req.context, req.organization.id, req.body.member.userId, req.body.member.role)
             .then(function (member) {
-                res.status(201).json(formatMember(req, member));
+                res.status(201).json(formatMember(member));
             })
             .catch(function (err) {
                 logger.error(err.toString());
@@ -211,7 +203,6 @@ api.param('memberid', function (req, res, next, id) {
         return next(new apiErrors.InvalidParams('Invalid member ID.'));
     }
     req.memberId = +id;
-    req.context.links.memberId = +id;
     next();
 });
 
@@ -233,7 +224,7 @@ api.route('/organizations/:orgid/members/:memberid')
         }
         storage.OrganizationAccess.grantAccess(req.context, req.organization.id, req.memberId, req.body.member.role)
             .then(function (member) {
-                res.json(formatMember(req, member));
+                res.json(formatMember(member));
             })
             .catch(function (err) {
                 logger.error(err.toString());
@@ -254,6 +245,9 @@ api.route('/organizations/:orgid/members/:memberid')
             });
     });
 
-api.use('/organizations/:orgid', workspaces);
+api.use('/organizations/:orgid', require('./workspaces'));
+api.use('/organizations/:orgid', require('./connections'));
+api.use('/organizations/:orgid', require('./history'));
+api.use('/organizations', require('./history'));
 
 module.exports = api;

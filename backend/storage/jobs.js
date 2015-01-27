@@ -49,6 +49,9 @@ var create = module.exports.create = Promise.method(function (context, attribute
     if (!attributes.name) {
         throw new errors.InvalidParams('Job name is not specified.');
     }
+    if (!attributes.organizationId) {
+        throw new errors.InvalidParams('Organization ID is not specified.');
+    }
     if (!attributes.workspaceId) {
         throw new errors.InvalidParams('Workspace ID is not specified.');
     }
@@ -57,40 +60,41 @@ var create = module.exports.create = Promise.method(function (context, attribute
 
     return using (models.transaction(), function (tx) {
 
-        return workspaceAccess.ensureHasAccess(context, attributes.workspaceId, workspaceAccess.WorkspaceRoles.Editor, tx)
+        return workspaceAccess.ensureHasAccess(context, attributes.workspaceId,
+                                               workspaceAccess.WorkspaceRoles.Editor, tx)
             .then(function() {
                 return models.Job.create(locals.attrs, { transaction: tx });
             })
             .then(function (job) {
                 locals.job = job;
-                var link = context.url + '/' + job.id;
                 return Promise.join(
-                    history.logCreated(context.personId, link, job, tx), // context.links.job(job.id)
+                    history.logCreated(context.personId, {
+                                            organizationId: job.organizationId,
+                                            workspaceId: job.workspaceId,
+                                            jobId: job.id
+                                        }, job, tx),
                     cache.put(getJobIdCacheKey(job.id), job));
             })
+            .then(function() {
+                if (locals.attrs.tags) {
+                    var tags;
+                    var arrayData = locals.attrs.tags;
+                    // TODO: replace with promises (sequential foreach)
+                    arrayData.forEach(function (tag) {
+                        tags = {
+                            jobId: locals.job.id,
+                            tag: tag.toString()
+                        };
+                        models.JobTag.create(tags);
+                    });
+                }
+            })
+            .then(function() {
+                return locals.job;
+            });
         })
         .catch(function (err) {
             logger.error('Failed to create a job, %s.', err.toString());
-            throw err;
-        })
-        .then(function() {
-            if (locals.attrs.tags) {
-                var tags;
-                var arrayData = locals.attrs.tags;
-                arrayData.forEach(function (tag) {
-                    tags = {
-                        jobId: locals.job.dataValues.id,
-                        tag: tag.toString()
-                    }
-                    models.JobTag.create(tags);
-                });
-            }
-        })
-        .then(function(){
-            return locals.job;
-        })
-        .catch(function (err) {
-            logger.error('Failed to create a JobTag, %s.', err.toString());
             throw err;
         });
 });
@@ -155,9 +159,12 @@ var update = module.exports.update = Promise.method(function (context, id, attri
             })
             .then(function (job) {
                 locals.job = job;
-                var link = context.url;
                 return Promise.join(
-                    history.logUpdated(context.personId, link, job, locals.oldJob, tx),
+                    history.logUpdated(context.personId, {
+                            organizationId: job.organizationId,
+                            workspaceId: job.workspaceId,
+                            jobId: job.id
+                        }, job, locals.oldJob, tx),
                     cache.put(getJobIdCacheKey(job.id), job),
                     function () {
                         return locals.job;
@@ -165,30 +172,31 @@ var update = module.exports.update = Promise.method(function (context, id, attri
             })
             .then(function() {
                 if (locals.attrs.tags) {
-                    return models.JobTag.destroy({where: {jobId: locals.job.dataValues.id}, transaction: tx});
+                    return models.JobTag.destroy({where: {jobId: locals.job.id}, transaction: tx});
                 }
             })
             .then(function(){
                 if (locals.attrs.tags) {
                     var tags;
                     var arrayData = locals.attrs.tags;
+                    // TODO: replace with promises (sequential foreach)
                     arrayData.forEach(function (tag) {
                         tags = {
-                            jobId: locals.job.dataValues.id,
+                            jobId: locals.job.id,
                             tag: tag.toString()
-                        }
+                        };
                         models.JobTag.create(tags);
                     });
                 }
+            })
+            .then (function(){
+                return locals.job;
             });
         })
         .catch(function (err) {
             logger.error('Failed to update the job %d, %s.', id, err.toString());
             throw err;
-        })
-        .then (function(){
-        return locals.job;
-    })
+        });
 });
 /**
  * Remove a job.
@@ -203,11 +211,14 @@ var remove = module.exports.remove = Promise.method(function (context, id) {
                     return;
                 }
                 locals.job = job;
-                var link = context.url;
                 return job.destroy({transaction: tx})
                     .then(function () {
                         return Promise.join(
-                            history.logRemoved(context.personId, link, locals.job, tx),
+                            history.logRemoved(context.personId, {
+                                organizationId: locals.job.organizationId,
+                                workspaceId: locals.job.workspaceId,
+                                jobId: locals.job.id
+                            }, locals.job, tx),
                             cache.remove(getJobIdCacheKey(locals.job.id)));
                     });
             });

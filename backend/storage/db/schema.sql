@@ -402,24 +402,22 @@ if not HasSchemaVersion(11) then
         constraint      Connection_UpdatedBy_Person_Fk foreign key (updatedByPersonId) references tc.Person (id)
     );
 
+    create type tc.EntityType as enum ('person', 'organization', 'workspace', 'job', 'task', 'connection');
+
     drop index if exists History_ResourceUrl_Index ;
     delete from tc.History;
     alter table tc.History drop column resourceUrl;
     alter table tc.History rename column personId to updatedByPersonId;
     alter table tc.History rename constraint History_Person_Fk to History_UpdatedByPerson_Fk;
+    alter table tc.History add column entity tc.EntityType not null;
     alter table tc.History add column organizationId bigint;
     alter table tc.History add column workspaceId bigint;
     alter table tc.History add column jobId bigint;
     alter table tc.History add column taskId bigint;
     alter table tc.History add column connectionId bigint;
     alter table tc.History add column personId bigint;
-    alter table tc.History add constraint History_Organization_Fk foreign key (organizationId) references tc.Organization (id);
-    alter table tc.History add constraint History_Workspace_Fk foreign key (workspaceId) references tc.Workspace (id);
-    alter table tc.History add constraint History_Job_Fk foreign key (jobId) references tc.Job (id);
-    alter table tc.History add constraint History_Task_Fk foreign key (taskId) references tc.Task (id);
-    alter table tc.History add constraint History_Connection_Fk foreign key (connectionId) references tc.Connection (id);
-    alter table tc.History add constraint History_Person_Fk foreign key (personId) references tc.Person (id);
-
+    -- No foreign keys here, because we want to keep the records forever, even when the object is gone. For audit
+    -- and restore purposes.
     perform CommitSchemaVersion(11, 'Added Connection. Changed History: an object is identified by a set of IDs instead of a single URL.');
 end if;
 end $$;

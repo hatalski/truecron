@@ -18,7 +18,8 @@ log.info('API tests prefix: ' + prefix);
 var taskTypeId=-100;
 var updatedByPersonId=-1;
 var id_to_delete;
-var workspaceIdMaster=-12;
+var organizationIdMaster=testdata.AcmeCorp.id;
+var workspaceIdMaster=testdata.MyWorkspace.id;
 var id_task_to_delete;
 var id_run_to_delete;
 var testDataIdJob=-222;
@@ -43,7 +44,8 @@ describe('RUNS API',
             superagent.post(prefix + '/jobs')
                 .set('Content-Type', 'application/json')
                 .send({ 'job': {
-                    'workspaceId':workspaceIdMaster,
+                    'organizationId': organizationIdMaster,
+                    'workspaceId': workspaceIdMaster,
                     'name': 'TestName',
                     'tags': ["edi", "production"],
                     'updatedByPersonId':updatedByPersonId,
@@ -61,12 +63,15 @@ describe('RUNS API',
                 });
         });
 
+        // TODO: This shouldn't be in API
         it('create a new run', function (done) {
             superagent.post(prefix + '/jobs/'+id_to_delete+'/runs')
                 .set('Content-Type', 'application/json')
                 .authenticate(accessToken)
                 .send({ 'run': {
                     "jobId": id_to_delete,
+                    'organizationId': organizationIdMaster,
+                    'workspaceId': workspaceIdMaster,
                     'startedAt': '2014-08-21T10:00:11Z',
                     "startedByPersonId": updatedByPersonId,
                     "status": 5,
@@ -104,11 +109,11 @@ describe('RUNS API',
                 .authenticate(accessToken)
                 .end(function (e, res) {
                     expect(e).to.eql(null);
+                    expect(res.status).to.eql(200);
                     expect(res.header['content-type']).to.eql('application/json; charset=utf-8');
                     expect(res.body.error).to.eql(undefined);
                     expect(res.body.run.id).to.be.a('string');
                     expect(validator.isDate(res.body.run.startedAt)).to.be.ok();
-                    expect(res.status).to.eql(200);
                     done();
                 });
         });

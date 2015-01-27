@@ -17,24 +17,26 @@ var api = express.Router();
 //add links
 //
 function formatRun(run) {
-    if (run === undefined) {
-        return run;
-    }
     var rn = run.toJSON();
-    var selfUrl = '/jobs/' + run.jobId + '/runs/' + run.id;
+    var selfUrl = '/runs/' + run.id;
     rn._links = {
-        self: selfUrl
+        self: selfUrl,
+        job: '/job/' + run.jobId
     };
-    return {run:rn};}
+    return rn;
+}
 
-api.route('/jobs/:jobid/runs')
+api.route('/runs')
     //
-    // Get all runs
+    // Get all runs of a specific job
     //
     .get(common.parseListParams, function (req, res, next) {
-        var where = {};
-        if (!!req.listParams.searchTerm) {
-            where = { jobId: req.params.jobid };
+        if (!req.job) {
+            return next(new apiErrors.InvalidParams('Job is not specified.'));
+        }
+        var where = { jobId: req.job.id };
+        if (req.listParams.searchTerm) {
+            where = _.merge(where, { message: { like: req.listParams.searchTerm } });
         }
         var sort = req.listParams.sort || 'elapsed';
 
@@ -60,9 +62,24 @@ api.route('/jobs/:jobid/runs')
         if (!req.body || !req.body.run) {
             return next(new apiErrors.InvalidParams());
         }
-        storage.Runs.create(req.context, req.params.jobid, req.body.run)
+        var organizationId = req.organization ? req.organization.id : req.body.run.organizationId;
+        if (!organizationId) {
+            return next(new apiErrors.InvalidParams('Organization is not specified.'));
+        }
+        var workspaceId = req.workspace ? req.workspace.id : req.body.run.workspaceId;
+        if (!workspaceId) {
+            return next(new apiErrors.InvalidParams('Workspace is not specified.'));
+        }
+        var jobId = req.workspace ? req.workspace.id : req.body.run.jobId;
+        if (!jobId) {
+            return next(new apiErrors.InvalidParams('Job is not specified.'));
+        }
+        req.body.run.organizationId = organizationId;
+        req.body.run.workspaceId = workspaceId;
+        req.body.run.jobId = jobId;
+        storage.Runs.create(req.context, req.body.run)
             .then(function (run) {
-                res.status(201).json(formatRun(run));
+                res.status(201).json({ run: formatRun(run) });
             })
             .catch(function (err) {
                 logger.error(err.toString());
@@ -71,32 +88,34 @@ api.route('/jobs/:jobid/runs')
     });
 
 
+api.param('runid', function (req, res, next, id) {
+    if (!validator.isInt(id)) {
+        return next(new apiErrors.InvalidParams('Invalid run ID.'));
+    }
 
-api.route('/jobs/:jobid/runs/:runid')
+    storage.Runs.findById(req.context, id)
+        .then(function (run) {
+            if (run !== null) {
+                req.run = run;
+                next();
+            } else {
+                next(new apiErrors.NotFound());
+            }
+        })
+        .catch(function (err) {
+            logger.error(err.toString());
+            next(err);
+        });
+});
+
+
+api.route('/runs/:runid')
 
 //
 // Get run by id
 //
     .get(common.parseListParams, function (req, res, next) {
-        var where = {};
-        if (!!req.listParams.searchTerm) {
-            where = { jobId: req.params.jobid , id:req.params.runid};
-        }
-        var sort = req.listParams.sort || 'elapsed';
-
-        storage.Runs.findById(req.context, req.params.jobid, req.params.runid)
-            .then(function (run) {
-                if (run!==null){
-                    res.json(formatRun(run));
-                }
-            else{
-                    next(new apiErrors.NotFound());
-                }
-        })
-            .catch(function (err) {
-                logger.error(err.toString());
-                next(err);
-            })
+        res.json({ run: formatRun(req.run)});
     });
 /* not use for api
     //
@@ -109,7 +128,7 @@ api.route('/jobs/:jobid/runs/:runid')
         }
         storage.Runs.update(req.context, req.params.jobid, req.params.runid, req.body.run)
             .then(function (run) {
-                res.json(formatRun(run));
+                res.json({ run: formatRun(run) });
             });
     })
 

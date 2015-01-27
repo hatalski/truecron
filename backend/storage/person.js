@@ -182,7 +182,7 @@ var processPassword = Promise.method(function (attributes) {
  */
 var create = module.exports.create = Promise.method(function (context, attributes) {
     if (!context.isSystem()) {
-        throw new errors.AccessDenied('Only SYSTEM can create new organizations.');
+        throw new errors.AccessDenied('Only SYSTEM can create new users.');
     }
     if (!attributes || validator.isNull(attributes.name)
         || validator.isNull(attributes.password) && validator.isNull(attributes.passwordHash)) {
@@ -266,13 +266,16 @@ var remove = module.exports.remove = Promise.method(function (context, id, force
                     return;
                 }
                 locals.person = person;
+                return removePersonEmails(context, person.id, tx);
+            })
+            .then(function() {
                 if (force) {
-                    return history.cleanUserLogs(person.id, locals.tx)
+                    return history.cleanUserLogs(locals.person.id, locals.tx)
                         .then(function() {
-                            return person.destroy({transaction: locals.tx});
+                            return locals.person.destroy({transaction: locals.tx});
                         });
                 } else {
-                    return person.updateAttributes({ deleted: true }, { transaction: locals.tx });
+                    return locals.person.updateAttributes({ deleted: true }, { transaction: locals.tx });
                 }
             })
             .then(function () {
@@ -424,7 +427,7 @@ var changeEmailStatus = module.exports.changeEmailStatus = Promise.method(functi
 });
 
 var removePersonEmails = Promise.method(function (context, personId, transaction) {
-    return models.PersonEmail.findAll({ personId: personId })
+    return models.PersonEmail.findAll({ where: { personId: personId }}, { transaction: transaction })
         .each(function (email) {
             var personEmail = email;
             return personEmail.destroy({ transaction: transaction })

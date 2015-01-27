@@ -1,17 +1,18 @@
 module.exports = function(sequelize, DataTypes) {
 
     var History = sequelize.define('History', {
-        id:       { type: DataTypes.BIGINT, primaryKey: true, allowNull: false, autoIncrement: true },
+        id:             { type: DataTypes.BIGINT, primaryKey: true, allowNull: false, autoIncrement: true },
         updatedByPersonId: { type: DataTypes.BIGINT, allowNull: false },
         organizationId: { type: DataTypes.BIGINT, allowNull: true },
-        workspaceId: { type: DataTypes.BIGINT, allowNull: true },
-        jobId: { type: DataTypes.BIGINT, allowNull: true },
-        taskId: { type: DataTypes.BIGINT, allowNull: true },
-        connectionId: { type: DataTypes.BIGINT, allowNull: true },
-        personId: { type: DataTypes.BIGINT, allowNull: true },
-        operation: { type: DataTypes.STRING(128), allowNull: false },
-        change:   { type: DataTypes.STRING(8192), allowNull: false },
-        oldValue: { type: DataTypes.STRING(8192) }
+        workspaceId:    { type: DataTypes.BIGINT, allowNull: true },
+        jobId:          { type: DataTypes.BIGINT, allowNull: true },
+        taskId:         { type: DataTypes.BIGINT, allowNull: true },
+        connectionId:   { type: DataTypes.BIGINT, allowNull: true },
+        personId:       { type: DataTypes.BIGINT, allowNull: true },
+        operation:      { type: DataTypes.STRING(128), allowNull: false },
+        entity:         { type: DataTypes.ENUM, values: ['person', 'organization', 'workspace', 'job', 'task', 'connection'], allowNull: false },
+        change:         { type: DataTypes.STRING(8192), allowNull: false },
+        oldValue:       { type: DataTypes.STRING(8192) }
     }, {
         schema: 'tc',
         tableName: 'history',

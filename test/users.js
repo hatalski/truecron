@@ -14,7 +14,7 @@ var prefix     = config.get('API_HOST') || 'http://localhost:3000/api/v1';
 
 log.info('API tests prefix: ' + prefix);
 
-describe.only('USERS API',
+describe('USERS API',
     function() {
         var accessToken = null;
         before(function (done) {

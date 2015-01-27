@@ -55,24 +55,13 @@ var findById = module.exports.findById = Promise.method(function (context, id, w
     return workspaceAccess.findByIdAndEnsureAccess(context, id, workspaceRole, transaction);
 });
 
-var limitQueryToAccessibleOrganizations = Promise.method(function (context, options, transaction) {
-    if (context.isSystem()) {
-        return options;
-    }
-    return organizationAccess.getAccessibleOrganizations(context, transaction)
-        .then(function (accessEntries) {
-            var accessibleIds = _.keys(accessEntries);
-            return _.merge(options, { where: { organizationId: accessibleIds }});
-        });
-});
-
 /**
  * Search for a single workspace.
  * @param {object} options See Sequelize.find docs for details
  * Only workspaces the current user has access to are returned.
  */
 var find = module.exports.find = Promise.method(function (context, options, transaction) {
-    return limitQueryToAccessibleOrganizations(context, options, transaction)
+    return tools.limitQueryToAccessibleOrganizations(context, options, transaction)
         .then(function (newOptions) {
             return models.Workspace.find(newOptions, { transaction: transaction });
         })
@@ -101,7 +90,7 @@ var find = module.exports.find = Promise.method(function (context, options, tran
  * Only workspaces the current user has access to are returned.
  */
 var findAndCountAll = module.exports.findAndCountAll = Promise.method(function (context, options) {
-    return limitQueryToAccessibleOrganizations(context, options)
+    return tools.limitQueryToAccessibleOrganizations(context, options)
         .then(function (newOptions) {
             return models.Workspace.findAndCountAll(newOptions);
         })
