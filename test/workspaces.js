@@ -36,9 +36,9 @@ describe('WORKSPACES API',
                     expect(validator.isDate(res.body.workspace.createdAt)).to.be.ok();
                     expect(validator.isDate(res.body.workspace.updatedAt)).to.be.ok();
                     expect(res.body.workspace.updatedBy).to.be.eql(testdata.BrianJohnston.id);
-                    expect(res.body.workspace.links.self).to.be.eql('/organizations/' + testdata.AcmeCorp.id + '/workspaces/' + testdata.MyWorkspace.id);
-                    expect(res.body.workspace.links.jobs).to.be.eql('/organizations/' + testdata.AcmeCorp.id + '/workspaces/' + testdata.MyWorkspace.id + '/jobs');
-                    expect(res.body.workspace.links.history).to.be.eql('/organizations/' + testdata.AcmeCorp.id + '/workspaces/' + testdata.MyWorkspace.id + '/history');
+                    expect(res.body.workspace.links.self).to.be.eql('/workspaces/' + testdata.MyWorkspace.id);
+                    expect(res.body.workspace.links.jobs).to.be.eql('/workspaces/' + testdata.MyWorkspace.id + '/jobs');
+                    expect(res.body.workspace.links.history).to.be.eql('/workspaces/' + testdata.MyWorkspace.id + '/history');
                     done();
                 });
         });
@@ -60,9 +60,9 @@ describe('WORKSPACES API',
                     expect(validator.isDate(workspace.createdAt)).to.be.ok();
                     expect(validator.isDate(workspace.updatedAt)).to.be.ok();
                     expect(workspace.updatedBy).to.be.eql(testdata.BrianJohnston.id);
-                    expect(workspace.links.self).to.be.eql('/organizations/' + testdata.AcmeCorp.id + '/workspaces/' + testdata.MyWorkspace.id);
-                    expect(workspace.links.jobs).to.be.eql('/organizations/' + testdata.AcmeCorp.id + '/workspaces/' + testdata.MyWorkspace.id + '/jobs');
-                    expect(workspace.links.history).to.be.eql('/organizations/' + testdata.AcmeCorp.id + '/workspaces/' + testdata.MyWorkspace.id + '/history');
+                    expect(workspace.links.self).to.be.eql('/workspaces/' + testdata.MyWorkspace.id);
+                    expect(workspace.links.jobs).to.be.eql('/workspaces/' + testdata.MyWorkspace.id + '/jobs');
+                    expect(workspace.links.history).to.be.eql('/workspaces/' + testdata.MyWorkspace.id + '/history');
                     done();
                 });
         });
@@ -106,9 +106,9 @@ describe('WORKSPACES API',
                     expect(validator.isDate(res.body.workspace.createdAt)).to.be.ok();
                     expect(validator.isDate(res.body.workspace.updatedAt)).to.be.ok();
                     expect(res.body.workspace.updatedBy).to.eql(testdata.BrianJohnston.id);
-                    expect(res.body.workspace.links.self).to.eql('/organizations/' + testdata.AcmeCorp.id + '/workspaces/' + res.body.workspace.id);
-                    expect(res.body.workspace.links.jobs).to.eql('/organizations/' + testdata.AcmeCorp.id + '/workspaces/' + res.body.workspace.id + '/jobs');
-                    expect(res.body.workspace.links.history).to.eql('/organizations/' + testdata.AcmeCorp.id + '/workspaces/' + res.body.workspace.id + '/history');
+                    expect(res.body.workspace.links.self).to.eql('/workspaces/' + res.body.workspace.id);
+                    expect(res.body.workspace.links.jobs).to.eql('/workspaces/' + res.body.workspace.id + '/jobs');
+                    expect(res.body.workspace.links.history).to.eql('/workspaces/' + res.body.workspace.id + '/history');
 
                     return api.getWorkspace(accessToken, testdata.AcmeCorp.id, res.body.workspace.id);
                 })

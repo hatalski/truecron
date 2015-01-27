@@ -2,11 +2,6 @@ var util = require('util'),
     validator = require('../../lib/validator'),
     logger = require('../../lib/logger');
 
-//
-// The Storage uses this class to get object links for logging purposes (aka History).
-// This is the only dependency the Storage has on the API.
-//
-
 function Links(url) {
     'use strict';
 }

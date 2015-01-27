@@ -384,6 +384,93 @@ if not HasSchemaVersion(10) then
 end if;
 end $$;
 
+do $$
+begin
+if not HasSchemaVersion(11) then
+
+    create table tc.Connection
+    (
+        id              bigserial,
+        organizationId  bigint not null,
+        name            varchar(255) not null,
+        settings        json not null,
+        createdAt       timestamp(0) with time zone not null default 'now',
+        updatedAt       timestamp(0) with time zone not null default 'now',
+        updatedByPersonId bigint not null,
+        constraint      Connection_Pk primary key(id),
+        constraint      Connection_Organization_Fk foreign key (organizationId) references tc.Organization (id),
+        constraint      Connection_UpdatedBy_Person_Fk foreign key (updatedByPersonId) references tc.Person (id)
+    );
+
+    create type tc.EntityType as enum ('person', 'organization', 'workspace', 'job', 'task', 'connection');
+
+    drop index if exists History_ResourceUrl_Index ;
+    delete from tc.History;
+    alter table tc.History drop column resourceUrl;
+    alter table tc.History rename column personId to updatedByPersonId;
+    alter table tc.History rename constraint History_Person_Fk to History_UpdatedByPerson_Fk;
+    alter table tc.History add column entity tc.EntityType not null;
+    alter table tc.History add column organizationId bigint;
+    alter table tc.History add column workspaceId bigint;
+    alter table tc.History add column jobId bigint;
+    alter table tc.History add column taskId bigint;
+    alter table tc.History add column connectionId bigint;
+    alter table tc.History add column personId bigint;
+    -- No foreign keys here, because we want to keep the records forever, even when the object is gone. For audit
+    -- and restore purposes.
+    perform CommitSchemaVersion(11, 'Added Connection. Changed History: an object is identified by a set of IDs instead of a single URL.');
+end if;
+end $$;
+
+do $$
+begin
+if not HasSchemaVersion(12) then
+
+    alter table tc.Job add column organizationId bigint;
+    update tc.Job job set organizationId = (select ws.organizationId from tc.Workspace ws where ws.id = job.workspaceId);
+    alter table tc.Job alter column organizationId set not null;
+    alter table tc.Job add constraint Job_Organization_Fk foreign key (organizationId) references tc.Organization (id);
+
+    alter table tc.Task add column organizationId bigint;
+    alter table tc.Task add column workspaceId bigint;
+    update tc.Task task set organizationId = (select job.organizationId from tc.Job job where job.id = task.jobId),
+                            workspaceId = (select job.workspaceId from tc.Job job where job.id = task.jobId);
+    alter table tc.Task alter column organizationId set not null;
+    alter table tc.Task alter column workspaceId set not null;
+    alter table tc.Task add constraint Task_Organization_Fk foreign key (organizationId) references tc.Organization (id);
+    alter table tc.Task add constraint Task_Workspace_Fk foreign key (workspaceId) references tc.Workspace (id);
+
+    alter table tc.Run add column organizationId bigint;
+    alter table tc.Run add column workspaceId bigint;
+    update tc.Run run set organizationId = (select job.organizationId from tc.Job job where job.id = run.jobId),
+                          workspaceId = (select job.workspaceId from tc.Job job where job.id = run.jobId);
+    alter table tc.Run alter column organizationId set not null;
+    alter table tc.Run alter column workspaceId set not null;
+    alter table tc.Run add constraint Run_Organization_Fk foreign key (organizationId) references tc.Organization (id);
+    alter table tc.Run add constraint Run_Workspace_Fk foreign key (workspaceId) references tc.Workspace (id);
+
+    alter table tc.JobConters rename to JobCounters;
+    alter table tc.JobCounters add column organizationId bigint;
+    alter table tc.JobCounters add column workspaceId bigint;
+    update tc.JobCounters counters set organizationId = (select job.organizationId from tc.Job job where job.id = counters.jobId),
+                                       workspaceId = (select job.workspaceId from tc.Job job where job.id = counters.jobId);
+    alter table tc.JobCounters alter column organizationId set not null;
+    alter table tc.JobCounters alter column workspaceId set not null;
+    alter table tc.JobCounters add constraint JobCounters_Organization_Fk foreign key (organizationId) references tc.Organization (id);
+    alter table tc.JobCounters add constraint JobCounters_Workspace_Fk foreign key (workspaceId) references tc.Workspace (id);
+
+    perform CommitSchemaVersion(12, 'Added organizationId and workspaceId to all child tables to simplify security checks.');
+end if;
+end $$;
+
+do $$
+begin
+if not HasSchemaVersion(12) then
+    alter table tc.Person add column deleted smallint not null default 0;
+    perform CommitSchemaVersion(12, 'Users are not deleted anymore, instead they are marked deleted.');
+end if;
+end $$;
+
 -- Use the snippet as a template:
 --
 -- do $$

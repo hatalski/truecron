@@ -175,13 +175,16 @@ var ensureHasAccess = module.exports.ensureHasAccess = Promise.method(function (
 var grantAccess = module.exports.grantAccess = Promise.method(function (context, workspaceId, personId, roleName) {
     workspaceId = tools.getId(workspaceId);
     personId = tools.getId(personId);
-    var role = WorkspaceRoles.parse(roleName);
+    var locals = {
+        role: WorkspaceRoles.parse(roleName)
+    };
     return using(models.transaction(), function (tx) {
         return workspace.findByIdNoChecks(context, workspaceId, tx)
             .then(function (workspace) {
                 if (!workspace) {
                     throw new errors.NotFound();
                 }
+                locals.workspace = workspace;
                 // A user needs to be organization's admin to modify workspace permissions
                 return organizationAccess.ensureHasAccess(context, workspace.organizationId, organizationAccess.OrganizationRoles.Admin, tx);
             })
@@ -191,7 +194,7 @@ var grantAccess = module.exports.grantAccess = Promise.method(function (context,
                 }, { transaction: tx });
             })
             .then(function (accessEntry) {
-                if (accessEntry && accessEntry.role === role.name) {
+                if (accessEntry && accessEntry.role === locals.role.name) {
                     // The person already has the required role, nothing to do.
                     return accessEntry;
                 }
@@ -201,19 +204,20 @@ var grantAccess = module.exports.grantAccess = Promise.method(function (context,
                         return models.WorkspaceToPerson.create({
                             workspaceId: workspaceId,
                             personId: personId,
-                            role: role.name,
+                            role: locals.role.name,
                             updatedByPersonId: context.personId
                         }, { transaction: tx });
                     } else {
                         return accessEntry.updateAttributes({
-                            role: role.name,
+                            role: locals.role.name,
                             updatedByPersonId: context.personId
                         }, { transaction: tx });
                     }
                 })
                 .then(function (newAccessEntry) {
                     return Promise.join(
-                        history.logAccessGranted(context.personId, context.links.workspace(workspaceId), newAccessEntry, tx),
+                        history.logAccessGranted(context.personId, { organizationId: locals.workspace.organizationId, workspaceId: workspaceId },
+                                                 newAccessEntry, tx),
                         cache.remove(getEditableWorkspacesCacheKey(personId)),
                         function() {
                             return newAccessEntry;
@@ -244,6 +248,7 @@ var revokeAccess = module.exports.revokeAccess = Promise.method(function (contex
                 if (!workspace) {
                     throw new errors.NotFound();
                 }
+                locals.workspace = workspace;
                 // A user needs to be organization's admin to modify workspace permissions
                 return organizationAccess.ensureHasAccess(context, workspace.organizationId, organizationAccess.OrganizationRoles.Admin, tx);
             })
@@ -260,7 +265,8 @@ var revokeAccess = module.exports.revokeAccess = Promise.method(function (contex
                 locals.accessEntry = accessEntry;
                 return accessEntry.destroy({ transaction: tx })
                     .then(function() {
-                        return history.logAccessRevoked(context.personId, context.links.workspace(workspaceId), locals.accessEntry, tx);
+                        return history.logAccessRevoked(context.personId, { organizationId: locals.workspace.organizationId, workspaceId: workspaceId },
+                                                        locals.accessEntry, tx);
                     })
                     .then(function() {
                         cache.remove(getEditableWorkspacesCacheKey(personId));

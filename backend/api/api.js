@@ -34,7 +34,7 @@ api.use(require('./tasks'));
 api.use(require('./connections'));
 api.use(require('./task-types'));
 api.use(require('./runs'));
-
+api.use(require('./history'));
 
 //
 // Errors and logging

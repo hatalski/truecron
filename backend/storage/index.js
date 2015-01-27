@@ -40,6 +40,7 @@ Storage.prototype.initialize = Promise.method(function initialize() {
     this.WorkspaceAccess = require('./workspace-access');
     this.Tasks = require('./tasks');
     this.Runs = require('./runs');
+    this.History = require('./history');
 
     return db.upgradeDatabaseIfNeeded(databaseOptions);
 });

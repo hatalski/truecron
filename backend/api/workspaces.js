@@ -6,23 +6,20 @@ var express = require('express'),
     validator = require('../../lib/validator'),
     storage = require('../storage'),
     apiErrors = require('./../../lib/errors'),
-    common = require('./common'),
-    jobs = require('./jobs');
+    common = require('./common');
 
 var api = express.Router();
 
 /**
  * Format a workspace object retrieved from a database to be returned from the API.
  */
-function formatWorkspace(req, workspace) {
-    if (workspace === undefined) {
-        return workspace;
-    }
+function formatWorkspace(workspace) {
     var ws = workspace.toJSON();
+    var selfUri = '/workspaces/' + ws.id;
     ws.links = {
-        self: req.context.links.workspace({ workspaceId: ws.id }),
-        jobs: req.context.links.jobs({ workspaceId: ws.id }),
-        history: req.context.links.workspaceHistory({ workspaceId: ws.id })
+        self:       selfUri,
+        jobs:       selfUri + '/jobs',
+        history:    selfUri + '/history'
     };
     common.formatApiOutput(ws);
     return ws;
@@ -53,7 +50,7 @@ api.route('/workspaces')
             offset: req.listParams.offset
         }).then(function (result) {
             res.json({
-                workspaces: result.rows.map(formatWorkspace.bind(null, req)),
+                workspaces: result.rows.map(formatWorkspace),
                 meta: {
                     total: result.count
                 }});
@@ -64,21 +61,25 @@ api.route('/workspaces')
             });
     })
     //
-    // Add a new workspace to the req.organization.
+    // Add a new workspace to the req.organization or req.body.workspace.organizationId.
     //
     .post(function (req, res, next) {
-        if (!req.organization) {
-            return next(new apiErrors.InvalidParams('Organization is not specified.'));
+        if (!req.body || !req.body.workspace) {
+            return next(new apiErrors.InvalidParams('workspace is not specified.'));
+        }
+        var organizationId = req.organization ? req.organization.id : req.body.workspace.organizationId;
+        if (!organizationId) {
+            return next(new apiErrors.InvalidParams('organizationId is not specified.'));
         }
         req.checkBody('workspace.name', 'Invalid workspace name.').isLength(1, 255);
         var errors = req.validationErrors();
         if (errors) {
             return next(new apiErrors.InvalidParams(errors));
         }
-        req.body.workspace.organizationId = req.organization.id;
+        req.body.workspace.organizationId = organizationId;
         storage.Workspace.create(req.context, req.body.workspace)
             .then(function (workspace) {
-                res.status(201).json({ workspace: formatWorkspace(req, workspace)});
+                res.status(201).json({ workspace: formatWorkspace(workspace)});
             })
             .catch(function (err) {
                 logger.error(err.toString());
@@ -94,8 +95,6 @@ api.param('workspaceid', function (req, res, next, id) {
         .then(function (workspace) {
             if (workspace !== null) {
                 req.workspace = workspace;
-                req.context.links.workspaceId = workspace.id;
-                req.context.links.organizationId = workspace.organizationId;
                 next();
             } else {
                 next(new apiErrors.NotFound());
@@ -112,7 +111,7 @@ api.route('/workspaces/:workspaceid')
     // Get a workspace
     //
     .get(function (req, res, next) {
-        res.json({ workspace: formatWorkspace(req, req.workspace) });
+        res.json({ workspace: formatWorkspace(req.workspace) });
     })
     //
     // Update the workspace
@@ -123,7 +122,7 @@ api.route('/workspaces/:workspaceid')
         }
         storage.Workspace.update(req.context, req.workspace.id, req.body.workspace)
             .then(function (workspace) {
-                res.json({ workspace: formatWorkspace(req, workspace)});
+                res.json({ workspace: formatWorkspace(workspace)});
             })
             .catch(function (err) {
                 logger.error(err.toString());
@@ -149,7 +148,7 @@ api.route('/workspaces/:workspaceid')
 // WORKSPACE MEMBERS
 //
 
-function formatMember(req, member) {
+function formatMember(member) {
     // TODO: Include person name/email
     var result = {
         userId: member.personId,
@@ -158,8 +157,8 @@ function formatMember(req, member) {
         updatedAt: member.updatedAt,
         updatedByUserId: member.updatedByPersonId,
         links: {
-            self: req.context.links.workspaceMember(member.personId),
-            user: req.context.links.user(member.personId)
+            self: '/workspaces/' + member.workspaceId + '/members/' + member.personId,
+            user: '/users/' + member.personId
         }
     };
     common.formatApiOutput(result);
@@ -183,7 +182,7 @@ api.route('/workspaces/:workspaceid/members')
             offset: req.listParams.offset
         }).then(function (result) {
             res.json({
-                members: result.rows.map(formatMember.bind(null, req)),
+                members: result.rows.map(formatMember),
                 meta: {
                     total: result.count
                 }});
@@ -205,7 +204,7 @@ api.route('/workspaces/:workspaceid/members')
         }
         storage.WorkspaceAccess.grantAccess(req.context, req.workspace, req.body.member.userId, req.body.member.role)
             .then(function (member) {
-                res.status(201).json(formatMember(req, member));
+                res.status(201).json(formatMember(member));
             })
             .catch(function (err) {
                 logger.error(err.toString());
@@ -218,7 +217,6 @@ api.param('wsmemberid', function (req, res, next, id) {
         return next(new apiErrors.InvalidParams('Invalid member ID.'));
     }
     req.workspaceMemberId = +id;
-    req.context.links.workspaceMemberId = +id;
     next();
 });
 
@@ -240,7 +238,7 @@ api.route('/workspaces/:workspaceid/members/:wsmemberid')
         }
         storage.WorkspaceAccess.grantAccess(req.context, req.workspace, req.workspaceMemberId, req.body.member.role)
             .then(function (member) {
-                res.json(formatMember(req, member));
+                res.json(formatMember(member));
             })
             .catch(function (err) {
                 logger.error(err.toString());
@@ -261,6 +259,7 @@ api.route('/workspaces/:workspaceid/members/:wsmemberid')
             });
     });
 
-api.use('/workspaces/:workspaceid', jobs);
+api.use('/workspaces/:workspaceid', require('./jobs'));
+api.use('/workspaces/:workspaceid', require('./history'));
 
 module.exports = api;

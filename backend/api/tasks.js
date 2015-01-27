@@ -15,11 +15,8 @@ var api = express.Router();
 //
 //+++++++++++++++++++++++++++++++
 function formatTask(task) {
-    if (task === undefined) {
-        return task;
-    }
     var tk = task.toJSON();
-    var selfUrl = '/jobs/' + task.jobId + '/tasks/' + task.id;
+    var selfUrl = '/tasks/' + task.id;
     tk.links = {
         self: selfUrl
     };
@@ -61,11 +58,20 @@ api.route('/tasks')
         if (!req.body || !req.body.task) {
             return next(new apiErrors.InvalidParams('Task is not specified.'));
         }
+        var organizationId = req.organization ? req.organization.id : req.body.task.organizationId;
+        if (!organizationId) {
+            return next(new apiErrors.InvalidParams('organizationId is not specified.'));
+        }
+        var workspaceId = req.workspace ? req.workspace.id : req.body.task.workspaceId;
+        if (!workspaceId) {
+            return next(new apiErrors.InvalidParams('workspaceId is not specified.'));
+        }
         var jobId = req.job ? req.job.id : req.body.task.jobId;
         if (!jobId) {
-            return next(new apiErrors.InvalidParams('Job is not specified.'));
+            return next(new apiErrors.InvalidParams('jobId is not specified.'));
         }
-        req.context.url = req.url;
+        req.body.task.organizationId = organizationId;
+        req.body.task.workspaceId = workspaceId;
         req.body.task.jobId = jobId;
         storage.Tasks.create(req.context, req.body.task)
             .then(function (task) {
@@ -86,7 +92,6 @@ api.param('taskId', function (req, res, next, id) {
         .then(function (task) {
             if (task !== null) {
                 req.task = task;
-                req.context.links.taskId = task.id;
                 next();
             } else {
                 next(new apiErrors.NotFound());
@@ -129,5 +134,7 @@ api.route('/tasks/:taskId')
                 res.status(204).json({});
             });
     });
+
+api.use('/tasks/:taskId', require('./history'));
 
 module.exports = api;

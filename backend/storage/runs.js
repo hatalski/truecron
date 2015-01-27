@@ -9,7 +9,9 @@ var Promise = require("bluebird"),
     history = require('./history'),
     logger = require('../../lib/logger'),
     validator = require('../../lib/validator'),
-    errors = require('../../lib/errors');
+    errors = require('../../lib/errors'),
+    tools = require('./tools'),
+    jobs = require('./jobs');
 
 var using = Promise.using;
 
@@ -24,14 +26,22 @@ var getRunIdCacheKey = function(runId) {
 // Create run
 //
 
-var create = module.exports.create = Promise.method(function (context, jobId, attributes) {
-    attributes.updatedByPersonId = context.personId;
-    attributes.jobId = jobId;
+var create = module.exports.create = Promise.method(function (context, attributes) {
+    attributes = tools.sanitizeAttributesForCreate(context, attributes);
+    if (!attributes.organizationId) {
+        throw new errors.InvalidParams('Organization ID is not specified.');
+    }
+    if (!attributes.workspaceId) {
+        throw new errors.InvalidParams('Workspace ID is not specified.');
+    }
+    if (!attributes.jobId) {
+        throw new errors.InvalidParams('jobId is not specified.');
+    }
     return using(models.transaction(), function (tx) {
         return models.Run.create(attributes, { transaction: tx });
     })
         .catch(function (err) {
-            logger.error('Failed create run on the job %d .', jobId, err.toString());
+            logger.error('Failed create run on the job %d .', attributes.jobId, err.toString());
             throw err;
         });
 });
@@ -55,16 +65,28 @@ var findAndCountAll = module.exports.findAndCountAll = Promise.method(function (
 //
 // Search for a single run by ID.
 //
-var findById = module.exports.findById = Promise.method(function (context, jobid, id,  transaction) {
+var findById = module.exports.findById = Promise.method(function (context, id, forEdit, transaction) {
+    var locals = {};
     return cache.get(getRunIdCacheKey(id))
         .then(function (result) {
             if (result.found) {
                 return result.value;
             }
-            return models.Run.find({ where: { id: id, jobId: jobid } }, { transaction: transaction })
+            return models.Run.find({ where: { id: id } }, { transaction: transaction })
                 .then(function (run) {
                     cache.put(getRunIdCacheKey(id), run);
-                    return run;
+                    locals.run = run;
+                    if (!run) {
+                        return run;
+                    }
+                    if (forEdit) {
+                        return jobs.ensureCanEdit(context, run.jobId);
+                    } else {
+                        return jobs.ensureCanView(context, run.jobId);
+                    }
+                })
+                .then(function (){
+                    return locals.run;
                 });
         })
         .catch(function (err) {
@@ -76,26 +98,21 @@ var findById = module.exports.findById = Promise.method(function (context, jobid
 /**
  * Update a run.
  */
-var update = module.exports.update = Promise.method(function (context, jobid, id, attributes) {
-    attributes.updatedByPersonId = context.personId;
-    var self = { attrs: attributes };
+var update = module.exports.update = Promise.method(function (context, id, attributes) {
+    attributes = tools.sanitizeAttributesForUpdate(context, attributes);
+    var locals = { attrs: attributes };
     return using (models.transaction(), function (tx) {
-        self.tx = tx;
-        return module.exports.findById(context, jobid, id, tx)
+        locals.tx = tx;
+        return findById(context, id, true, tx) // findById will check access rights
             .then(function (run) {
                 if (run === null) {
                     throw new errors.NotFound();
                 }
-                self.oldRun = run;
-                return run.updateAttributes(self.attrs, { transaction: self.tx });
+                return run.updateAttributes(locals.attrs, { transaction: locals.tx });
             })
             .then(function (run) {
-                self.run = run;
-                return history.logUpdated(context.personId, getRunIdCacheKey(run.id), run, self.oldRun, self.tx);
-            })
-            .then(function () {
-                cache.put(getRunIdCacheKey(self.run.id), self.run);
-                return self.run;
+                cache.put(getRunIdCacheKey(locals.run.id), locals.run);
+                return run;
             });
     })
         .catch(function (err) {
@@ -107,22 +124,18 @@ var update = module.exports.update = Promise.method(function (context, jobid, id
 /**
  * Remove a run.
  */
-var remove = module.exports.remove = Promise.method(function (context, jobId, id) {
+var remove = module.exports.remove = Promise.method(function (context, id) {
     return using (models.transaction(), function (tx) {
-        var self = { tx: tx };
-        return findById(context, jobId, id)
+        var locals = { tx: tx };
+        return findById(context, id, true, tx) // findById will check access rights
             .then(function (run) {
                 if (run === null) {
                     // No found, that's ok for remove() operation
                     return;
                 }
-                self.run = run;
-                return run.destroy({transaction: self.tx})
+                return run.destroy({transaction: tx})
                     .then(function () {
-                        return history.logRemoved(context.personId, getRunIdCacheKey(self.run.id), self.run, self.tx);
-                    })
-                    .then(function () {
-                        cache.remove(getRunIdCacheKey(self.run.id))
+                        cache.remove(getRunIdCacheKey(id));
                     });
             });
     })

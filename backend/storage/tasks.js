@@ -21,6 +21,12 @@ var getTaskIdCacheKey = function(taskId) {
 
 var create = module.exports.create = Promise.method(function (context, attributes) {
     attributes = tools.sanitizeAttributesForCreate(context, attributes);
+    if (!attributes.organizationId) {
+        throw new errors.InvalidParams('Organization ID is not specified.');
+    }
+    if (!attributes.workspaceId) {
+        throw new errors.InvalidParams('Workspace ID is not specified.');
+    }
     if (!attributes.jobId) {
         throw new errors.InvalidParams('Job ID is not specified.');
     }
@@ -43,12 +49,19 @@ var create = module.exports.create = Promise.method(function (context, attribute
     var locals = { attrs: attributes };
     attributes.timeout = attributes.timeout.toString();
     return using(models.transaction(), function (tx) {
-        return models.Task.create(attributes, { transaction: tx })
-            .then(function(task) {
+        return jobs.ensureCanEdit(context, attributes.jobId)
+            .then(function() {
+                return models.Task.create(attributes, { transaction: tx });
+            })
+            .then(function (task) {
                 locals.task = task;
-                var link = context.url + '/' + task.id;
                 return Promise.join(
-                    history.logCreated(context.personId, link, task, tx), // context.links.job(job.id)
+                    history.logCreated(context.personId, {
+                            organizationId: task.organizationId,
+                            workspaceId: task.workspaceId,
+                            jobId: task.jobId,
+                            taskId: task.id
+                        }, task, tx),
                     cache.put(getTaskIdCacheKey(task.id), task),
                     function () {
                         return locals.task;
@@ -77,7 +90,7 @@ var findAndCountAll = module.exports.findAndCountAll = Promise.method(function (
         });
 });
 
-var findByIdNoCheck = module.exports.findById = Promise.method(function (context, id, transaction) {
+var findByIdNoCheck = module.exports.findByIdNoCheck = Promise.method(function (context, id, transaction) {
     return cache.get(getTaskIdCacheKey(id))
         .then(function (result) {
             if (result.found) {
@@ -134,7 +147,12 @@ var update = module.exports.update = Promise.method(function (context, id, attri
             .then(function (task) {
                 locals.task = task;
                 return Promise.join(
-                    history.logUpdated(context.personId, getTaskIdCacheKey(task.id), task, locals.oldTask, tx),
+                    history.logUpdated(context.personId, {
+                            organizationId: task.organizationId,
+                            workspaceId: task.workspaceId,
+                            jobId: task.jobId,
+                            taskId: task.id
+                        }, task, locals.oldTask, tx),
                     cache.put(getTaskIdCacheKey(locals.task.id), locals.task),
                     function () {
                         return locals.task;
@@ -166,7 +184,12 @@ var remove = module.exports.remove = Promise.method(function (context, id) {
                     })
                     .then(function () {
                         return Promise.join(
-                            history.logRemoved(context.personId, getTaskIdCacheKey(locals.task.id), locals.task, tx),
+                            history.logRemoved(context.personId, {
+                                    organizationId: locals.task.organizationId,
+                                    workspaceId: locals.task.workspaceId,
+                                    jobId: locals.task.jobId,
+                                    taskId: locals.task.id
+                                }, locals.task, tx),
                             cache.remove(getTaskIdCacheKey(locals.task.id)));
                     });
             });

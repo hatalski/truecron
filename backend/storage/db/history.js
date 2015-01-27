@@ -1,12 +1,18 @@
 module.exports = function(sequelize, DataTypes) {
 
     var History = sequelize.define('History', {
-        id:       { type: DataTypes.BIGINT, primaryKey: true, allowNull: false, autoIncrement: true },
-        personId: { type: DataTypes.BIGINT, allowNull: false },
-        resourceUrl: { type: DataTypes.STRING(256), allowNull: false },
-        operation: { type: DataTypes.STRING(128), allowNull: false },
-        change:   { type: DataTypes.STRING(8192), allowNull: false },
-        oldValue: { type: DataTypes.STRING(8192) }
+        id:             { type: DataTypes.BIGINT, primaryKey: true, allowNull: false, autoIncrement: true },
+        updatedByPersonId: { type: DataTypes.BIGINT, allowNull: false },
+        organizationId: { type: DataTypes.BIGINT, allowNull: true },
+        workspaceId:    { type: DataTypes.BIGINT, allowNull: true },
+        jobId:          { type: DataTypes.BIGINT, allowNull: true },
+        taskId:         { type: DataTypes.BIGINT, allowNull: true },
+        connectionId:   { type: DataTypes.BIGINT, allowNull: true },
+        personId:       { type: DataTypes.BIGINT, allowNull: true },
+        operation:      { type: DataTypes.STRING(128), allowNull: false },
+        entity:         { type: DataTypes.ENUM, values: ['person', 'organization', 'workspace', 'job', 'task', 'connection'], allowNull: false },
+        change:         { type: DataTypes.STRING(8192), allowNull: false },
+        oldValue:       { type: DataTypes.STRING(8192) }
     }, {
         schema: 'tc',
         tableName: 'history',
@@ -15,6 +21,12 @@ module.exports = function(sequelize, DataTypes) {
         freezeTableName: true,
         classMethods: {
             associate: function(models) {
+                History.belongsTo(models.Person, { as: 'updatedBy', foreignKey: 'updatedByPersonId' });
+                History.belongsTo(models.Organization, { as: 'organization', foreignKey: 'organizationId' });
+                History.belongsTo(models.Workspace, { as: 'workspace', foreignKey: 'workspaceId' });
+                History.belongsTo(models.Job, { as: 'job', foreignKey: 'jobId' });
+                History.belongsTo(models.Task, { as: 'task', foreignKey: 'taskId' });
+                History.belongsTo(models.Connection, { as: 'connection', foreignKey: 'connectionId' });
                 History.belongsTo(models.Person, { as: 'person', foreignKey: 'personId' });
             }
         }

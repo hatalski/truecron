@@ -6,6 +6,8 @@ module.exports = function(sequelize, DataTypes) {
 
     var Run = sequelize.define('Run', {
         id: { type: DataTypes.BIGINT, primaryKey: true, allowNull: false, autoIncrement: true },
+        organizationId: { type: DataTypes.BIGINT, allowNull: false },
+        workspaceId: { type: DataTypes.BIGINT, allowNull: false},
         jobId: {type: DataTypes.BIGINT, allowNull: false},
         startedAt: { type: DataTypes.DATE, allowNull: false},
         startedByPersonId: { type: DataTypes.BIGINT },

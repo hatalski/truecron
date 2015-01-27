@@ -55,24 +55,13 @@ var findById = module.exports.findById = Promise.method(function (context, id, w
     return workspaceAccess.findByIdAndEnsureAccess(context, id, workspaceRole, transaction);
 });
 
-var limitQueryToAccessibleOrganizations = Promise.method(function (context, options, transaction) {
-    if (context.isSystem()) {
-        return options;
-    }
-    return organizationAccess.getAccessibleOrganizations(context, transaction)
-        .then(function (accessEntries) {
-            var accessibleIds = _.keys(accessEntries);
-            return _.merge(options, { where: { organizationId: accessibleIds }});
-        });
-});
-
 /**
  * Search for a single workspace.
  * @param {object} options See Sequelize.find docs for details
  * Only workspaces the current user has access to are returned.
  */
 var find = module.exports.find = Promise.method(function (context, options, transaction) {
-    return limitQueryToAccessibleOrganizations(context, options, transaction)
+    return tools.limitQueryToAccessibleOrganizations(context, options, transaction)
         .then(function (newOptions) {
             return models.Workspace.find(newOptions, { transaction: transaction });
         })
@@ -101,7 +90,7 @@ var find = module.exports.find = Promise.method(function (context, options, tran
  * Only workspaces the current user has access to are returned.
  */
 var findAndCountAll = module.exports.findAndCountAll = Promise.method(function (context, options) {
-    return limitQueryToAccessibleOrganizations(context, options)
+    return tools.limitQueryToAccessibleOrganizations(context, options)
         .then(function (newOptions) {
             return models.Workspace.findAndCountAll(newOptions);
         })
@@ -140,10 +129,9 @@ var create = module.exports.create = Promise.method(function (context, attribute
             })
             .then(function (workspace) {
                 locals.workspace = workspace;
-                var workspaceLinks = context.links.workspace(
-                    { organizationId: workspace.organizationId, workspaceId: workspace.id });
                 return Promise.join(
-                    history.logCreated(context.personId, workspaceLinks, workspace, locals.tx),
+                    history.logCreated(context.personId, { organizationId: workspace.organizationId, workspaceId: workspace.id },
+                                       workspace, locals.tx),
                     cache.put(getWorkspaceIdCacheKey(workspace.id), workspace),
                     function () {
                         return locals.workspace;
@@ -180,8 +168,8 @@ var update = module.exports.update = Promise.method(function (context, id, attri
             .then(function (workspace) {
                 locals.workspace = workspace;
                 return Promise.join(
-                    history.logUpdated(context.personId, context.links.workspace(workspace.id), workspace,
-                                       locals.oldWorkspace, locals.tx),
+                    history.logUpdated(context.personId, { organizationId: workspace.organizationId, workspaceId: workspace.id },
+                                       workspace, locals.oldWorkspace, locals.tx),
                     cache.put(getWorkspaceIdCacheKey(locals.workspace.id), locals.workspace),
                     function () {
                         return locals.workspace;
@@ -212,10 +200,8 @@ var remove = module.exports.remove = Promise.method(function (context, id) {
                 return workspace.destroy({ transaction: locals.tx });
             })
             .then(function () {
-                var links = context.links.workspace(
-                    { organizationId: locals.workspace.organizationId, workspaceId: locals.workspace.id });
                 return Promise.join(
-                    history.logRemoved(context.personId, links,
+                    history.logRemoved(context.personId, { organizationId: locals.workspace.organizationId, workspaceId: locals.workspace.id },
                                        locals.workspace, locals.tx),
                     cache.remove(getWorkspaceIdCacheKey(locals.workspace.id)));
             });
