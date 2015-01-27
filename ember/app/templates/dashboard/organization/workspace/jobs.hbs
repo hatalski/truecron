@@ -1,3 +1,4 @@
+{{#if ishidesidebar}}
 <div class="sidebar_tabs">
     <ul class="nav nav-tabs" role="tablist">
         {{#link-to "dashboard.organization.workspace.jobs" tagName="li"}}<span>Jobs</span>{{/link-to}}
@@ -9,6 +10,7 @@
         <button type="button" class="btn btn-default"><i class="fa fa-search"></i></button>
     </div>
 </div>
+
 <div class="sidebar">
 {{#each job in controller}}
     <div class="menu-tabs">
@@ -30,15 +32,25 @@
       {{/link-to}}
     </div>
 {{else}}
-  {{#if ishidesidebar}}
         No jobs
-  {{/if}}
 {{/each}}
-    <a href="#" class="btn btn-default, hidesidebar" {{action "hidesidebar"}}><<</a>
+  {{#if ishidesidebar}}
+      <a href="#" class="btn btn-default, hidesidebar" {{action "hidesidebar"}}>&lt&lt</a>
+  {{/if}}
+
 </div>
+{{/if}}
+{{#if ishidesidebar}}
+{{else}}
+  <a href="#" class="btn btn-default, smollhidesidebar" {{action "hidesidebar"}}>&gt&gt</a>
+{{/if}}
+
 <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2">
     <div class="main cron-main">
       {{outlet}}
     </div>
 </div>
+
+
+
 

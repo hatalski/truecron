@@ -853,8 +853,16 @@ h2.pitch {
 
 .hidesidebar {
   position:absolute;
-  bottom:5px;
+  bottom:0px;
   left:0;
   border: 1px solid #13AFC8;
   width:100%;
+}
+
+.smollhidesidebar {
+  position:absolute;
+  bottom:0px;
+  left:0;
+  border: 1px solid #13AFC8;
+  width:40px;
 }

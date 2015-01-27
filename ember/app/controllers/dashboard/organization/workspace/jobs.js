@@ -1,14 +1,3 @@
-/*App = Ember.Application.create();
-App.ApplicationController = Ember.Controller.extend({
-  ishidesidebar: true,
-  actions: {
-    hidesidebar: function () {
-      this.toggleProperty('ishidesidebar');
-    }
-  }
-
-});
-*/
 import Ember from 'ember';
 export default Ember.ArrayController.extend({
 	needs: ['dashboard', 'dashboard/organization', 'dashboard/organization/workspace'],
@@ -20,7 +9,7 @@ export default Ember.ArrayController.extend({
 	actions: {
     hidesidebar: function () {
       this.toggleProperty('ishidesidebar');
-    }, 
+    },
 		addjob: function() {
 		    var self = this;
 		    var workspace = self.get('workspace');
