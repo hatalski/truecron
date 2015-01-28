@@ -37,6 +37,26 @@ export default Ember.ObjectController.extend({
     }.property('model.rrule', 'model.startsAt'),
     actions: {
         run: function(job) {
+
+          var self = this;
+          var workspace = self.get('workspace');
+          var user = self.get('session.user');
+          var newJobRun = self.store.createRecord('job-run', {
+            guid          : job.get('id'),
+            jobId         : job.get('id'),
+            startDate     : new Date(),
+            elapsedTime   : 0,
+            triggeredBy   : 'test',
+            channelId     : job.get('id')
+          });
+
+          newJobRun.save().then(function(result) {
+            console.log(result);
+          }, function(error) {
+            console.log(error);
+          });
+
+
           var socket = window.io(ENV.APP.SERVER_HOST + ':443', {secure: true});
           if(this.get('running') !== true)
           {
