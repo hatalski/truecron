@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
-if [ -d "/var/www/truecron" ]; then
-    cd /var/www/truecron; npm start
+if [ -d "/var/www/truecron/server" ]; then
+    cd /var/www/truecron/server; npm start
 else
     echo "
 
