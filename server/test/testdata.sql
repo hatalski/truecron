@@ -27,6 +27,30 @@ insert into tc.History (id, updatedByPersonId, organizationId, workspaceId, jobI
     where not exists (select * from tc.History
     where id = -51);
 
+-- Brian's Personal organization
+insert into tc.Organization (id, name, email, createdAt, updatedAt, updatedByPersonId)
+    select -31, 'Personal', 'bj@it.acme.corp', 'now', 'now', -10
+    where not exists (select * from tc.Organization
+    where id = -31);
+
+insert into tc.History (id, updatedByPersonId, organizationId, workspaceId, jobId, taskId, connectionId, personId, operation, change, oldValue, entity)
+    select -49, -10, -31, null, null, null, null, null, 'created', '{ "name": "Personal" }', null, 'organization'
+    where not exists (select * from tc.History
+    where id = -49);
+
+insert into tc.OrganizationToPerson (organizationId, personId, role, createdAt, updatedAt, updatedByPersonId)
+    select -31, -10, 'admin', 'now', 'now', -10
+    where not exists (select * from tc.OrganizationToPerson
+    where organizationId = -31 and personId = -10);
+
+insert into tc.History (id, updatedByPersonId, organizationId, workspaceId, jobId, taskId, connectionId, personId, operation, change, oldValue, entity)
+    select -48, -10, -31, null, null, null, null, null, 'member-add', '{ "personId": "-10", "role": "admin" }', null, 'organization'
+    where not exists (select * from tc.History
+    where id = -48);
+
+
+-- ACME Corp
+
 insert into tc.Organization (id, name, email, createdAt, updatedAt, updatedByPersonId)
     select -11, 'Acme Corporation', 'bj@it.acme.corp', 'now', 'now', -10
     where not exists (select * from tc.Organization
@@ -125,6 +149,21 @@ insert into tc.History (id, updatedByPersonId, organizationId, workspaceId, jobI
     select -157, -10, -11, -12, -13, -14, null, null, 'created', '{ "taskId": -14, "jobId": "-13", "name": "My workspace test job task", "position": 1, "taskTypeId": 5, "settings": {}, "timeout": 30000 }', null, 'task'
     where not exists (select * from tc.History
     where id = -157);
+
+insert into tc.ConnectionType (id, name)
+    select 'testftp', 'FTP server'
+    where not exists (select * from tc.ConnectionType
+    where id = 'testftp');
+
+insert into tc.Connection (id, organizationId, connectionTypeId, name, settings, createdAt, updatedAt, updatedByPersonId)
+    select -15, -11, 'testftp', 'My ftp server', '{ "address": "127.0.0.1", "port": "21" }', 'now', 'now', -10
+    where not exists (select * from tc.Connection
+    where id = -15);
+
+insert into tc.Connection (id, organizationId, connectionTypeId, name, settings, createdAt, updatedAt, updatedByPersonId)
+    select -16, -31, 'testftp', 'My home FTP server', '{ "address": "sweethome.dyndns.xyz", "port": "21" }', 'now', 'now', -10
+    where not exists (select * from tc.Connection
+    where id = -16);
 
 
 --

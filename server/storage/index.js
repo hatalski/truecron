@@ -41,6 +41,7 @@ Storage.prototype.initialize = Promise.method(function initialize() {
     this.Tasks = require('./tasks');
     this.Runs = require('./runs');
     this.History = require('./history');
+    this.Connection = require('./connection');
 
     return db.upgradeDatabaseIfNeeded(databaseOptions);
 });

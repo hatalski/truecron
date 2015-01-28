@@ -26,33 +26,40 @@ function formatRecord(historyRecord) {
 api.route('/history')
     .get(common.parseListParams, function (req, res, next) {
         var where = {};
-        if (req.organization) {
-            where.organizationId = req.organization.id;
-        }
-        if (req.workspace) {
-            where.workspaceId = req.workspace.id;
-        }
-        if (req.person) {
-            where.personId = req.person.id;
-        }
-        if (req.connection) {
-            where.connectionId = req.connection.id;
-        }
-        if (req.job) {
-            where.jobId = req.job.id;
-        }
+        var withChildren = !!req.param('children');
+
         if (req.task) {
             where.taskId = req.task.id;
+        } else if (req.job) {
+            where.jobId = req.job.id;
+            if (!withChildren) {
+                where.taskId = null;
+            }
+        } else if (req.connection) {
+            where.connectionId = req.connection.id;
+        } else if (req.workspace) {
+            where.workspaceId = req.workspace.id;
+            if (!withChildren) {
+                where.jobId = null;
+                where.taskId = null;
+            }
+        } else if (req.organization) {
+            where.organizationId = req.organization.id;
+            if (!withChildren) {
+                where.workspaceId = null;
+                where.connectionId = null;
+                where.jobId = null;
+                where.taskId = null;
+            }
+        } else if (req.person) {
+            where.personId = req.person.id;
         }
 
-        if (Object.keys(where).length === 0) {
+        var setFieldsCount = _.reduce(where, function (sum, value) { return value ? sum + 1 : sum; }, 0);
+        if (setFieldsCount === 0) {
             return next(new apiErrors.InvalidParams('Cannot show history, object is not specified.'));
         }
 
-
-        if (!req.organization) {
-            return next(new apiErrors.InvalidParams('Organization is not specified.'));
-        }
         if (req.listParams.searchTerm) {
             where = _.merge(where, { change: { like: req.listParams.searchTerm } });
         }
@@ -62,7 +69,6 @@ api.route('/history')
         } else {
             order = 'createdAt desc';
         }
-        var sort = req.listParams.sort || 'createdAt';
 
         storage.History.findAndCountAll(req.context, {
             where: where,
@@ -76,10 +82,10 @@ api.route('/history')
                     total: result.count
                 }});
         })
-            .catch(function (err) {
-                logger.error(err.toString());
-                next(err);
-            });
+        .catch(function (err) {
+            logger.error(err.toString());
+            next(err);
+        });
     });
 
 api.param('recordid', function (req, res, next, id) {
@@ -101,9 +107,9 @@ api.param('recordid', function (req, res, next, id) {
         });
 });
 
-api.route('/connections/:connectionid')
+api.route('/history/:recordid')
     //
-    // Get a connection
+    // Get a history record
     //
     .get(function (req, res, next) {
         res.json({ record: formatRecord(req.record) });

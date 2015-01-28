@@ -26,8 +26,29 @@ describe('WORKSPACES API',
             });
         });
 
-        it('should allow to get an existing workspace by ID', function (done) {
+        it('should allow to get an existing workspace by organization and ID', function (done) {
             api.getWorkspace(accessToken, testdata.AcmeCorp.id, testdata.MyWorkspace.id)
+                .then(function (res) {
+                    expect(res.status).to.eql(200);
+                    expect(res.body.workspace.id).to.be.eql(testdata.MyWorkspace.id);
+                    expect(res.body.workspace.organizationId).to.be.eql(testdata.AcmeCorp.id);
+                    expect(res.body.workspace.name).to.be.eql(testdata.MyWorkspace.name);
+                    expect(validator.isDate(res.body.workspace.createdAt)).to.be.ok();
+                    expect(validator.isDate(res.body.workspace.updatedAt)).to.be.ok();
+                    expect(res.body.workspace.updatedBy).to.be.eql(testdata.BrianJohnston.id);
+                    expect(res.body.workspace.links.self).to.be.eql('/workspaces/' + testdata.MyWorkspace.id);
+                    expect(res.body.workspace.links.jobs).to.be.eql('/workspaces/' + testdata.MyWorkspace.id + '/jobs');
+                    expect(res.body.workspace.links.history).to.be.eql('/workspaces/' + testdata.MyWorkspace.id + '/history');
+                    done();
+                });
+        });
+
+        it('should allow to get an existing workspace by ID only', function (done) {
+            superagent.get(prefix + '/workspaces/' + testdata.MyWorkspace.id)
+                    .set('Content-Type', 'application/json')
+                    .send()
+                    .authenticate(accessToken)
+                    .endAsync()
                 .then(function (res) {
                     expect(res.status).to.eql(200);
                     expect(res.body.workspace.id).to.be.eql(testdata.MyWorkspace.id);
