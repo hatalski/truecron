@@ -120,8 +120,23 @@ describe('JOBS API',
                 });
         });
 
-        it('get job by id', function (done) {
+        it('get job by organization, workspace and id', function (done) {
             superagent.get(prefix + '/organizations/' + testdata.AcmeCorp.id + '/workspaces/' + testdata.MyWorkspace.id + '/jobs/' + id_to_delete)
+                .send()
+                .authenticate(accessToken)
+                .end(function (e, res) {
+                    expect(e).to.eql(null);
+                    expect(res.header['content-type']).to.eql('application/json; charset=utf-8');
+                    expect(res.body.error).to.eql(undefined);
+                    expect(res.body.job.id).to.be.a('string');
+                    expect(validator.isDate(res.body.job.createdAt)).to.be.ok();
+                    expect(validator.isDate(res.body.job.updatedAt)).to.be.ok();
+                    expect(res.status).to.eql(200);
+                    done();
+                });
+        });
+        it('get job by id only', function (done) {
+            superagent.get(prefix + '/jobs/' + id_to_delete)
                 .send()
                 .authenticate(accessToken)
                 .end(function (e, res) {
@@ -155,7 +170,7 @@ describe('JOBS API',
         });
 
         it('update job without tags', function (done) {
-            superagent.put(prefix + '/organizations/' + testdata.AcmeCorp.id + '/workspaces/' + testdata.MyWorkspace.id + '/jobs/' + id_to_delete)
+            superagent.put(prefix + '/jobs/' + id_to_delete)
                 .set('Content-Type', 'application/json')
                 .send({ 'job':  {
                     'startsAt': '2014-08-21T10:00:11Z',
@@ -185,7 +200,7 @@ describe('JOBS API',
         });
 
         it('delete job2', function (done) {
-            superagent.del(prefix + '/organizations/' + testdata.AcmeCorp.id + '/workspaces/' + testdata.MyWorkspace.id + '/jobs/' + id_to_delete2)
+            superagent.del(prefix + '/jobs/' + id_to_delete2)
                 .send()
                 .authenticate(accessToken)
                 .end(function (e, res) {

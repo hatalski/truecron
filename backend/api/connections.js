@@ -33,10 +33,10 @@ api.route('/connections')
     // List connections of the req.organization.
     //
     .get(common.parseListParams, function (req, res, next) {
-        if (!req.organization) {
-            return next(new apiErrors.InvalidParams('Organization is not specified.'));
+        var where = { };
+        if (req.organization) {
+            where = { organizationId: req.organization.id };
         }
-        var where = { organizationId: req.organization.id };
         if (req.listParams.searchTerm) {
             where = _.merge(where, { name: { like: req.listParams.searchTerm } });
         }
@@ -92,7 +92,7 @@ api.param('connectionid', function (req, res, next, id) {
     }
     storage.Connection.findById(req.context, id)
         .then(function (connection) {
-            if (connection !== null) {
+            if (connection) {
                 req.connection = connection;
                 next();
             } else {

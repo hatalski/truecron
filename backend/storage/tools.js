@@ -1,4 +1,5 @@
 var Promise = require("bluebird"),
+    Sequelize = require('sequelize'),
     _ = require('lodash'),
     validator = require('../../lib/validator'),
     errors = require('../../lib/errors'),
@@ -45,7 +46,15 @@ module.exports.limitQueryToAccessibleOrganizations = Promise.method(function (co
     return organizationAccess.getAccessibleOrganizations(context, transaction)
         .then(function (accessEntries) {
             var accessibleIds = _.keys(accessEntries);
-            return _.merge(options, { where: { organizationId: accessibleIds }});
+            if (options.where && options.where.organizationId) {
+                if (_.includes(accessibleIds, options.where.organizationId)) {
+                    return options;
+                }
+                options.where = Sequelize.and(options.where, { organizationId: accessibleIds });
+                return options;
+            } else {
+                return _.merge(options, { where: { organizationId: accessibleIds }});
+            }
         });
 });
 

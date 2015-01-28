@@ -465,11 +465,30 @@ end $$;
 
 do $$
 begin
-if not HasSchemaVersion(12) then
+if not HasSchemaVersion(13) then
     alter table tc.Person add column deleted smallint not null default 0;
-    perform CommitSchemaVersion(12, 'Users are not deleted anymore, instead they are marked deleted.');
+    perform CommitSchemaVersion(13, 'Users are not deleted anymore, instead they are marked deleted.');
 end if;
 end $$;
+
+do $$
+begin
+if not HasSchemaVersion(14) then
+    create table tc.ConnectionType
+    (
+        id              varchar(64) not null,
+        name            varchar(255) not null,
+        constraint      ConnectionType_Pk primary key (id)
+    );
+
+    delete from tc.Connection;
+    alter table tc.Connection add column connectionTypeId varchar(64) not null;
+    alter table tc.Connection add constraint Connection_ConnectionType_Fk foreign key (connectionTypeId) references tc.ConnectionType (id);
+
+    perform CommitSchemaVersion(14, 'Added a connection type table.');
+end if;
+end $$;
+
 
 -- Use the snippet as a template:
 --
