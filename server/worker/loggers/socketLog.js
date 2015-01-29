@@ -3,7 +3,7 @@
  */
 var LogSubscriber = require('./logSubscriber');
 var util        = require('util');
-var app = require('../../../app');
+var app = require('../../app');
 
 var socketLog = function(key)
 {
