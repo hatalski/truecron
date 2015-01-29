@@ -7,7 +7,7 @@ var Router = Ember.Router.extend({
 
 Router.map(function() {
   this.route('profile');
-  this.resource('dashboard', function() { 
+  this.resource('dashboard', function() {
     this.route('organization', { path: '/:organization_id' }, function() {
       this.route('workspace', { path: '/:workspace_id' }, function() {
         this.route('jobs', { path: '/jobs' }, function() {
@@ -31,6 +31,8 @@ Router.map(function() {
       });
     });
   });
+
+  this.resource("jobs", function() {});
 });
 
 export default Router;
