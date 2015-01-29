@@ -20,6 +20,7 @@
     "moment": "2.9.0",
     "validator-js": "3.28.0",
     "torii": "0.2.2",
-    "socket.io-client": "1.2.1"
+    "socket.io-client": "1.2.1",
+    "jquery-ui": "1.11.2"
   }
 }

@@ -13,6 +13,10 @@
 </nav>
 <div class="container-fluid">
     <div class="row">
+        <button type="button" class="btn btn-default" {{action 'toggleSidebarVisibility'}}>Toggle Visibility</button>
+    </div>
+    <div class="row">
+        {{#sidebar-hide condition=invisibleSidebar}}
         <div class="col-xs-5 col-sm-4 col-md-3 col-lg-2" data-spy="affix" data-offset-top="40" data-offset-bottom="200">
             <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
                 <div class="panel panel-default">
@@ -59,6 +63,7 @@
                 </div>
             </div>
         </div>
+        {{/sidebar-hide}}
         <div class="col-xs-7 col-sm-8 col-md-9 col-lg-10">col-xs-7 col-sm-8 col-md-9 col-lg-10</div>
     </div>
 </div>

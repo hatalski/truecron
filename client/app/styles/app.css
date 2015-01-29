@@ -1,0 +1,6 @@
+body { padding-top: 50px }
+
+.navbar-brand {
+  background:url(logo.png) no-repeat center;
+  width: 168px;
+}
