@@ -41,15 +41,19 @@ export default Ember.ObjectController.extend({
           var self = this;
           var workspace = self.get('workspace');
           var user = self.get('session.user');
-          var newJobRun = self.store.createRecord('job-run', {
+          debugger;
+          var newJobRun = self.store.createRecord('run', {
             guid          : job.get('id'),
             jobId         : job.get('id'),
-            startDate     : new Date(),
-            elapsedTime   : 0,
+            organizationId: workspace.get('organization').get('id'),
+            workspaceId   : workspace.get('id'),
+            startedAt     : new Date(),
+            elapsed       : 0,
+            status        : 0,
             triggeredBy   : 'test',
             channelId     : job.get('id')
           });
-
+          console.log(JSON.stringify(newJobRun));
           newJobRun.save().then(function(result) {
             console.log(result);
           }, function(error) {
