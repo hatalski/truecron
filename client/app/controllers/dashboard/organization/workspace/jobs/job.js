@@ -43,7 +43,6 @@ export default Ember.ObjectController.extend({
           {
             var self = this;
             var workspace = self.get('workspace');
-            var user = self.get('session.user');
 
             var newJobRun = self.store.createRecord('run', {
               guid          : job.get('id'),
@@ -58,17 +57,17 @@ export default Ember.ObjectController.extend({
             });
             socket.connect();
             socket.on('connect', function(){
-              console.log('client connected');
-              socket.emit('ping');
-              socket.on('pong', function(){
-                console.log('pong received');
-              });
+              //console.log('client connected');
+              //socket.emit('ping');
+              //socket.on('pong', function(){
+              //  console.log('pong received');
+              //});
               socket.on(newJobRun.get('guid'), function(message){
                 console.log(message);
               });
             });
             newJobRun.save().then(function(result) {
-
+              console.log(result);
             }, function(error) {
               console.log(error);
             });
