@@ -2,40 +2,54 @@
  * Created by estet on 10/26/14.
  */
 var S3Log = require('./loggers/s3Log');
-
+var FtpTask    = require('./ftptask');
 
 var jobRunner = function(job, callBack, logger) {
+
+    var self = this;
+    self.job = job;
+    self.callBack = callBack;
+    self.logger = logger;
+
     if (!job) {
         throw new Exception('Sorry mate, but job is required parameter');
     }
 
-    if (typeof callBack !== 'function') {
-        logger = callBack;
+    if (typeof self.callBack !== 'function') {
+        self.logger = self.callBack;
     }
 
-    logger = logger || new S3Log(job.id);
+    self.logger = self.logger || new S3Log(job.id);
 
-    var executeTask = function (index) {
-        if (job.tasks.length > index) {
-            var task = job.tasks[index];
+    self.executeTask = function (index) {
+        if (self.job.tasks.count > index) {
+
+            //var task = new taskWrapper(self.job.tasks.rows[index]);
+
+            var task = new FtpTask({host:'ftp.darvision.com', username:'anonymous', password:'@anonymous', protocol: 'ftp'}, 'ls .');
+
             if (task) {
-                if(logger) {
-                    task.logSubscribers.push(logger);
+                if(self.logger) {
+                    task.logSubscribers.push(self.logger);
                 }
-                task.run(executeTask(index + 1));//on call back running next task in order
+                task.run(self.executeTask(index + 1));//on call back running next task in order
             }
         }
         else {
-            if (typeof callBack === 'function') {
-                callBack();
+            if (typeof self.callBack === 'function') {
+                self.callBack();
             }
         }
     };
 
-    if (job.tasks) {
+    self.run = function()
+    {
+        if (self.job.tasks) {
 
-        executeTask(0);//Executing first task.
+            self.executeTask(0);//Executing first task.
+        }
     }
+
 };
 
 module.exports = jobRunner;

@@ -81,10 +81,12 @@ api.route('/runs')
         req.body.run.jobId = jobId;
         storage.Runs.create(req.context, req.body.run)
             .then(function (run) {
-                var job = storage.Jobs.findById(req.context, run.jobId);
-                var socketLogger = new SocketLogger(req.body.run.guid);
-                var jobRunner = new JobRunner(job, null, socketLogger);
-                res.status(201).json({ run: formatRun(run) });
+                storage.Tasks.findAndCountAll(req.context, run.get('jobId')).then(function (tasks) {
+                    var socketLogger = new SocketLogger(req.body.run.guid);
+                    var jobRunner = new JobRunner({tasks: tasks}, socketLogger);
+                    jobRunner.run();
+                    res.status(201).json({run: formatRun(run)});
+                })
             })
             .catch(function (err) {
                 logger.error(err.toString());

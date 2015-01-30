@@ -37,33 +37,25 @@ export default Ember.ObjectController.extend({
     }.property('model.rrule', 'model.startsAt'),
     actions: {
         run: function(job) {
-
-          var self = this;
-          var workspace = self.get('workspace');
-          var user = self.get('session.user');
-
-          var newJobRun = self.store.createRecord('run', {
-            guid          : job.get('id'),
-            jobId         : job.get('id'),
-            organizationId: workspace.get('organization').get('id'),
-            workspaceId   : workspace.get('id'),
-            startedAt     : new Date(),
-            elapsed       : 0,
-            status        : 0,
-            triggeredBy   : 'test',
-            channelId     : job.get('id')
-          });
-
-          newJobRun.save().then(function(result) {
-            console.log(result);
-          }, function(error) {
-            console.log(error);
-          });
-
-
           var socket = window.io(ENV.APP.SERVER_HOST + ':443', {secure: true});
+
           if(this.get('running') !== true)
           {
+            var self = this;
+            var workspace = self.get('workspace');
+            var user = self.get('session.user');
+
+            var newJobRun = self.store.createRecord('run', {
+              guid          : job.get('id'),
+              jobId         : job.get('id'),
+              organizationId: workspace.get('organization').get('id'),
+              workspaceId   : workspace.get('id'),
+              startedAt     : new Date(),
+              elapsed       : 0,
+              status        : 0,
+              triggeredBy   : 'test',
+              channelId     : job.get('id')
+            });
             socket.connect();
             socket.on('connect', function(){
               console.log('client connected');
@@ -71,7 +63,16 @@ export default Ember.ObjectController.extend({
               socket.on('pong', function(){
                 console.log('pong received');
               });
+              socket.on(newJobRun.get('guid'), function(message){
+                console.log(message);
+              });
             });
+            newJobRun.save().then(function(result) {
+
+            }, function(error) {
+              console.log(error);
+            });
+
           }
           else
           {
