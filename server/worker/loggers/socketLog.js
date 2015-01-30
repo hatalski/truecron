@@ -3,14 +3,14 @@
  */
 var LogSubscriber = require('./logSubscriber');
 var util        = require('util');
-var app = require('../../../app');
+var app = require('../../app');
 
 var socketLog = function(key)
 {
     var self = this;
     self.send = function(message)
     {
-        app.io.emit('tco'+key, message);
+        global.socketIO.emit(key, message);
     };
 
     self.stop = function(callback)
