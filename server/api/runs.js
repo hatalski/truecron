@@ -9,7 +9,9 @@ var express = require('express'),
     validator = require('../lib/validator'),
     storage = require('../storage'),
     apiErrors = require('../lib/errors'),
-    common = require('./common');
+    common = require('./common'),
+    JobRunner = require('../worker/jobRunner'),
+    SocketLogger = require('../worker/loggers/socketLog');
 
 var api = express.Router();
 
@@ -79,7 +81,12 @@ api.route('/runs')
         req.body.run.jobId = jobId;
         storage.Runs.create(req.context, req.body.run)
             .then(function (run) {
-                res.status(201).json({ run: formatRun(run) });
+                storage.Tasks.findAndCountAll(req.context, run.get('jobId')).then(function (tasks) {
+                    var socketLogger = new SocketLogger(req.body.run.guid);
+                    var jobRunner = new JobRunner({tasks: tasks}, socketLogger);
+                    jobRunner.run();
+                    res.status(201).json({run: formatRun(run)});
+                })
             })
             .catch(function (err) {
                 logger.error(err.toString());

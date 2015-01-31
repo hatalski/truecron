@@ -75,9 +75,10 @@ var create = module.exports.create = Promise.method(function (context, attribute
 });
 
 var findAndCountAll = module.exports.findAndCountAll = Promise.method(function (context, job, options) {
+    var jobId = typeof job === 'object' ? tools.getId(job) : job;
     return jobs.ensureCanView(context, job)
         .then(function () {
-            options = _.merge(options || {}, { where: { jobId: tools.getId(job) } });
+            options = _.merge(options || {}, { where: { jobId: jobId } });
             return models.Task.findAndCountAll(options);
         })
         .then(function (result) {

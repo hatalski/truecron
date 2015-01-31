@@ -22,7 +22,7 @@ var Task = function(name, position, timeout, subscribers)
 Task.prototype.init = function()
 {
     this.status = taskStatusEnum.waiting;
-    this.logSubscribers = [];
+    this.logSubscribers = this.logSubscribers || [];
 };
 
 Task.prototype.onError = function(error)

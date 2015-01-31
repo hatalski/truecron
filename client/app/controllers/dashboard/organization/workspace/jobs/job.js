@@ -38,16 +38,40 @@ export default Ember.ObjectController.extend({
     actions: {
         run: function(job) {
           var socket = window.io(ENV.APP.SERVER_HOST + ':443', {secure: true});
+
           if(this.get('running') !== true)
           {
+            var self = this;
+            var workspace = self.get('workspace');
+
+            var newJobRun = self.store.createRecord('run', {
+              guid          : job.get('id'),
+              jobId         : job.get('id'),
+              organizationId: workspace.get('organization').get('id'),
+              workspaceId   : workspace.get('id'),
+              startedAt     : new Date(),
+              elapsed       : 0,
+              status        : 0,
+              triggeredBy   : 'test',
+              channelId     : job.get('id')
+            });
             socket.connect();
             socket.on('connect', function(){
-              console.log('client connected');
-              socket.emit('ping');
-              socket.on('pong', function(){
-                console.log('pong received');
+              //console.log('client connected');
+              //socket.emit('ping');
+              //socket.on('pong', function(){
+              //  console.log('pong received');
+              //});
+              socket.on(newJobRun.get('guid'), function(message){
+                console.log(message);
               });
             });
+            newJobRun.save().then(function(result) {
+              console.log(result);
+            }, function(error) {
+              console.log(error);
+            });
+
           }
           else
           {
