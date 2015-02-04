@@ -6,7 +6,7 @@ var Router = Ember.Router.extend({
 });
 
 Router.map(function() {
-  this.route('profile');
+  // these routes will be removed
   this.resource('dashboard', function() {
     this.route('organization', { path: '/:organization_id' }, function() {
       this.route('workspace', { path: '/:workspace_id' }, function() {
@@ -32,7 +32,45 @@ Router.map(function() {
     });
   });
 
-  this.resource("jobs", function() {});
+  // -----------------------------------------------------------
+
+  // new routes
+  this.route("signup");
+  this.route("signin");
+  this.route("forgot");
+  this.route("profile");
+  this.resource("workspaces", function() {
+    "use strict";
+    this.route("workspace", { path: "/:workspace_id" }, function() {
+      this.resource("collaborators", function() {
+        this.route("user", { path: "/:user_id" });
+      });
+      this.resource("settings");
+      this.resource("jobs", function() {
+        this.route("index");
+        this.route("job", { path: "/:job_id" }, function() {
+          this.resource("tasks", function() {
+            this.route('task', { path: '/:task_id' });
+          });
+        });
+      });
+    });
+  });
+  this.resource("organizations", function() {
+    "use strict";
+    this.route("organization", { path: "/:organization_id" }, function() {
+      this.resource("plans", function() {
+        this.route("plan", { path: "/:plan_id" });
+      });
+      this.resource("members", function() {
+        this.route("user", { path: "/:user_id" });
+      });
+      this.resource("connections", function() {
+        this.route("connection", { path: "/:connection_id" });
+      });
+      this.resource("vcs");
+    });
+  });
 });
 
 export default Router;
