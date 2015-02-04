@@ -42,10 +42,10 @@ Router.map(function() {
   this.resource("workspaces", function() {
     "use strict";
     this.route("workspace", { path: "/:workspace_id" }, function() {
-      this.resource("collaborators", function() {
+      this.route("settings"); // redirect from index when user has access to settings
+      this.resource("users", { path: "/members" }, function() {
         this.route("user", { path: "/:user_id" });
       });
-      this.resource("settings");
       this.resource("jobs", function() {
         this.route("index");
         this.route("job", { path: "/:job_id" }, function() {
@@ -62,7 +62,7 @@ Router.map(function() {
       this.resource("plans", function() {
         this.route("plan", { path: "/:plan_id" });
       });
-      this.resource("members", function() {
+      this.resource("users", { path: "/members" }, function() {
         this.route("user", { path: "/:user_id" });
       });
       this.resource("connections", function() {
