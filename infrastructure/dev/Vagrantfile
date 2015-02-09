@@ -18,6 +18,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
     application.vm.provision :shell, path: "provision/nodejs-psql.sh"
     application.vm.provision :shell, path: "provision/nodejs-bower.sh"
     application.vm.provision :shell, path: "provision/nodejs-truecron.sh"
+    application.vm.provision :shell, path: "provision/lftp.sh"
     application.vm.provision :shell, path: "provision/debugproxy.sh", run: "always"
     application.vm.provision :shell, path: "provision/nodejs-truecron-start.sh", run: "always"
 
