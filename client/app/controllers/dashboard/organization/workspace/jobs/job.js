@@ -55,17 +55,24 @@ export default Ember.ObjectController.extend({
               triggeredBy   : 'test',
               channelId     : job.get('id')
             });
+
             socket.connect();
-            socket.on('connect', function(){
-              //console.log('client connected');
-              //socket.emit('ping');
-              //socket.on('pong', function(){
-              //  console.log('pong received');
-              //});
-              socket.on(newJobRun.get('guid'), function(message){
+
+            var onMessageReceived = function(message)
+            {
                 console.log(message);
-              });
+            };
+
+            socket.on('connect', function() {
+              socket.on(newJobRun.get('guid'), onMessageReceived);
             });
+
+            socket.on('disconnect', function(){
+              socket.off(newJobRun.get('guid'));
+              socket.off('connect');
+              socket.off('disconnect');
+            });
+
             newJobRun.save().then(function(result) {
               console.log(result);
             }, function(error) {
