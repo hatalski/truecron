@@ -1,0 +1,18 @@
+<div class="navbar navbar-fixed-top navbar-teaser" role="navigation">
+    <div class="container">
+        <div class="navbar-header">
+            <a class="navbar-brand navbar-brand-teaser" href="#"></a>
+        </div>
+        <div class="navbar-collapse collapse">
+          {{#unless hideSignUpButton}}
+            <form class="navbar-form navbar-right" style="border-left: solid 1px #ff9719">
+              <input type="button" {{action "redirectToSignup"}} class="btn btn-signup" value="SIGN UP">
+            </form>
+          {{/unless}}
+            <form class="navbar-form navbar-right">
+              <input type="button" {{action "redirectToSignin"}} class="btn btn-signin" value="SIGN IN">
+            </form>
+        </div>
+    </div>
+</div>
+{{outlet}}
