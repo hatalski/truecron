@@ -5,7 +5,7 @@ import {
 
 moduleForModel('workspaces/workspace/jobs/job/task', 'WorkspacesWorkspaceJobsJobTask', {
   // Specify the other units that are required for this test.
-  needs: []
+  needs: ['model:job']
 });
 
 test('it exists', function() {

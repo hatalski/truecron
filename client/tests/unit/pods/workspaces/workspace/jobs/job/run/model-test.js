@@ -3,13 +3,9 @@ import {
   test
 } from 'ember-qunit';
 
-moduleForModel('organization', 'Organization', {
+moduleForModel('workspaces/workspace/jobs/job/run', 'WorkspacesWorkspaceJobsJobRun', {
   // Specify the other units that are required for this test.
-  needs: [
-  	'model:user', 
-  	'model:connection', 
-  	'model:workspace',
-  	'model:job']
+  needs: []
 });
 
 test('it exists', function() {

@@ -3,9 +3,9 @@ import {
   test
 } from 'ember-qunit';
 
-moduleForModel('connection', 'Connection', {
+moduleForModel('workspaces/workspace/jobs/job/record', 'WorkspacesWorkspaceJobsJobRecord', {
   // Specify the other units that are required for this test.
-  needs: ['model:user']
+  needs: []
 });
 
 test('it exists', function() {
