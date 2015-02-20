@@ -103,9 +103,9 @@ module.exports = function(environment) {
   }
 
   ENV['simple-auth'] = {
-    authenticationRoute: 'index',
-    routeAfterAuthentication: 'dashboard',
-    routeIfAlreadyAuthenticated: 'dashboard',
+    authenticationRoute: 'signin',
+    routeAfterAuthentication: 'workspaces',
+    routeIfAlreadyAuthenticated: 'workspaces',
     authorizer: 'simple-auth-authorizer:oauth2-bearer',
     crossOriginWhitelist: [ENV.APP.SERVER_HOST]
   }

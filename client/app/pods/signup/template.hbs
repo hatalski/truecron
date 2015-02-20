@@ -1,1 +1,19 @@
+<div class="container-fluid" style="padding-top: 100px">
+    <form {{action "signup" on="submit"}}>
+        <h2>Sign Up</h2>
+        <div {{bind-attr class=":form-group isEmailError:has-error"}}>
+            <label for='email'>Email:</label>
+          {{input id="signupEmail" value=signupEmail valueBinding="signupEmail" type="email" placeholder="Email" required="required" class="form-control"}}
+        </div>
+        <div {{bind-attr class=":form-group isPasswordError:has-error"}}>
+            <label for='password'>Create password:</label>
+          {{input title="Password must contain at least 8 characters, including UPPER/lowercase and numbers." type="password" value=signupPassword valueBinding="signupPassword" placeholder="Should be minimum of 8 characters in length" required="required" class="form-control" pattern="(?=^.{8,}$)(?=.*\d)(?![.\n])(?=.*[A-Z])(?=.*[a-z]).*$" }}
+        </div>
+        <div {{bind-attr class=":form-group isPasswordConfirmError:has-error"}}>
+            <label for='password-confirmation'>Confirm your password:</label>
+          {{input type="password" value=signupPasswordConfirm valueBinding="signupPasswordConfirm" placeholder="Enter password again" class="form-control"}}
+        </div>
+        <p><input type="submit" class="btn btn-signup" value="SIGN UP"></p>
+    </form>
+</div>
 {{outlet}}
