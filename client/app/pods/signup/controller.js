@@ -2,23 +2,24 @@ import Ember from 'ember';
 import ENV from 'true-cron/config/environment';
 
 export default Ember.Controller.extend({
-  signupEmail: '',
+  email: '',
   isEmailError: false,
-  signupPassword: '',
+  password: '',
   isPasswordError: false,
-  signupPasswordConfirm: '',
+  passwordConfirm: '',
   isPasswordConfirmError: false,
   hideSignUpButton: ENV.APP.HIDE_SIGNUP,
   actions: {
-    signup: function() {
+    signup: function(form) {
+      debugger;
       var self = this;
-      var email = this.get('signupEmail');
-      var password = this.get('signupPassword');
+      var email = this.get('email');
+      var password = this.get('password');
       var isEmailValid = validator.isEmail(email);
       this.set('isEmailError', !isEmailValid);
       var isPasswordValid = password.length > 7;
       this.set('isPasswordError', !isPasswordValid);
-      var isPasswordSame = password === this.get('signupPasswordConfirm');
+      var isPasswordSame = password === this.get('passwordConfirm');
       this.set('isPasswordConfirmError', !isPasswordSame);
       if (isEmailValid && isPasswordValid && isPasswordSame) {
         var requestData = { email: email, password: password };

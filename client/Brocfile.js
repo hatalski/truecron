@@ -25,6 +25,7 @@ app.import("bower_components/font-awesome/fonts/FontAwesome.otf", { destDir: "fo
 // js
 app.import('bower_components/jquery/dist/jquery.js');
 app.import('bower_components/jquery-ui/jquery-ui.js');
+app.import('bower_components/JavaScript-MD5/js/md5.js');
 app.import('bower_components/socket.io-client/socket.io.js');
 app.import('bower_components/bootstrap/dist/js/bootstrap.js');
 app.import('bower_components/ember-data/ember-data.js');

@@ -51,6 +51,7 @@ Router.map(function() {
       this.resource("vcs");
     });
   });
+  this.route('reset');
 });
 
 export default Router;

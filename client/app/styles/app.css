@@ -1,5 +1,13 @@
 /*body { padding-top: 50px }*/
 
+body {
+  font-family: Trebuchet MS, Helvetica, Arial, sans-serif;
+}
+
+.container-truecron {
+  padding-top: 60px;
+}
+
 .navbar-teaser {
   background-color: rgba(0, 0, 0, 0.6);
   border: 0;
