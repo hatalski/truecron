@@ -39,7 +39,7 @@ module.exports = function(environment) {
       'script-src': "'self' 'unsafe-inline' 'unsafe-eval' use.typekit.net connect.facebook.net maps.googleapis.com maps.gstatic.com",
       'font-src': "'self' data: use.typekit.net",
       'connect-src': "'self' https://dev.truecron.com wss://dev.truecron.com/ www.googleapis.com",
-      'img-src': "'self' www.facebook.com p.typekit.net data:",
+      'img-src': "'self' www.gravatar.com www.facebook.com p.typekit.net data:",
       'style-src': "'self' 'unsafe-inline' use.typekit.net",
       'frame-src': "s-static.ak.facebook.com static.ak.facebook.com www.facebook.com"
     }
@@ -96,7 +96,7 @@ module.exports = function(environment) {
       'script-src': "'self' 'unsafe-inline' 'unsafe-eval' use.typekit.net connect.facebook.net maps.googleapis.com maps.gstatic.com",
       'font-src': "'self' data: use.typekit.net",
       'connect-src': "'self' https://www.truecron.com ws://www.truecron.com wss://www.truecron.com www.googleapis.com",
-      'img-src': "'self' www.facebook.com p.typekit.net data:",
+      'img-src': "'self' www.gravatar.com www.facebook.com p.typekit.net data:",
       'style-src': "'self' 'unsafe-inline' use.typekit.net",
       'frame-src': "s-static.ak.facebook.com static.ak.facebook.com www.facebook.com"
     }

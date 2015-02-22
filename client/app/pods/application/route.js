@@ -4,6 +4,19 @@ import ApplicationRouteMixin from 'simple-auth/mixins/application-route-mixin';
 
 export default Ember.Route.extend(ApplicationRouteMixin, {
   actions: {
+    googleLogin: function() {
+      Ember.Logger.log('google login initiated');
+      var self = this;
+      self.get('session').authenticate('simple-auth-authenticator:torii', 'google-token')
+        .then(function() {
+          var session = self.get('session');
+          if (session.get('authenticator') === 'authenticator:truecron') {
+            self.transitionTo('workspaces');
+          }
+          Ember.Logger.log('SUCCESS ' + session);
+        }).catch(Ember.Logger.error);
+      return;
+    },
     authenticateSession: function() {
       Ember.Logger.log('authenticateSession called');
       this._super();
@@ -50,7 +63,7 @@ export default Ember.Route.extend(ApplicationRouteMixin, {
           data: JSON.stringify(requestData),
           crossDomain: true
         });
-        result.success(function(response) {
+        result.done(function(response) {
           Ember.Logger.log('sign up success');
           Ember.Logger.log(response);
           var options = { identification: session.get('userEmail'), grant_type: 'http://google.com' };
@@ -58,10 +71,10 @@ export default Ember.Route.extend(ApplicationRouteMixin, {
             .then(function(result) {
               Ember.Logger.log('on authenticate result');
               Ember.Logger.log(result);
-              self.transitionTo('dashboard');
+              self.transitionTo('workspaces');
             }).catch(Ember.Logger.error);
         });
-        result.error(function(error) {
+        result.fail(function(error) {
           Ember.Logger.log('sign up error');
           Ember.Logger.log(error);
           var options = { identification: session.get('userEmail'), grant_type: 'http://google.com' };
@@ -69,7 +82,7 @@ export default Ember.Route.extend(ApplicationRouteMixin, {
             .then(function(result) {
               Ember.Logger.log('on authenticate result');
               Ember.Logger.log(result);
-              self.transitionTo('dashboard');
+              self.transitionTo('workspaces');
             }).catch(Ember.Logger.error);
           return { error: error };
         });

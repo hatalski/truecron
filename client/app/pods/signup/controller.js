@@ -10,8 +10,7 @@ export default Ember.Controller.extend({
   isPasswordConfirmError: false,
   hideSignUpButton: ENV.APP.HIDE_SIGNUP,
   actions: {
-    signup: function(form) {
-      debugger;
+    signup: function() {
       var self = this;
       var email = this.get('email');
       var password = this.get('password');
