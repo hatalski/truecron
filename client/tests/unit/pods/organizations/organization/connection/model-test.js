@@ -5,7 +5,7 @@ import {
 
 moduleForModel('organizations/organization/connection', 'OrganizationsOrganizationConnection', {
   // Specify the other units that are required for this test.
-  needs: []
+  needs: ['model:organization', 'model:user', 'model:workspace']
 });
 
 test('it exists', function() {

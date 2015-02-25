@@ -12,8 +12,8 @@ var Job = DS.Model.extend({
   updatedBy:   DS.belongsTo('user', { async: true }),
   workspace:   DS.belongsTo('workspace', { async: true }),
   tags:        DS.hasMany('job-tag', { async: true }),
-  history:     DS.hasMany('job-history', { async: true }),
-  tasks:       DS.hasMany('task', { async: true })
+  //history:     DS.hasMany('job-history', { async: true }),
+  tasks:       DS.hasMany('workspaces.workspace.jobs.job.task', { async: true })
 });
 
 export default Job;

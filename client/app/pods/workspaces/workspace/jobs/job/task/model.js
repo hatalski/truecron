@@ -11,7 +11,7 @@ var Task = DS.Model.extend({
   createdAt: DS.attr('date', { defaultValue: new Date() }),
   updatedAt: DS.attr('date', { defaultValue: new Date() }),
   updatedBy: DS.belongsTo('user', { async: true }),
-  job:       DS.belongsTo('job', { async: true }),
+  job:       DS.belongsTo('workspaces.workspace.job', { async: true }),
   taskTypeId:DS.attr('number', { defaultValue: 0 }),
   taskType:  function() {
     return {
