@@ -1,7 +1,7 @@
 <div class="container-fluid container-truecron">
     <div class="row">
         <div class="col-md-offset-4 col-md-4">
-            <h2 class="text-center">Password Recovery:</h2>
+            <h2 class="text-center">{{format-message (intl-get "messages.auth.recovery_form.header")}}</h2>
             <hr/>
         </div>
     </div>
@@ -22,7 +22,7 @@
                 </div>
                 <div class="form-group">
                     <div class="input-group-btn">
-                        <button type="submit" class="btn btn-lg btn-block btn-signup">SEND EMAIL WITH INSTRUCTIONS</button>
+                        <button type="submit" class="btn btn-lg btn-block btn-signup">{{format-message (intl-get "messages.auth.recovery_form.button")}}</button>
                     </div>
                 </div>
             </form>

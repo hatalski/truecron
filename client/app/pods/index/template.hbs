@@ -2,15 +2,12 @@
     <div class="topper">
         <div class="container-fluid">
             <div class="jumbotron">
-                <h2 class="pitch">Enterprise Strength Scheduling for your Growing Business</h2>
+                <h2 class="pitch">{{format-message (intl-get "messages.landing.pitch")}}</h2>
                 <div class="row">
                     <div class="col-xs-3">
                         <div class="pitch-ext">
-                            <p>Do your job.</p>
-                            <p>We will do the scheduling.</p>
-                          {{#unless hideSignUpButton}}
-                              <a class="btn btn-large btn-primary" {{action 'googleLogin'}}>Sign in with Google</a>
-                          {{/unless}}
+                            <p>{{format-message (intl-get "messages.landing.moto1")}}</p>
+                            <p>{{format-message (intl-get "messages.landing.moto2")}}</p>
                         </div>
                     </div>
                     <div class="col-xs-9">
@@ -28,11 +25,13 @@
                         <div class="interested_box">
                             <form {{action "invite" on="submit"}}>
                                 <div class="container">
-                                    <h2>Interested?</h2>
-                                    <p>Leave your e-mail address to get notified when we are live.</p>
+                                    <h2>{{format-message (intl-get "messages.landing.beta_invite.header")}}</h2>
+                                    <p>{{format-message (intl-get "messages.landing.beta_invite.description")}}</p>
                                     <div {{bind-attr class=":form-group isInvitationEmailError:has-error"}}>
-                                      {{input class="form-control" value="email" valueBinding="invitationEmail" type="email" placeholder="Email" required="required"}}
+                                      {{input class="form-control" value="email" valueBinding="invitationEmail"
+                                      type="email" placeholder="Email" required="required"}}
                                     </div>
+                                    {{log intl}}
                                     <p><input type="submit" class="btn btn-signup" value="SIGN UP"></p>
                                 </div>
                             </form>
@@ -43,14 +42,14 @@
                     </div>
                 </div>
             </div>
-            <h2 class="problem-definition-header">What is TRUECRON?</h2>
+            <h2 class="problem-definition-header">{{format-message (intl-get "messages.landing.what.header")}}</h2>
         </div>
     </div>
     <div class="middle_grey">
         <div class="container-fluid">
             <div class="jumbotron">
-                <p>TrueCron is the scheduler you have been waiting for.</p>
-                <p>It is the way the scheduler should have been built, but was not.</p>
+                <p>{{format-message (intl-get "messages.landing.what.description1")}}</p>
+                <p>{{format-message (intl-get "messages.landing.what.description2")}}</p>
             </div>
         </div>
     </div>
@@ -60,10 +59,10 @@
                 <div class="row">
                     <div class="col-xs-5">
                         <ul>
-                            <li>It runs on our servers so you do not have to worry about infrastructure.</li>
-                            <li>It knows that developers actually test code before releasing it into production.</li>
-                            <li>It knows that the fiscal calendar does not end in December.</li>
-                            <li>It does not make you write a Powershell script to copy a file.</li>
+                            <li>{{format-message (intl-get "messages.landing.what.list.item1")}}</li>
+                            <li>{{format-message (intl-get "messages.landing.what.list.item2")}}</li>
+                            <li>{{format-message (intl-get "messages.landing.what.list.item3")}}</li>
+                            <li>{{format-message (intl-get "messages.landing.what.list.item4")}}</li>
                         </ul>
                     </div>
                     <div class="col-xs-7">
@@ -76,40 +75,32 @@
     <div class="middle_grey">
         <div class="container-fluid">
             <div class="jumbotron">
-                <p>Simply put, TrueCron is a scheduler that allows you to create a complex tasks in several clicks, peer review it,
-                    test and release to production and be sure it will run properly.</p>
+                <p>{{format-message (intl-get "messages.landing.features.header")}}</p>
             </div>
         </div>
     </div>
     <div class="footer_white">
         <div class="container-fluid">
-
             <div class="row">
                 <div class="col-xs-6">
                     <div class="airbag"></div>
                 </div>
                 <div class="col-xs-6">
-                    <h2 class="problem-definition-header">BUILD TEST RELEASE CYCLE SUPPORT</h2>
+                    <h2 class="problem-definition-header">{{format-message (intl-get "messages.landing.features.feature1.header")}}</h2>
                     <p>
-                        Finally a scheduler made for Software Developers by Software Developers. We think that scheduled jobs are as important as your production code.
-                        Therefore it should be tested as such. Production code is typically created in a development environment,
-                        tested there and then integrated into staging environment, tested there again and only then released to production.
-                        This is exactly what TrueCron supports for scheduled jobs. Connect to your Github and make sure your jobs are proper.
+                      {{format-message (intl-get "messages.landing.features.feature1.description")}}
                     </p>
                 </div>
             </div>
-
         </div>
     </div>
     <div class="footer_grey">
         <div class="container-fluid">
-
             <div class="row">
                 <div class="col-xs-6">
-                    <h2 class="problem-definition-header">EXTENSIVE LIBRARY OF OUT OF THE BOX TASKS</h2>
-                    <p>We want to create your jobs fast. So we provided pre-configured tasks for you.
-                        We can do it all from running arbitrary executable on a remote machine to encrypting a file and uploading it to S3 storage.
-                        We got tasks like SQL query execution, FTP operations, file management, MS Office format manipulations, SMTP operations, etc.
+                    <h2 class="problem-definition-header">{{format-message (intl-get "messages.landing.features.feature2.header")}}</h2>
+                    <p>
+                      {{format-message (intl-get "messages.landing.features.feature2.description")}}
                     </p>
                 </div>
                 <div class="col-xs-6">
@@ -117,7 +108,6 @@
                 </div>
             </div>
         </div>
-
     </div>
     <div class="footer_white">
         <div class="container-fluid">
@@ -126,11 +116,9 @@
                     <div class="ballet"></div>
                 </div>
                 <div class="col-xs-6">
-                    <h2 class="problem-definition-header">POWERFUL & FLEXIBLE SCHEDULER</h2>
+                    <h2 class="problem-definition-header">{{format-message (intl-get "messages.landing.features.feature3.header")}}</h2>
                     <p>
-                        No matter how complex your schedule is, we will support it. We support custom calendars like state, religious and company holidays;
-                        fiscal calendars and arbitrary calendar exceptions. Our proprietary easy to use scheduling UI allows you to set up
-                        a complicated schedule in a matter of seconds. Comprehensive scheduling dashboard provides a bird eye view of all your jobs.
+                      {{format-message (intl-get "messages.landing.features.feature3.description")}}
                     </p>
                 </div>
             </div>
@@ -138,12 +126,11 @@
     </div>
     <div class="footer_grey">
         <div class="container-fluid">
-
             <div class="row">
                 <div class="col-xs-6">
-                    <h2 class="problem-definition-header">SECURE AND RELIABLE</h2>
+                    <h2 class="problem-definition-header">{{format-message (intl-get "messages.landing.features.feature4.header")}}</h2>
                     <p>
-                        Extensively pen tested by independent experts and state of the art SSAE-16 certified application will assure security of your data.
+                      {{format-message (intl-get "messages.landing.features.feature4.description")}}
                     </p>
                 </div>
                 <div class="col-xs-6">
@@ -159,10 +146,9 @@
                     <div class="grow"></div>
                 </div>
                 <div class="col-xs-6">
-                    <h2 class="problem-definition-header">GROWS WITH YOU</h2>
+                    <h2 class="problem-definition-header">{{format-message (intl-get "messages.landing.features.feature5.header")}}</h2>
                     <p>
-                        We are made to scale. Whether you have 10 or 10 000 jobs TrueCron will grow with you and make sure that scheduling is not the thing you
-                        should worry about.
+                      {{format-message (intl-get "messages.landing.features.feature5.description")}}
                     </p>
                 </div>
             </div>
@@ -172,62 +158,23 @@
         <div class="container-fluid">
             <div class="jumbotron">
                 <p>
-                    © 2014 TrueCron. All rights reserved. TrueCron is an registered trademarks of Perks Lab, Inc.
-                    Terms, conditions, features, availability, pricing, fees, service and support options subject to change without notice.
-                    iPad and iPhone are trademarks of Apple Inc., registered in the U.S. and other countries.
+                  {{format-message (intl-get "messages.landing.footer")
+                    current-year=current_year}}
                 </p>
             </div>
         </div>
     </footer>
     <!-- Modal -->
-    <div class="modal fade" id="signup_modal" tabindex="-1" role="dialog" aria-labelledby="signUpTitle" aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <!--<div class="modal-header">-->
-                <!--<h4 class="modal-title" id="signUpTitle"></h4>-->
-                <!--</div>-->
-                <div class="modal-body signup">
-                    <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
-                    <div class="container-fluid">
-                        <div class="signup_logo"></div>
-                        <form {{action "signup" on="submit"}}>
-                            <h2>Sign Up</h2>
-
-                            <div {{bind-attr class=":form-group isEmailError:has-error"}}>
-                                <label for='email'>Email:</label>
-                              {{input id="signupEmail" value=signupEmail valueBinding="signupEmail" type="email" placeholder="Email" required="required" class="form-control"}}
-                            </div>
-
-                            <div {{bind-attr class=":form-group isPasswordError:has-error"}}>
-                                <label for='password'>Create password:</label>
-                              {{input title="Password must contain at least 8 characters, including UPPER/lowercase and numbers." type="password" value=signupPassword valueBinding="signupPassword" placeholder="Should be minimum of 8 characters in length" required="required" class="form-control" pattern="(?=^.{8,}$)(?=.*\d)(?![.\n])(?=.*[A-Z])(?=.*[a-z]).*$" }}
-                            </div>
-
-                            <div {{bind-attr class=":form-group isPasswordConfirmError:has-error"}}>
-                                <label for='password-confirmation'>Confirm your password:</label>
-                              {{input type="password" value=signupPasswordConfirm valueBinding="signupPasswordConfirm" placeholder="Enter password again" class="form-control"}}
-                            </div>
-
-                            <p><input type="submit" class="btn btn-signup" value="SIGN UP"></p>
-                        </form>
-                    </div>
-                </div>
-                <!--<div class="modal-footer">-->
-                <!--<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>-->
-                <!--</div>-->
-            </div>
-        </div>
-    </div>
     <div class="modal fade" id="invite_modal" tabindex="-1" role="dialog" aria-labelledby="inviteTitle" aria-hidden="true">
         <div class="modal-dialog signup">
             <div class="modal-content">
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
-                    <h2 class="modal-title" id="inviteTitle">THANK YOU</h2>
+                    <h2 class="modal-title" id="inviteTitle">{{format-message (intl-get "messages.landing.beta_invite.confirmation.header")}}</h2>
                 </div>
                 <div class="modal-body">
                     <div class="signup_logo"></div>
-                    <p>Share this page to spread the world</p>
+                    <p>{{format-message (intl-get "messages.landing.beta_invite.confirmation.share")}}</p>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-signup" data-dismiss="modal">Close</button>
