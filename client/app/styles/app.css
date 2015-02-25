@@ -1,236 +1,186 @@
-/*body { padding-top: 50px }*/
-
-body {
-  font-family: Trebuchet MS, Helvetica, Arial, sans-serif;
-}
-
-.container-truecron {
-  padding-top: 60px;
-}
-
-.navbar-teaser {
-  background-color: rgba(0, 0, 0, 0.6);
-  border: 0;
-}
-.navbar-brand-teaser {
-  background: url("white-logo.png") no-repeat center;
-  width: 270px;
-}
-.btn-signin {
-  text-shadow: 0px 1px 0px #ffffff;
-  background: repeat-x linear-gradient(to bottom, #ffffff 0px, #ffffff 100%);
-  border-color: #ff9933;
-}
-.btn-signup {
-  text-shadow: 0px 1px 0px #ff9933;
-  background: repeat-x linear-gradient(to bottom, #F93 0px, #F93 100%);
-  border-color: #ff9933;
-  color: #ffffff;
-}
-
-.navbar-truecron {
-  background-color: #006380;
-  background-image: linear-gradient(to bottom, #35607e 0%, #006380 100%);
-}
-
-.navbar-brand-truecron {
-  background:url(logo.png) no-repeat center;
-  width: 168px;
-}
-
-.sidebar {
-  background-color: #b9ced6;
-}
-
-.job-details-header {
-
-}
-
-.job-details-body {
-  background-color: #eaf2f3;
-}
-
-/*teaser page*/
-/*
- * Base structure
- */
-
-/* Move down content because we have a fixed navbar that is 50px tall */
 .teaser {
   font-family: "Trebuchet MS";
   font-size: 16pt;
-  /*background-image: url('../img/bg-apple-with-logo.jpg');
-  background-size: 100% auto;
-  background-repeat: no-repeat;*/
-}
+  /*background-image: url('../img/bg-apple-with-logo.jpg'); */
+  /*background-size: 100% auto; */
+  /*background-repeat: no-repeat; */ }
+
 .teaser .container-fluid {
-  max-width: 1200px;
-}
+  max-width: 1200px; }
 
 .topper {
-  background:#000 url("teaser_bg.jpg") no-repeat center top;
-}
+  background: #000 url("teaser_bg.jpg") no-repeat center top; }
+
+.navbar-teaser {
+  background-color: rgba(0, 0, 0, 0.6); }
 
 .teaser .jumbotron {
-  background-color:transparent;
-  margin-bottom: 0;
-}
+  background-color: transparent;
+  margin-bottom: 0; }
 
 .teaser .topper .jumbotron {
   padding-bottom: 0;
   padding-left: 0;
-  padding-right: 0;
-}
+  padding-right: 0; }
+
 .teaser .middle .jumbotron {
-  padding: 0;
-}
+  padding: 0; }
+
+.navbar-brand-teaser {
+  background: url("white-logo.png") no-repeat center;
+  width: 270px; }
+
+.teaser .col-xs-3 {
+  width: 30%; }
+
+.teaser .col-xs-9 {
+  width: 70%; }
+
 h2.pitch {
   text-align: center;
   font-size: 32pt;
   color: #fff;
-  padding: 20px 0 15px;
-  /*text-shadow: -1px 0 #e3e3e3, 0 1px #e3e3e3, 1px 0 #e3e3e3, 0 -1px #e3e3e3;*/
-}
-.teaser .col-xs-3 {
-  width: 30%;
-}
-.teaser .col-xs-9 {
-  width: 70%;
-}
+  padding: 20px 0 15px; }
+
 .pitch-ext {
   text-align: left;
   color: #fff;
   font-size: 24px;
-  padding-top: 20px;
-}
+  padding-top: 20px; }
+
 .teaser .pitch-ext p {
   margin: 3px 0;
-  font-size: 25px;
-}
-.interested_box p {
-  font-size: 16px;
-}
+  font-size: 25px; }
 
-.teaser .interested_box .btn-signup{
+.interested_box p {
+  font-size: 16px; }
+
+.teaser .interested_box .btn-signup {
   background-image: none;
   background-color: #fff;
   color: #ff9719;
-  text-shadow: none;
-}
+  text-shadow: none; }
+
 .interested_box .btn:hover, .btn:focus {
-  color:#333;
-}/*
-.interested_box .form-control {
-  border: none;
-}*/
+  color: #333; }
+
 .top_mac {
   background: url("top_mac.png") no-repeat top right;
-  height: 336px;
-}
+  height: 336px; }
+
 .bottom_mac {
   background: url("bottom_mac.png") no-repeat top right;
-  height: 301px;
-}
+  height: 301px; }
 
 .interested_box {
   background-color: #ff9719;
   color: #fff;
-  margin-top: 20px;
-}
+  margin-top: 20px; }
+
 .problem-definition-header {
   color: #ff9719;
   text-align: center;
   font-size: 58px;
-  font-weight: bold;
-}
+  font-weight: bold; }
 
 .airbag {
-  background: url("airbag.jpg")no-repeat left top;
-  height: 569px;
-}
+  background: url("airbag.jpg") no-repeat left top;
+  height: 569px; }
+
 .footer_white {
-  background-color: #fff;
-}
+  background-color: #fff; }
+
 .footer_grey {
-  background-color: #e3e3e3;
-}
+  background-color: #e3e3e3; }
 
 .footer_white .problem-definition-header,
-.footer_grey .problem-definition-header{
+.footer_grey .problem-definition-header {
   font-size: 24px;
   text-align: left;
-  padding-top: 30px;
-}
+  padding-top: 30px; }
+
 .footer_white .jumbotron,
 .footer_grey .jumbotron {
   padding-top: 0;
-  padding-bottom: 0;
-}
+  padding-bottom: 0; }
 
 .footer_white p {
-  line-height: 35px;
-}
+  line-height: 35px; }
+
 .middle {
-  background: url("teaser_border.png") repeat-x top;
-}
+  background: url("teaser_border.png") repeat-x top; }
+
 .library {
-  background: url("library.jpg")no-repeat top left;
-  height: 466px;
-}
+  background: url("library.jpg") no-repeat top left;
+  height: 466px; }
 
 .ballet {
-  background: url("teaser_ballet.jpg")no-repeat top;
-  height: 477px;
-}
+  background: url("teaser_ballet.jpg") no-repeat top;
+  height: 477px; }
 
 .hands {
-  background: url("teaser_hands.jpg")no-repeat;
-  height: 286px;
-}
+  background: url("teaser_hands.jpg") no-repeat;
+  height: 286px; }
 
 .grow {
-  background: url("teaser_grow.jpg")no-repeat;
-  height: 320px;
-}
+  background: url("teaser_grow.jpg") no-repeat;
+  height: 320px; }
+
 .middle_grey {
-  background-color: #d7d7d7;
-}
+  background-color: #d7d7d7; }
+
 .middle_white {
-  background-color: #fff;
-}
+  background-color: #fff; }
+
 .words {
   background: url("teaser_words.png") no-repeat;
-  height: 337px;
-}
+  height: 337px; }
+
 .middle_grey .jumbotron p {
   text-align: center;
-  font-size: 28px;
-}
+  font-size: 28px; }
 
 .teaser ul {
   margin-top: 30px;
-  list-style-image: url("li.png");
-}
+  list-style-image: url("li.png"); }
 
 .teaser li {
-  padding-bottom: 15px;
-}
+  padding-bottom: 15px; }
 
 .teaser .interested_box .form-control {
   border-color: #ff9818;
-  border-radius: 0px;
-}
+  border-radius: 0px; }
 
 .teaser .btn {
-  border-radius: 0px;
-}
+  border-radius: 0px; }
 
 .teaser footer {
   background-color: #000000;
   color: #ffffff;
-  text-align: center;
-}
+  text-align: center; }
 
 .teaser footer .jumbotron p {
-  font-size: 14px;
-}
+  font-size: 14px; }
+
+.teaser .btn-signin {
+  text-shadow: 0px 1px 0px #ffffff;
+  background-image: linear-gradient(to bottom, #ffffff 0px, #ffffff 100%);
+  background-repeat: repeat-x;
+  border-color: #ff9933; }
+
+.teaser .btn-signup {
+  text-shadow: 0px 1px 0px #ff9933;
+  background-image: linear-gradient(to bottom, #F93 0px, #F93 100%);
+  background-repeat: repeat-x;
+  border-color: #ff9933;
+  color: #ffffff; }
+
+.teaser .navbar-fixed-top {
+  border: 0; }
+
+.teaser .navbar-border {
+  background-color: rgba(0, 0, 0, 0.2);
+  padding: 12px;
+  margin-top: 0; }
+
+/*# sourceMappingURL=app.css.map */
