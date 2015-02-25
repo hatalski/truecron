@@ -1,0 +1,42 @@
+<div class="container-fluid container-truecron">
+    <div class="row">
+        <div class="col-md-offset-4 col-md-4">
+            <h2 class="text-center">Change your Password:</h2>
+            <hr/>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-offset-4 col-md-4">
+            <form {{action "reset" on="submit"}}>
+                <div {{bind-attr class=":form-group isPasswordError:has-error"}}>
+                    <div class="input-group">
+                        <span class="input-group-addon"><i class="fa fa-key"></i></span>
+                      {{input title="Password must contain at least 8 characters, including UPPER/lowercase and numbers."
+                      type="password"
+                      value=signupPassword
+                      valueBinding="password"
+                      placeholder="New password"
+                      required="required"
+                      class="form-control input-lg"
+                      pattern="(?=^.{8,}$)(?=.*\d)(?![.\n])(?=.*[A-Z])(?=.*[a-z]).*$" }}
+                    </div>
+                </div>
+                <div {{bind-attr class=":form-group isPasswordConfirmError:has-error"}}>
+                    <div class="input-group">
+                        <span class="input-group-addon"><i class="fa fa-key"></i></span>
+                      {{input type="password"
+                      value=signupPasswordConfirm
+                      valueBinding="passwordConfirm"
+                      placeholder="Retype new password"
+                      class="form-control input-lg"}}
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="input-group-btn">
+                        <button type="submit" class="btn btn-lg btn-block btn-signup">CHANGE PASSWORD</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

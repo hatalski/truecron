@@ -3,6 +3,7 @@
 module.exports = function(environment) {
   var ENV = {
     modulePrefix: 'true-cron',
+    podModulePrefix: 'true-cron/pods',
     environment: environment,
     baseURL: '/',
     locationType: 'hash',
@@ -27,7 +28,7 @@ module.exports = function(environment) {
   };
 
   if (environment === 'development') {
-    // ENV.APP.LOG_RESOLVER = true;
+    ENV.APP.LOG_RESOLVER = true;
     ENV.APP.LOG_ACTIVE_GENERATION = true;
     // ENV.APP.LOG_TRANSITIONS = true;
     // ENV.APP.LOG_TRANSITIONS_INTERNAL = true;
@@ -38,7 +39,7 @@ module.exports = function(environment) {
       'script-src': "'self' 'unsafe-inline' 'unsafe-eval' use.typekit.net connect.facebook.net maps.googleapis.com maps.gstatic.com",
       'font-src': "'self' data: use.typekit.net",
       'connect-src': "'self' https://dev.truecron.com wss://dev.truecron.com/ www.googleapis.com",
-      'img-src': "'self' www.facebook.com p.typekit.net data:",
+      'img-src': "'self' www.gravatar.com www.facebook.com p.typekit.net data:",
       'style-src': "'self' 'unsafe-inline' use.typekit.net",
       'frame-src': "s-static.ak.facebook.com static.ak.facebook.com www.facebook.com"
     }
@@ -75,7 +76,7 @@ module.exports = function(environment) {
       'script-src': "'self' 'unsafe-inline' 'unsafe-eval' use.typekit.net connect.facebook.net maps.googleapis.com maps.gstatic.com",
       'font-src': "'self' data: use.typekit.net",
       'connect-src': "'self' https://staging.truecron.com ws://staging.truecron.com wss://staging.truecron.com www.googleapis.com",
-      'img-src': "'self' www.facebook.com p.typekit.net data:",
+      'img-src': "'self' www.gravatar.com www.facebook.com p.typekit.net data:",
       'style-src': "'self' 'unsafe-inline' use.typekit.net",
       'frame-src': "s-static.ak.facebook.com static.ak.facebook.com www.facebook.com"
     }
@@ -95,16 +96,16 @@ module.exports = function(environment) {
       'script-src': "'self' 'unsafe-inline' 'unsafe-eval' use.typekit.net connect.facebook.net maps.googleapis.com maps.gstatic.com",
       'font-src': "'self' data: use.typekit.net",
       'connect-src': "'self' https://www.truecron.com ws://www.truecron.com wss://www.truecron.com www.googleapis.com",
-      'img-src': "'self' www.facebook.com p.typekit.net data:",
+      'img-src': "'self' www.gravatar.com www.facebook.com p.typekit.net data:",
       'style-src': "'self' 'unsafe-inline' use.typekit.net",
       'frame-src': "s-static.ak.facebook.com static.ak.facebook.com www.facebook.com"
     }
   }
 
   ENV['simple-auth'] = {
-    authenticationRoute: 'index',
-    routeAfterAuthentication: 'dashboard',
-    routeIfAlreadyAuthenticated: 'dashboard',
+    authenticationRoute: 'signin',
+    routeAfterAuthentication: 'workspaces',
+    routeIfAlreadyAuthenticated: 'workspaces',
     authorizer: 'simple-auth-authorizer:oauth2-bearer',
     crossOriginWhitelist: [ENV.APP.SERVER_HOST]
   }
