@@ -5,7 +5,12 @@ import {
 
 moduleForModel('workspace', 'Workspace', {
   // Specify the other units that are required for this test.
-  needs: []
+  needs: ['model:user',
+    'model:organization',
+    'model:job-tag',
+    'model:workspaces.workspace.job',
+    'model:workspaces.workspace.jobs.job.task',
+    'model:organizations.organization.connection']
 });
 
 test('it exists', function() {

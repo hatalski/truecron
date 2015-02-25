@@ -5,7 +5,10 @@ import {
 
 moduleForModel('workspaces/workspace/jobs/job/task', 'WorkspacesWorkspaceJobsJobTask', {
   // Specify the other units that are required for this test.
-  needs: ['model:job']
+  needs: ['model:workspaces.workspace.job',
+    'model:user',
+    'model:workspace',
+    'model:job-tag']
 });
 
 test('it exists', function() {
