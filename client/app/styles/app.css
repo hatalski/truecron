@@ -1,3 +1,23 @@
+/*main */
+body {
+  background-color: #ecf6f8; }
+  body .btn-signup {
+    -webkit-border-radius: 2px;
+    -moz-border-radius: 2px;
+    -ms-border-radius: 2px;
+    border-radius: 2px;
+    background-color: #ff4e00;
+    color: #fff; }
+  body .btn-signin {
+    -webkit-border-radius: 2px;
+    -moz-border-radius: 2px;
+    -ms-border-radius: 2px;
+    border-radius: 2px;
+    background-color: #fff;
+    color: #464748;
+    border: solid 1px #ff4e00; }
+
+/* teaser page styles */
 .teaser {
   font-family: "Trebuchet MS";
   font-size: 16pt;
@@ -12,7 +32,7 @@
   background: #000 url("teaser_bg.jpg") no-repeat center top; }
 
 .navbar-teaser {
-  background-color: rgba(0, 0, 0, 0.6); }
+  background-color: rgba(53, 97, 126, 0.6); }
 
 .teaser .jumbotron {
   background-color: transparent;
@@ -151,9 +171,8 @@ h2.pitch {
   border-color: #ff9818;
   border-radius: 0px; }
 
-.teaser .btn {
-  border-radius: 0px; }
-
+/*.teaser .btn
+ * border-radius: 0px */
 .teaser footer {
   background-color: #000000;
   color: #ffffff;
@@ -162,19 +181,17 @@ h2.pitch {
 .teaser footer .jumbotron p {
   font-size: 14px; }
 
-.teaser .btn-signin {
-  text-shadow: 0px 1px 0px #ffffff;
-  background-image: linear-gradient(to bottom, #ffffff 0px, #ffffff 100%);
-  background-repeat: repeat-x;
-  border-color: #ff9933; }
-
-.teaser .btn-signup {
-  text-shadow: 0px 1px 0px #ff9933;
-  background-image: linear-gradient(to bottom, #F93 0px, #F93 100%);
-  background-repeat: repeat-x;
-  border-color: #ff9933;
-  color: #ffffff; }
-
+/*.teaser .btn-signin
+ * text-shadow: 0px 1px 0px #ffffff
+ * background-image: linear-gradient(to bottom, #ffffff 0px, #ffffff 100%)
+ * background-repeat: repeat-x
+ * border-color: #ff9933 */
+/*.teaser .btn-signup
+ * text-shadow: 0px 1px 0px #ff9933
+ * background-image: linear-gradient(to bottom, #F93 0px, #F93 100%)
+ * background-repeat: repeat-x
+ * border-color: #ff9933
+ * color: #ffffff */
 .teaser .navbar-fixed-top {
   border: 0; }
 
@@ -182,5 +199,9 @@ h2.pitch {
   background-color: rgba(0, 0, 0, 0.2);
   padding: 12px;
   margin-top: 0; }
+
+/* sign-in sign-up */
+.container-truecron {
+  margin-top: 50px; }
 
 /*# sourceMappingURL=app.css.map */
