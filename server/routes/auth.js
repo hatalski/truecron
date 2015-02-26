@@ -219,4 +219,36 @@ router.use(function(err, req, res, next) {
     });
 });
 
+router.post('/resetpassword', function(req, res) {
+    var email = req.body.email;
+    var codeToResetPassword = req.body.resetpasswordcode;
+    var validEmail = validator.isEmail(email);
+
+    console.log('email:'+email);
+
+    if (validEmail) {
+        // send an email to the user code to reset your password
+        smtp.sendMail({
+            from: 'welcome@truecron.com',
+            to: email,
+            subject: 'reset password truecron.com',
+            html: 'To reset the password, enter the code:'+codeToResetPassword+' on the page<br/><br/>' +
+            '<a href="https://www.truecron.com">https://www.truecron.com</a>' +
+            '<br/><br/>Yours Truly,<br/>' + 'TrueCron Team'
+        }, function (error, info) {
+            if (error) {
+                console.log(error);
+            } else {
+                console.dir(info);
+                console.log('Message sent: ' + info.messageId);
+            }
+        });
+        res.status(201).json({ message: 'Email with a code to reset your password has been sent to the specified address'});
+    }
+    else {
+        res.status(400).json({ message: 'Email not valid!!!'});
+    }
+});
+
+
 module.exports = router;
