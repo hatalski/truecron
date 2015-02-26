@@ -21,7 +21,9 @@ export default Locale.extend({
       },
       signup_form: {
         header: 'Create your TrueCron Account:',
-        warning: 'By clicking "Sign up for TrueCron", you agree to our terms of service and privacy policy.',
+        warning: 'By clicking "Sign up for TrueCron", you agree to our',
+        terms: 'terms of service',
+        privacy: 'privacy policy',
         button: 'SIGN UP FOR TRUECRON',
         accountExists: 'Already have an account?',
         signinLink: 'Sign In',

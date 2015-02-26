@@ -62,7 +62,7 @@
   <br >
     <div class="row">
         <div class="col-md-offset-2 col-md-8 col-border-top">
-            <h6 class="text-center">{{format-message (intl-get "messages.auth.signup_form.warning")}}</h6>
+            <h6 class="text-center">{{format-message (intl-get "messages.auth.signup_form.warning")}} {{#link-to 'policy.eula'}}{{format-message (intl-get "messages.auth.signup_form.terms")}}{{/link-to}} and {{#link-to 'policy.privacy'}}{{format-message (intl-get "messages.auth.signup_form.privacy")}}{{/link-to}}.</h6>
         </div>
     </div>
 </div>
