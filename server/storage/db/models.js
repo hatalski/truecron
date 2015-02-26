@@ -29,7 +29,8 @@ module.exports.initialize = function(sequelize) {
         'workspacetoperson',
         'task',
         'run',
-        'connection'
+        'connection',
+        'resetpassword'
     ];
 
     daos.forEach(function (dao) {

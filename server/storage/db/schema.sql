@@ -489,6 +489,21 @@ if not HasSchemaVersion(14) then
 end if;
 end $$;
 
+do $$
+begin
+if not HasSchemaVersion(15) then
+    create table tc.ResetPassword
+    (
+        email               varchar(256) not null,
+        resetpasswordcode   bytea not null,
+        createdAt           timestamp(0) with time zone not null default 'now',
+        constraint          ResetPassword_Pk primary key (resetpasswordcode)
+    );
+
+    perform CommitSchemaVersion(15, 'Added a reset password table.');
+end if;
+end $$;
+
 
 -- Use the snippet as a template:
 --
