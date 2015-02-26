@@ -1,6 +1,7 @@
 /*main */
 body {
-  background-color: #ecf6f8; }
+  background-color: #ecf6f8;
+  color: #464748; }
   body .btn-signup {
     -webkit-border-radius: 2px;
     -moz-border-radius: 2px;
@@ -203,5 +204,26 @@ h2.pitch {
 /* sign-in sign-up */
 .container-truecron {
   margin-top: 50px; }
+
+.g_sign {
+  padding-top: 62px; }
+
+.g_btn {
+  background-color: #fff;
+  border: solid 1px #b2babc;
+  -webkit-border-radius: 0px;
+  -moz-border-radius: 0px;
+  -ms-border-radius: 0px;
+  border-radius: 0px;
+  color: #707070; }
+
+.g_sign .fa {
+  color: #ff2a34; }
+
+.col-border-right {
+  border-right: solid 1px #c2cacd; }
+
+.col-border-top {
+  border-top: solid 1px #c2cacd; }
 
 /*# sourceMappingURL=app.css.map */
