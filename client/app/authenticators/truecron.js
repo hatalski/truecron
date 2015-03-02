@@ -30,7 +30,7 @@ export default OAuth2.extend({
     });
   },
   authenticate: function(options) {
-    console.log('we are inside authenticator authenticate method');
+    Ember.Logger.log('we are inside authenticator authenticate method');
     var _this = this;
     return new Ember.RSVP.Promise(function(resolve, reject) {
       var grant_type = options.grant_type || 'password';
@@ -40,7 +40,7 @@ export default OAuth2.extend({
         Ember.merge(data, { scope: scopesString });
       }
       _this.makeRequest(_this.serverTokenEndpoint, data).then(function(response) {
-        console.log('authentication request is resolved');
+        Ember.Logger.log('authentication request is resolved');
         Ember.run(function() {
           var expiresAt = _this.absolutizeExpirationTime(response.expires_in);
           _this.scheduleAccessTokenRefresh(response.expires_in, expiresAt, response.refresh_token);
@@ -50,9 +50,9 @@ export default OAuth2.extend({
           resolve(response);
         });
       }, function(xhr, status, error) {
-        console.log('authentication request is rejected');
-        console.log('status: ' + status);
-        console.log('error: ' + error);
+        Ember.Logger.log('authentication request is rejected');
+        Ember.Logger.log('status: ' + status);
+        Ember.Logger.log('error: ' + error);
         Ember.run(function() {
           reject(xhr.responseJSON || xhr.responseText);
         });
