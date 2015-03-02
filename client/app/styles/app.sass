@@ -7,6 +7,12 @@ $primary-color: #464748
   -ms-border-radius:     $radius
   border-radius:         $radius
 
+=button-grad($gradient1, $gradient2)
+  background: -webkit-linear-gradient($gradient1, $gradient2)
+  background: -o-linear-gradient($gradient1, $gradient2)
+  background: -moz-linear-gradient($gradient1, $gradient2)
+  background: linear-gradient($gradient1, $gradient2)
+
 /*main
 
 body
@@ -15,7 +21,12 @@ body
 
   .btn-signup
     +border-radius(2px)
-    background-color: #ff4e00
+    +button-grad(#fe5900, #fa4402)
+    color: #fff
+
+  .btn-signup:hover, .btn-signup:active
+    +border-radius(2px)
+    +button-grad(#ff722a, #ff5500)
     color: #fff
 
   .btn-signin
@@ -24,6 +35,8 @@ body
     color: #464748
     border: solid 1px #ff4e00
 
+  a
+    color: #009dfe
 /* teaser page styles
 .teaser
   font-family: "Trebuchet MS"
@@ -192,20 +205,6 @@ h2.pitch
 .teaser footer .jumbotron p
   font-size: 14px
 
-/*.teaser .btn-signin
-  text-shadow: 0px 1px 0px #ffffff
-  background-image: linear-gradient(to bottom, #ffffff 0px, #ffffff 100%)
-  background-repeat: repeat-x
-  border-color: #ff9933
-
-/*.teaser .btn-signup
-  text-shadow: 0px 1px 0px #ff9933
-  background-image: linear-gradient(to bottom, #F93 0px, #F93 100%)
-  background-repeat: repeat-x
-  border-color: #ff9933
-  color: #ffffff
-
-
 .teaser .navbar-fixed-top
   border: 0
 
@@ -227,7 +226,7 @@ h2.pitch
   +border-radius(0px)
   color: #707070
 
-.g_sign .fa
+.g_btn .fa
   color: #ff2a34
 
 .col-border-right
