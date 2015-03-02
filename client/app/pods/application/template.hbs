@@ -1,5 +1,5 @@
 {{#if session.isAuthenticated}}
-    <div class="navbar navbar-inverse navbar-fixed-top navbar-truecron" role="navigation">
+    <div class="navbar navbar-fixed-top navbar-teaser" role="navigation">
         <div class="container-fluid">
             <div class="navbar-header">
                 <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
@@ -8,10 +8,10 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a class="navbar-brand" href="/"></a>
+                <a class="navbar-brand navbar-brand-teaser" href="/"></a>
             </div>
             <div class="navbar-collapse collapse">
-                <ul class="nav navbar-nav navbar-right" style="border-left: solid 1px #ff4e00">
+                <ul class="nav navbar-nav navbar-right">
                     <li class="dropdown">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown">{{gravatar-image email=session.userEmail size=30 default='identicon' class='img-circle' }}<span class="caret"></span></a>
                         <ul class="dropdown-menu" role="menu">
@@ -28,6 +28,12 @@
     <div class="navbar navbar-fixed-top navbar-teaser" role="navigation">
         <div class="container teaser">
             <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
                 <a class="navbar-brand navbar-brand-teaser" href="#"></a>
             </div>
             <div class="navbar-collapse collapse">
