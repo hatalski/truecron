@@ -89,18 +89,21 @@ export default Ember.Route.extend(ApplicationRouteMixin, {
         });
       } else {
         Ember.Logger.log('authenticator: authenticator:truecron');
-        var result = Ember.$.ajax(ENV.APP.API_HOST + '/users/current', {
+        var userResult = Ember.$.ajax(ENV.APP.API_HOST + '/users/current', {
           type: 'GET',
-          contentType: 'application/json'//,
-          //dataType: 'json',
-          //data: JSON.stringify(requestData),
-          //crossDomain: true
+          contentType: 'application/json'
         });
-        result.done(function(response) {
+        userResult.done(function(response) {
           "use strict";
           self.get('session').set('userEmail', response.user.name);
           self.get('session').set('userId', response.user.id);
           self.transitionTo('workspaces');
+        });
+        userResult.fail(function(error) {
+          "use strict";
+          Ember.Logger.log('get current user error');
+          Ember.Logger.log(error);
+          return { error: error };
         });
       }
     }
