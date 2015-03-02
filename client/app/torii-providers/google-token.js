@@ -32,7 +32,7 @@ var GoogleToken = Oauth2Bearer.extend({
 
       Ember.Logger.log('adapter:');
       Ember.Logger.log(this.get('adapter'));
-      
+
       return this.get('popup').open(url, responseParams).then(function(authData) {
         Ember.Logger.log('on popup auth data triggered with authData: ');
         Ember.Logger.log(authData);
