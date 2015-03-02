@@ -13,9 +13,9 @@
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav navbar-right" style="border-left: solid 1px #ff4e00">
                     <li class="dropdown">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">{{gravatar-image email=session.userEmail size=35 default='identicon' class='img-circle' }}<span class="caret"></span></a>
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">{{gravatar-image email=session.userEmail size=30 default='identicon' class='img-circle' }}<span class="caret"></span></a>
                         <ul class="dropdown-menu" role="menu">
-                            <li>{{#link-to "profile"}}<i class="fa fa-user"></i>{{log session.userEmail}} My Profile{{/link-to}}</li>
+                            <li>{{#link-to "profile"}}<i class="fa fa-user"></i> My Profile{{/link-to}}</li>
                             <li class="divider"></li>
                             <li><a href="#" {{action "invalidateSession"}}><i class="fa fa-sign-out"></i> Sign out</a></li>
                         </ul>
