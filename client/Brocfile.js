@@ -7,6 +7,9 @@ var app = new EmberApp({
   minifyCSS: {
     enabled: false,
     options: {}
+  },
+  gzip: {
+    keepUncompressed: true
   }
 });
 
