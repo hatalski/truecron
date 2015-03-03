@@ -36,10 +36,9 @@ body {
 .sidebar {
   padding-left: 0;
   padding-right: 0;
-  position: absolute;
+  position: fixed;
   top: 50px;
   left: 0px;
-  bottom: 0px;
   z-index: 1000;
   display: block;
   overflow-x: hidden;
