@@ -33,6 +33,17 @@ body {
   body a {
     color: #009dfe; }
 
+.sidebar {
+  padding-left: 0;
+  padding-right: 0;
+  position: fixed;
+  top: 50px;
+  left: 0px;
+  z-index: 1000;
+  display: block;
+  overflow-x: hidden;
+  overflow-y: auto; }
+
 /* teaser page styles */
 .teaser {
   font-family: "Trebuchet MS";
