@@ -51,8 +51,7 @@ export default Locale.extend({
           password: 'New password',
           confirm: 'Retype new password'
         }
-      }
-    },
+      },
       reset_form: {
         header: 'Change your Password:',
         button: 'CHANGE PASSWORD',
