@@ -19,35 +19,24 @@ body
   background-color: $primary-bg-color
   color: $primary-color
 
-  .btn-signup
-    +border-radius(2px)
-    +button-grad(#fe5900, #fa4402)
-    color: #fff
+.btn-signup
+  +border-radius(2px)
+  +button-grad(#fe5900, #fa4402)
+  color: #fff
 
-  .btn-signup:hover, .btn-signup:active
-    +border-radius(2px)
-    +button-grad(#ff722a, #ff5500)
-    color: #fff
+.btn-signup:hover, .btn-signup:active
+  +border-radius(2px)
+  +button-grad(#ff722a, #ff5500)
+  color: #fff
 
-  .btn-signin
-    +border-radius(2px)
-    background-color: #fff
-    color: #464748
-    border: solid 1px #ff4e00
+.btn-signin
+  +border-radius(2px)
+  background-color: #fff
+  color: #464748
+  border: solid 1px #ff4e00
 
-  a
-    color: #009dfe
-
-.sidebar
-  padding-left: 0
-  padding-right: 0
-  position: fixed
-  top: 50px
-  left: 0px
-  z-index: 1000
-  display: block
-  overflow-x: hidden
-  overflow-y: auto
+a
+  color: #009dfe
 
 /* teaser page styles
 .teaser
@@ -246,3 +235,32 @@ h2.pitch
 
 .col-border-top
   border-top: solid 1px #c2cacd
+
+/*sidebar
+
+.sidebar
+  padding-left: 0
+  padding-right: 0
+  position: fixed
+  top: 50px
+  left: 0px
+  z-index: 1000
+  display: block
+  overflow-x: hidden
+  overflow-y: auto
+  height: 100%
+  background-color: #beccd4
+
+.dropdown-truecron li
+  list-style: none
+
+.dropdown-truecron
+  font-size: 20px
+  color: #464646
+
+.dropdown-truecron a, a:hover, .dropdown-truecron a:active
+  text-decoration: none
+  color: #464646
+
+.dropdown-truecron span
+  color: #fa5b00
