@@ -52,7 +52,6 @@ Router.map(function() {
     });
   });
   this.route('reset');
-  this.route('confirmreset');
 });
 
 export default Router;
