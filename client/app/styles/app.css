@@ -262,4 +262,42 @@ h2.pitch {
 .dropdown-truecron span {
   color: #fa5b00; }
 
+.panel-heading .fa-cog {
+  color: #fa5b00; }
+
+.panel-heading .btn-truecron-settings {
+  background: -webkit-linear-gradient(#f7f6f2, #e4e6e5);
+  background: -o-linear-gradient(#f7f6f2, #e4e6e5);
+  background: -moz-linear-gradient(#f7f6f2, #e4e6e5);
+  background: linear-gradient(#f7f6f2, #e4e6e5);
+  -webkit-border-radius: 2px;
+  -moz-border-radius: 2px;
+  -ms-border-radius: 2px;
+  border-radius: 2px;
+  border: solid 1px #b9cdd4; }
+
+.panel-default > .panel-heading {
+  background-color: #f6f6f6;
+  background-image: none;
+  border-bottom: solid 1px #b9cdd8; }
+
+.panel-heading .col-md-12 {
+  padding-top: 15px; }
+
+.no-padding {
+  padding-left: 0px;
+  padding-right: 0px; }
+
+.panel-default {
+  border: none; }
+
+.list-group-item {
+  border: 1px solid #b9cdd8; }
+
+a.list-group-item {
+  background: -webkit-linear-gradient(#f6fafd, #efeff1);
+  background: -o-linear-gradient(#f6fafd, #efeff1);
+  background: -moz-linear-gradient(#f6fafd, #efeff1);
+  background: linear-gradient(#f6fafd, #efeff1); }
+
 /*# sourceMappingURL=app.css.map */
