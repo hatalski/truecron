@@ -4,7 +4,6 @@
 import DS from 'ember-data';
 
 var outputMessage = DS.Model.extend({
-  id:           DS.attr(),
   taskId:       DS.attr(),
   messageType:  DS.attr('string'),
   text:         DS.attr('string')
