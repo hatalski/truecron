@@ -7,7 +7,7 @@ $primary-color: #464748
   -ms-border-radius:     $radius
   border-radius:         $radius
 
-=button-grad($gradient1, $gradient2)
+=grad($gradient1, $gradient2)
   background: -webkit-linear-gradient($gradient1, $gradient2)
   background: -o-linear-gradient($gradient1, $gradient2)
   background: -moz-linear-gradient($gradient1, $gradient2)
@@ -21,12 +21,12 @@ body
 
 .btn-signup
   +border-radius(2px)
-  +button-grad(#fe5900, #fa4402)
+  +grad(#fe5900, #fa4402)
   color: #fff
 
 .btn-signup:hover, .btn-signup:active
   +border-radius(2px)
-  +button-grad(#ff722a, #ff5500)
+  +grad(#ff722a, #ff5500)
   color: #fff
 
 .btn-signin
@@ -264,3 +264,32 @@ h2.pitch
 
 .dropdown-truecron span
   color: #fa5b00
+
+.panel-heading .fa-cog
+  color: #fa5b00
+
+.panel-heading .btn-truecron-settings
+  +grad(#f7f6f2, #e4e6e5)
+  +border-radius(2px)
+  border: solid 1px #b9cdd4
+
+.panel-default > .panel-heading
+  background-color: #f6f6f6
+  background-image: none
+  border-bottom: solid 1px #b9cdd8
+
+.panel-heading .col-md-12
+  padding-top: 15px
+
+.no-padding
+  padding-left: 0px
+  padding-right: 0px
+
+.panel-default
+  border: none
+
+.list-group-item
+  border: 1px solid #b9cdd8
+
+a.list-group-item
+  +grad(#f6fafd, #efeff1)
