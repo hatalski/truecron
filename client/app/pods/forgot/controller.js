@@ -5,6 +5,7 @@ import LoginControllerMixin from 'simple-auth/mixins/login-controller-mixin';
 
 export default Ember.Controller.extend(LoginControllerMixin, {
   email:'',
+  isSuccess: false,
     actions: {
       sendRecoveryCode: function() {
         var self = this;
@@ -35,6 +36,8 @@ export default Ember.Controller.extend(LoginControllerMixin, {
         });
         result.success(function(response) {
           console.log(response.message);
+          Ember.$('#inputformrecovery').hide();
+          self.set('isSuccess',true);
           Ember.$('#email').popover({
             title: 'Verification code has been sent.',
             content: 'Check your email!',
