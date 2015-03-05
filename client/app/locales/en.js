@@ -48,8 +48,8 @@ export default Locale.extend({
         header: 'Confirm password reset:',
         button: 'RESET PASSWORD',
         placeholders: {
-          password: 'New password',
-          confirm: 'Retype new password'
+          email: 'Email',
+          text: 'Code to reset password'
         }
       },
       reset_form: {
