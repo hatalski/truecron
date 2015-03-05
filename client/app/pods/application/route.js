@@ -66,6 +66,7 @@ export default Ember.Route.extend(ApplicationRouteMixin, {
         result.done(function(response) {
           Ember.Logger.log('sign up success');
           Ember.Logger.log(response);
+          self.get('session').set('userId', response.id);
           var options = { identification: session.get('userEmail'), grant_type: 'http://google.com' };
           self.get('session').authenticate('authenticator:truecron', options)
             .then(function(result) {
@@ -88,7 +89,22 @@ export default Ember.Route.extend(ApplicationRouteMixin, {
         });
       } else {
         Ember.Logger.log('authenticator: authenticator:truecron');
-        this._super();
+        var userResult = Ember.$.ajax(ENV.APP.API_HOST + '/users/current', {
+          type: 'GET',
+          contentType: 'application/json'
+        });
+        userResult.done(function(response) {
+          "use strict";
+          self.get('session').set('userEmail', response.user.name);
+          self.get('session').set('userId', response.user.id);
+          self.transitionTo('workspaces');
+        });
+        userResult.fail(function(error) {
+          "use strict";
+          Ember.Logger.log('get current user error');
+          Ember.Logger.log(error);
+          return { error: error };
+        });
       }
     }
   }

@@ -1,21 +1,41 @@
 /*main */
 body {
-  background-color: #ecf6f8; }
-  body .btn-signup {
-    -webkit-border-radius: 2px;
-    -moz-border-radius: 2px;
-    -ms-border-radius: 2px;
-    border-radius: 2px;
-    background-color: #ff4e00;
-    color: #fff; }
-  body .btn-signin {
-    -webkit-border-radius: 2px;
-    -moz-border-radius: 2px;
-    -ms-border-radius: 2px;
-    border-radius: 2px;
-    background-color: #fff;
-    color: #464748;
-    border: solid 1px #ff4e00; }
+  background-color: #ecf6f8;
+  color: #464748; }
+
+.btn-signup {
+  -webkit-border-radius: 2px;
+  -moz-border-radius: 2px;
+  -ms-border-radius: 2px;
+  border-radius: 2px;
+  background: -webkit-linear-gradient(#fe5900, #fa4402);
+  background: -o-linear-gradient(#fe5900, #fa4402);
+  background: -moz-linear-gradient(#fe5900, #fa4402);
+  background: linear-gradient(#fe5900, #fa4402);
+  color: #fff; }
+
+.btn-signup:hover, .btn-signup:active {
+  -webkit-border-radius: 2px;
+  -moz-border-radius: 2px;
+  -ms-border-radius: 2px;
+  border-radius: 2px;
+  background: -webkit-linear-gradient(#ff722a, #ff5500);
+  background: -o-linear-gradient(#ff722a, #ff5500);
+  background: -moz-linear-gradient(#ff722a, #ff5500);
+  background: linear-gradient(#ff722a, #ff5500);
+  color: #fff; }
+
+.btn-signin {
+  -webkit-border-radius: 2px;
+  -moz-border-radius: 2px;
+  -ms-border-radius: 2px;
+  border-radius: 2px;
+  background-color: #fff;
+  color: #464748;
+  border: solid 1px #ff4e00; }
+
+a {
+  color: #009dfe; }
 
 /* teaser page styles */
 .teaser {
@@ -181,17 +201,6 @@ h2.pitch {
 .teaser footer .jumbotron p {
   font-size: 14px; }
 
-/*.teaser .btn-signin
- * text-shadow: 0px 1px 0px #ffffff
- * background-image: linear-gradient(to bottom, #ffffff 0px, #ffffff 100%)
- * background-repeat: repeat-x
- * border-color: #ff9933 */
-/*.teaser .btn-signup
- * text-shadow: 0px 1px 0px #ff9933
- * background-image: linear-gradient(to bottom, #F93 0px, #F93 100%)
- * background-repeat: repeat-x
- * border-color: #ff9933
- * color: #ffffff */
 .teaser .navbar-fixed-top {
   border: 0; }
 
@@ -203,5 +212,92 @@ h2.pitch {
 /* sign-in sign-up */
 .container-truecron {
   margin-top: 50px; }
+
+.g_sign {
+  padding-top: 62px; }
+
+.g_btn {
+  background-color: #fff;
+  border: solid 1px #b2babc;
+  -webkit-border-radius: 0px;
+  -moz-border-radius: 0px;
+  -ms-border-radius: 0px;
+  border-radius: 0px;
+  color: #707070; }
+
+.g_btn .fa {
+  color: #ff2a34; }
+
+.col-border-right {
+  border-right: solid 1px #c2cacd; }
+
+.col-border-top {
+  border-top: solid 1px #c2cacd; }
+
+/*sidebar */
+.sidebar {
+  padding-left: 0;
+  padding-right: 0;
+  position: fixed;
+  top: 50px;
+  left: 0px;
+  z-index: 1000;
+  display: block;
+  overflow-x: hidden;
+  overflow-y: auto;
+  height: 100%;
+  background-color: #beccd4; }
+
+.dropdown-truecron li {
+  list-style: none; }
+
+.dropdown-truecron {
+  font-size: 20px;
+  color: #464646; }
+
+.dropdown-truecron a, a:hover, .dropdown-truecron a:active {
+  text-decoration: none;
+  color: #464646; }
+
+.dropdown-truecron span {
+  color: #fa5b00; }
+
+.panel-heading .fa-cog {
+  color: #fa5b00; }
+
+.panel-heading .btn-truecron-settings {
+  background: -webkit-linear-gradient(#f7f6f2, #e4e6e5);
+  background: -o-linear-gradient(#f7f6f2, #e4e6e5);
+  background: -moz-linear-gradient(#f7f6f2, #e4e6e5);
+  background: linear-gradient(#f7f6f2, #e4e6e5);
+  -webkit-border-radius: 2px;
+  -moz-border-radius: 2px;
+  -ms-border-radius: 2px;
+  border-radius: 2px;
+  border: solid 1px #b9cdd4; }
+
+.panel-default > .panel-heading {
+  background-color: #f6f6f6;
+  background-image: none;
+  border-bottom: solid 1px #b9cdd8; }
+
+.panel-heading .col-md-12 {
+  padding-top: 15px; }
+
+.no-padding {
+  padding-left: 0px;
+  padding-right: 0px; }
+
+.panel-default {
+  border: none; }
+
+.list-group-item {
+  border: 1px solid #b9cdd8; }
+
+a.list-group-item {
+  background: -webkit-linear-gradient(#f6fafd, #efeff1);
+  background: -o-linear-gradient(#f6fafd, #efeff1);
+  background: -moz-linear-gradient(#f6fafd, #efeff1);
+  background: linear-gradient(#f6fafd, #efeff1); }
 
 /*# sourceMappingURL=app.css.map */

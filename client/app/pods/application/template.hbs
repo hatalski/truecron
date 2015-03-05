@@ -1,47 +1,54 @@
 {{#if session.isAuthenticated}}
-    <div class="navbar navbar-inverse navbar-fixed-top navbar-truecron" role="navigation">
-        <div class="container-fluid">
-            <div class="navbar-header">
-                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-                    <span class="sr-only">Toggle navigation</span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                </button>
-                <a class="navbar-brand" href="/"></a>
-            </div>
-            <div class="navbar-collapse collapse">
-                <ul class="nav navbar-nav navbar-right" style="border-left: solid 1px #ff4e00">
-                    <li class="dropdown">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">{{gravatar-image email='vhatalski@naviam.com' size=35 default='identicon' class='img-circle' }}<span class="caret"></span></a>
-                        <ul class="dropdown-menu" role="menu">
-                            <li>{{#link-to "profile"}}<i class="fa fa-user"></i> My Profile{{/link-to}}</li>
-                            <li class="divider"></li>
-                            <li><a href="#" {{action "invalidateSession"}}><i class="fa fa-sign-out"></i> Sign out</a></li>
-                        </ul>
-                    </li>
-                </ul>
-            </div>
+<div class="navbar navbar-fixed-top navbar-teaser" role="navigation">
+    <div class="container-fluid">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand navbar-brand-teaser" href="/"></a>
+        </div>
+        <div class="navbar-collapse collapse">
+            <ul class="nav navbar-nav navbar-right">
+                <li class="dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                      {{gravatar-image email=session.userEmail size=20 default='identicon' class='img-circle' }}
+                        <span class="caret"></span></a>
+                    <ul class="dropdown-menu" role="menu">
+                        <li>{{#link-to "profile"}}<i class="fa fa-user"></i> My Profile{{/link-to}}</li>
+                        <li class="divider"></li>
+                        <li><a href="#" {{action "invalidateSession"}}><i class="fa fa-sign-out"></i> Sign out</a></li>
+                    </ul>
+                </li>
+            </ul>
         </div>
     </div>
+</div>
 {{else}}
-    <div class="navbar navbar-fixed-top navbar-teaser" role="navigation">
-        <div class="container teaser">
-            <div class="navbar-header">
-                <a class="navbar-brand navbar-brand-teaser" href="#"></a>
-            </div>
-            <div class="navbar-collapse collapse">
-              {{#unless hideSignUpButton}}
-                  <form class="navbar-form navbar-right" style="border-left: solid 1px #ff4e00">
-                      <input type="button" {{action "redirectToSignup"}} class="btn btn-signup" value="SIGN UP">
-                  </form>
-              {{/unless}}
-                <form class="navbar-form navbar-right">
-                    <input type="button" {{action "redirectToSignin"}} class="btn btn-signin" value="SIGN IN">
-                </form>
-            </div>
+<div class="navbar navbar-fixed-top navbar-teaser" role="navigation">
+    <div class="container teaser">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand navbar-brand-teaser" href="#"></a>
+        </div>
+        <div class="navbar-collapse collapse">
+          {{#unless hideSignUpButton}}
+            <form class="navbar-form navbar-right" style="border-left: solid 1px #ff4e00">
+                <input type="button" {{action "redirectToSignup"}} class="btn btn-signup" value="SIGN UP">
+            </form>
+            <form class="navbar-form navbar-right">
+                <input type="button" {{action "redirectToSignin"}} class="btn btn-signin" value="SIGN IN">
+            </form>
+          {{/unless}}
         </div>
     </div>
+</div>
 {{/if}}
-{{log session}}
 {{outlet}}

@@ -1,4 +1,5 @@
 $primary-bg-color: #ecf6f8
+$primary-color: #464748
 
 =border-radius($radius)
   -webkit-border-radius: $radius
@@ -6,21 +7,36 @@ $primary-bg-color: #ecf6f8
   -ms-border-radius:     $radius
   border-radius:         $radius
 
+=grad($gradient1, $gradient2)
+  background: -webkit-linear-gradient($gradient1, $gradient2)
+  background: -o-linear-gradient($gradient1, $gradient2)
+  background: -moz-linear-gradient($gradient1, $gradient2)
+  background: linear-gradient($gradient1, $gradient2)
+
 /*main
 
 body
   background-color: $primary-bg-color
+  color: $primary-color
 
-  .btn-signup
-    +border-radius(2px)
-    background-color: #ff4e00
-    color: #fff
+.btn-signup
+  +border-radius(2px)
+  +grad(#fe5900, #fa4402)
+  color: #fff
 
-  .btn-signin
-    +border-radius(2px)
-    background-color: #fff
-    color: #464748
-    border: solid 1px #ff4e00
+.btn-signup:hover, .btn-signup:active
+  +border-radius(2px)
+  +grad(#ff722a, #ff5500)
+  color: #fff
+
+.btn-signin
+  +border-radius(2px)
+  background-color: #fff
+  color: #464748
+  border: solid 1px #ff4e00
+
+a
+  color: #009dfe
 
 /* teaser page styles
 .teaser
@@ -190,20 +206,6 @@ h2.pitch
 .teaser footer .jumbotron p
   font-size: 14px
 
-/*.teaser .btn-signin
-  text-shadow: 0px 1px 0px #ffffff
-  background-image: linear-gradient(to bottom, #ffffff 0px, #ffffff 100%)
-  background-repeat: repeat-x
-  border-color: #ff9933
-
-/*.teaser .btn-signup
-  text-shadow: 0px 1px 0px #ff9933
-  background-image: linear-gradient(to bottom, #F93 0px, #F93 100%)
-  background-repeat: repeat-x
-  border-color: #ff9933
-  color: #ffffff
-
-
 .teaser .navbar-fixed-top
   border: 0
 
@@ -215,3 +217,79 @@ h2.pitch
 /* sign-in sign-up
 .container-truecron
   margin-top: 50px
+
+.g_sign
+  padding-top: 62px
+
+.g_btn
+  background-color: #fff
+  border: solid 1px #b2babc
+  +border-radius(0px)
+  color: #707070
+
+.g_btn .fa
+  color: #ff2a34
+
+.col-border-right
+  border-right: solid 1px #c2cacd
+
+.col-border-top
+  border-top: solid 1px #c2cacd
+
+/*sidebar
+
+.sidebar
+  padding-left: 0
+  padding-right: 0
+  position: fixed
+  top: 50px
+  left: 0px
+  z-index: 1000
+  display: block
+  overflow-x: hidden
+  overflow-y: auto
+  height: 100%
+  background-color: #beccd4
+
+.dropdown-truecron li
+  list-style: none
+
+.dropdown-truecron
+  font-size: 20px
+  color: #464646
+
+.dropdown-truecron a, a:hover, .dropdown-truecron a:active
+  text-decoration: none
+  color: #464646
+
+.dropdown-truecron span
+  color: #fa5b00
+
+.panel-heading .fa-cog
+  color: #fa5b00
+
+.panel-heading .btn-truecron-settings
+  +grad(#f7f6f2, #e4e6e5)
+  +border-radius(2px)
+  border: solid 1px #b9cdd4
+
+.panel-default > .panel-heading
+  background-color: #f6f6f6
+  background-image: none
+  border-bottom: solid 1px #b9cdd8
+
+.panel-heading .col-md-12
+  padding-top: 15px
+
+.no-padding
+  padding-left: 0px
+  padding-right: 0px
+
+.panel-default
+  border: none
+
+.list-group-item
+  border: 1px solid #b9cdd8
+
+a.list-group-item
+  +grad(#f6fafd, #efeff1)
