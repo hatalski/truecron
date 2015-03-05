@@ -52,6 +52,7 @@ Router.map(function() {
     });
   });
   this.route('reset');
+  this.route('confirmreset');
   this.route('policy', function() {
     this.route('privacy');
     this.route('eula');

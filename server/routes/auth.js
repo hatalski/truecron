@@ -223,6 +223,7 @@ router.post('/resetpassword', function(req, res) {
     var email = req.body.email;
     var codeToResetPassword = req.body.resetpasswordcode;
     var validEmail = validator.isEmail(email);
+    var pathForTransition = 'http://localhost:4200/#/confirmreset'; //temporary address change to the correct
 
     console.log('email:'+email);
 
@@ -233,7 +234,7 @@ router.post('/resetpassword', function(req, res) {
             to: email,
             subject: 'reset password truecron.com',
             html: 'To reset the password, enter the code:'+codeToResetPassword+' on the page<br/><br/>' +
-            '<a href="https://www.truecron.com">https://www.truecron.com</a>' +
+            '<a href="'+pathForTransition+'">'+pathForTransition+'</a> <br/> ' +'<a href="'+pathForTransition+'/:'+codeToResetPassword+'">GO</a> <br/> ' +
             '<br/><br/>Yours Truly,<br/>' + 'TrueCron Team'
         }, function (error, info) {
             if (error) {
