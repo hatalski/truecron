@@ -15,7 +15,7 @@
                                         <span class="caret"></span>
                                     </a>
                                     <ul class="dropdown-menu" role="menu">
-                                        {{#each organization in model}}
+                                        {{#each organization in model.organizations}}
                                             <li class="dropdown-header">{{organization.name}}</li>
                                           {{#each workspace in organization.workspaces}}
                                               <li role="presentation"><a {{action "changeWorkspace" workspace}} role="menuitem" tabindex="-1" href="#">{{workspace.name}}</a></li>
@@ -33,6 +33,10 @@
                 </div>
             </div>
             <div class="list-group">
+                {{#each job in model.jobs}}
+                  {{log job}}
+                  {{job-list-item job=job}}
+                {{/each}}
                 <a href="#" class="list-group-item">
                     <h4 class="list-group-item-heading">List group item heading</h4>
                     <p class="list-group-item-text">...</p>
