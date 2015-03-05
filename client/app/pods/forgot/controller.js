@@ -2,14 +2,10 @@ import Ember from 'ember';
 import ENV from 'true-cron/config/environment';
 //import Crypto from 'true-cron/node_modules/ember-cli/node_modules/npm/node_modules/request/node_modules/hawk/lib';
 import LoginControllerMixin from 'simple-auth/mixins/login-controller-mixin';
-// curl -u "-2:Igd7en1_VCMP59pBpmEF" -H "Content-Type:application/x-www-form-urlencoded" --data "grant_type=http://google.com&username=system@truecron.com" http://dev.truecron.com:3000/oauth/token
 
 export default Ember.Controller.extend(LoginControllerMixin, {
   email:'',
     actions: {
-    	forgotpasswordModal: function() {
-        Ember.$('#forgotpassword_modal').modal({});
-      },
       sendRecoveryCode: function() {
         var self = this;
         var email = self.get('signupEmail');
@@ -39,27 +35,27 @@ export default Ember.Controller.extend(LoginControllerMixin, {
         });
         result.success(function(response) {
           console.log(response.message);
-          Ember.$('#resetpasswordEmail').popover({
+          Ember.$('#email').popover({
             title: 'Verification code has been sent.',
             content: 'Check your email!',
             placement: 'bottom',
             trigger: 'manual'
           });
-          Ember.$('#resetpasswordEmail').popover('show');
+          Ember.$('#email').popover('show');
           setTimeout(function(){
-            Ember.$('#resetpasswordEmail').popover('hide');
+            Ember.$('#email').popover('hide');
           }, 7000);
         });
         result.error(function(error) {
           console.log(error);
-          Ember.$('#resetpasswordEmail').popover({
+          Ember.$('#email').popover({
             title: 'result.error',
             placement: 'bottom',
             trigger: 'manual'
           });
-          Ember.$('#resetpasswordEmail').popover('show');
+          Ember.$('#email').popover('show');
           setTimeout(function(){
-            Ember.$('#resetpasswordEmail').popover('hide');
+            Ember.$('#email').popover('hide');
           }, 7000);
           console.log(error);
         });

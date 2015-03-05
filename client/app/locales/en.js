@@ -46,6 +46,14 @@ export default Locale.extend({
           email: 'Email'
         }
       },
+      confirm_reset_form: {
+        header: 'Confirm password reset:',
+        button: 'RESET PASSWORD',
+        placeholders: {
+          email: 'Email',
+          text: 'Code to reset password'
+        }
+      },
       reset_form: {
         header: 'Change your Password:',
         button: 'CHANGE PASSWORD',
