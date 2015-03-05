@@ -38,6 +38,10 @@ body
 a
   color: #009dfe
 
+.navbar-truecron .dropdown a:hover, .navbar-truecron .dropdown a:active, .navbar-truecron .dropdown a:focus, .navbar-truecron .dropdown a:visited
+  background-color: #35617e
+  background-image: none
+
 /* teaser page styles
 .teaser
   font-family: "Trebuchet MS"
@@ -56,6 +60,9 @@ a
 .navbar-teaser
   background-color: rgba(53, 97, 126, 0.6)
 
+.navbar-truecron
+  background-color: rgba(53, 97, 126, 1)
+
 .teaser .jumbotron
   background-color: transparent
   margin-bottom: 0
@@ -70,8 +77,12 @@ a
   padding: 0
 
 .navbar-brand-teaser
-  background: url("white-logo.png") no-repeat center
+  background: url("white-logo-teaser.png") no-repeat center
   width: 270px
+
+.navbar-brand-truecron
+  background: url("white-logo.png") no-repeat center
+  width: 190px
 
 .teaser .col-xs-3
   width: 30%
@@ -195,9 +206,6 @@ h2.pitch
   border-color: #ff9818
   border-radius: 0px
 
-/*.teaser .btn
-  border-radius: 0px
-
 .teaser footer
   background-color: #000000
   color: #ffffff
@@ -274,12 +282,15 @@ h2.pitch
   border: solid 1px #b9cdd4
 
 .panel-default > .panel-heading
-  background-color: #f6f6f6
+  background-color: #ffffff
   background-image: none
   border-bottom: solid 1px #b9cdd8
 
 .panel-heading .col-md-12
   padding-top: 15px
+
+.panel-heading .col-md-12 .fa-plus
+  padding-right: 10px
 
 .no-padding
   padding-left: 0px
@@ -290,6 +301,7 @@ h2.pitch
 
 .list-group-item
   border: 1px solid #b9cdd8
-
-a.list-group-item
   +grad(#f6fafd, #efeff1)
+
+a.list-group-item:hover, a.list-group-item:active, a.list-group-item:focus
+  background: #ecf6f8
