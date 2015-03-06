@@ -20,11 +20,11 @@ export default Ember.Controller.extend(LoginControllerMixin, {
         //}
         var resetPasswordCode = 'Zd64L4ORUc5h7MoPvAOTOfBgnq8Mg'; // this is just an example, we should do real resetPasswordCode
         var isEmailValid = validator.isEmail(email);
-        var requestData;
+        var requestData = {'resetpass':{}};
         this.set('isEmailError', !isEmailValid);
 
         if (isEmailValid) {
-          requestData = {email: email, resetpasswordcode: resetPasswordCode};
+          requestData.resetpass = {email: email, resetpasswordcode: resetPasswordCode};
         }
         var result = Ember.$.ajax({
           url: ENV.APP.RESET_PASSWORD_HOST,

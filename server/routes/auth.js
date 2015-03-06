@@ -219,13 +219,11 @@ router.use(function(err, req, res, next) {
     });
 });
 
-router.post('/resetpassword', function(req, res) {
-    var email = req.body.email;
-    var codeToResetPassword = req.body.resetpasswordcode;
+router.post('/resetpassword', function(req, res, next) {
+    var email = req.body.resetpass.email;
+    var codeToResetPassword = req.body.resetpass.resetpasswordcode;
     var validEmail = validator.isEmail(email);
     var pathForTransition = 'http://localhost:4200/#/confirmreset'; //temporary address change to the correct
-
-    console.log('email:'+email);
 
     if (validEmail) {
         // send an email to the user code to reset your password
@@ -249,6 +247,19 @@ router.post('/resetpassword', function(req, res) {
     else {
         res.status(400).json({ message: 'Email not valid!!!'});
     }
+    //// save to DB this code with bug
+    //var resetPasswordCode = req.body.resetpasswordcode;
+    //if (!resetPasswordCode) {
+    //    return next(new apiErrors.InvalidParams('resetPasswordCode is not specified.'));
+    //}
+    //storage.Resetpasswords.create(req.context, req.body.resetpass)
+    //    .then(function (resetpassw) {
+    //        res.status(201).json({ resetpass: resetpassw });
+    //    })
+    //    .catch(function (err) {
+    //        logger.error(err.toString());
+    //        return next(err);
+    //    });
 });
 
 
