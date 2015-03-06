@@ -8,12 +8,12 @@
     </div>
 </div>
 {{!--<p class="list-group-item-text">{{job.rrule}}</p>--}}
-<p class="list-group-item-text">schedule: {{recurrence.text}}</p>
-<p class="list-group-item-text">last run: {{format-relative recurrence.lastRun}}</p>
-<p class="list-group-item-text">time left to next run: {{format-relative recurrence.nextRun}}</p>
+<p class="list-group-item-text truecron-job-item-p">schedule: <span class="truecron-job-item-span">{{recurrence.text}}</span></p>
+<p class="list-group-item-text truecron-job-item-p">last run: <span class="truecron-job-item-span">{{format-relative recurrence.lastRun}}</span></p>
+<p class="list-group-item-text truecron-job-item-p">time left to next run: <span class="truecron-job-item-span">{{format-relative recurrence.nextRun}}</span></p>
 <p class="list-group-item-text">
   {{#each tag in job.tags}}
-      <span class="label label-default">{{tag.name}}</span>
+      <span class="label truecron-job-label">{{tag.name}}</span>
   {{/each}}
 </p>
 {{yield}}
