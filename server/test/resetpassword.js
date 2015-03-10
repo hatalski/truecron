@@ -23,18 +23,18 @@
 //            });
 //        });
 //        it.only('create a new data in DB', function (done) {
-//            superagent.post(prefix + '/organizations/' + testdata.AcmeCorp.id + '/workspaces/' + testdata.MyWorkspace.id + '/jobs')
+//            superagent.post('https://dev.truecron.com' + '/auth/resetpassword')
 //                .set('Content-Type', 'application/json')
 //                .send({ 'resetpassworddata': {
-//                    'email': 'Testemail1',
-//                    'resetpasswordcode': Zd64L4ORUc5h7MoPvAOTOfBgnq8Mg
+//                    'email': 'Testemail1@gmail.com',
+//                    'resetpasswordcode': 'Zd64L4ORUc5h7MoPvAOTOfBgnq8Mg'
 //                }
 //                })
 //                .authenticate(accessToken)
 //                .end(function (e, res) {
 //                    expect(e).to.eql(null);
 //                    expect(res.header['content-type']).to.eql('application/json; charset=utf-8');
-//                    expect(res.body.resetpassworddata.email).to.eql('Testemail1');
+//                    expect(res.body.resetpassworddata.email).to.eql('Testemail1@gmail.com');
 //                    expect(res.body.resetpassworddata.resetpasswordcode).to.eql('Zd64L4ORUc5h7MoPvAOTOfBgnq8Mg');
 //                    expect(validator.isDate(res.body.resetpassworddata.createdAt)).to.be.ok();
 //                    expect(res.status).to.eql(201);

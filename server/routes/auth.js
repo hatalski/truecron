@@ -225,6 +225,7 @@ router.post('/resetpassword', function(req, res, next) {
     var validEmail = validator.isEmail(email);
     var pathForTransition = 'http://localhost:4200/#/confirmreset'; //temporary address change to the correct
 
+
     if (validEmail) {
         // send an email to the user code to reset your password
         smtp.sendMail({
@@ -252,7 +253,7 @@ router.post('/resetpassword', function(req, res, next) {
     //if (!resetPasswordCode) {
     //    return next(new apiErrors.InvalidParams('resetPasswordCode is not specified.'));
     //}
-    //storage.Resetpasswords.create(req.context, req.body.resetpass)
+    //storage.ResetPasswords.create(req.context, req.body.resetpass)
     //    .then(function (resetpassw) {
     //        res.status(201).json({ resetpass: resetpassw });
     //    })
