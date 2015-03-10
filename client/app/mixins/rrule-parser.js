@@ -23,11 +23,6 @@ export default Ember.Mixin.create({
         return "";
     }
   },
-  getMonthName: function(monthNumber) {
-    "use strict";
-    var months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
-    return months[monthNumber - 1];
-  },
   getFrequencyText: function(freq) {
     "use strict";
     switch(freq) {
@@ -47,7 +42,8 @@ export default Ember.Mixin.create({
         return 'year';
     }
   },
-  recurrenceRuleToText: function(rrule) {
+  // timezone is optional
+  recurrenceRuleToText: function(rrule, timezone) {
     "use strict";
     var text = '';
 
@@ -90,7 +86,7 @@ export default Ember.Mixin.create({
         var last = monthsArrayLength - m === 1;
         var beforeLast = monthsArrayLength - m === 2;
         var separator = last ? '' : beforeLast ? ' and ' : ', ';
-        monthsText += this.getMonthName(monthsArray[m]) + separator;
+        monthsText += moment.months()[monthsArray[m]-1] + separator;
       }
       monthsText = byMonthTemplate.fmt(monthsText);
     }
@@ -98,7 +94,9 @@ export default Ember.Mixin.create({
     var startsOnText = '';
     if (rRules['DTSTART']) {
       var startsOnTemplate = ' starting on %@';
-      var startsOnDate = moment(rRules['DTSTART'], 'YYYYMMDDHHmmssZ');
+      var startsOnDate = timezone ?
+        moment(rRules['DTSTART'], 'YYYYMMDDHHmmssZ').zone(timezone) :
+        moment(rRules['DTSTART'], 'YYYYMMDDHHmmssZ');
       startsOnText = startsOnTemplate.fmt(
         startsOnDate.format('MMMM Do YYYY [at] hh:mm:ss A Z')
       );
@@ -107,7 +105,9 @@ export default Ember.Mixin.create({
     var untilText = '';
     if (rRules['UNTIL']) {
       var untilTemplate = ' until %@';
-      var untilDate = moment(rRules['UNTIL'], 'YYYYMMDDHHmmssZ');
+      var untilDate = timezone ?
+        moment(rRules['UNTIL'], 'YYYYMMDDHHmmssZ').zone(timezone) :
+        moment(rRules['UNTIL'], 'YYYYMMDDHHmmssZ');
       untilText = untilTemplate.fmt(
         untilDate.format('MMMM Do YYYY hh:mm:ss A Z')
       );
