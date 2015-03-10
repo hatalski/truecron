@@ -38,16 +38,6 @@ export default Ember.Controller.extend(LoginControllerMixin, {
           console.log(response.message);
           Ember.$('#inputformrecovery').hide();
           self.set('isSuccess',true);
-          Ember.$('#email').popover({
-            title: 'Verification code has been sent.',
-            content: 'Check your email!',
-            placement: 'bottom',
-            trigger: 'manual'
-          });
-          Ember.$('#email').popover('show');
-          setTimeout(function(){
-            Ember.$('#email').popover('hide');
-          }, 7000);
         });
         result.error(function(error) {
           console.log(error);
