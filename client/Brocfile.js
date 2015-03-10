@@ -31,6 +31,7 @@ app.import('bower_components/ember-data/ember-data.js');
 app.import('bower_components/rrule/lib/rrule.js');
 app.import('bower_components/rrule/lib/nlp.js');
 app.import('bower_components/moment/moment.js');
+app.import('bower_components/moment-timezone/moment-timezone.js');
 app.import('bower_components/validator-js/validator.js');
 
 // Use `app.import` to add additional libraries to the generated
