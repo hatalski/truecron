@@ -228,12 +228,13 @@ router.post('/resetpassword', function(req, res, next) {
 
     if (validEmail) {
         // send an email to the user code to reset your password
+        console.log(pathForTransition+'?mail='+validEmail+'&code='+codeToResetPassword);
         smtp.sendMail({
             from: 'welcome@truecron.com',
             to: email,
             subject: 'reset password truecron.com',
-            html: 'To reset the password, enter the code:'+codeToResetPassword+' on the page<br/><br/>' +
-            '<a href="'+pathForTransition+'">'+pathForTransition+'</a> <br/> ' +'<a href="'+pathForTransition+'/:'+codeToResetPassword+'">GO</a> <br/> ' +
+            html: 'To reset your password, just click this link:<br/><br/>' +
+            '<a href="'+pathForTransition+'?mail='+validEmail+'&code='+codeToResetPassword+'">'+pathForTransition+'</a> <br/> ' +
             '<br/><br/>Yours Truly,<br/>' + 'TrueCron Team'
         }, function (error, info) {
             if (error) {
@@ -255,6 +256,7 @@ router.post('/resetpassworddb', function(req, res, next) {
     console.log('!!!!!!!!!!!!!!in auth reset passwordDB');
     var email = req.body.resetpass.email;
     req.body.resetpass.resetpasswordcode = codeToResetPassword;
+    console.log(codeToResetPassword);
     console.log(req.body.resetpass);
     var validEmail = validator.isEmail(email);
 
