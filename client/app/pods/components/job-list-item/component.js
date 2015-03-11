@@ -1,6 +1,7 @@
 import Ember from 'ember';
+import RRuleParser from 'true-cron/mixins/rrule-parser';
 
-export default Ember.Component.extend({
+export default Ember.Component.extend(RRuleParser, {
   tagName: 'a',
   classNames: ['list-group-item'],
   attributeBindings: ['href'],
@@ -55,7 +56,7 @@ export default Ember.Component.extend({
     var rule = new RRule(o);
     var now = new Date();
     return {
-      text:    rule.toText(),
+      text:    this.recurrenceRuleToText(this.get('job.rrule')),
       lastRun: rule.before(now, true),
       nextRun: rule.after(now, true)
     };
