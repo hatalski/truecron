@@ -10,6 +10,7 @@ var express   = require('express'),
     storage   = require('../storage'),
     context   = require('../context'),
     random    = require('randomstring');
+    crypto = require('crypto');
     //clientAuth = require('./clientauth'),
     //oauthErrors = require('./oautherrors'),
     //token = require('./token');
@@ -218,13 +219,12 @@ router.use(function(err, req, res, next) {
         }
     });
 });
-
+var codeToResetPassword;
 router.post('/resetpassword', function(req, res, next) {
     var email = req.body.resetpass.email;
-    var codeToResetPassword = req.body.resetpass.resetpasswordcode;
     var validEmail = validator.isEmail(email);
     var pathForTransition = 'http://localhost:4200/#/confirmreset'; //temporary address change to the correct
-
+    codeToResetPassword = crypto.randomBytes(16);
 
     if (validEmail) {
         // send an email to the user code to reset your password
@@ -248,20 +248,30 @@ router.post('/resetpassword', function(req, res, next) {
     else {
         res.status(400).json({ message: 'Email not valid!!!'});
     }
-    //// save to DB this code with bug
-    //var resetPasswordCode = req.body.resetpasswordcode;
-    //if (!resetPasswordCode) {
-    //    return next(new apiErrors.InvalidParams('resetPasswordCode is not specified.'));
-    //}
-    //storage.ResetPasswords.create(req.context, req.body.resetpass)
-    //    .then(function (resetpassw) {
-    //        res.status(201).json({ resetpass: resetpassw });
-    //    })
-    //    .catch(function (err) {
-    //        logger.error(err.toString());
-    //        return next(err);
-    //    });
 });
 
+//// save to DB resetpassword
+router.post('/resetpassworddb', function(req, res, next) {
+    console.log('!!!!!!!!!!!!!!in auth reset passwordDB');
+    var email = req.body.resetpass.email;
+    req.body.resetpass.resetpasswordcode = codeToResetPassword;
+    console.log(req.body.resetpass);
+    var validEmail = validator.isEmail(email);
+
+    if (!validEmail) {
+        return next(new apiErrors.InvalidParams('Email is not specified.'));
+    }
+    if (!codeToResetPassword) {
+        return next(new apiErrors.InvalidParams('resetPasswordCode is not specified.'));
+    }
+    storage.ResetPasswords.create(req.context, req.body.resetpass)
+        .then(function (resetpassw) {
+            res.status(201).json({ resetpass: resetpassw });
+        })
+        .catch(function (err) {
+            logger.error(err.toString());
+            return next(err);
+        });
+});
 
 module.exports = router;
