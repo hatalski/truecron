@@ -66,20 +66,45 @@ export default Ember.Mixin.create({
       interval + ' ' + freqText + 's' :
       freqText);
 
+    var setPosText = '';
+    if (rRules['BYSETPOS']) {
+      var setPosArray = rRules['BYSETPOS'].split(',');
+      var setPosArrayLength = setPosArray.length;
+      for (var s = 0; s < setPosArrayLength; s++) {
+        if (setPosArray[s] === '1') {
+          setPosText += '1st';
+        } else if (setPosArray[s] === '2') {
+          setPosText += '2nd';
+        } else if (setPosArray[s] === '3') {
+          setPosText += '3rd';
+        } else {
+          setPosText += setPosArray[s] + 'th';
+        }
+        var lastSetPos = setPosArrayLength - s === 1;
+        var beforeLastSetPos = setPosArrayLength - s === 2;
+        var sep = lastSetPos ? ' ' : beforeLastSetPos ? ' and ' : ', ';
+        setPosText += sep;
+      }
+    }
+
     var daysText = '';
     if(rRules['BYDAY']) {
-      var byDayTemplate = ' on %@';
+      var byDayTemplate = ' on %@%@';
       var daysArray = rRules['BYDAY'].split(',');
       var daysArrayLength = daysArray.length;
       for (var d = 0; d < daysArrayLength; d++) {
         daysText += this.getDayName(daysArray[d]) + ((daysArrayLength - d !== 1) ? ', ' : '');
       }
-      daysText = byDayTemplate.fmt(daysText);
+      daysText = byDayTemplate.fmt(setPosText, daysText);
     }
 
     var monthsText = '';
     if(rRules['BYMONTH']) {
       var byMonthTemplate = ' in %@';
+      if (freqText === 'month') {
+        byMonthTemplate = '%@';
+        everyText = 'Every ';
+      }
       var monthsArray = rRules['BYMONTH'].split(',');
       var monthsArrayLength = monthsArray.length;
       for (var m = 0; m < monthsArrayLength; m++) {
