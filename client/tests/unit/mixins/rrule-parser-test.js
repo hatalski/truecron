@@ -77,11 +77,15 @@ test('parsing monthly rrule interval', function() {
   var text4 = subject.recurrenceRuleToText(
     'FREQ=MONTHLY;DTSTART=20150305T210000Z;WKST=MO;BYDAY=TU,TH,FR;BYMONTH=2,8',
     '+0300');
-  equal(text4, 'Every month in February and August on Tuesday, Thursday, Friday starting on March 6th 2015 at 12:00:00 AM +03:00');
+  equal(text4, 'Every February and August on Tuesday, Thursday, Friday starting on March 6th 2015 at 12:00:00 AM +03:00');
   var text5 = subject.recurrenceRuleToText(
     'FREQ=MONTHLY;DTSTART=20150305T210000Z;WKST=MO;BYDAY=TU,TH,FR;BYMONTH=2',
     '+0300');
-  equal(text5, 'Every month in February on Tuesday, Thursday, Friday starting on March 6th 2015 at 12:00:00 AM +03:00');
+  equal(text5, 'Every February on Tuesday, Thursday, Friday starting on March 6th 2015 at 12:00:00 AM +03:00');
+  var text6 = subject.recurrenceRuleToText(
+    'FREQ=MONTHLY;DTSTART=20150305T210000Z;WKST=MO;BYDAY=TU,TH,FR;BYMONTH=2;BYSETPOS=2,3',
+    '+0300');
+  equal(text6, 'Every February on 2nd and 3rd Tuesday, Thursday, Friday starting on March 6th 2015 at 12:00:00 AM +03:00');
 });
 
 test('parsing weekly rrule interval', function() {
