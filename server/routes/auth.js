@@ -10,6 +10,7 @@ var express   = require('express'),
     storage   = require('../storage'),
     context   = require('../context'),
     random    = require('randomstring');
+    crypto = require('crypto');
     //clientAuth = require('./clientauth'),
     //oauthErrors = require('./oautherrors'),
     //token = require('./token');
@@ -218,23 +219,22 @@ router.use(function(err, req, res, next) {
         }
     });
 });
-
-router.post('/resetpassword', function(req, res) {
-    var email = req.body.email;
-    var codeToResetPassword = req.body.resetpasswordcode;
+var codeToResetPassword;
+router.post('/resetpassword', function(req, res, next) {
+    var email = req.body.resetpass.email;
     var validEmail = validator.isEmail(email);
     var pathForTransition = 'http://localhost:4200/#/confirmreset'; //temporary address change to the correct
-
-    console.log('email:'+email);
+    codeToResetPassword = crypto.randomBytes(16);
 
     if (validEmail) {
         // send an email to the user code to reset your password
+        console.log(pathForTransition+'?mail='+validEmail+'&code='+codeToResetPassword);
         smtp.sendMail({
             from: 'welcome@truecron.com',
             to: email,
             subject: 'reset password truecron.com',
-            html: 'To reset the password, enter the code:'+codeToResetPassword+' on the page<br/><br/>' +
-            '<a href="'+pathForTransition+'">'+pathForTransition+'</a> <br/> ' +'<a href="'+pathForTransition+'/:'+codeToResetPassword+'">GO</a> <br/> ' +
+            html: 'To reset your password, just click this link:<br/><br/>' +
+            '<a href="'+pathForTransition+'?mail='+validEmail+'&code='+codeToResetPassword+'">'+pathForTransition+'</a> <br/> ' +
             '<br/><br/>Yours Truly,<br/>' + 'TrueCron Team'
         }, function (error, info) {
             if (error) {
@@ -251,5 +251,29 @@ router.post('/resetpassword', function(req, res) {
     }
 });
 
+//// save to DB resetpassword
+router.post('/resetpassworddb', function(req, res, next) {
+    console.log('!!!!!!!!!!!!!!in auth reset passwordDB');
+    var email = req.body.resetpass.email;
+    req.body.resetpass.resetpasswordcode = codeToResetPassword;
+    //console.log(codeToResetPassword);
+    //console.log(req.body.resetpass);
+    var validEmail = validator.isEmail(email);
+
+    if (!validEmail) {
+        return next(new apiErrors.InvalidParams('Email is not specified.'));
+    }
+    if (!codeToResetPassword) {
+        return next(new apiErrors.InvalidParams('resetPasswordCode is not specified.'));
+    }
+    storage.ResetPasswords.create(req.context, req.body.resetpass)
+        .then(function (resetpassw) {
+            res.status(201).json({ resetpass: resetpassw });
+        })
+        .catch(function (err) {
+            logger.error(err.toString());
+            return next(err);
+        });
+});
 
 module.exports = router;
