@@ -7,7 +7,7 @@
     </div>
     <div class="row">
         <div class="col-md-offset-4 col-md-4">
-            <form {{action "sendRecoveryCode" on="submit"}}>
+            <form id="inputformrecovery" {{action "sendRecoveryCode" on="submit"}}>
                 <div {{bind-attr class=":form-group isEmailError:has-error"}}>
                     <div class="input-group">
                         <span class="input-group-addon"><i class="fa fa-envelope-o"></i></span>
@@ -26,6 +26,13 @@
                     </div>
                 </div>
             </form>
+          {{#if isSuccess}}
+              <div id="divresultsuccess">
+                  <h4>An email was sent to you with further instructions on how to retrieve your password.</h4>
+              </div>
+          {{/if}}
+
+
         </div>
     </div>
 </div>

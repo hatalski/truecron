@@ -17,6 +17,7 @@ var using = Promise.using;
  */
 
 var create = module.exports.create = Promise.method(function (context, attributes) {
+    console.log('!!!!!!!!!!!!!!in storage resetpassword create');
     if (!attributes.email) {
         throw new errors.InvalidParams('email is not specified.');
     }
