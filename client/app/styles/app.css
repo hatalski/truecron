@@ -348,6 +348,9 @@ a.list-group-item:hover, a.list-group-item:active, a.list-group-item:focus {
   color: #303030; }
 
 /*workspaces */
+.dashed, .orange-dashed, .blue-dashed {
+  border-bottom: 1px dashed #cccccc; }
+
 .job-details-header .col-md-1 {
   padding-top: 20px; }
 
@@ -355,8 +358,13 @@ a.list-group-item:hover, a.list-group-item:active, a.list-group-item:focus {
   color: #ee6820; }
 
 .job-title {
-  color: #ee6820;
-  text-decoration: underline; }
+  color: #ee6820; }
+
+.orange-dashed {
+  border-color: #ee6820; }
+
+.blue-dashed {
+  border-color: #3399ff; }
 
 .trucron-tasks-header {
   text-align: center; }
@@ -365,14 +373,13 @@ a.list-group-item:hover, a.list-group-item:active, a.list-group-item:focus {
   background-color: #ffffff; }
 
 .trucron-tasks-header h3 {
-  color: #3399ff;
-  text-decoration: underline; }
+  color: #3399ff; }
 
 .trucron-top-tasks {
   padding-top: 10px; }
 
 .job-details-body .col-md-2 .btn-signup {
-  margin-top: 2px; }
+  margin-top: 1px; }
 
 .arrow_box {
   position: relative;
