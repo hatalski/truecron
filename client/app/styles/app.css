@@ -376,10 +376,25 @@ a.list-group-item:hover, a.list-group-item:active, a.list-group-item:focus {
   color: #3399ff; }
 
 .trucron-top-tasks {
-  padding-top: 10px; }
+  padding-top: 20px; }
 
 .job-details-body .col-md-2 .btn-signup {
   margin-top: 1px; }
+
+.run-history-info {
+  background-color: #eef4f8; }
+
+.run-history-info h4 {
+  color: #74838a; }
+
+.truecron-grey {
+  color: #333333; }
+
+.truecron-orange {
+  color: #ee6820; }
+
+.run-history-info a {
+  text-decoration: underline; }
 
 .arrow_box {
   position: relative;
