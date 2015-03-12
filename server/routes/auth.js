@@ -256,8 +256,8 @@ router.post('/resetpassworddb', function(req, res, next) {
     console.log('!!!!!!!!!!!!!!in auth reset passwordDB');
     var email = req.body.resetpass.email;
     req.body.resetpass.resetpasswordcode = codeToResetPassword;
-    console.log(codeToResetPassword);
-    console.log(req.body.resetpass);
+    //console.log(codeToResetPassword);
+    //console.log(req.body.resetpass);
     var validEmail = validator.isEmail(email);
 
     if (!validEmail) {
