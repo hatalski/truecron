@@ -228,7 +228,7 @@ router.post('/resetpassword', function(req, res, next) {
 
     if (validEmail) {
         // send an email to the user code to reset your password
-        console.log(pathForTransition+'?mail='+validEmail+'&code='+codeToResetPassword);
+        console.log(pathForTransition+'?mail='+email+'&code='+codeToResetPassword);
         smtp.sendMail({
             from: 'welcome@truecron.com',
             to: email,
