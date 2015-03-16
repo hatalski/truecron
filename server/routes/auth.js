@@ -256,7 +256,27 @@ router.post('/resetpassworddb', function(req, res, next) {
     console.log('!!!!!!!!!!!!!!in auth reset passwordDB');
     var email = req.body.resetpass.email;
     req.body.resetpass.resetpasswordcode = codeToResetPassword;
-    //console.log(codeToResetPassword);
+    var validEmail = validator.isEmail(email);
+    if (!validEmail) {
+        return next(new apiErrors.InvalidParams('Email is not specified.'));
+    }
+    if (!codeToResetPassword) {
+        return next(new apiErrors.InvalidParams('resetPasswordCode is not specified.'));
+    }
+    storage.ResetPasswords.create(req.context, req.body.resetpass)
+        .then(function (resetpassw) {
+            res.status(201).json({ resetpass: resetpassw });
+        })
+        .catch(function (err) {
+            logger.error(err.toString());
+            return next(err);
+        });
+});
+
+
+router.post('/resetpasswordconfirmreset', function(req, res, next) {
+    console.log('!!!!!!!!!!!!!!in auth confirm reset password');
+    var email = req.body.resetpass.email;
     //console.log(req.body.resetpass);
     var validEmail = validator.isEmail(email);
 
@@ -266,7 +286,7 @@ router.post('/resetpassworddb', function(req, res, next) {
     if (!codeToResetPassword) {
         return next(new apiErrors.InvalidParams('resetPasswordCode is not specified.'));
     }
-    storage.ResetPasswords.create(req.context, req.body.resetpass)
+    storage.ResetPasswords.findByEmail(req.context, req.body.resetpass.email)
         .then(function (resetpassw) {
             res.status(201).json({ resetpass: resetpassw });
         })
