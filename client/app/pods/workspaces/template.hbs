@@ -38,6 +38,62 @@
                   {{job-list-item job=job}}
                 {{/each}}
             </div>
+            <div class="panel panel-default">
+
+            <div class="panel-heading truecron-panel-heading" role="tab" id="collapseListGroupHeading1">
+              <div class="row">
+                  <div class="col-md-9">
+                    <h4 class="panel-title">
+                        <a class="" data-toggle="collapse" href="#collapseListGroup1" aria-expanded="true" aria-controls="collapseListGroup1">
+                            <span class="caret truecron-caret"></span>Run History
+                        </a>
+                    </h4>
+                  </div>
+                  <div class="col-md-3 text-right">
+                      <a class="btn btn-default btn-sm btn-truecron-icon"><i class="fa fa-filter fa-lg"></i></a>
+                  </div>
+              </div>
+             </div>
+                <div id="collapseListGroup1" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="collapseListGroupHeading1" aria-expanded="true">
+                    <ul class="list-group">
+                        <li class="list-group-item truecron-sub-menu">
+                            <div class="row">
+                                <div class="col-md-4">Triggerd by<i class="fa fa-sort"></i></div>
+                                <div class="col-md-4 text-center">Date<i class="fa fa-sort-desc"></i></div>
+                                <div class="col-md-4 text-right">Duration<i class="fa fa-sort"></i></div>
+                            </div>
+                        </li>
+                        <li class="list-group-item truecron-tab-normal">
+                            <div class="row">
+                                <div class="col-md-4">Schedule</div>
+                                <div class="col-md-4 text-center">Jul 10 10:43:34</div>
+                                <div class="col-md-4 text-right">2.34s</div>
+                            </div>
+                        </li>
+                        <li class="list-group-item truecron-tab-active">
+                          <div class="row">
+                            <div class="col-md-4">Lev Kurts</div>
+                            <div class="col-md-4 text-center">Jul 5 12:32:00</div>
+                            <div class="col-md-4 text-right">0.68s</div>
+                          </div>
+                        </li>
+                        <li class="list-group-item truecron-tab-normal">
+                            <div class="row">
+                                <div class="col-md-4">Schedule</div>
+                                <div class="col-md-4 text-center">Jul 10 10:43:34</div>
+                                <div class="col-md-4 text-right">2.34s</div>
+                            </div>
+                        </li>
+                        <li class="list-group-item truecron-tab-failed">
+                            <div class="row">
+                                <div class="col-md-4">Schedule</div>
+                                <div class="col-md-4 text-center">Jul 2 12:32:34</div>
+                                <div class="col-md-4 text-right">0.68s</div>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
         </div>
     </aside>
     {{/sidebar-hide}}
