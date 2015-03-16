@@ -8,31 +8,6 @@
     <div class="row">
         <div class="col-md-offset-4 col-md-4">
             <form {{action "confirmreset" on="submit"}}>
-                <div {{bind-attr class=":form-group isEmailError:has-error"}}>
-                    <div class="input-group">
-                        <span class="input-group-addon"><i class="fa fa-envelope-o"></i></span>
-                      {{input id="email"
-                      value=signupEmail
-                      valueBinding="email"
-                      type="email"
-                      placeholder="Email"
-                      required="required"
-                      class="form-control input-lg"}}
-                    </div>
-                </div>
-                <div {{bind-attr class=":form-group isPasswordConfirmError:has-error"}}>
-                    <div class="input-group">
-                        <span class="input-group-addon"><i class="fa fa-key"></i></span>
-                      {{input title="Code to reset your password"
-                      type="text"
-                      value=signupPassword
-                      valueBinding="password"
-                      placeholder="Code to reset password"
-                      required="required"
-                      class="form-control input-lg"
-                      }}
-                    </div>
-                </div>
                 <div class="form-group">
                     <div class="input-group-btn">
                         <button type="submit" class="btn btn-lg btn-block btn-signup">{{format-message (intl-get "messages.auth.confirm_reset_form.button")}}</button>
