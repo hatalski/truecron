@@ -1,0 +1,10 @@
+<ul>
+  {{#each organization in model}}
+  <li>
+      <h3>{{organization.name}}</h3>
+      {{#each workspace in organization.workspaces}}
+        <li>{{#link-to 'jobs' workspace}}{{workspace.name}}{{/link-to}}</li>
+      {{/each}}
+      </li>
+  {{/each}}
+</ul>

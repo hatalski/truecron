@@ -2,5 +2,6 @@ import Ember from 'ember';
 
 export default Ember.ArrayController.extend({
   sortProperties: ['name'],
-  sortAscending: true
+  sortAscending: true,
+  itemController: 'jobs.job'
 });

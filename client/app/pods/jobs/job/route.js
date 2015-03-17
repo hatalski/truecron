@@ -3,6 +3,6 @@ import Ember from 'ember';
 export default Ember.Route.extend({
   model: function(params) {
     "use strict";
-    return this.store.find('workspace', params.id);
+    return this.store.find('job', params.id);
   }
 });
