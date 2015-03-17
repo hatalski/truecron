@@ -382,6 +382,27 @@ a.list-group-item:hover, a.list-group-item:active, a.list-group-item:focus {
   background-color: #f7f9fa;
   background-image: none; }
 
+.truecron-sub-filter {
+  background-color: #f6f6f6;
+  background-image: none; }
+
+.truecron-dropdown {
+  width: 100%;
+  text-align: left; }
+
+.caret-right {
+  float: right;
+  margin-top: 8px;
+  white-space: normal; }
+
+textarea:focus, input:focus, input[type]:focus, .uneditable-input:focus {
+  border-color: rgba(239, 105, 32, 0.8);
+  box-shadow: 0 1px 1px rgba(239, 105, 32, 0.075) inset, 0 0 8px rgba(239, 105, 32, 0.6);
+  outline: 0 none; }
+
+.truecron-form-control {
+  border-radius: 0px; }
+
 /*workspaces */
 .dashed, .orange-dashed, .blue-dashed {
   border-bottom: 1px dashed #cccccc; }
