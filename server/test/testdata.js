@@ -11,8 +11,8 @@ var system = module.exports.system = { id: context.SystemPersonId, name: 'SYSTEM
 var brian = module.exports.BrianJohnston = { id: -10, name: 'Brian Johnston', email: 'bj@it.acme.corp', password: 'P@ssw0rd' };
 var brianPersonal = module.exports.BrianPersonal = { id: -31, name: 'Personal', email: 'bj@it.acme.corp', updatedByUserId: brian.id };
 var acme = module.exports.AcmeCorp = { id: -11, name: 'Acme Corporation', email: 'bj@it.acme.corp', updatedByUserId: brian.id };
-var myWorkspace = module.exports.MyWorkspace = { id: -12, name: 'My workspace', organizationId: acme.id, updatedByUserId: brian.id };
-var testJob = module.exports.MyWorkspaceTestJob = { id: -13, name: 'My workspace test job', updatedByUserId: brian.id };
+var myWorkspace = module.exports.MyWorkspace = { id: -12, name: 'Development', organizationId: acme.id, updatedByUserId: brian.id };
+var testJob = module.exports.MyWorkspaceTestJob = { id: -13, name: 'Weekly Financial Report', updatedByUserId: brian.id };
 var testTaskType = module.exports.TestTaskType = { id: -1, name: 'default' };
 var testTask = module.exports.MyWorkspaceTestTask = { id: -14, name: 'My workspace test job task', jobId: testJob.id, taskTypeId: testTaskType.id, updatedByUserId: brian.id };
 var myFtpConnection = module.exports.MyFtpConnection = { id: -15, name: 'My ftp server', connectionTypeId: 'testftp', organizationId: acme.id, updatedByUserId: brian.id };

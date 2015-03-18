@@ -48,6 +48,25 @@ insert into tc.History (id, updatedByPersonId, organizationId, workspaceId, jobI
     where not exists (select * from tc.History
     where id = -48);
 
+insert into tc.Workspace (id, organizationId, name, createdAt, updatedAt, updatedByPersonId)
+    select -120, -31, 'My First Workspace', 'now', 'now', -10
+    where not exists (select * from tc.Workspace
+    where id = -120);
+
+insert into tc.History (id, updatedByPersonId, organizationId, workspaceId, jobId, taskId, connectionId, personId, operation, change, oldValue, entity)
+    select -550, -10, -31, -120, null, null, null, null, 'created', '{ "id": "-120", "name": "My First Workspace" }', null, 'workspace'
+    where not exists (select * from tc.History
+    where id = -550);
+
+insert into tc.WorkspaceToPerson (workspaceId, personId, role, createdAt, updatedAt, updatedByPersonId)
+    select -120, -10, 'editor', 'now', 'now', -10
+    where not exists (select * from tc.WorkspaceToPerson
+    where workspaceId = -120 and personId = -10);
+
+insert into tc.History (id, updatedByPersonId, organizationId, workspaceId, jobId, taskId, connectionId, personId, operation, change, oldValue, entity)
+    select -560, -10, -31, -120, null, null, null, -10, 'workspace-access', '{ "workspaceId": "-120", "personId": "-10", "role": "editor" }', null, 'workspace'
+    where not exists (select * from tc.History
+    where id = -560);
 
 -- ACME Corp
 
@@ -76,7 +95,7 @@ insert into tc.History (id, updatedByPersonId, organizationId, workspaceId, jobI
     where id = -54);
 
 insert into tc.Workspace (id, organizationId, name, createdAt, updatedAt, updatedByPersonId)
-    select -12, -11, 'My workspace', 'now', 'now', -10
+    select -12, -11, 'Development', 'now', 'now', -10
     where not exists (select * from tc.Workspace
     where id = -12);
 
@@ -96,14 +115,24 @@ insert into tc.History (id, updatedByPersonId, organizationId, workspaceId, jobI
     where id = -56);
 
 insert into tc.Job (id, organizationId, workspaceId, name, createdAt, updatedAt, updatedByPersonId, rrule)
-    select -13, -11, -12, 'My workspace test job', 'now', 'now', -10, 'FREQ=WEEKLY;COUNT=30;WKST=MO'
+    select -13, -11, -12, 'Weekly Financial Report', 'now', 'now', -10, 'FREQ=WEEKLY;COUNT=30;WKST=MO'
     where not exists (select * from tc.Job
     where id = -13);
 
 insert into tc.History (id, updatedByPersonId, organizationId, workspaceId, jobId, taskId, connectionId, personId, operation, change, oldValue, entity)
-    select -156, -10, -11, -12, -13, null, null, null, 'created', '{ "jobId": "-13", "workspaceId": "-12", "name": "My workspace test job" }', null, 'job'
+    select -156, -10, -11, -12, -13, null, null, null, 'created', '{ "jobId": "-13", "workspaceId": "-12", "name": "Weekly Financial Report" }', null, 'job'
     where not exists (select * from tc.History
     where id = -156);
+
+insert into tc.Job (id, organizationId, workspaceId, name, createdAt, updatedAt, updatedByPersonId, rrule)
+    select -14, -11, -12, 'Hourly TrueCron Website Ping', 'now', 'now', -10, 'FREQ=HOURLY;WKST=MO'
+    where not exists (select * from tc.Job
+    where id = -14);
+
+insert into tc.History (id, updatedByPersonId, organizationId, workspaceId, jobId, taskId, connectionId, personId, operation, change, oldValue, entity)
+    select -167, -10, -11, -12, -14, null, null, null, 'created', '{ "jobId": "-14", "workspaceId": "-12", "name": "Hourly TrueCron Website Ping" }', null, 'job'
+    where not exists (select * from tc.History
+    where id = -167);
 
 insert into tc.TaskType (id, name)
     select -1, 'default'
