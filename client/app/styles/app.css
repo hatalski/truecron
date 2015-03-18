@@ -583,4 +583,26 @@ textarea:focus, input:focus, input[type]:focus, .uneditable-input:focus {
 .trucron-underline {
   text-decoration: underline; }
 
+/* Organizations */
+.truecron-org-header {
+  background-color: #d4dcdf;
+  margin-top: 10px;
+  padding-top: 3px;
+  padding-bottom: 3px; }
+
+.btn-margin {
+  margin-top: 2px; }
+
+.truecron-org-title {
+  background-color: #dbf2fa;
+  padding-top: 6px; }
+
+.org-title {
+  color: #ff7e44;
+  font-weight: bold; }
+
+.truecron-org-content {
+  padding-top: 6px;
+  border-bottom: 1px solid #c4c8d1; }
+
 /*# sourceMappingURL=app.css.map */
