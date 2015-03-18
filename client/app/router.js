@@ -12,14 +12,14 @@ Router.map(function() {
   this.route("profile");
   this.resource("workspaces", function() {
     "use strict";
-    this.route("workspace", { path: "/:id" }, function() {
+    this.route("workspace", { path: "/:workspace_id" }, function() {
       this.route("settings"); // redirect from index when user has access to settings
       this.resource("users", { path: "/members" }, function() {
         this.route("user", { path: "/:id" });
       });
       this.resource("jobs", function() {
         this.route("index");
-        this.route("job", { path: "/:id" }, function() {
+        this.route("job", { path: "/:job_id" }, function() {
           this.resource("tags", function() {
             this.route("tag", { path: "/:id" });
           });

@@ -1,5 +1,7 @@
 {{!--<a href="#" class="list-group-item">--}}
-{{#link-to linkTo job.workspace job class='list-group-item'}}
+{{log job.workspace}}
+{{log job}}
+{{#link-to 'jobs.job' job.workspace job class='list-group-item'}}
 <div class="row">
     <div class="col-md-10">
         <h4 class="list-group-item-heading">{{job.name}}</h4>
