@@ -19,6 +19,8 @@
                                             <li role="presentation"><a {{action "changeWorkspace" workspace}} role="menuitem" tabindex="-1" href="#">{{workspace.name}}</a></li>
                                         {{/each}}
                                       {{/each}}
+                                        <li role="presentation" class="divider"><hr/></li>
+                                        <li role="presentation">{{#link-to 'workspaces'}}Dashboard{{/link-to}}</li>
                                     </ul>
                                 </li>
                             </div>
