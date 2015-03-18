@@ -1,8 +1,8 @@
 import Ember from 'ember';
 
 export default Ember.Route.extend({
-  model: function(params) {
+  model: function() {
     "use strict";
-    return this.store.find('workspace', params.workspace_id);
+    return this.store.find('organization');
   }
 });

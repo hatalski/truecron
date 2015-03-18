@@ -8,6 +8,7 @@ moduleForModel('workspaces/workspace/job', 'WorkspacesWorkspaceJob', {
   needs: ['model:user',
     'model:workspace',
     'model:job-tag',
+    'model:job',
     'model:organizations.organization.connection',
     'model:workspaces.workspace.jobs.job.task',
     'model:organization',
