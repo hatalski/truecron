@@ -40,8 +40,28 @@ var create = module.exports.create = Promise.method(function (context, attribute
 /**
  * Search a code.
  */
+var findByCode = module.exports.findByCode = Promise.method(function (context, code, transaction) {
+    console.log('!!!!!!in findByCode');
+    return models.ResetPassword.find({ where: { resetpasswordcode: code } }, { transaction: transaction })
+        .then(function (resetpass) {
+            return resetpass;
+        })
+        .then(function (resetpass) {
+            if (resetpass === null) {
+                return null;
+            }
+            return resetpass;
+        })
+        .catch(function (err) {
+            logger.error('Failed to find a resetpass %s, %s.', code, err.toString());
+            throw err;
+        });
+});
+
+
 var findByEmail = module.exports.findByEmail = Promise.method(function (context, email, transaction) {
     console.log('!!!!!!in findByEmail');
+    console.log('context.resetpasswordcode:'+context.resetpasswordcode);
         return models.ResetPassword.find({ where: { email: email, resetpasswordcode: context.resetpasswordcode } }, { transaction: transaction })
             .then(function (resetpass) {
                 return resetpass;

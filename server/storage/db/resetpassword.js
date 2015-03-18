@@ -14,7 +14,8 @@ module.exports = function(sequelize, DataTypes) {
     }, {
         schema: 'tc',
         tableName: 'resetpassword',
-        timestamps: false,
+        timestamps: true,
+        updatedAt: false,
         freezeTableName: true,
         classMethods: {
             //associate: function(models) {

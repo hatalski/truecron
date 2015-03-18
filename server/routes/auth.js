@@ -226,10 +226,7 @@ router.post('/resetpassword', function(req, res, next) {
     }
     console.log('!!!!!!!!!codeToResetPassword:'+codeToResetPassword);
     console.log('length:'+codeToResetPassword.length);
-    //var testhex = codeToResetPassword.toString(16);
-    //console.log('!!!!!! testhex:'+testhex);
 
-1
     if (validEmail) {
         // send an email to the user code to reset your password
         console.log(pathForTransition+'?mail='+email+'&code='+codeToResetPassword);
@@ -280,26 +277,28 @@ router.post('/resetpassworddb', function(req, res, next) {
 
 
 router.post('/resetpasswordconfirmreset', function(req, res, next) {
+    req.context = context.newSystemContext();
+
     console.log('!!!!!!!!!!!!!!in auth confirm reset password');
     console.log(util.inspect(req.body));
-    var email = req.body.resetpass.email;
+    //var email = req.body.resetpass.email;
     var codeToResetPassword = req.body.resetpass.resetpasswordcode;
-    console.log('!!!!!!codeToResetPassword'+codeToResetPassword);
+    console.log('!!!!!!codeToResetPassword:'+codeToResetPassword);
     //console.log(req.body.resetpass);
-    var validEmail = validator.isEmail(email);
-    console.log('!!!!!!22222222');
+    //var validEmail = validator.isEmail(email);
+    //console.log('!!!!!!22222222');
 
-    if (!validEmail) {
-        console.log('!!!!!!777777777');
-        return next(new apiErrors.InvalidParams('Email is not specified.'));
-    }
-    console.log('!!!!!!111111');
+    //if (!validEmail) {
+    //    console.log('!!!!!!777777777');
+    //    return next(new apiErrors.InvalidParams('Email is not specified.'));
+    //}
+    //console.log('!!!!!!111111');
     if (!codeToResetPassword) {
         console.log('!!!!!!55555555555');
         return next(new apiErrors.InvalidParams('resetPasswordCode is not specified.'));
     }
     console.log('!!!!!!fskjdhf');
-    storage.ResetPasswords.findByEmail(req.context, req.body.resetpass.email)
+    storage.ResetPasswords.findByEmail(req.context, 'ghostxx7@gmail.com')
         .then(function (resetpassw) {
             res.status(201).json({ resetpass: resetpassw });
         })
