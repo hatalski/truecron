@@ -7,7 +7,7 @@ var Workspace =   DS.Model.extend({
   updatedAt:      DS.attr('date'),
   updatedBy:      DS.belongsTo('user', { async: true }),
   organization:   DS.belongsTo('organization', { async: true }),
-  jobs:           DS.hasMany('workspaces.workspace.job', { async: true }),
+  jobs:           DS.hasMany('job', { async: true }),
   // history: DS.hasMany('history-record', { async: true }),
   connections:    DS.hasMany('organizations.organization.connection', { async: true })
 });

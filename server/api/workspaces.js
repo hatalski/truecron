@@ -34,10 +34,11 @@ api.route('/workspaces')
     // List workspaces of the req.organization.
     //
     .get(common.parseListParams, function (req, res, next) {
-        if (!req.organization) {
+        var orgId = req.organization ? req.organization.id : req.query.organizationId;
+        if (!orgId) {
             return next(new apiErrors.InvalidParams('Organization is not specified.'));
         }
-        var where = { organizationId: req.organization.id };
+        var where = { organizationId: orgId };
         if (req.listParams.searchTerm) {
             where = _.merge(where, { name: { like: req.listParams.searchTerm } });
         }

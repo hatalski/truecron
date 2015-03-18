@@ -45,8 +45,6 @@ export default Ember.Mixin.create({
   // timezone is optional
   recurrenceRuleToText: function(rrule, timezone) {
     "use strict";
-    var text = '';
-
     var everyTemplate = "Every %@";
 
     var rules = rrule.split(';');
@@ -144,7 +142,7 @@ export default Ember.Mixin.create({
       countText = countTemplate.fmt(rRules['COUNT']);
     }
 
-    text = everyText + monthsText + daysText + startsOnText + untilText + countText;
+    var text = everyText + monthsText + daysText + startsOnText + untilText + countText;
     Ember.$.each(rules, function(index, rule) {
       switch(rule) {
         //case 'FREQ':
