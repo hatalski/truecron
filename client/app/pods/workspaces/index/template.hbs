@@ -3,10 +3,10 @@
         <div class="col-md-8 col-md-offset-2 truecron-org-header">
             <div class="row">
                 <div class="col-md-8">
-                   <h4>Organizations</h4>
+                   <h4>Your Organizations</h4>
                 </div>
                 <div class="col-md-4 text-right">
-                    <a class="btn btn-signup btn-margin">ADD ORGANIZATIONS</a>
+                    <a class="btn btn-signup btn-margin"><i class="fa fa-plus"></i> Create Organization</a>
                 </div>
             </div>
         </div>
@@ -17,16 +17,16 @@
                       <p class="org-title">{{organization.name}}</p>
                   </div>
                   <div class="col-md-2">
-                      <p>3 Workspaces</p>
+                      <p>{{organization.workspaces.length}} workspace(s)</p>
                   </div>
                   <div class="col-md-2">
-                      <p>633 Jobs</p>
+                      <p>633 jobs</p>
                   </div>
                   <div class="col-md-2">
-                      <p>8 Users</p>
+                      <p>8 users</p>
                   </div>
                   <div class="col-md-3 text-right">
-                      <a href="#"><i class="fa fa-plus"></i> ADD WORKSPACE</a>
+                      <a href="#"><i class="fa fa-plus"></i> New Workspace</a>
                   </div>
               </div>
           </div>
@@ -37,10 +37,10 @@
                     <p>{{#link-to 'jobs' workspace}}{{workspace.name}}{{/link-to}}</p>
                 </div>
                 <div class="col-md-2">
-                    <p>3 Jobs</p>
+                    <p>{{workspace.jobs.length}} job(s)</p>
                 </div>
                 <div class="col-md-2">
-                    <p>1 User</p>
+                    <p>1 user</p>
                 </div>
             </div>
             {{/each}}

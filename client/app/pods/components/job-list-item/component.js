@@ -53,24 +53,25 @@ export default Ember.Component.extend(RRuleParser, {
     }
     // console.log('startsAt date : ' + new Date(startsAt));
     o.dtstart = new Date(startsAt);
-    var rule = new RRule(o);
-    var now = new Date();
+    //var rule = new RRule(o);
+    //var now = new Date();
     return {
       text:    this.recurrenceRuleToText(this.get('job.rrule')),
-      lastRun: rule.before(now, true),
-      nextRun: rule.after(now, true)
+      lastRun: new Date(),//'todo'rule.before(now, true),
+      nextRun: new Date()//'todo'//rule.after(now, true)
     };
   }.property('job.rrule', 'job.startsAt'),
   actions: {
     click: function() {
       "use strict";
       Ember.Logger.log('component clicked');
-      if (this.get('linkTo')) {
-        this.transitionToRoute(this.get('linkTo'));
-      } else {
-        Ember.Logger.log('linkTo parameter is NOT specified in job-list-item component.');
-        return;
-      }
+      this.sendAction('action', this.get('job'));
+      //if (this.get('linkTo')) {
+      //  this.transitionToRoute(this.get('linkTo'));
+      //} else {
+      //  Ember.Logger.log('linkTo parameter is NOT specified in job-list-item component.');
+      //  return;
+      //}
     }
   }
 });
