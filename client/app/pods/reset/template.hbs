@@ -1,41 +1,39 @@
 <div class="container-fluid container-truecron">
     <div class="row">
         <div class="col-md-offset-4 col-md-4">
-            <h2 class="text-center">{{format-message (intl-get "messages.auth.confirm_reset_form.header")}}</h2>
+            <h2 class="text-center">{{format-message (intl-get "messages.auth.new_password_reset_form.header")}}</h2>
             <hr/>
         </div>
     </div>
     <div class="row">
         <div class="col-md-offset-4 col-md-4">
             <form {{action "confirmreset" on="submit"}}>
-                <div {{bind-attr class=":form-group isEmailError:has-error"}}>
+                <div {{bind-attr class=":form-group isPasswordError:has-error"}}>
                     <div class="input-group">
-                        <span class="input-group-addon"><i class="fa fa-envelope-o"></i></span>
-                      {{input id="email"
-                      value=signupEmail
-                      valueBinding="email"
-                      type="email"
-                      placeholder="Email"
+                        <span class="input-group-addon"><i class="fa fa-key"></i></span>
+                      {{input title="Password must contain at least 8 characters, including UPPER/lowercase and numbers."
+                      type="password"
+                      value=signupPassword
+                      valueBinding="password"
+                      placeholder="Password (more than 8 characters in length)"
                       required="required"
-                      class="form-control input-lg"}}
+                      class="form-control input-lg"
+                      pattern="(?=^.{8,}$)(?=.*\d)(?![.\n])(?=.*[A-Z])(?=.*[a-z]).*$" }}
                     </div>
                 </div>
                 <div {{bind-attr class=":form-group isPasswordConfirmError:has-error"}}>
                     <div class="input-group">
                         <span class="input-group-addon"><i class="fa fa-key"></i></span>
-                      {{input title="Code to reset your password"
-                      type="text"
-                      value=signupPassword
-                      valueBinding="password"
-                      placeholder="Code to reset password"
-                      required="required"
-                      class="form-control input-lg"
-                      }}
+                      {{input type="password"
+                      value=signupPasswordConfirm
+                      valueBinding="passwordConfirm"
+                      placeholder="Enter password again"
+                      class="form-control input-lg"}}
                     </div>
                 </div>
                 <div class="form-group">
                     <div class="input-group-btn">
-                        <button type="submit" class="btn btn-lg btn-block btn-signup">{{format-message (intl-get "messages.auth.confirm_reset_form.button")}}</button>
+                        <button type="submit" class="btn btn-lg btn-block btn-signup">{{format-message (intl-get "messages.auth.new_password_reset_form.button")}}</button>
                     </div>
                 </div>
             </form>
