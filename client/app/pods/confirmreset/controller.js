@@ -31,7 +31,7 @@ export default Ember.Controller.extend({
         crossDomain: true
       });
       result.success(function (response) {
-        console.log(response.message);
+        console.log(response);
       });
       result.error(function (error) {
         console.log(error);

@@ -286,19 +286,16 @@ router.post('/resetpasswordconfirmreset', function(req, res, next) {
     console.log('!!!!!!codeToResetPassword:'+codeToResetPassword);
     //console.log(req.body.resetpass);
     //var validEmail = validator.isEmail(email);
-    //console.log('!!!!!!22222222');
-
     //if (!validEmail) {
     //    console.log('!!!!!!777777777');
     //    return next(new apiErrors.InvalidParams('Email is not specified.'));
     //}
-    //console.log('!!!!!!111111');
     if (!codeToResetPassword) {
         console.log('!!!!!!55555555555');
         return next(new apiErrors.InvalidParams('resetPasswordCode is not specified.'));
     }
     console.log('!!!!!!fskjdhf');
-    storage.ResetPasswords.findByEmail(req.context, 'ghostxx7@gmail.com')
+    storage.ResetPasswords.findByCode(req.context, codeToResetPassword)
         .then(function (resetpassw) {
             res.status(201).json({ resetpass: resetpassw });
         })
