@@ -16,7 +16,7 @@ export default Ember.Controller.extend({
       }
     },
     confirmreset: function(){
-      var code = this.get('code');
+      var code = this.get('checkCodeField');
       var requestData = {'resetpass': {
         resetpasswordcode: code
       }};
