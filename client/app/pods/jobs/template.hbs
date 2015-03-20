@@ -9,7 +9,7 @@
                             <div class="dropdown dropdown-truecron">
                                 <div class="dropdown-toggle" data-toggle="dropdown" aria-expanded="true">
                                     <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                                        Choose workspace
+                                      {{model.workspace.organization.name}} / {{model.workspace.name}}
                                         <span class="caret"></span>
                                     </a>
                                     <ul class="dropdown-menu" role="menu">
@@ -125,7 +125,7 @@
               </div>
           {{else}}
               <div class="list-group">
-                {{#each job in model.jobs}}
+                {{#each job in model.workspace.jobs}}
                   {{job-list-item job=job linkTo='jobs.job' action='selectJob'}}
                 {{/each}}
               </div>

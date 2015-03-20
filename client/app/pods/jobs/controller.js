@@ -14,6 +14,10 @@ export default Ember.Controller.extend({
     backToJobsList: function() {
       "use strict";
       this.set('showJobDetails', false);
+    },
+    changeWorkspace: function(workspace) {
+      "use strict";
+      this.transitionToRoute('jobs', workspace);
     }
   }
 });

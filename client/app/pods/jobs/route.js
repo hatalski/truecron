@@ -5,7 +5,7 @@ export default Ember.Route.extend(AuthenticatedRouteMixin, {
   model: function() {
     "use strict";
     return {
-      jobs: this.modelFor("workspaces.workspace").get('jobs'),
+      workspace: this.modelFor('workspaces.workspace'),
       organizations: this.store.all('organization')
     };
     //return {
