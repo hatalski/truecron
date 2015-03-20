@@ -9,7 +9,7 @@
                             <div class="dropdown dropdown-truecron">
                                 <div class="dropdown-toggle" data-toggle="dropdown" aria-expanded="true">
                                     <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                                      {{model.workspace.organization.name}} / {{model.workspace.name}}
+                                      {{model.workspace.name}}
                                         <span class="caret"></span>
                                     </a>
                                     <ul class="dropdown-menu" role="menu">
@@ -30,7 +30,7 @@
                         </div>
                         <div class="col-md-6 text-left no-padding truecron-tab-margin">
                         {{#if showJobDetails}}
-                            <a class="btn btn-signup" {{action 'backToJobsList'}}>Back to Jobs</a>
+                            <a class="btn btn-truecron-icon" {{action 'backToJobsList'}}><i class="fa fa-long-arrow-left"></i> Back to Jobs</a>
                         {{/if}}
                         </div>
                         <div class="col-md-6 text-right no-padding truecron-tab-margin"><a class="btn btn-signup"><i class="fa fa-plus fa-lg"></i> New Job</a></div>
@@ -38,6 +38,9 @@
                 </div>
             </div>
           {{#if showJobDetails}}
+              <div class="list-group">
+                  {{job-list-item job=selectedJob linkTo='jobs.job' action='selectJob'}}
+              </div>
               <div class="panel panel-default">
                   <div class="panel-heading truecron-panel-heading" role="tab" id="collapseListGroupHeading1">
                       <div class="row">
