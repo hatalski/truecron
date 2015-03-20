@@ -32,6 +32,7 @@ export default Ember.Controller.extend({
       });
       result.success(function (response) {
         console.log(response);
+        window.location = ENV.APP.SERVER_HOST+"/#/reset?code="+response.resetpass.resetpasswordcode;
       });
       result.error(function (error) {
         console.log(error);
