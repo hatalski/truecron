@@ -256,6 +256,9 @@ h2.pitch {
   border-top: solid 1px #c2cacd; }
 
 /*sidebar */
+.truecron-tab-margin {
+  margin-top: 15px; }
+
 .sidebar {
   padding-left: 0;
   padding-right: 0;
@@ -653,7 +656,15 @@ textarea:focus, input:focus, input[type]:focus, .uneditable-input:focus {
   margin-top: 10px; }
 
 .complex_task_icon {
-  background: url("complex_task_icon.png") no-repeat 20px 20px;
-  height: 61px; }
+  background: url("complex_task_icon.png") no-repeat 20px 25px;
+  height: 66px; }
+
+.complex_task_git {
+  background: url("git_icon.png") no-repeat 20px 30px;
+  height: 81px; }
+
+.complex_task_icon_cog {
+  background: url("icon-cog-blue.png") no-repeat 20px 30px;
+  height: 81px; }
 
 /*# sourceMappingURL=app.css.map */
