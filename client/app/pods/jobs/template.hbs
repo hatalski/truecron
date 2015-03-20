@@ -26,14 +26,17 @@
                             </div>
                         </div>
                         <div class="col-md-3 text-right no-padding">
-                            <a class="btn btn-sm btn-truecron-icon"><i class="fa fa-cog fa-lg"></i></a>
+                            {{#link-to 'workspaces.workspace.settings' model.workspace class="btn btn-sm btn-truecron-icon"}}<i class="fa fa-cog fa-lg"></i>{{/link-to}}
+                            {{!--<a class="btn btn-sm btn-truecron-icon"><i class="fa fa-cog fa-lg"></i></a>--}}
                         </div>
                         <div class="col-md-6 text-left no-padding truecron-tab-margin">
                         {{#if showJobDetails}}
                             <a class="btn btn-truecron-icon" {{action 'backToJobsList'}}><i class="fa fa-long-arrow-left"></i> Back to Jobs</a>
                         {{/if}}
                         </div>
-                        <div class="col-md-6 text-right no-padding truecron-tab-margin"><a class="btn btn-signup"><i class="fa fa-plus fa-lg"></i> New Job</a></div>
+                        <div class="col-md-6 text-right no-padding truecron-tab-margin">
+                            {{#link-to 'jobs.new' class="btn btn-signup"}}<i class="fa fa-plus fa-lg"></i> New Job{{/link-to}}
+                        </div>
                     </div>
                 </div>
             </div>
