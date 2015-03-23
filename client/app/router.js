@@ -19,6 +19,7 @@ Router.map(function() {
       });
       this.resource("jobs", function() {
         this.route("index");
+        this.route('new');
         this.route("job", { path: "/:job_id" }, function() {
           this.resource("tags", function() {
             this.route("tag", { path: "/:id" });
