@@ -497,7 +497,7 @@ if not HasSchemaVersion(15) then
         email               varchar(256) not null,
         resetpasswordcode   varchar(1024) not null,
         createdAt           timestamp(0) with time zone not null default 'now',
-        constraint          ResetPassword_Pk primary key (email)
+        constraint          ResetPassword_Pk primary key (resetpasswordcode)
     );
 
     perform CommitSchemaVersion(15, 'Added a reset password table.');

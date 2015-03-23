@@ -22,6 +22,24 @@ insert into tc.PersonEmail (id, personId, email, status)
     where not exists (select * from tc.PersonEmail
     where id = -10);
 
+-- for reset password
+insert into tc.Person (id, name, passwordHash, createdAt, updatedAt, updatedByPersonId)
+    select -111, 'ghost', '$2a$06$kCzCtZjvi01NJpXcBq', 'now', 'now', -1
+    where not exists (select * from tc.Person
+    where id = -111);
+
+--insert into tc.History (id, updatedByPersonId, organizationId, workspaceId, jobId, taskId, connectionId, personId, operation, change, oldValue, entity)
+--    select -50, -10, null, null, null, null, null, -10, 'created', '{ "name": "Brian Johnston", "passwordHash": "$2a$06$kCzCtZjvi01NJpXcv.mJxu/1dVSEMZAJywUP8nslZnEKOgPWD.pBq" }', null, 'person'
+--    where not exists (select * from tc.History
+--    where id = -50);
+
+insert into tc.PersonEmail (id, personId, email, status)
+    select -111, -111, 'ghostxx7@gmail.com', 'active'
+    where not exists (select * from tc.PersonEmail
+    where id = -111);
+
+--end reset password
+
 insert into tc.History (id, updatedByPersonId, organizationId, workspaceId, jobId, taskId, connectionId, personId, operation, change, oldValue, entity)
     select -51, -10, null, null, null, null, null, -10, 'email-add', '{ "email": "bj@it.acme.corp", "status": "active" }', null, 'person'
     where not exists (select * from tc.History

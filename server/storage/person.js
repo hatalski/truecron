@@ -387,7 +387,10 @@ var addEmail = module.exports.addEmail = Promise.method(function (context, perso
  * ```
  */
 var findEmail = module.exports.findEmail = Promise.method(function (context, personId, emailIdOrValue, transaction) {
-    var where = { personId: personId };
+    var where = {};
+    if (personId) {
+        where = {personId: personId};
+    }
     if (validator.isInt(emailIdOrValue)) {
         where.id = emailIdOrValue;
     } else if (validator.isEmail(emailIdOrValue)) {
