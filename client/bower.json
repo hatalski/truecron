@@ -24,6 +24,7 @@
     "jquery-ui": "1.11.3",
     "JavaScript-MD5": "1.1.0",
     "moment-timezone": "0.3.0",
-    "bootstrap-material-design": "0.3.0"
+    "bootstrap-material-design": "0.3.0",
+    "hammerjs": "~2.0.4"
   }
 }
