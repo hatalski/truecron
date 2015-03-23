@@ -329,6 +329,50 @@ router.post('/resetpasswordconfirmreset', function(req, res, next) {
         });
 });
 
+router.post('/resetpasswordconfirmnewpassword', function(req, res, next) {
+    req.context = context.newSystemContext();
+    var codeToResetPassword = req.body.resetpass.resetpasswordcode;
+    var newPassword = req.body.resetpass.password;
+    if (!codeToResetPassword) {
+        return next(new apiErrors.InvalidParams('resetPasswordCode is not specified.'));
+    }
+    if (!newPassword){
+        return next(new apiErrors.InvalidParams('newPassword is not specified.'));
+    }
+    storage.ResetPasswords.findByCode(req.context, codeToResetPassword)
+        .then(function (resetpassw) {
+            var mail = resetpassw.email;
+            var validEmail = validator.isEmail(mail);
+            if (validEmail) {
+                storage.Person.findByEmail(req.context, mail)
+                    .then(function (person) {
+                        if (person) {
+                            person.password = newPassword;
+                            storage.Person.update(req.context, person.id, person)
+                                .then (function (){
+                                storage.ResetPasswords.remove(req.context, codeToResetPassword)
+                                    .then (function (done){
+                                    if (done){
+                                        res.status(201).json({resetpass: resetpassw, message: 'Finded'});
+                                    }
+                                    else {
+                                        res.status(400).json({resetpass: resetpassw, message: 'Not Finded'});
+                                    }
+                                })
+                            })
+                        } else {
+                            next(new apiErrors.NotFound());
+                        }
+                    })
+            }
+
+        })
+        .catch(function (err) {
+            logger.error(err.toString());
+            return next(err);
+        });
+});
+
 router.use(function(err, req, res, next) {
     logger.error(util.inspect(err));
     // Make sure the err has an appropriate status and a message

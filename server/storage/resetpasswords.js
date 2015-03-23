@@ -41,7 +41,6 @@ var create = module.exports.create = Promise.method(function (context, attribute
  * Search a code.
  */
 var findByCode = module.exports.findByCode = Promise.method(function (context, code, transaction) {
-    console.log('!!!!!!in findByCode');
     return models.ResetPassword.find({ where: { resetpasswordcode: code } }, { transaction: transaction })
         .then(function (resetpass) {
             return resetpass;
