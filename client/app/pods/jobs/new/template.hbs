@@ -1,2 +1,32 @@
-<h1>New Job Form</h1>
+<header class="job-details-header">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-5">
+                <h3 class="job-title"><span class="orange-dashed">{{model.name}}</span></h3>
+            </div>
+            <div class="col-md-1">
+                <span class="btn btn-sm btn-truecron-icon"><i class="fa fa-trash fa-lg"></i></span>
+            </div>
+            <div class="col-md-6 trucron-tasks-header">
+                <h3><span class="blue-dashed">Schedule is not set yet.</span></h3>
+            </div>
+        </div>
+    </div>
+</header>
+<div class="job-details-body">
+    <form class="form-inline">
+        <div class="form-group">
+            <label for="startsOn">Starts on:</label>
+            <input id="startsOn" class="form-control" type="date" />
+        </div>
+        <div class="form-group">
+            <label for="startsAt">at:</label>
+            <input id="startsAt" class="form-control" type="datetime" />
+        </div>
+        <div class="form-group">
+            <label for="timezone">timezone:</label>
+            <input id="timezone" class="form-control" type="text" />
+        </div>
+    </form>
+</div>
 {{outlet}}
