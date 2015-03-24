@@ -17,8 +17,8 @@ var app = new EmberApp({
 // css
 app.import('bower_components/bootstrap/dist/css/bootstrap.css');
 app.import('bower_components/bootstrap/dist/css/bootstrap.css.map', { destDir: "assets"});
-app.import('bower_components/bootstrap/dist/css/bootstrap-theme.css');
-app.import('bower_components/bootstrap/dist/css/bootstrap-theme.css.map', { destDir: "assets"});
+//app.import('bower_components/bootstrap/dist/css/bootstrap-theme.css');
+//app.import('bower_components/bootstrap/dist/css/bootstrap-theme.css.map', { destDir: "assets"});
 app.import('bower_components/bootstrap-material-design/dist/css/roboto.css');
 app.import('bower_components/bootstrap-material-design/dist/css/roboto.css.map', { destDir: "assets"});
 app.import('bower_components/bootstrap-material-design/dist/css/material-fullpalette.css');
@@ -26,6 +26,15 @@ app.import('bower_components/bootstrap-material-design/dist/css/material-fullpal
 app.import('bower_components/bootstrap-material-design/dist/css/ripples.css');
 app.import('bower_components/bootstrap-material-design/dist/css/ripples.css.map', { destDir: "assets"});
 app.import('bower_components/bootstrap-material-design/dist/fonts/Material-Design-Icons.eot', { destDir: "fonts"});
+app.import('bower_components/bootstrap-material-design/dist/fonts/Material-Design-Icons.svg', { destDir: "fonts"});
+app.import('bower_components/bootstrap-material-design/dist/fonts/Material-Design-Icons.ttf', { destDir: "fonts"});
+app.import('bower_components/bootstrap-material-design/dist/fonts/Material-Design-Icons.woff', { destDir: "fonts"});
+app.import('bower_components/bootstrap-material-design/dist/fonts/RobotoDraftMedium.woff', { destDir: "fonts"});
+app.import('bower_components/bootstrap-material-design/dist/fonts/RobotoDraftMedium.woff2', { destDir: "fonts"});
+app.import('bower_components/bootstrap-material-design/dist/fonts/RobotoDraftItalic.woff', { destDir: "fonts"});
+app.import('bower_components/bootstrap-material-design/dist/fonts/RobotoDraftItalic.woff2', { destDir: "fonts"});
+app.import('bower_components/bootstrap-material-design/dist/fonts/RobotoDraftBold.woff', { destDir: "fonts"});
+app.import('bower_components/bootstrap-material-design/dist/fonts/RobotoDraftBold.woff2', { destDir: "fonts"});
 app.import('bower_components/bootstrap-material-design/dist/fonts/RobotoDraftRegular.woff', { destDir: "fonts"});
 app.import('bower_components/bootstrap-material-design/dist/fonts/RobotoDraftRegular.woff2', { destDir: "fonts"});
 app.import('bower_components/font-awesome/css/font-awesome.min.css');
