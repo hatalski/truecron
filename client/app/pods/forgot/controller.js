@@ -7,7 +7,7 @@ export default Ember.Controller.extend(LoginControllerMixin, {
     actions: {
       sendRecoveryCode: function() {
         var self = this;
-        var email = self.get('signupEmail');
+        var email = self.get('email');
         console.log('email for reset:'+email);
         var isEmailValid = validator.isEmail(email);
         var requestData = {'resetpass':{}};

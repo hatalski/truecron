@@ -9,19 +9,14 @@ export default Ember.Controller.extend({
   actions: {
     confirmnewpassword: function() {
       var self = this;
-      console.log('!!!!!!!!!confirmnewpassword');
-      var password = self.get('signupPassword');
-      console.log('!!!!!!!!!password:'+password);
+      var password = self.get('password');
       var isPasswordValid = password.length > 7;
       self.set('isPasswordError', !isPasswordValid);
-      var isPasswordSame = password === self.get('signupPasswordConfirm');
-      console.log('!!!!!!!!!isPasswordSame:'+isPasswordSame);
+      var isPasswordSame = password === self.get('passwordConfirm');
       self.set('isPasswordConfirmError', !isPasswordSame);
-      console.log('!!!!!!!!!isPasswordValid:'+isPasswordValid);
       if (isPasswordValid && isPasswordSame) {
         var wl = window.location.toString();
         var code = wl.slice(wl.search(/code=/) + 5);
-        console.log('!!!code:'+code);
         var requestData = {'resetpass':{
           resetpasswordcode: code,
           password: password

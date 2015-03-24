@@ -8,32 +8,30 @@
     <div class="row">
         <div class="col-md-offset-4 col-md-4">
             <form {{action "confirmnewpassword" on="submit"}}>
-                <div {{bind-attr class=":form-group isPasswordError:has-error"}}>
+                <div {{bind-attr class=":form-group-material-orange-700 isPasswordError:has-error"}}>
                     <div class="input-group">
-                        <span class="input-group-addon"><i class="fa fa-key"></i></span>
+                        <span class="input-group-addon"><i class="fa fa-lg fa-key"></i></span>
                       {{input title="Password must contain at least 8 characters, including UPPER/lowercase and numbers."
                       type="password"
-                      value=signupPassword
-                      valueBinding="password"
+                      value=password
                       placeholder="Password (more than 8 characters in length)"
                       required="required"
                       class="form-control input-lg"
                       pattern="(?=^.{8,}$)(?=.*\d)(?![.\n])(?=.*[A-Z])(?=.*[a-z]).*$" }}
                     </div>
                 </div>
-                <div {{bind-attr class=":form-group isPasswordConfirmError:has-error"}}>
+                <div {{bind-attr class=":form-group-material-orange-700 isPasswordConfirmError:has-error"}}>
                     <div class="input-group">
-                        <span class="input-group-addon"><i class="fa fa-key"></i></span>
+                        <span class="input-group-addon"><i class="fa fa-lg fa-key"></i></span>
                       {{input type="password"
-                      value=signupPasswordConfirm
-                      valueBinding="passwordConfirm"
+                      value=passwordConfirm
                       placeholder="Enter password again"
                       class="form-control input-lg"}}
                     </div>
                 </div>
                 <div class="form-group">
                     <div class="input-group-btn">
-                        <button type="submit" class="btn btn-lg btn-block btn-signup">{{format-message (intl-get "messages.auth.new_password_reset_form.button")}}</button>
+                        <button type="submit" class="btn btn-lg btn-block btn-material-orange-800">{{format-message (intl-get "messages.auth.new_password_reset_form.button")}}</button>
                     </div>
                 </div>
             </form>
