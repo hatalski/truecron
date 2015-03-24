@@ -1,58 +1,677 @@
-/*
-Error: File to import not found or unreadable: ember-paper.
-       Load paths:
-         
-        on line 1 of app.scss
+/*main */
+body {
+  background-color: #ecf6f8;
+  color: #464748; }
 
-1: @import "ember-paper";
-2: 
-3: $primary-bg-color: #ecf6f8;
-4: $primary-color: #464748;
-5: 
-6: @mixin border-radius($radius) {
+.btn-signup {
+  -webkit-border-radius: 2px;
+  -moz-border-radius: 2px;
+  -ms-border-radius: 2px;
+  border-radius: 2px;
+  background: -webkit-linear-gradient(#fe5900, #fa4402);
+  background: -o-linear-gradient(#fe5900, #fa4402);
+  background: -moz-linear-gradient(#fe5900, #fa4402);
+  background: linear-gradient(#fe5900, #fa4402);
+  color: white; }
 
-Backtrace:
-app.scss:1
-C:/Ruby22-x64/lib/ruby/gems/2.2.0/gems/sass-3.4.13/lib/sass/tree/import_node.rb:66:in `rescue in import'
-C:/Ruby22-x64/lib/ruby/gems/2.2.0/gems/sass-3.4.13/lib/sass/tree/import_node.rb:45:in `import'
-C:/Ruby22-x64/lib/ruby/gems/2.2.0/gems/sass-3.4.13/lib/sass/tree/import_node.rb:28:in `imported_file'
-C:/Ruby22-x64/lib/ruby/gems/2.2.0/gems/sass-3.4.13/lib/sass/tree/import_node.rb:37:in `css_import?'
-C:/Ruby22-x64/lib/ruby/gems/2.2.0/gems/sass-3.4.13/lib/sass/tree/visitors/perform.rb:311:in `visit_import'
-C:/Ruby22-x64/lib/ruby/gems/2.2.0/gems/sass-3.4.13/lib/sass/tree/visitors/base.rb:36:in `visit'
-C:/Ruby22-x64/lib/ruby/gems/2.2.0/gems/sass-3.4.13/lib/sass/tree/visitors/perform.rb:158:in `block in visit'
-C:/Ruby22-x64/lib/ruby/gems/2.2.0/gems/sass-3.4.13/lib/sass/stack.rb:79:in `block in with_base'
-C:/Ruby22-x64/lib/ruby/gems/2.2.0/gems/sass-3.4.13/lib/sass/stack.rb:115:in `with_frame'
-C:/Ruby22-x64/lib/ruby/gems/2.2.0/gems/sass-3.4.13/lib/sass/stack.rb:79:in `with_base'
-C:/Ruby22-x64/lib/ruby/gems/2.2.0/gems/sass-3.4.13/lib/sass/tree/visitors/perform.rb:158:in `visit'
-C:/Ruby22-x64/lib/ruby/gems/2.2.0/gems/sass-3.4.13/lib/sass/tree/visitors/base.rb:52:in `block in visit_children'
-C:/Ruby22-x64/lib/ruby/gems/2.2.0/gems/sass-3.4.13/lib/sass/tree/visitors/base.rb:52:in `map'
-C:/Ruby22-x64/lib/ruby/gems/2.2.0/gems/sass-3.4.13/lib/sass/tree/visitors/base.rb:52:in `visit_children'
-C:/Ruby22-x64/lib/ruby/gems/2.2.0/gems/sass-3.4.13/lib/sass/tree/visitors/perform.rb:167:in `block in visit_children'
-C:/Ruby22-x64/lib/ruby/gems/2.2.0/gems/sass-3.4.13/lib/sass/tree/visitors/perform.rb:179:in `with_environment'
-C:/Ruby22-x64/lib/ruby/gems/2.2.0/gems/sass-3.4.13/lib/sass/tree/visitors/perform.rb:166:in `visit_children'
-C:/Ruby22-x64/lib/ruby/gems/2.2.0/gems/sass-3.4.13/lib/sass/tree/visitors/base.rb:36:in `block in visit'
-C:/Ruby22-x64/lib/ruby/gems/2.2.0/gems/sass-3.4.13/lib/sass/tree/visitors/perform.rb:186:in `visit_root'
-C:/Ruby22-x64/lib/ruby/gems/2.2.0/gems/sass-3.4.13/lib/sass/tree/visitors/base.rb:36:in `visit'
-C:/Ruby22-x64/lib/ruby/gems/2.2.0/gems/sass-3.4.13/lib/sass/tree/visitors/perform.rb:157:in `visit'
-C:/Ruby22-x64/lib/ruby/gems/2.2.0/gems/sass-3.4.13/lib/sass/tree/visitors/perform.rb:8:in `visit'
-C:/Ruby22-x64/lib/ruby/gems/2.2.0/gems/sass-3.4.13/lib/sass/tree/root_node.rb:36:in `css_tree'
-C:/Ruby22-x64/lib/ruby/gems/2.2.0/gems/sass-3.4.13/lib/sass/tree/root_node.rb:29:in `render_with_sourcemap'
-C:/Ruby22-x64/lib/ruby/gems/2.2.0/gems/sass-3.4.13/lib/sass/engine.rb:368:in `_render_with_sourcemap'
-C:/Ruby22-x64/lib/ruby/gems/2.2.0/gems/sass-3.4.13/lib/sass/engine.rb:285:in `render_with_sourcemap'
-C:/Ruby22-x64/lib/ruby/gems/2.2.0/gems/sass-3.4.13/lib/sass/plugin/compiler.rb:490:in `update_stylesheet'
-C:/Ruby22-x64/lib/ruby/gems/2.2.0/gems/sass-3.4.13/lib/sass/plugin/compiler.rb:215:in `block in update_stylesheets'
-C:/Ruby22-x64/lib/ruby/gems/2.2.0/gems/sass-3.4.13/lib/sass/plugin/compiler.rb:209:in `each'
-C:/Ruby22-x64/lib/ruby/gems/2.2.0/gems/sass-3.4.13/lib/sass/plugin/compiler.rb:209:in `update_stylesheets'
-C:/Ruby22-x64/lib/ruby/gems/2.2.0/gems/sass-3.4.13/lib/sass/plugin.rb:82:in `update_stylesheets'
-C:/Ruby22-x64/lib/ruby/gems/2.2.0/gems/sass-3.4.13/lib/sass/exec/sass_scss.rb:361:in `watch_or_update'
-C:/Ruby22-x64/lib/ruby/gems/2.2.0/gems/sass-3.4.13/lib/sass/exec/sass_scss.rb:51:in `process_result'
-C:/Ruby22-x64/lib/ruby/gems/2.2.0/gems/sass-3.4.13/lib/sass/exec/base.rb:52:in `parse'
-C:/Ruby22-x64/lib/ruby/gems/2.2.0/gems/sass-3.4.13/lib/sass/exec/base.rb:19:in `parse!'
-C:/Ruby22-x64/lib/ruby/gems/2.2.0/gems/sass-3.4.13/bin/scss:13:in `<top (required)>'
-C:/Ruby22-x64/bin/scss:23:in `load'
-C:/Ruby22-x64/bin/scss:23:in `<main>'
-*/
-body:before {
-  white-space: pre;
-  font-family: monospace;
-  content: "Error: File to import not found or unreadable: ember-paper.\A        Load paths:\A          \A         on line 1 of app.scss\A \A 1: @import \"ember-paper\";\A 2: \A 3: $primary-bg-color: #ecf6f8;\A 4: $primary-color: #464748;\A 5: \A 6: @mixin border-radius($radius) {"; }
+.btn-signup:hover, .btn-signup:active {
+  -webkit-border-radius: 2px;
+  -moz-border-radius: 2px;
+  -ms-border-radius: 2px;
+  border-radius: 2px;
+  background: -webkit-linear-gradient(#ff722a, #ff5500);
+  background: -o-linear-gradient(#ff722a, #ff5500);
+  background: -moz-linear-gradient(#ff722a, #ff5500);
+  background: linear-gradient(#ff722a, #ff5500);
+  color: white; }
+
+.btn-signin {
+  -webkit-border-radius: 2px;
+  -moz-border-radius: 2px;
+  -ms-border-radius: 2px;
+  border-radius: 2px;
+  background-color: white;
+  color: #464748;
+  border: solid 1px #ff4e00; }
+
+a {
+  color: #009dfe; }
+
+.navbar-truecron .dropdown .dropdown-menu > li > a:hover {
+  background: -webkit-linear-gradient(#f3f3f3, #e9e9e9);
+  background: -o-linear-gradient(#f3f3f3, #e9e9e9);
+  background: -moz-linear-gradient(#f3f3f3, #e9e9e9);
+  background: linear-gradient(#f3f3f3, #e9e9e9); }
+
+.navbar-truecron .nav .open > a, .navbar-truecron .nav .open > a:hover, .navbar-truecron .nav .open > a:focus {
+  background-color: #35617e; }
+
+.navbar-truecron .dropdown a:hover, .navbar-truecron .dropdown a:active, .navbar-truecron .dropdown a:focus, .navbar-truecron .dropdown li:visited {
+  background-color: #35617e;
+  background-image: none; }
+
+.navbar-truecron .dropdown .caret {
+  color: #ff5800; }
+
+/* teaser page styles */
+.teaser {
+  font-family: "Trebuchet MS";
+  font-size: 16pt;
+  /*background-image: url('../img/bg-apple-with-logo.jpg'); */
+  /*background-size: 100% auto; */
+  /*background-repeat: no-repeat; */ }
+
+.teaser .container-fluid {
+  max-width: 1200px; }
+
+.topper {
+  background: black url("teaser_bg.jpg") no-repeat center top; }
+
+.navbar-teaser {
+  background-color: rgba(53, 97, 126, 0.6); }
+
+.navbar-truecron {
+  background-color: #35617e; }
+
+.teaser .jumbotron {
+  background-color: transparent;
+  margin-bottom: 0; }
+
+.teaser .topper .jumbotron {
+  padding-bottom: 0;
+  padding-left: 0;
+  padding-right: 0; }
+
+.teaser .middle .jumbotron {
+  padding: 0; }
+
+.navbar-brand-teaser {
+  background: url("white-logo-teaser.png") no-repeat center;
+  width: 270px; }
+
+.navbar-brand-truecron {
+  background: url("white-logo.png") no-repeat center;
+  width: 190px; }
+
+.teaser .col-xs-3 {
+  width: 30%; }
+
+.teaser .col-xs-9 {
+  width: 70%; }
+
+h2.pitch {
+  text-align: center;
+  font-size: 32pt;
+  color: white;
+  padding: 20px 0 15px; }
+
+.pitch-ext {
+  text-align: left;
+  color: white;
+  font-size: 24px;
+  padding-top: 20px; }
+
+.teaser .pitch-ext p {
+  margin: 3px 0;
+  font-size: 25px; }
+
+.interested_box p {
+  font-size: 16px; }
+
+.teaser .interested_box .btn-signup {
+  background-image: none;
+  background-color: white;
+  color: #ff9719;
+  text-shadow: none; }
+
+.interested_box .btn:hover, .btn:focus {
+  color: #333333; }
+
+.top_mac {
+  background: url("top_mac.png") no-repeat top right;
+  height: 336px; }
+
+.bottom_mac {
+  background: url("bottom_mac.png") no-repeat top right;
+  height: 301px; }
+
+.interested_box {
+  background-color: #ff9719;
+  color: white;
+  margin-top: 20px; }
+
+.problem-definition-header {
+  color: #ff9719;
+  text-align: center;
+  font-size: 58px;
+  font-weight: bold; }
+
+.airbag {
+  background: url("airbag.jpg") no-repeat left top;
+  height: 569px; }
+
+.footer_white {
+  background-color: white; }
+
+.footer_grey {
+  background-color: #e3e3e3; }
+
+.footer_white .problem-definition-header,
+.footer_grey .problem-definition-header {
+  font-size: 24px;
+  text-align: left;
+  padding-top: 30px; }
+
+.footer_white .jumbotron,
+.footer_grey .jumbotron {
+  padding-top: 0;
+  padding-bottom: 0; }
+
+.footer_white p {
+  line-height: 35px; }
+
+.middle {
+  background: url("teaser_border.png") repeat-x top; }
+
+.library {
+  background: url("library.jpg") no-repeat top left;
+  height: 466px; }
+
+.ballet {
+  background: url("teaser_ballet.jpg") no-repeat top;
+  height: 477px; }
+
+.hands {
+  background: url("teaser_hands.jpg") no-repeat;
+  height: 286px; }
+
+.grow {
+  background: url("teaser_grow.jpg") no-repeat;
+  height: 320px; }
+
+.middle_grey {
+  background-color: #d7d7d7; }
+
+.middle_white {
+  background-color: white; }
+
+.words {
+  background: url("teaser_words.png") no-repeat;
+  height: 337px; }
+
+.middle_grey .jumbotron p {
+  text-align: center;
+  font-size: 28px; }
+
+.teaser ul {
+  margin-top: 30px;
+  list-style-image: url("li.png"); }
+
+.teaser li {
+  padding-bottom: 15px; }
+
+.teaser .interested_box .form-control {
+  border-color: #ff9818;
+  border-radius: 0px; }
+
+.teaser footer {
+  background-color: black;
+  color: white;
+  text-align: center; }
+
+.teaser footer .jumbotron p {
+  font-size: 14px; }
+
+.teaser .navbar-fixed-top {
+  border: 0; }
+
+.teaser .navbar-border {
+  background-color: rgba(0, 0, 0, 0.2);
+  padding: 12px;
+  margin-top: 0; }
+
+/* sign-in sign-up */
+.container-truecron {
+  margin-top: 50px; }
+
+.g_sign {
+  padding-top: 62px; }
+
+.g_btn {
+  background-color: white;
+  border: solid 1px #b2babc;
+  -webkit-border-radius: 0px;
+  -moz-border-radius: 0px;
+  -ms-border-radius: 0px;
+  border-radius: 0px;
+  color: #707070; }
+
+.g_btn .fa {
+  color: #ff2a34; }
+
+.col-border-right {
+  border-right: solid 1px #c2cacd; }
+
+.col-border-top {
+  border-top: solid 1px #c2cacd; }
+
+/*sidebar */
+.truecron-tab-margin {
+  margin-top: 15px; }
+
+.sidebar {
+  padding-left: 0;
+  padding-right: 0;
+  position: fixed;
+  top: 50px;
+  left: 0px;
+  z-index: 1000;
+  display: block;
+  overflow-x: hidden;
+  overflow-y: auto;
+  height: 100%;
+  background-color: #beccd4; }
+
+.dropdown-truecron li {
+  list-style: none; }
+
+.dropdown-truecron {
+  font-size: 20px;
+  color: #464646; }
+
+.dropdown-truecron a, a:hover, .dropdown-truecron a:active {
+  text-decoration: none;
+  color: #464646; }
+
+.dropdown-truecron span {
+  color: #fa5b00; }
+
+.panel-heading .fa-cog, .panel-heading .fa-filter {
+  color: #fa5b00; }
+
+.btn-truecron-icon {
+  background: -webkit-linear-gradient(#f7f6f2, #e4e6e5);
+  background: -o-linear-gradient(#f7f6f2, #e4e6e5);
+  background: -moz-linear-gradient(#f7f6f2, #e4e6e5);
+  background: linear-gradient(#f7f6f2, #e4e6e5);
+  -webkit-border-radius: 2px;
+  -moz-border-radius: 2px;
+  -ms-border-radius: 2px;
+  border-radius: 2px;
+  border: solid 1px #b9cdd4; }
+
+.panel-heading .btn-signin .fa-long-arrow-left {
+  color: #ff4e00; }
+
+.panel-default > .panel-heading {
+  background-color: #f6f6f6;
+  background-image: none;
+  border-bottom: solid 1px #b9cdd8; }
+
+.panel-heading .col-md-12 {
+  padding-top: 15px; }
+
+.panel-heading .col-md-12 .fa-plus {
+  padding-right: 10px; }
+
+.no-padding {
+  padding-left: 0px;
+  padding-right: 0px; }
+
+.panel-default {
+  border: none; }
+
+.list-group-item {
+  border: 1px solid #b9cdd8;
+  background: -webkit-linear-gradient(#f6fafd, #efeff1);
+  background: -o-linear-gradient(#f6fafd, #efeff1);
+  background: -moz-linear-gradient(#f6fafd, #efeff1);
+  background: linear-gradient(#f6fafd, #efeff1); }
+
+a.list-group-item:hover, a.list-group-item:active, a.list-group-item:focus {
+  background: #ecf6f8; }
+
+.truecron-job-item-p {
+  color: #74838a; }
+
+.truecron-job-item-span {
+  color: #303030; }
+
+.neverrun-job {
+  color: #888888; }
+
+.failed-job {
+  color: red; }
+
+.success-job {
+  color: #00ee05; }
+
+.running-job {
+  color: #35617e; }
+
+.truecron-job-label {
+  background-color: #baced7;
+  color: #303030; }
+
+.panel-default > .truecron-panel-heading {
+  background: -webkit-linear-gradient(#f9f9f9, #e9e9e9);
+  background: -o-linear-gradient(#f9f9f9, #e9e9e9);
+  background: -moz-linear-gradient(#f9f9f9, #e9e9e9);
+  background: linear-gradient(#f9f9f9, #e9e9e9); }
+
+.truecron-caret {
+  color: #fa5b00;
+  margin-right: 5px; }
+
+.truecron-tab-p {
+  margin: 8px 0; }
+
+.truecron-sub-menu {
+  background: -webkit-linear-gradient(#f9f9f9, #e9e9e9);
+  background: -o-linear-gradient(#f9f9f9, #e9e9e9);
+  background: -moz-linear-gradient(#f9f9f9, #e9e9e9);
+  background: linear-gradient(#f9f9f9, #e9e9e9);
+  border-bottom: solid 1px #beccd4; }
+
+.truecron-sub-menu .fa-sort, .truecron-sub-menu .fa-sort-desc {
+  padding-left: 5px;
+  color: #aaa8a8; }
+
+.truecron-tab-active {
+  background-color: #eef4f8;
+  background-image: none;
+  border-left: solid #f06a21;
+  border-width: 1px 0 1px 1px; }
+
+.truecron-tab-failed {
+  background-color: #f6edee;
+  background-image: none; }
+
+.truecron-tab-normal {
+  background-color: #f7f9fa;
+  background-image: none; }
+
+.truecron-sub-filter {
+  background-color: #f6f6f6;
+  background-image: none; }
+
+.truecron-dropdown {
+  width: 100%;
+  text-align: left; }
+
+.caret-right {
+  float: right;
+  margin-top: 8px;
+  white-space: normal; }
+
+textarea:focus, input:focus, input[type]:focus, .uneditable-input:focus {
+  border-color: rgba(239, 105, 32, 0.8);
+  box-shadow: 0 1px 1px rgba(239, 105, 32, 0.075) inset, 0 0 8px rgba(239, 105, 32, 0.6);
+  outline: 0 none; }
+
+.truecron-form-control {
+  border-radius: 0px; }
+
+/*workspaces */
+.dashed, .orange-dashed, .blue-dashed {
+  border-bottom: 1px dashed #cccccc; }
+
+.job-details-header .col-md-1 {
+  padding-top: 20px; }
+
+.btn-truecron-icon .fa-trash {
+  color: #ee6820; }
+
+.job-title {
+  color: #ee6820; }
+
+.orange-dashed {
+  border-color: #ee6820; }
+
+.blue-dashed {
+  border-color: #3399ff; }
+
+.trucron-tasks-header {
+  text-align: center; }
+
+.job-details-header {
+  background-color: white; }
+
+.truecron-tasks-header h3 {
+  color: #3399ff; }
+
+.trucron-top-tasks {
+  padding-top: 20px; }
+
+.job-details-body .col-md-2 .btn-signup {
+  margin-top: 1px; }
+
+.run-history-info {
+  background-color: #eef4f8; }
+
+.run-history-info h4 {
+  color: #74838a; }
+
+.truecron-grey {
+  color: #333333; }
+
+.truecron-orange {
+  color: #ee6820; }
+
+.run-history-info a {
+  text-decoration: underline; }
+
+.arrow_box {
+  position: relative;
+  background: #fff9e6;
+  border: 1px solid #fee798;
+  text-align: center; }
+
+.arrow_box h3 {
+  margin-top: 10px;
+  color: #666666; }
+
+.arrow_box:after, .arrow_box:before {
+  left: 100%;
+  top: 50%;
+  border: solid transparent;
+  content: " ";
+  height: 0;
+  width: 0;
+  position: absolute;
+  pointer-events: none; }
+
+.arrow_box:after {
+  border-color: rgba(255, 249, 230, 0);
+  border-left-color: #fff9e6;
+  border-width: 7px;
+  margin-top: -7px; }
+
+.arrow_box:before {
+  border-color: rgba(254, 231, 152, 0);
+  border-left-color: #fee798;
+  border-width: 8px;
+  margin-top: -8px; }
+
+/* workspaces accordion */
+.truecron-accordion .truecron-panel-body {
+  background-color: #69757b;
+  color: white; }
+
+.truecron-accordion .truecron-first-heading {
+  background-color: #e7ecf0; }
+
+.truecron-accordion .truecron-second-heading {
+  background-color: #e0e6e9; }
+
+.truecron-accordion .truecron-error-heading {
+  background-color: #efe6e9; }
+
+.truecron-accordion .truecron-error-heading .trucron-underline {
+  color: red; }
+
+.truecron-accordion p {
+  margin: 0; }
+
+.truecron-inactive-heading p, .truecron-inactive-heading .trucron-underline {
+  color: #cccccc; }
+
+.trucron-underline {
+  text-decoration: underline; }
+
+.trucron-tasks-header {
+  text-align: center; }
+
+.job-details-header {
+  background-color: white; }
+
+.trucron-tasks-header h3 {
+  color: #3399ff; }
+
+.trucron-top-tasks {
+  padding-top: 10px; }
+
+.job-details-body .col-md-2 .btn-signup {
+  margin-top: 2px; }
+
+.arrow_box {
+  position: relative;
+  background: #fff9e6;
+  border: 1px solid #fee798;
+  text-align: center; }
+
+.arrow_box h3 {
+  margin-top: 10px;
+  color: #666666; }
+
+.arrow_box:after, .arrow_box:before {
+  left: 100%;
+  top: 50%;
+  border: solid transparent;
+  content: " ";
+  height: 0;
+  width: 0;
+  position: absolute;
+  pointer-events: none; }
+
+.arrow_box:after {
+  border-color: rgba(255, 249, 230, 0);
+  border-left-color: #fff9e6;
+  border-width: 7px;
+  margin-top: -7px; }
+
+.arrow_box:before {
+  border-color: rgba(254, 231, 152, 0);
+  border-left-color: #fee798;
+  border-width: 8px;
+  margin-top: -8px; }
+
+/* workspaces accordion */
+.truecron-accordion .truecron-panel-body {
+  background-color: #69757b;
+  color: white; }
+
+.truecron-accordion .truecron-first-heading {
+  background-color: #e7ecf0; }
+
+.truecron-accordion .truecron-second-heading {
+  background-color: #e0e6e9; }
+
+.truecron-accordion .truecron-error-heading {
+  background-color: #efe6e9; }
+
+.truecron-accordion .truecron-error-heading .trucron-underline {
+  color: red; }
+
+.truecron-accordion p {
+  margin: 0; }
+
+.truecron-inactive-heading p, .truecron-inactive-heading .trucron-underline {
+  color: #cccccc; }
+
+.trucron-underline {
+  text-decoration: underline; }
+
+/* Organizations */
+.truecron-org-header {
+  background-color: #d4dcdf;
+  margin-top: 10px;
+  padding-top: 3px;
+  padding-bottom: 3px; }
+
+.btn-margin {
+  margin-top: 2px; }
+
+.truecron-org-title {
+  background-color: #dbf2fa;
+  padding-top: 6px; }
+
+.org-title {
+  color: #ff7e44;
+  font-weight: bold; }
+
+.truecron-org-content {
+  padding-top: 6px;
+  border-bottom: 1px solid #c4c8d1; }
+
+/*index page */
+.truecron-index-header {
+  background-color: white;
+  width: 100%; }
+
+.arrow_box-left {
+  position: relative;
+  background: #fff9e6;
+  border: 1px solid #fee798;
+  text-align: center;
+  margin-top: 46px;
+  margin-bottom: 5px; }
+
+.arrow_box-left h3 {
+  margin-top: 10px;
+  color: #666666; }
+
+.arrow_box-left:after, .arrow_box-left:before {
+  right: 100%;
+  top: 50%;
+  border: solid transparent;
+  content: " ";
+  height: 0;
+  width: 0;
+  position: absolute;
+  pointer-events: none; }
+
+.arrow_box-left:after {
+  border-color: rgba(255, 249, 230, 0);
+  border-right-color: #fff9e6;
+  border-width: 7px;
+  margin-top: -7px; }
+
+.arrow_box-left:before {
+  border-color: rgba(254, 231, 152, 0);
+  border-right-color: #fee798;
+  border-width: 8px;
+  margin-top: -8px; }
+
+.truecron-index-body {
+  border: solid 1px #fee798;
+  background-color: #fffcf2;
+  margin-top: 10px; }
+
+.complex_task_icon {
+  background: url("complex_task_icon.png") no-repeat 20px 25px;
+  height: 66px; }
+
+.complex_task_git {
+  background: url("git_icon.png") no-repeat 20px 30px;
+  height: 81px; }
+
+.complex_task_icon_cog {
+  background: url("icon-cog-blue.png") no-repeat 20px 30px;
+  height: 81px; }
+
+/*add new job */
+.new-job-body {
+  padding-top: 15px; }
+
+/*# sourceMappingURL=app.css.map */

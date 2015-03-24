@@ -19,6 +19,15 @@ app.import('bower_components/bootstrap/dist/css/bootstrap.css');
 app.import('bower_components/bootstrap/dist/css/bootstrap.css.map', { destDir: "assets"});
 app.import('bower_components/bootstrap/dist/css/bootstrap-theme.css');
 app.import('bower_components/bootstrap/dist/css/bootstrap-theme.css.map', { destDir: "assets"});
+app.import('bower_components/bootstrap-material-design/dist/css/roboto.css');
+app.import('bower_components/bootstrap-material-design/dist/css/roboto.css.map', { destDir: "assets"});
+app.import('bower_components/bootstrap-material-design/dist/css/material-fullpalette.css');
+app.import('bower_components/bootstrap-material-design/dist/css/material-fullpalette.css.map', { destDir: "assets"});
+app.import('bower_components/bootstrap-material-design/dist/css/ripples.css');
+app.import('bower_components/bootstrap-material-design/dist/css/ripples.css.map', { destDir: "assets"});
+app.import('bower_components/bootstrap-material-design/dist/fonts/Material-Design-Icons.eot', { destDir: "fonts"});
+app.import('bower_components/bootstrap-material-design/dist/fonts/RobotoDraftRegular.woff', { destDir: "fonts"});
+app.import('bower_components/bootstrap-material-design/dist/fonts/RobotoDraftRegular.woff2', { destDir: "fonts"});
 app.import('bower_components/font-awesome/css/font-awesome.min.css');
 
 // js
@@ -27,6 +36,8 @@ app.import('bower_components/jquery-ui/jquery-ui.js');
 app.import('bower_components/JavaScript-MD5/js/md5.js');
 app.import('bower_components/socket.io-client/socket.io.js');
 app.import('bower_components/bootstrap/dist/js/bootstrap.js');
+app.import('bower_components/bootstrap-material-design/dist/js/material.js');
+app.import('bower_components/bootstrap-material-design/dist/js/ripples.js');
 app.import('bower_components/ember-data/ember-data.js');
 app.import('bower_components/rrule/lib/rrule.js');
 app.import('bower_components/rrule/lib/nlp.js');
