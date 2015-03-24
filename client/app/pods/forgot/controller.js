@@ -10,7 +10,9 @@ export default Ember.Controller.extend(LoginControllerMixin, {
         var email = self.get('signupEmail');
         console.log('email for reset:'+email);
         var isEmailValid = validator.isEmail(email);
-        var requestData = {'resetpass':{}};
+        var requestData = {'resetpass':{ }};
+        requestData.env = ENV.APP.SERVER_HOST;
+        console.log('ENV.APP.SERVER_HOST:'+ENV.APP.SERVER_HOST);
         this.set('isEmailError', !isEmailValid);
 
         if (isEmailValid) {

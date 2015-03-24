@@ -212,7 +212,8 @@ var codeToResetPassword = '';
 router.post('/resetpassword', function(req, res, next) {
     var email = req.body.resetpass.email;
     var validEmail = validator.isEmail(email);
-    var pathForTransition = 'http://localhost:4200/#/confirmreset'; //temporary address change to the correct
+    var pathForTransition = req.body.env+'/#/confirmreset'; //temporary address change to the correct
+    console.log('!!!!!!!url:'+pathForTransition);
     var code = crypto.randomBytes(16).toString();
 
     //Reinvent code in HEX format
@@ -229,7 +230,6 @@ router.post('/resetpassword', function(req, res, next) {
 
     if (validEmail) {
         // send an email to the user code to reset your password
-        console.log(pathForTransition+'?mail='+email+'&code='+codeToResetPassword);
         smtp.sendMail({
             from: 'welcome@truecron.com',
             to: email,
@@ -255,7 +255,6 @@ router.post('/resetpassword', function(req, res, next) {
 
 //// save to DB resetpassword
 router.post('/resetpassworddb', function(req, res, next) {
-    console.log('!!!!!!!!!!!!!!in auth reset passwordDB');
     var email = req.body.resetpass.email;
     req.body.resetpass.resetpasswordcode = codeToResetPassword;
     var validEmail = validator.isEmail(email);
@@ -278,19 +277,9 @@ router.post('/resetpassworddb', function(req, res, next) {
 
 router.post('/resetpasswordconfirmreset', function(req, res, next) {
     req.context = context.newSystemContext();
-
-    console.log('!!!!!!!!!!!!!!in auth confirm reset password');
     console.log(util.inspect(req.body));
-    //var email = req.body.resetpass.email;
     var codeToResetPassword = req.body.resetpass.resetpasswordcode;
     var isCheckPass = false;
-    console.log('!!!!!!codeToResetPassword:'+codeToResetPassword);
-    //console.log(req.body.resetpass);
-    //var validEmail = validator.isEmail(email);
-    //if (!validEmail) {
-    //    console.log('!!!!!!777777777');
-    //    return next(new apiErrors.InvalidParams('Email is not specified.'));
-    //}
     if (!codeToResetPassword) {
         return next(new apiErrors.InvalidParams('resetPasswordCode is not specified.'));
     }
@@ -298,24 +287,19 @@ router.post('/resetpasswordconfirmreset', function(req, res, next) {
     storage.ResetPasswords.findByCode(req.context, codeToResetPassword)
         .then(function (resetpassw) {
             var mail = resetpassw.email;
-            console.log('!!!mail:'+mail);
             var validEmail = validator.isEmail(mail);
-            console.log('!!!!!!fskjdhf');
             if (validEmail) {
                 isCheckPass = true;
-                console.log('!!!!!!222222222222');
                 storage.Person.findEmail(req.context, false, mail)
                     .then(function (email) {
                         if (email) {
                             req.email = email.dataValues.email;
-                            //next();
                         } else {
                             isCheckPass = false;
                             next(new apiErrors.NotFound());
                         }
                     })
             }
-            console.log('!!!!!!6666666666');
             if(isCheckPass) {
                 res.status(201).json({resetpass: resetpassw, message: 'Finded'});
             }
