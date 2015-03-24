@@ -8,30 +8,19 @@ body {
   -moz-border-radius: 2px;
   -ms-border-radius: 2px;
   border-radius: 2px;
-  background: -webkit-linear-gradient(#fe5900, #fa4402);
-  background: -o-linear-gradient(#fe5900, #fa4402);
-  background: -moz-linear-gradient(#fe5900, #fa4402);
-  background: linear-gradient(#fe5900, #fa4402);
-  color: white; }
+  color: #ffffff; }
 
 .btn-signup:hover, .btn-signup:active {
   -webkit-border-radius: 2px;
   -moz-border-radius: 2px;
   -ms-border-radius: 2px;
-  border-radius: 2px;
-  background: -webkit-linear-gradient(#ff722a, #ff5500);
-  background: -o-linear-gradient(#ff722a, #ff5500);
-  background: -moz-linear-gradient(#ff722a, #ff5500);
-  background: linear-gradient(#ff722a, #ff5500);
-  color: white; }
+  border-radius: 2px; }
 
 .btn-signin {
   -webkit-border-radius: 2px;
   -moz-border-radius: 2px;
   -ms-border-radius: 2px;
   border-radius: 2px;
-  background-color: white;
-  color: #464748;
   border: solid 1px #ff4e00; }
 
 a {
@@ -56,10 +45,7 @@ a {
 /* teaser page styles */
 .teaser {
   font-family: "Trebuchet MS";
-  font-size: 16pt;
-  /*background-image: url('../img/bg-apple-with-logo.jpg'); */
-  /*background-size: 100% auto; */
-  /*background-repeat: no-repeat; */ }
+  font-size: 16pt; }
 
 .teaser .container-fluid {
   max-width: 1200px; }
@@ -67,15 +53,17 @@ a {
 .topper {
   background: black url("teaser_bg.jpg") no-repeat center top; }
 
-.navbar-teaser {
-  background-color: rgba(53, 97, 126, 0.6); }
+.navbar .navbar-form {
+  margin-top: 0;
+  margin-bottom: 0; }
 
 .navbar-truecron {
   background-color: #35617e; }
 
 .teaser .jumbotron {
   background-color: transparent;
-  margin-bottom: 0; }
+  margin-bottom: 0;
+  box-shadow: none; }
 
 .teaser .topper .jumbotron {
   padding-bottom: 0;
@@ -102,8 +90,8 @@ a {
 h2.pitch {
   text-align: center;
   font-size: 32pt;
-  color: white;
-  padding: 20px 0 15px; }
+  color: #ffffff;
+  padding: 30px 0 5px; }
 
 .pitch-ext {
   text-align: left;
@@ -193,7 +181,7 @@ h2.pitch {
   background-color: #d7d7d7; }
 
 .middle_white {
-  background-color: white; }
+  background-color: #ffffff; }
 
 .words {
   background: url("teaser_words.png") no-repeat;
@@ -237,14 +225,15 @@ h2.pitch {
 .g_sign {
   padding-top: 62px; }
 
+.input-lg {
+  height: 46px !important; }
+
 .g_btn {
-  background-color: white;
   border: solid 1px #b2babc;
   -webkit-border-radius: 0px;
   -moz-border-radius: 0px;
   -ms-border-radius: 0px;
-  border-radius: 0px;
-  color: #707070; }
+  border-radius: 0px; }
 
 .g_btn .fa {
   color: #ff2a34; }
@@ -403,11 +392,6 @@ a.list-group-item:hover, a.list-group-item:active, a.list-group-item:focus {
   float: right;
   margin-top: 8px;
   white-space: normal; }
-
-textarea:focus, input:focus, input[type]:focus, .uneditable-input:focus {
-  border-color: rgba(239, 105, 32, 0.8);
-  box-shadow: 0 1px 1px rgba(239, 105, 32, 0.075) inset, 0 0 8px rgba(239, 105, 32, 0.6);
-  outline: 0 none; }
 
 .truecron-form-control {
   border-radius: 0px; }
