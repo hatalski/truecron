@@ -2,7 +2,16 @@
     <div class="container-fluid">
         <div class="row">
             <div class="col-md-6">
-                <h3 class="job-title"><span class="orange-dashed">{{model.name}}</span></h3>
+                <h3 class="job-title">
+                  {{!--{{paper-text label="Job name" value=module.name}}--}}
+                    <div class="form-group">
+                        <input class="form-control floating-label" id="focusedInput" placeholder="Focus to show the hint" data-hint="You should really write something here" type="text">
+                    </div>
+                    {{!--<div class="form-group">--}}
+                        {{!--<input class="form-control floating-label" id="focusedInput" placeholder="Focus to show the hint" data-hint="You should really write something here" type="text">--}}
+                    {{!--</div>--}}
+                    {{!--<span class="orange-dashed">{{model.name}}</span>--}}
+                </h3>
             </div>
             <div class="col-md-6 truecron-tasks-header">
                 <h3><span class="blue-dashed">Schedule is not set yet.</span></h3>
