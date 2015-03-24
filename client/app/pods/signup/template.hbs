@@ -8,7 +8,7 @@
     <div class="row">
         <div class="col-md-offset-2 col-md-4 col-border-right">
             <form {{action "signup" on="submit"}}>
-                <div {{bind-attr class=":form-group isEmailError:has-error"}}>
+                <div {{bind-attr class=":form-group-material-orange-700 isEmailError:has-error"}}>
                     <div class="input-group">
                         <span class="input-group-addon"><i class="fa fa-envelope-o"></i></span>
                       {{input id="email"
@@ -20,7 +20,7 @@
                       class="form-control input-lg"}}
                     </div>
                 </div>
-                <div {{bind-attr class=":form-group isPasswordError:has-error"}}>
+                <div {{bind-attr class=":form-group-material-orange-700 isPasswordError:has-error"}}>
                     <div class="input-group">
                         <span class="input-group-addon"><i class="fa fa-key"></i></span>
                       {{input title="Password must contain at least 8 characters, including UPPER/lowercase and numbers."
@@ -33,7 +33,7 @@
                       pattern="(?=^.{8,}$)(?=.*\d)(?![.\n])(?=.*[A-Z])(?=.*[a-z]).*$" }}
                     </div>
                 </div>
-                <div {{bind-attr class=":form-group isPasswordConfirmError:has-error"}}>
+                <div {{bind-attr class=":form-group-material-orange-700 isPasswordConfirmError:has-error"}}>
                     <div class="input-group">
                         <span class="input-group-addon"><i class="fa fa-key"></i></span>
                       {{input type="password"
@@ -45,7 +45,7 @@
                 </div>
                 <div class="form-group">
                     <div class="input-group-btn">
-                        <button type="submit" class="btn btn-lg btn-block btn-signup">{{format-message (intl-get "messages.auth.signup_form.button")}}</button>
+                        <button type="submit" class="btn btn-lg btn-block btn-signup btn-material-orange-800">{{format-message (intl-get "messages.auth.signup_form.button")}}</button>
                     </div>
                 </div>
                 <div>
@@ -55,7 +55,7 @@
         </div>
         <div class="col-md-4 col-xs-12">
             <div class="g_sign">
-              <a class="btn btn-lg btn-block g_btn" {{action 'googleLogin'}}><i class="fa fa-google-plus"></i> {{format-message (intl-get "messages.auth.googleButton")}}</a>
+              <a class="btn btn-lg btn-block g_btn btn-white" {{action 'googleLogin'}}><i class="fa fa-google-plus"></i> {{format-message (intl-get "messages.auth.googleButton")}}</a>
             </div>
         </div>
     </div>

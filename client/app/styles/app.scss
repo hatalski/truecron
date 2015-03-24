@@ -26,20 +26,15 @@ body {
 
 .btn-signup {
   @include border-radius(2px);
-  @include grad(#fe5900, #fa4402);
-  color: white;
+  color: #ffffff;
 }
 
 .btn-signup:hover, .btn-signup:active {
   @include border-radius(2px);
-  @include grad(#ff722a, #ff5500);
-  color: white;
 }
 
 .btn-signin {
   @include border-radius(2px);
-  background-color: white;
-  color: #464748;
   border: solid 1px #ff4e00;
 }
 
@@ -68,9 +63,6 @@ a {
 .teaser {
   font-family: "Trebuchet MS";
   font-size: 16pt;
-  /*background-image: url('../img/bg-apple-with-logo.jpg'); */
-  /*background-size: 100% auto; */
-  /*background-repeat: no-repeat; */
 }
 
 .teaser .container-fluid {
@@ -81,8 +73,10 @@ a {
   background: black url("teaser_bg.jpg") no-repeat center top;
 }
 
-.navbar-teaser {
-  background-color: rgba(53, 97, 126, 0.6);
+
+.navbar .navbar-form {
+  margin-top: 0;
+  margin-bottom: 0;
 }
 
 .navbar-truecron {
@@ -92,6 +86,7 @@ a {
 .teaser .jumbotron {
   background-color: transparent;
   margin-bottom: 0;
+  box-shadow: none;
 }
 
 .teaser .topper .jumbotron {
@@ -125,8 +120,8 @@ a {
 h2.pitch {
   text-align: center;
   font-size: 32pt;
-  color: white;
-  padding: 20px 0 15px;
+  color: #ffffff;
+  padding: 30px 0 5px;
 }
 
 .pitch-ext {
@@ -238,7 +233,7 @@ h2.pitch {
 }
 
 .middle_white {
-  background-color: white;
+  background-color: #ffffff;
 }
 
 .words {
@@ -293,12 +288,12 @@ h2.pitch {
 .g_sign {
   padding-top: 62px;
 }
-
+.input-lg {
+  height: 46px !important;
+}
 .g_btn {
-  background-color: white;
   border: solid 1px #b2babc;
   @include border-radius(0px);
-  color: #707070;
 }
 
 .g_btn .fa {
@@ -480,12 +475,6 @@ a.list-group-item:hover, a.list-group-item:active, a.list-group-item:focus {
   float: right;
   margin-top: 8px;
   white-space: normal;
-}
-
-textarea:focus, input:focus, input[type]:focus, .uneditable-input:focus {
-  border-color: rgba(239, 105, 32, 0.8);
-  box-shadow: 0 1px 1px rgba(239, 105, 32, 0.075) inset, 0 0 8px rgba(239, 105, 32, 0.6);
-  outline: 0 none;
 }
 
 .truecron-form-control {
