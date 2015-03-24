@@ -37,6 +37,7 @@ app.import('bower_components/bootstrap-material-design/dist/fonts/RobotoDraftBol
 app.import('bower_components/bootstrap-material-design/dist/fonts/RobotoDraftBold.woff2', { destDir: "fonts"});
 app.import('bower_components/bootstrap-material-design/dist/fonts/RobotoDraftRegular.woff', { destDir: "fonts"});
 app.import('bower_components/bootstrap-material-design/dist/fonts/RobotoDraftRegular.woff2', { destDir: "fonts"});
+app.import('bower_components/dropdown.js/jquery.dropdown.css');
 app.import('bower_components/font-awesome/css/font-awesome.min.css');
 
 // js
@@ -48,6 +49,7 @@ app.import('bower_components/bootstrap/dist/js/bootstrap.js');
 app.import('bower_components/arrive/minified/arrive.min.js');
 app.import('bower_components/bootstrap-material-design/dist/js/material.js');
 app.import('bower_components/bootstrap-material-design/dist/js/ripples.js');
+app.import('bower_components/dropdown.js/jquery.dropdown.js');
 app.import('bower_components/ember-data/ember-data.js');
 app.import('bower_components/rrule/lib/rrule.js');
 app.import('bower_components/rrule/lib/nlp.js');

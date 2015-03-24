@@ -12,6 +12,7 @@ var App = Ember.Application.extend({
   ready: function () {
     this.intl.set('locales', ['en']);
     Ember.$.material.init();
+    Ember.$("select").dropdown({ "autoinit" : "select" });
   }
 });
 
