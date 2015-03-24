@@ -7,10 +7,13 @@ export default Ember.Controller.extend({
   actions: {
     checkcode: function(){
       var wl = window.location.toString();
-      var code = wl.slice(wl.search(/code=/) + 5);
+      var code;
+      if (wl.search(/code=/) > 4){
+        code = wl.slice(wl.search(/code=/) + 5);
+      }
       console.log('!!!code:'+code);
       console.log('code.length: '+code.length);
-      if (code.length < 41 ){
+      if (code.length < 41 & code.length > 1){
         this.set('checkCodeField', code);
         this.set('code', code);
       }
