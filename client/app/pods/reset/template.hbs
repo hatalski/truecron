@@ -24,7 +24,8 @@
                 <div {{bind-attr class=":form-group isPasswordConfirmError:has-error"}}>
                     <div class="input-group">
                         <span class="input-group-addon"><i class="fa fa-key"></i></span>
-                      {{input type="password"
+                      {{input id="inputConfirmPassword"
+                      type="password"
                       value=signupPasswordConfirm
                       valueBinding="passwordConfirm"
                       placeholder="Enter password again"

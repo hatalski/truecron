@@ -32,18 +32,19 @@ export default Ember.Controller.extend({
         });
         result.done(function(response) {
           Ember.Logger.log(response);
+          window.location = ENV.APP.SERVER_HOST+"/#/signin";
         });
         result.fail(function(error) {
           Ember.Logger.log(error);
-          Ember.$('#password').popover({
+          Ember.$('#inputConfirmPassword').popover({
             title: 'error.',
-            content: 'Error.',
+            content: 'User not found.',
             placement: 'bottom',
             trigger: 'manual'
           });
-          Ember.$('#password').popover('show');
+          Ember.$('#inputConfirmPassword').popover('show');
           setTimeout(function(){
-            Ember.$('#password').popover('hide');
+            Ember.$('#inputConfirmPassword').popover('hide');
           }, 5000);
         });
       }
