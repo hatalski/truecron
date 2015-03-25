@@ -5,7 +5,7 @@
             <div class="panel-heading">
                 <div class="container-fluid">
                     <div class="row">
-                        <div class="col-md-9 no-padding">
+                        <div class="col-md-9 no-padding truecron-title-margin">
                             <div class="dropdown dropdown-truecron">
                                 <div class="dropdown-toggle" data-toggle="dropdown" aria-expanded="true">
                                     <a href="#" class="dropdown-toggle" data-toggle="dropdown">
@@ -29,14 +29,14 @@
                             {{#link-to 'workspaces.workspace.settings' model.workspace class="btn btn-sm btn-truecron-icon"}}<i class="fa fa-cog fa-lg"></i>{{/link-to}}
                             {{!--<a class="btn btn-sm btn-truecron-icon"><i class="fa fa-cog fa-lg"></i></a>--}}
                         </div>
-                        <div class="col-md-6 text-left no-padding truecron-tab-margin">
+                        <div class="col-md-6 text-left no-padding">
                         {{#if showJobDetails}}
                           {{!--{{#paper-button action="backToJobsList" noink=true classNames="md-primary"}}<i class="fa fa-long-arrow-left"></i> Back to Jobs{{/paper-button}}--}}
-                            <a class="btn btn-default" {{action 'backToJobsList'}}><i class="fa fa-long-arrow-left"></i> Back to Jobs</a>
+                            <a class="btn btn-signin btn-white" {{action 'backToJobsList'}}><i class="fa fa-long-arrow-left"></i> Back to Jobs</a>
                         {{/if}}
                         </div>
-                        <div class="col-md-6 text-right no-padding truecron-tab-margin">
-                            {{#link-to 'jobs.new' class="btn btn-signup"}}<i class="fa fa-plus fa-lg"></i> New Job{{/link-to}}
+                        <div class="col-md-6 text-right no-padding">
+                            {{#link-to 'jobs.new' class="btn btn-signup btn-material-orange-800"}}<i class="fa fa-plus fa-lg"></i> New Job{{/link-to}}
                         </div>
                     </div>
                 </div>
@@ -48,7 +48,7 @@
               <div class="panel panel-default">
                   <div class="panel-heading truecron-panel-heading" role="tab" id="collapseListGroupHeading1">
                       <div class="row">
-                          <div class="col-md-9">
+                          <div class="col-md-9 truecron-title-margin">
                               <h4 class="panel-title">
                                   <a class="" data-toggle="collapse" href="#collapseListGroup1" aria-expanded="true" aria-controls="collapseListGroup1">
                                       <p class="truecron-tab-p"><span class="caret truecron-caret"></span>Run History</p>
@@ -68,26 +68,25 @@
                                       <p class="form-control-static">Date Range</p>
                                   </div>
                                   <div class="col-xs-6">
-                                      <input type="date" class="form-control truecron-form-control" placeholder=".col-xs-6">
+                                      <div class="form-group-material-orange-700">
+                                         <input type="date" class="form-control truecron-form-control" placeholder=".col-xs-6">
+                                      </div>
                                   </div>
                                   <div class="col-xs-6">
-                                      <input type="date" class="form-control truecron-form-control" placeholder=".col-xs-6">
+                                      <div class="form-group-material-orange-700">
+                                          <input type="date" class="form-control truecron-form-control" placeholder=".col-xs-6">
+                                      </div>
                                   </div>
                                   <div class="col-xs-12">
                                       <p class="form-control-static">Changed by</p>
                                   </div>
                                   <div class="col-xs-6">
-                                      <div class="dropdown">
-                                          <button class="btn btn-default truecron-dropdown dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-expanded="true">
-                                              --
-                                              <span class="caret truecron-caret caret-right"></span>
-                                          </button>
-                                          <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu1">
-                                              <li role="presentation"><a role="menuitem" tabindex="-1" href="#">Action</a></li>
-                                              <li role="presentation"><a role="menuitem" tabindex="-1" href="#">Another action</a></li>
-                                              <li role="presentation"><a role="menuitem" tabindex="-1" href="#">Something else here</a></li>
-                                              <li role="presentation"><a role="menuitem" tabindex="-1" href="#">Separated link</a></li>
-                                          </ul>
+                                      <div class="form-group-material-orange-700">
+                                          <select class="form-control" placeholder="Triggerd by">
+                                              <option value="1">Lev Kurts</option>
+                                              <option value="2">System</option>
+                                              <option value="3">God know</option>
+                                          </select>
                                       </div>
                                   </div>
                               </div>
@@ -120,11 +119,11 @@
                                   <div class="col-md-4 text-right">2.34s</div>
                               </div>
                           </li>
-                          <li class="list-group-item truecron-tab-failed">
+                          <li class="truecron-tab-failed list-group-item">
                               <div class="row">
                                   <div class="col-md-4">Schedule</div>
                                   <div class="col-md-4 text-center">Jul 2 12:32:34</div>
-                                  <div class="col-md-4 text-right">0.68s</div>
+                                  <div class="col-md-4 text-right">0.9s</div>
                               </div>
                           </li>
                       </ul>
