@@ -37,8 +37,14 @@
                 </div>
                 <div class="col-md-7">
                     <div class="form-group">
-                        <label for="timezone">timezone:</label>
-                        <input id="timezone" class="form-control" type="text" />
+                        {{!--<label for="timezone">timezone:</label>--}}
+                      {{ember-selectize
+                      content=controller.items
+                      optionValuePath="content.id"
+                      optionLabelPath="content.name"
+                      selection=controller.item
+                      placeholder="Select an item" }}
+                        {{!--<input id="timezone" class="form-control" type="text" />--}}
                     </div>
                 </div>
             </form>

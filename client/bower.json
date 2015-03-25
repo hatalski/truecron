@@ -27,6 +27,6 @@
     "bootstrap-material-design": "0.3.0",
     "hammerjs": "2.0.4",
     "arrive": "2.1.0",
-    "dropdown.js": "0.0.2dev"
+    "selectize": "0.12.0"
   }
 }
