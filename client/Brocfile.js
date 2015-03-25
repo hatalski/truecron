@@ -56,7 +56,7 @@ app.import('bower_components/bootstrap-material-design/dist/js/ripples.js');
 app.import('bower_components/rrule/lib/rrule.js');
 app.import('bower_components/rrule/lib/nlp.js');
 app.import('bower_components/moment/min/moment.min.js');
-app.import('bower_components/moment-timezone/builds/moment-timezone.min.js');
+app.import('bower_components/moment-timezone/builds/moment-timezone-with-data.js');
 app.import('bower_components/validator-js/validator.min.js');
 
 // Use `app.import` to add additional libraries to the generated

@@ -2,16 +2,9 @@
     <div class="container-fluid">
         <div class="row">
             <div class="col-md-6">
-                <h3 class="job-title">
-                  {{!--{{paper-text label="Job name" value=module.name}}--}}
-                    <div class="form-group-material-orange-700">
-                        <input class="form-control floating-label" id="jobName" placeholder="Job's name" data-hint="Give it a meaningful name" type="text">
-                    </div>
-                    {{!--<div class="form-group">--}}
-                        {{!--<input class="form-control floating-label" id="focusedInput" placeholder="Focus to show the hint" data-hint="You should really write something here" type="text">--}}
-                    {{!--</div>--}}
-                    {{!--<span class="orange-dashed">{{model.name}}</span>--}}
-                </h3>
+                <div class="form-group-material-orange-700">
+                    <input class="form-control floating-label input-lg" id="jobName" placeholder="Job's name" data-hint="Give it a meaningful name" type="text">
+                </div>
             </div>
             <div class="col-md-6 truecron-tasks-header">
                 <h3><span class="blue-dashed">Schedule is not set yet.</span></h3>
@@ -20,31 +13,93 @@
     </div>
 </header>
 <div class="container-fluid">
+    <div class="row"><h3>Set a run frequency</h3></div>
     <div class="row">
         <div class="new-job-body">
-            <form class="form-inline">
-                <div class="col-md-3">
-                    <div class="form-group">
-                        <label for="startsOn">Starts on:</label>
-                        <input id="startsOn" class="form-control" type="date" />
+            <form>
+                <div class="row">
+                    <div class="col-md-1">
+                        <h5>Starts:</h5>
+                    </div>
+                    <div class="col-md-2">
+                        <div class="form-group-material-orange-700">
+                          {{input id="startsOn" value=currentDate class="form-control floating-label input-lg" placeholder="Date" type="date"}}
+                        </div>
+                    </div>
+                    <div class="col-md-2">
+                        <div class="form-group-material-orange-700">
+                          {{input id="startsAt" value=currentTime class="form-control floating-label input-lg" placeholder="Time" type="time"}}
+                        </div>
+                    </div>
+                    <div class="col-md-2">
+                        <div class="form-group-material-orange-700">
+                            <select class="form-control floating-label input-lg" placeholder="Timezone">
+                              {{#each timezone in controller.zones}}
+                                  <option {{bind-attr value=timezone.name}}>{{timezone.name}} - {{timezone.abbr}} - {{timezone.offset}}</option>
+                              {{/each}}
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-md-1">
+                      {{currentZone}}
                     </div>
                 </div>
-                <div class="col-md-2">
-                    <div class="form-group">
-                        <label for="startsAt">at:</label>
-                        <input id="startsAt" class="form-control" type="time" />
+                <div class="row">
+                    <div class="col-md-1">
+                        <h5>Ends:</h5>
+                    </div>
+                    <div class="col-md-11">
+                        <div class="radio radio-material-orange-700">
+                            <label for="radioNever">
+                              {{input id="radioNever" type="radio" name="endsOn" value="never" checked="checked"}} Never
+                            </label>
+                        </div>
+                        <div class="radio radio-material-orange-700">
+                            <label>
+                              {{input type="radio" name="endsOn" value="after"}} After {{input id="endsAfter" type="number" value=endsAfter class="form-control"}} occurences
+                            </label>
+                        </div>
+                        <div class="radio radio-material-orange-700">
+                            <label>
+                              {{input type="radio" name="endsOn" value="on"}} On {{input id="endsOnDate" type="date" value=endsOnDate class="form-control"}}
+                            </label>
+                        </div>
                     </div>
                 </div>
-                <div class="col-md-7">
-                    <div class="form-group">
-                        {{!--<label for="timezone">timezone:</label>--}}
-                      {{ember-selectize
-                      content=controller.items
-                      optionValuePath="content.id"
-                      optionLabelPath="content.name"
-                      selection=controller.item
-                      placeholder="Select an item" }}
-                        {{!--<input id="timezone" class="form-control" type="text" />--}}
+                <hr/>
+                <div class="row">
+                    <div class="col-md-1">
+                        <h5>Repeats:</h5>
+                    </div>
+                    <div class="col-md-2">
+                        <div class="form-group-material-orange-700">
+                            <select class="form-control floating-label input-lg" placeholder="Rule">
+                                <option value="daily">Daily</option>
+                                <option value="weekly">Weekly</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-md-2">
+                        <div class="form-group-material-orange-700">
+                            <select class="form-control floating-label input-lg" placeholder="Every">
+                                <option value="1">1</option>
+                                <option value="2">2</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-1">
+                        <h5>Repeats on:</h5>
+                    </div>
+                    <div class="col-md-8">
+                      {{#each weekday in controller.weekdays}}
+                          <div class="checkbox checkbox-material-orange-700">
+                              <label>
+                                  {{input type="checkbox" checked=false}} {{weekday}}
+                              </label>
+                          </div>
+                      {{/each}}
                     </div>
                 </div>
             </form>
