@@ -11,6 +11,7 @@ var App = Ember.Application.extend({
   Resolver: Resolver,
   ready: function () {
     this.intl.set('locales', ['en']);
+    Ember.$.material.init();
   }
 });
 
