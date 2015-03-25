@@ -39,6 +39,16 @@ export default Ember.Controller.extend({
       });
       result.error(function (error) {
         console.log(error);
+        Ember.$('#inputCode').popover({
+          title: 'result.error',
+          content: 'Please check your code and try again.',
+          placement: 'bottom',
+          trigger: 'manual'
+        });
+        Ember.$('#inputCode').popover('show');
+        setTimeout(function(){
+          Ember.$('#inputCode').popover('hide');
+        }, 7000);
       });
     }
   }

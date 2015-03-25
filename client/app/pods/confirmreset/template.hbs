@@ -11,7 +11,8 @@
                 <div {{bind-attr class=":form-group isPasswordConfirmError:has-error"}}>
                     <div {{action "checkcode" on="mouseUp"}} class="input-group">
                         <span class="input-group-addon"><i class="fa fa-key"></i></span>
-                      {{input title="Code to reset your password"
+                      {{input id="inputCode"
+                      title="Code to reset your password"
                       type="text"
                       value=checkCodeField
                       valueBinding="checkCodeField"

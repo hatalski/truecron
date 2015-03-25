@@ -43,7 +43,6 @@ export default Ember.Controller.extend(LoginControllerMixin, {
           setTimeout(function(){
             Ember.$('#email').popover('hide');
           }, 7000);
-          console.log(error);
         });
         var urlfordbreset = ENV.APP.RESET_PASSWORD_HOST+'db';
         console.log(urlfordbreset);
