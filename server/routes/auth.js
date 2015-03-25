@@ -212,16 +212,49 @@ var codeToResetPassword = '';
 router.post('/resetpassword', function(req, res, next) {
     var email = req.body.resetpass.email;
     var validEmail = validator.isEmail(email);
-    var pathForTransition = req.body.env+'/#/confirmreset'; //temporary address change to the correct
-    console.log('!!!!!!!url:'+pathForTransition);
+    var pathForTransition = req.body.env+'/#/confirmreset';
     codeToResetPassword = crypto.randomBytes(64).toString('base64');
     if (codeToResetPassword.length > 40) {
         codeToResetPassword = codeToResetPassword.slice(codeToResetPassword.length - 40).toString();
+        req.body.resetpass.resetpasswordcode = codeToResetPassword;
     }
     console.log('!!!!!!!!!codeToResetPassword:'+codeToResetPassword);
     console.log('length:'+codeToResetPassword.length);
 
+    if (!validEmail) {
+        return next(new apiErrors.InvalidParams('Email is not specified.'));
+    }
+    if (!codeToResetPassword) {
+        return next(new apiErrors.InvalidParams('resetPasswordCode is not specified.'));
+    }
+
     if (validEmail) {
+        storage.ResetPasswords.create(req.context, req.body.resetpass)
+            .then(function (resetpassw) {
+                smtp.sendMail({
+                    from: 'welcome@truecron.com',
+                    to: email,
+                    subject: 'reset password truecron.com',
+                    html: 'To reset your password, just click this link:<br/><br/>' +
+                    '<a href="'+pathForTransition+'?code='+codeToResetPassword+'">'+pathForTransition+'</a> <br/> ' +
+                    'or manually enter this code: '+codeToResetPassword+
+                    '<br/><br/>Yours Truly,<br/>' + 'TrueCron Team'
+                }, function (error, info) {
+                    if (error) {
+                        res.status(400).json({ resetpass: resetpassw, message: 'Error DB'});
+                        console.log(error);
+                    } else {
+                        console.dir(info);
+                        console.log('Message sent: ' + info.messageId);
+                    }
+                });
+                res.status(201).json({ resetpass: resetpassw, message: '!!!!!!!!Email with a code to reset your password has been sent to the specified address'});
+            })
+            .catch(function (err) {
+                logger.error(err.toString());
+                return next(err);
+            });
+
         // send an email to the user code to reset your password
         smtp.sendMail({
             from: 'welcome@truecron.com',
@@ -239,34 +272,12 @@ router.post('/resetpassword', function(req, res, next) {
                 console.log('Message sent: ' + info.messageId);
             }
         });
-        res.status(201).json({ message: 'Email with a code to reset your password has been sent to the specified address'});
+        res.status(201).json({ message: '???????????????Email with a code to reset your password has been sent to the specified address'});
     }
     else {
         res.status(400).json({ message: 'Email not valid!!!'});
     }
 });
-
-//// save to DB resetpassword
-router.post('/resetpassworddb', function(req, res, next) {
-    var email = req.body.resetpass.email;
-    req.body.resetpass.resetpasswordcode = codeToResetPassword;
-    var validEmail = validator.isEmail(email);
-    if (!validEmail) {
-        return next(new apiErrors.InvalidParams('Email is not specified.'));
-    }
-    if (!codeToResetPassword) {
-        return next(new apiErrors.InvalidParams('resetPasswordCode is not specified.'));
-    }
-    storage.ResetPasswords.create(req.context, req.body.resetpass)
-        .then(function (resetpassw) {
-            res.status(201).json({ resetpass: resetpassw });
-        })
-        .catch(function (err) {
-            logger.error(err.toString());
-            return next(err);
-        });
-});
-
 
 router.post('/resetpasswordconfirmreset', function(req, res, next) {
     req.context = context.newSystemContext();

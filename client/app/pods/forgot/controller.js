@@ -44,23 +44,6 @@ export default Ember.Controller.extend(LoginControllerMixin, {
             Ember.$('#email').popover('hide');
           }, 7000);
         });
-        var urlfordbreset = ENV.APP.RESET_PASSWORD_HOST+'db';
-        console.log(urlfordbreset);
-        //send ajax to db
-        result = Ember.$.ajax({
-          url: urlfordbreset,
-          type: 'POST',
-          contentType: 'application/json',
-          dataType: 'json',
-          data: JSON.stringify(requestData),
-          crossDomain: true
-        });
-        result.success(function(response) {
-          console.log(response.message);
-        });
-        result.error(function(error) {
-          console.log(error);
-        });
       }
     }
 });
