@@ -1,6 +1,7 @@
 import Ember from 'ember';
 
 export default Ember.Controller.extend({
+  name: '',
   currentDate: moment().format('YYYY-MM-DD'),
   currentTime: moment().format('HH:mm'),
   currentZone: moment().zone(),
