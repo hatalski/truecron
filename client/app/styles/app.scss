@@ -1,6 +1,6 @@
 //@import "ember-paper";
 
-$primary-bg-color: #ecf6f8;
+$primary-bg-color: #eceff1;
 $primary-color: #464748;
 
 @mixin border-radius($radius) {
@@ -26,7 +26,6 @@ body {
 
 .btn-signup {
   @include border-radius(2px);
-  color: #ffffff;
 }
 
 .btn-signup:hover, .btn-signup:active {
@@ -309,9 +308,14 @@ h2.pitch {
 }
 
 /*sidebar */
-
-.truecron-tab-margin {
-  margin-top: 15px;
+.truecron-title-margin{
+  margin: 10px 0;
+}
+.truecron-input-margin{
+  margin: 25px 0;
+}
+.list-group .list-group-item{
+  padding: 10px 15px;
 }
 
 .sidebar {
@@ -325,7 +329,7 @@ h2.pitch {
   overflow-x: hidden;
   overflow-y: auto;
   height: 100%;
-  background-color: #beccd4;
+  background-color: #cfd8dc;
 }
 
 .dropdown-truecron li {
@@ -389,7 +393,7 @@ h2.pitch {
 }
 
 a.list-group-item:hover, a.list-group-item:active, a.list-group-item:focus {
-  background: #ecf6f8;
+  background: $primary-bg-color;
 }
 
 .truecron-job-item-p {
@@ -447,8 +451,7 @@ a.list-group-item:hover, a.list-group-item:active, a.list-group-item:focus {
 .truecron-tab-active {
   background-color: #eef4f8;
   background-image: none;
-  border-left: solid #f06a21;
-  border-width: 1px 0 1px 1px;
+  border-left: 1px solid #f06a21;
 }
 
 .truecron-tab-failed {
@@ -456,7 +459,7 @@ a.list-group-item:hover, a.list-group-item:active, a.list-group-item:focus {
   background-image: none;
 }
 
-.truecron-tab-normal {
+.list-group .list-group-item .truecron-tab-normal {
   background-color: #f7f9fa;
   background-image: none;
 }
@@ -530,7 +533,7 @@ a.list-group-item:hover, a.list-group-item:active, a.list-group-item:focus {
 }
 
 .run-history-info {
-  background-color: #eef4f8;
+  background-color: $primary-bg-color
 }
 
 .run-history-info h4 {
@@ -720,10 +723,6 @@ a.list-group-item:hover, a.list-group-item:active, a.list-group-item:focus {
   padding-bottom: 3px;
 }
 
-.btn-margin {
-  margin-top: 2px;
-}
-
 .truecron-org-title {
   background-color: #dbf2fa;
   padding-top: 6px;
@@ -751,7 +750,7 @@ a.list-group-item:hover, a.list-group-item:active, a.list-group-item:focus {
   background: #fff9e6;
   border: 1px solid #fee798;
   text-align: center;
-  margin-top: 46px;
+  margin-top: 65px;
   margin-bottom: 5px;
 }
 
