@@ -1,14 +1,13 @@
 /*main */
 body {
-  background-color: #ecf6f8;
+  background-color: #eceff1;
   color: #464748; }
 
 .btn-signup {
   -webkit-border-radius: 2px;
   -moz-border-radius: 2px;
   -ms-border-radius: 2px;
-  border-radius: 2px;
-  color: #ffffff; }
+  border-radius: 2px; }
 
 .btn-signup:hover, .btn-signup:active {
   -webkit-border-radius: 2px;
@@ -245,8 +244,14 @@ h2.pitch {
   border-top: solid 1px #c2cacd; }
 
 /*sidebar */
-.truecron-tab-margin {
-  margin-top: 15px; }
+.truecron-title-margin {
+  margin: 10px 0; }
+
+.truecron-input-margin {
+  margin: 25px 0; }
+
+.list-group .list-group-item {
+  padding: 10px 15px; }
 
 .sidebar {
   padding-left: 0;
@@ -259,7 +264,7 @@ h2.pitch {
   overflow-x: hidden;
   overflow-y: auto;
   height: 100%;
-  background-color: #beccd4; }
+  background-color: #cfd8dc; }
 
 .dropdown-truecron li {
   list-style: none; }
@@ -318,7 +323,7 @@ h2.pitch {
   background: linear-gradient(#f6fafd, #efeff1); }
 
 a.list-group-item:hover, a.list-group-item:active, a.list-group-item:focus {
-  background: #ecf6f8; }
+  background: #eceff1; }
 
 .truecron-job-item-p {
   color: #74838a; }
@@ -369,14 +374,13 @@ a.list-group-item:hover, a.list-group-item:active, a.list-group-item:focus {
 .truecron-tab-active {
   background-color: #eef4f8;
   background-image: none;
-  border-left: solid #f06a21;
-  border-width: 1px 0 1px 1px; }
+  border-left: 1px solid #f06a21; }
 
 .truecron-tab-failed {
   background-color: #f6edee;
   background-image: none; }
 
-.truecron-tab-normal {
+.list-group .list-group-item .truecron-tab-normal {
   background-color: #f7f9fa;
   background-image: none; }
 
@@ -431,7 +435,7 @@ a.list-group-item:hover, a.list-group-item:active, a.list-group-item:focus {
   margin-top: 1px; }
 
 .run-history-info {
-  background-color: #eef4f8; }
+  background-color: #eceff1; }
 
 .run-history-info h4 {
   color: #74838a; }
@@ -583,9 +587,6 @@ a.list-group-item:hover, a.list-group-item:active, a.list-group-item:focus {
   padding-top: 3px;
   padding-bottom: 3px; }
 
-.btn-margin {
-  margin-top: 2px; }
-
 .truecron-org-title {
   background-color: #dbf2fa;
   padding-top: 6px; }
@@ -608,7 +609,7 @@ a.list-group-item:hover, a.list-group-item:active, a.list-group-item:focus {
   background: #fff9e6;
   border: 1px solid #fee798;
   text-align: center;
-  margin-top: 46px;
+  margin-top: 65px;
   margin-bottom: 5px; }
 
 .arrow_box-left h3 {
