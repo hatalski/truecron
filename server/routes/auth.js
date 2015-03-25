@@ -214,14 +214,7 @@ router.post('/resetpassword', function(req, res, next) {
     var validEmail = validator.isEmail(email);
     var pathForTransition = req.body.env+'/#/confirmreset'; //temporary address change to the correct
     console.log('!!!!!!!url:'+pathForTransition);
-    var code = crypto.randomBytes(16).toString();
-
-    //Reinvent code in HEX format
-    var hex = '';
-    for (var i = 0; i < code.length; i++){
-        hex = code.charCodeAt(i).toString(16);
-        codeToResetPassword += hex;
-    }
+    codeToResetPassword = crypto.randomBytes(64).toString('base64');
     if (codeToResetPassword.length > 40) {
         codeToResetPassword = codeToResetPassword.slice(codeToResetPassword.length - 40).toString();
     }
