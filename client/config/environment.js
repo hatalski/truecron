@@ -35,7 +35,7 @@ module.exports = function(environment) {
     // ENV.APP.LOG_TRANSITIONS_INTERNAL = true;
     ENV.APP.LOG_VIEW_LOOKUPS = true;
 
-    ENV.APP.SERVER_HOST      = 'https://192.168.3.10';
+    ENV.APP.SERVER_HOST      = 'https://dev.truecron.com';
     ENV.APP.API_HOST         = ENV.APP.SERVER_HOST + '/api/v1';
     ENV.APP.SIGNUP_HOST      = ENV.APP.SERVER_HOST + '/auth/signup';
     ENV.APP.BETA_SIGNUP_HOST = ENV.APP.SERVER_HOST + '/beta/signup';
