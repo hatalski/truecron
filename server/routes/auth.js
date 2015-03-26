@@ -241,37 +241,19 @@ router.post('/resetpassword', function(req, res, next) {
                     '<br/><br/>Yours Truly,<br/>' + 'TrueCron Team'
                 }, function (error, info) {
                     if (error) {
-                        res.status(400).json({ resetpass: resetpassw, message: 'Error DB'});
+                        res.status(400).json({ resetpass: resetpassw, message: 'Error Send mail'});
                         console.log(error);
                     } else {
                         console.dir(info);
                         console.log('Message sent: ' + info.messageId);
                     }
                 });
-                res.status(201).json({ resetpass: resetpassw, message: '!!!!!!!!Email with a code to reset your password has been sent to the specified address'});
+                //res.status(201).json({ resetpass: resetpassw, message: '!!!!!!!!Email with a code to reset your password has been sent to the specified address'});
             })
             .catch(function (err) {
                 logger.error(err.toString());
                 return next(err);
             });
-
-        // send an email to the user code to reset your password
-        smtp.sendMail({
-            from: 'welcome@truecron.com',
-            to: email,
-            subject: 'reset password truecron.com',
-            html: 'To reset your password, just click this link:<br/><br/>' +
-            '<a href="'+pathForTransition+'?code='+codeToResetPassword+'">'+pathForTransition+'</a> <br/> ' +
-                'or manually enter this code: '+codeToResetPassword+
-            '<br/><br/>Yours Truly,<br/>' + 'TrueCron Team'
-        }, function (error, info) {
-            if (error) {
-                console.log(error);
-            } else {
-                console.dir(info);
-                console.log('Message sent: ' + info.messageId);
-            }
-        });
         res.status(201).json({ message: 'Email with a code to reset your password has been sent to the specified address'});
     }
     else {

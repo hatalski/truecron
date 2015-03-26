@@ -17,7 +17,6 @@ var using = Promise.using;
  */
 
 var create = module.exports.create = Promise.method(function (context, attributes) {
-    console.log('!!!!!!!!!!!!!!in storage resetpassword create');
     if (!attributes.email) {
         throw new errors.InvalidParams('email is not specified.');
     }
@@ -59,8 +58,6 @@ var findByCode = module.exports.findByCode = Promise.method(function (context, c
 
 
 var findByEmail = module.exports.findByEmail = Promise.method(function (context, email, transaction) {
-    console.log('!!!!!!in findByEmail');
-    console.log('context.resetpasswordcode:'+context.resetpasswordcode);
         return models.ResetPassword.find({ where: { email: email, resetpasswordcode: context.resetpasswordcode } }, { transaction: transaction })
             .then(function (resetpass) {
                 return resetpass;
