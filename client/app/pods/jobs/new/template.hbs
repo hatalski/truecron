@@ -4,7 +4,6 @@
             <div class="col-md-6 truecron-input-margin">
                 <div class="form-group-material-orange-700">
                     {{input id="jobName" type="text" value=name class="form-control floating-label input-lg" placeholder="Name of the job" data-hint="Give it a meaningful name"}}
-                    {{!--<input {{bind-attr value=name}} class="form-control floating-label input-lg" id="jobName" placeholder="Name of the job" data-hint="Give it a meaningful name" type="text"/>--}}
                 </div>
             </div>
             <div class="col-md-6 text-center truecron-title-margin">
@@ -124,8 +123,9 @@
                         <h5>Repeat on:</h5>
                     </div>
                     <div class="col-md-8">
+                        <div class="checkbox pull-left"></div>
                         {{#each weekday in controller.weekdays}}
-                            <div class="checkbox checkbox-material-orange-700 truecron-checkbox-margin">
+                            <div class="checkbox checkbox-material-orange-700 pull-left">
                                 <label>
                                     {{input type="checkbox" checked=false}} {{weekday}}
                                 </label>
@@ -148,7 +148,7 @@
                                 <div class="panel-body">
                                     <div class="row">
                                         <div class="col-md-1">
-                                            <h5>Date Range:</h5>
+                                            <h5>Range:</h5>
                                         </div>
                                         <div class="col-md-2">
                                             <div class="form-group form-group-material-orange-700">
