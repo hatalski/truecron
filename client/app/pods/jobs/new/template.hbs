@@ -1,19 +1,39 @@
 <header class="job-details-header">
     <div class="container-fluid">
         <div class="row">
-            <div class="col-md-6">
+            <div class="col-md-6 truecron-input-margin">
                 <div class="form-group-material-orange-700">
-                    <input class="form-control floating-label input-lg" id="jobName" placeholder="Job's name" data-hint="Give it a meaningful name" type="text">
+                    {{input id="jobName" type="text" value=name class="form-control floating-label input-lg" placeholder="Name of the job" data-hint="Give it a meaningful name"}}
+                    {{!--<input {{bind-attr value=name}} class="form-control floating-label input-lg" id="jobName" placeholder="Name of the job" data-hint="Give it a meaningful name" type="text"/>--}}
                 </div>
             </div>
-            <div class="col-md-6 truecron-tasks-header">
-                <h3><span class="blue-dashed">Schedule is not set yet.</span></h3>
+            {{!--<div class="col-md-6 truecron-tasks-header">--}}
+                {{!--<h4>--}}
+                    {{!--<span class="blue-dashed">Weekly on Monday, Friday, Thuesday, Sunday, Wednesday at 12:32:00 PM</span>--}}
+                {{!--</h4>--}}
+            {{!--</div>--}}
+        </div>
+        <div class="row">
+            <div class="col-md-6 run-history-info">
+                <h1>Run Schedule</h1>
             </div>
+            <div class="col-md-6 truecron-tasks-header">
+                <h4 class="text-center">
+                    <span class="blue-dashed">Weekly on Monday, Friday, Thuesday, Sunday, Wednesday at 12:32:00 PM</span>
+                </h4>
+            </div>
+            {{!--<div class="col-md-3 text-center">--}}
+                {{!--<h4>LAST RUN:</h4>--}}
+                {{!--<h4>July 6 12:32:00pm</h4>--}}
+            {{!--</div>--}}
+            {{!--<div class="col-md-3 text-center">--}}
+                {{!--<h4>LAST RUN:</h4>--}}
+                {{!--<h4>July 8 12:32:00pm</h4>--}}
+            {{!--</div>--}}
         </div>
     </div>
 </header>
 <div class="container-fluid">
-    <div class="row"><h3>Set a run frequency</h3></div>
     <div class="row">
         <div class="new-job-body">
             <form>
@@ -31,7 +51,7 @@
                           {{input id="startsAt" value=currentTime class="form-control floating-label input-lg" placeholder="Time" type="time"}}
                         </div>
                     </div>
-                    <div class="col-md-2">
+                    <div class="col-md-3">
                         <div class="form-group-material-orange-700">
                             <select class="form-control floating-label input-lg" placeholder="Timezone">
                               {{#each timezone in controller.zones}}
@@ -90,7 +110,7 @@
                 </div>
                 <div class="row">
                     <div class="col-md-1">
-                        <h5>Repeats on:</h5>
+                        <h5>Repeat on:</h5>
                     </div>
                     <div class="col-md-8">
                       {{#each weekday in controller.weekdays}}
@@ -100,6 +120,104 @@
                               </label>
                           </div>
                       {{/each}}
+                    </div>
+                </div>
+                <hr/>
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="panel panel-material-blue-grey-100">
+                            <div class="panel-heading" id="excludeRule">
+                                <h4 class="panel-title">
+                                    <a data-toggle="collapse" data-parent="#accordion" href="#exceptionRulePanel" aria-expanded="true" aria-controls="exceptionRulePanel">
+                                        Schedule Exceptions
+                                    </a>
+                                </h4>
+                            </div>
+                            <div id="exceptionRulePanel" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="excludeRule">
+                                <div class="panel-body">
+                                    <div class="row">
+                                        <div class="col-md-1">
+                                            <h5>Date Range:</h5>
+                                        </div>
+                                        <div class="col-md-2">
+                                            <div class="form-group form-group-material-orange-700">
+                                              {{input type="text" value=excludeFromDate class="form-control floating-label input-lg" placeholder="Exclude From"}}
+                                            </div>
+                                        </div>
+                                        <div class="col-md-2">
+                                            <div class="form-group form-group-material-orange-700">
+                                              {{input type="text" value=excludeToDate class="form-control floating-label input-lg" placeholder="Exclude To"}}
+                                            </div>
+                                        </div>
+                                        <div class="col-md-2">
+                                            <div class="form-group form-group-material-orange-700">
+                                                <div class="input-group-btn">
+                                                    <button type="submit" class="btn btn-material-orange-800">Exclude Date Range</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12">
+                        <table class="table table-striped table-hover">
+                            <thead>
+                            <tr>
+                                <th>#</th>
+                                <th>Weekday</th>
+                                <th>Date</th>
+                                <th>Time</th>
+                                <th>Timezone</th>
+                                <th>Excluded</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr>
+                                <td>1</td>
+                                <td>Monday</td>
+                                <td>2015-01-01</td>
+                                <td>10:00 AM</td>
+                                <td>GMT+0300</td>
+                                <td>no</td>
+                            </tr>
+                            <tr>
+                                <td>2</td>
+                                <td>Friday</td>
+                                <td>2016-02-02</td>
+                                <td>11:00 PM</td>
+                                <td>GMT+0300</td>
+                                <td>no</td>
+                            </tr>
+                            <tr>
+                                <td>3</td>
+                                <td>Friday</td>
+                                <td>2016-02-02</td>
+                                <td>11:00 PM</td>
+                                <td>GMT+0300</td>
+                                <td>no</td>
+                            </tr>
+                            <tr class="danger">
+                                <td>4</td>
+                                <td>Friday</td>
+                                <td>2016-02-02</td>
+                                <td>11:00 PM</td>
+                                <td>GMT+0300</td>
+                                <td>yes</td>
+                            </tr>
+                            <tr>
+                                <td>5</td>
+                                <td>Friday</td>
+                                <td>2016-02-02</td>
+                                <td>11:00 PM</td>
+                                <td>GMT+0300</td>
+                                <td>no</td>
+                            </tr>
+                            </tbody>
+                        </table>
                     </div>
                 </div>
             </form>
