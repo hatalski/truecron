@@ -520,10 +520,6 @@ a.list-group-item:hover, a.list-group-item:active, a.list-group-item:focus {
   background-color: white;
 }
 
-.truecron-tasks-header h3 {
-  color: #3399ff;
-}
-
 .trucron-top-tasks {
   padding-top: 20px;
 }
@@ -808,4 +804,9 @@ a.list-group-item:hover, a.list-group-item:active, a.list-group-item:focus {
 /*add new job */
 .new-job-body {
   padding-top: 15px;
+}
+
+.truecron-checkbox-margin .radio + .radio, .checkbox + .checkbox {
+  margin: 10px 20px 10px 0;
+  float: left;
 }
