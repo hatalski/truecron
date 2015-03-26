@@ -80,7 +80,7 @@
                   </div>
                   <div class="col-md-2">
                       <div class="form-group-material-orange-700">
-                        {{input id="endsAfter" type="number" value=endsAfter class="form-control form-control floating-label input-lg" placeholder="occurences"}}
+                        {{input id="endsAfter" type="number" value=endsAfter class="form-control form-control floating-label" placeholder="occurences"}}
                       </div>
                   </div>
                   <div class="col-md-1">
@@ -92,7 +92,7 @@
                   </div>
                     <div class="col-md-2">
                         <div class="form-group-material-orange-700">
-                           {{input id="endsOnDate" type="date" value=endsOnDate class="form-control input-lg"}}
+                           {{input id="endsOnDate" type="date" value=endsOnDate class="form-control"}}
                         </div>
                     </div>
                 </div>
@@ -124,13 +124,13 @@
                         <h5>Repeat on:</h5>
                     </div>
                     <div class="col-md-8">
-                            {{#each weekday in controller.weekdays}}
-                                <div class="checkbox checkbox-material-orange-700 truecron-checkbox-margin">
-                                    <label>
-                                        {{input type="checkbox" checked=false}} {{weekday}}
-                                    </label>
-                                </div>
-                            {{/each}}
+                        {{#each weekday in controller.weekdays}}
+                            <div class="checkbox checkbox-material-orange-700 truecron-checkbox-margin">
+                                <label>
+                                    {{input type="checkbox" checked=false}} {{weekday}}
+                                </label>
+                            </div>
+                        {{/each}}
                     </div>
                 </div>
                 <hr/>

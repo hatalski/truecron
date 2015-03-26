@@ -11,23 +11,24 @@
                 <div {{bind-attr class=":form-group-material-orange-700 isPasswordError:has-error"}}>
                     <div class="input-group">
                         <span class="input-group-addon"><i class="fa fa-lg fa-key"></i></span>
-                      {{input title="Password must contain at least 8 characters, including UPPER/lowercase and numbers."
-                      type="password"
-                      value=password
-                      placeholder="Password (more than 8 characters in length)"
-                      required="required"
-                      class="form-control input-lg"
-                      pattern="(?=^.{8,}$)(?=.*\d)(?![.\n])(?=.*[A-Z])(?=.*[a-z]).*$" }}
+                      {{input data-hint="Password must contain at least 8 characters, including UPPER/lowercase and numbers."
+                        type="password"
+                        value=password
+                        placeholder="Password (more than 8 characters in length)"
+                        required="required"
+                        class="form-control floating-label input-lg"
+                        pattern="(?=^.{8,}$)(?=.*\d)(?![.\n])(?=.*[A-Z])(?=.*[a-z]).*$" }}
                     </div>
                 </div>
                 <div {{bind-attr class=":form-group-material-orange-700 isPasswordConfirmError:has-error"}}>
                     <div class="input-group">
                         <span class="input-group-addon"><i class="fa fa-lg fa-key"></i></span>
                       {{input id="inputConfirmPassword"
-                      type="password"
-                      value=passwordConfirm
-                      placeholder="Enter password again"
-                      class="form-control input-lg"}}
+                        data-hint="Enter password again"
+                        type="password"
+                        value=passwordConfirm
+                        placeholder="Confirm password"
+                        class="form-control floating-label input-lg"}}
                     </div>
                 </div>
                 <div class="form-group">
