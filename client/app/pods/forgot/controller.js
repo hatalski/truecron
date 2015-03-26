@@ -10,7 +10,9 @@ export default Ember.Controller.extend(LoginControllerMixin, {
         var email = self.get('email');
         console.log('email for reset:'+email);
         var isEmailValid = validator.isEmail(email);
-        var requestData = {'resetpass':{}};
+        var requestData = {'resetpass':{ }};
+        requestData.env = ENV.APP.SERVER_HOST;
+        console.log('ENV.APP.SERVER_HOST:'+ENV.APP.SERVER_HOST);
         this.set('isEmailError', !isEmailValid);
 
         if (isEmailValid) {
@@ -41,24 +43,6 @@ export default Ember.Controller.extend(LoginControllerMixin, {
           setTimeout(function(){
             Ember.$('#email').popover('hide');
           }, 7000);
-          console.log(error);
-        });
-        var urlfordbreset = ENV.APP.RESET_PASSWORD_HOST+'db';
-        console.log(urlfordbreset);
-        //send ajax to db
-        result = Ember.$.ajax({
-          url: urlfordbreset,
-          type: 'POST',
-          contentType: 'application/json',
-          dataType: 'json',
-          data: JSON.stringify(requestData),
-          crossDomain: true
-        });
-        result.success(function(response) {
-          console.log(response.message);
-        });
-        result.error(function(error) {
-          console.log(error);
         });
       }
     }

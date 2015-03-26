@@ -8,12 +8,14 @@
     <div class="row">
         <div class="col-md-offset-4 col-md-4">
             <form {{action "confirmreset" on="submit"}}>
-                <div {{bind-attr class=":form-group-material-orange-700 isPasswordConfirmError:has-error"}}>
+                <div {{bind-attr class=":form-group isPasswordConfirmError:has-error"}}>
                     <div {{action "checkcode" on="mouseUp"}} class="input-group">
-                        <span class="input-group-addon"><i class="fa fa-lg fa-key"></i></span>
-                      {{input title="Code to reset your password"
+                        <span class="input-group-addon"><i class="fa fa-key"></i></span>
+                      {{input id="inputCode"
+                      title="Code to reset your password"
                       type="text"
                       value=checkCodeField
+                      valueBinding="checkCodeField"
                       placeholder="Code to reset password"
                       required="required"
                       class="form-control input-lg"
