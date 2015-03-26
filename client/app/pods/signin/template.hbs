@@ -12,22 +12,24 @@
                     <div class="input-group">
                         <span class="input-group-addon"><i class="fa fa-lg fa-envelope-o"></i></span>
                       {{input id="loginEmail"
-                      class="form-control floating-label input-lg"
-                      type="email"
-                      value=identification
-                      placeholder="Email"
-                      required="required"}}
+                        data-hint="Enter your account email"
+                        class="form-control floating-label input-lg"
+                        type="email"
+                        value=identification
+                        placeholder="Email"
+                        required="required"}}
                     </div>
                 </div>
                 <div {{bind-attr class=":form-group-material-orange-700 isLoginError:has-error"}}>
                     <div class="input-group">
                         <span class="input-group-addon"><i class="fa fa-lg fa-key"></i></span>
                       {{input id="loginPassword"
-                      class="form-control floating-label input-lg"
-                      type="password"
-                      value=password
-                      placeholder="Password"
-                      required="required"}}
+                        data-hint="Enter your account password"
+                        class="form-control floating-label input-lg"
+                        type="password"
+                        value=password
+                        placeholder="Password"
+                        required="required"}}
                     </div>
                 </div>
                 <div class="">
@@ -42,7 +44,7 @@
         </div>
         <div class="col-md-4 col-xs-12">
             <div class="g_sign">
-                <a class="btn btn-lg btn-block g_btn btn-white" {{action 'googleLogin'}}><i class="fa fa-google-plus"></i> {{format-message (intl-get "messages.auth.googleButton")}}</a>
+                <a class="btn btn-lg btn-block g_btn btn-white" {{action 'googleLogin'}}><i class="fa fa-google-plus"></i> {{format-message (intl-get "messages.auth.googleSignInButton")}}</a>
             </div>
         </div>
     </div>

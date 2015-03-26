@@ -4,7 +4,8 @@ export default Locale.extend({
   locale: 'en',
   messages: {
     auth: {
-      googleButton: 'Continue with Google',
+      googleSignUpButton: 'Sign up with Google',
+      googleSignInButton: 'Sign in with Google',
       signInButtonNav: 'SIGN IN',
       signUpButtonNav: 'SIGN UP',
       or: 'OR',
