@@ -22,6 +22,11 @@
     "torii": "0.2.2",
     "socket.io-client": "1.3.4",
     "jquery-ui": "1.11.3",
-    "JavaScript-MD5": "1.1.0"
+    "JavaScript-MD5": "1.1.0",
+    "moment-timezone": "0.3.0",
+    "bootstrap-material-design": "0.3.0",
+    "hammerjs": "2.0.4",
+    "arrive": "2.1.0",
+    "selectize": "0.12.0"
   }
 }

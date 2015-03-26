@@ -10,11 +10,12 @@ module.exports = function(sequelize, DataTypes) {
                 this.setDataValue('email', value.toString().toLowerCase());
             }
         },
-        resetpasswordcode:   { type: DataTypes.STRING(1024), allowNull: false }
+        resetpasswordcode:   { type: DataTypes.STRING(1024), primaryKey: true, allowNull: false }
     }, {
         schema: 'tc',
         tableName: 'resetpassword',
         timestamps: true,
+        updatedAt: false,
         freezeTableName: true,
         classMethods: {
             //associate: function(models) {

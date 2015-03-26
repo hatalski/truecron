@@ -1,10 +1,11 @@
 import Ember from 'ember';
+import RRuleParser from 'true-cron/mixins/rrule-parser';
 
-export default Ember.Component.extend({
-  tagName: 'a',
-  classNames: ['list-group-item'],
-  attributeBindings: ['href'],
-  href: '#',
+export default Ember.Component.extend(RRuleParser, {
+  tagName: 'span',
+  //classNames: ['list-group-item'],
+  // attributeBindings: ['href'],
+  // href: '#',
   //selectedRepeatRule: 'Daily',
   //repeatRules: ['Minutely', 'Hourly', 'Daily', 'Weekly', 'Monthly', 'Yearly'],
   //selectedRepeatEvery: 1,
@@ -52,18 +53,25 @@ export default Ember.Component.extend({
     }
     // console.log('startsAt date : ' + new Date(startsAt));
     o.dtstart = new Date(startsAt);
-    var rule = new RRule(o);
-    var now = new Date();
+    //var rule = new RRule(o);
+    //var now = new Date();
     return {
-      text:    rule.toText(),
-      lastRun: rule.before(now, true),
-      nextRun: rule.after(now, true)
+      text:    this.recurrenceRuleToText(this.get('job.rrule')),
+      lastRun: new Date(),//'todo'rule.before(now, true),
+      nextRun: new Date()//'todo'//rule.after(now, true)
     };
   }.property('job.rrule', 'job.startsAt'),
   actions: {
-    test: function() {
+    click: function() {
       "use strict";
-      return "test";
+      Ember.Logger.log('component clicked');
+      this.sendAction('action', this.get('job'));
+      //if (this.get('linkTo')) {
+      //  this.transitionToRoute(this.get('linkTo'));
+      //} else {
+      //  Ember.Logger.log('linkTo parameter is NOT specified in job-list-item component.');
+      //  return;
+      //}
     }
   }
 });

@@ -1,0 +1,50 @@
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-md-8 col-md-offset-2 truecron-org-header">
+            <div class="row">
+                <div class="col-md-8 truecron-title-margin">
+                   <h4>Your Organizations</h4>
+                </div>
+                <div class="col-md-4 text-right">
+                    <a class="btn btn-signup btn-material-orange-800"><i class="fa fa-plus"></i> Create Organization</a>
+                </div>
+            </div>
+        </div>
+      {{#each organization in model}}
+          <div class="col-md-8 col-md-offset-2 truecron-org-title">
+              <div class="row">
+                  <div class="col-md-3">
+                      <p class="org-title">{{organization.name}}</p>
+                  </div>
+                  <div class="col-md-2">
+                      <p>{{organization.workspaces.length}} workspace(s)</p>
+                  </div>
+                  <div class="col-md-2">
+                      <p>633 jobs</p>
+                  </div>
+                  <div class="col-md-2">
+                      <p>8 users</p>
+                  </div>
+                  <div class="col-md-3 text-right">
+                      <a href="#"><i class="fa fa-plus"></i> New Workspace</a>
+                  </div>
+              </div>
+          </div>
+          <div class="col-md-8 col-md-offset-2 truecron-org-content">
+            {{#each workspace in organization.workspaces}}
+            <div class="row">
+                <div class="col-md-2 col-md-offset-3">
+                    <p>{{#link-to 'jobs' workspace}}{{workspace.name}}{{/link-to}}</p>
+                </div>
+                <div class="col-md-2">
+                    <p>{{workspace.jobs.length}} job(s)</p>
+                </div>
+                <div class="col-md-2">
+                    <p>1 user</p>
+                </div>
+            </div>
+            {{/each}}
+          </div>
+      {{/each}}
+    </div>
+</div>

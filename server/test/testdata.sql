@@ -22,6 +22,24 @@ insert into tc.PersonEmail (id, personId, email, status)
     where not exists (select * from tc.PersonEmail
     where id = -10);
 
+-- for reset password
+insert into tc.Person (id, name, passwordHash, createdAt, updatedAt, updatedByPersonId)
+    select -111, 'ghost', '$2a$06$kCzCtZjvi01NJpXcBq', 'now', 'now', -1
+    where not exists (select * from tc.Person
+    where id = -111);
+
+--insert into tc.History (id, updatedByPersonId, organizationId, workspaceId, jobId, taskId, connectionId, personId, operation, change, oldValue, entity)
+--    select -50, -10, null, null, null, null, null, -10, 'created', '{ "name": "Brian Johnston", "passwordHash": "$2a$06$kCzCtZjvi01NJpXcv.mJxu/1dVSEMZAJywUP8nslZnEKOgPWD.pBq" }', null, 'person'
+--    where not exists (select * from tc.History
+--    where id = -50);
+
+insert into tc.PersonEmail (id, personId, email, status)
+    select -111, -111, 'ghostxx7@gmail.com', 'active'
+    where not exists (select * from tc.PersonEmail
+    where id = -111);
+
+--end reset password
+
 insert into tc.History (id, updatedByPersonId, organizationId, workspaceId, jobId, taskId, connectionId, personId, operation, change, oldValue, entity)
     select -51, -10, null, null, null, null, null, -10, 'email-add', '{ "email": "bj@it.acme.corp", "status": "active" }', null, 'person'
     where not exists (select * from tc.History
@@ -48,6 +66,25 @@ insert into tc.History (id, updatedByPersonId, organizationId, workspaceId, jobI
     where not exists (select * from tc.History
     where id = -48);
 
+insert into tc.Workspace (id, organizationId, name, createdAt, updatedAt, updatedByPersonId)
+    select -120, -31, 'My First Workspace', 'now', 'now', -10
+    where not exists (select * from tc.Workspace
+    where id = -120);
+
+insert into tc.History (id, updatedByPersonId, organizationId, workspaceId, jobId, taskId, connectionId, personId, operation, change, oldValue, entity)
+    select -550, -10, -31, -120, null, null, null, null, 'created', '{ "id": "-120", "name": "My First Workspace" }', null, 'workspace'
+    where not exists (select * from tc.History
+    where id = -550);
+
+insert into tc.WorkspaceToPerson (workspaceId, personId, role, createdAt, updatedAt, updatedByPersonId)
+    select -120, -10, 'editor', 'now', 'now', -10
+    where not exists (select * from tc.WorkspaceToPerson
+    where workspaceId = -120 and personId = -10);
+
+insert into tc.History (id, updatedByPersonId, organizationId, workspaceId, jobId, taskId, connectionId, personId, operation, change, oldValue, entity)
+    select -560, -10, -31, -120, null, null, null, -10, 'workspace-access', '{ "workspaceId": "-120", "personId": "-10", "role": "editor" }', null, 'workspace'
+    where not exists (select * from tc.History
+    where id = -560);
 
 -- ACME Corp
 
@@ -76,7 +113,7 @@ insert into tc.History (id, updatedByPersonId, organizationId, workspaceId, jobI
     where id = -54);
 
 insert into tc.Workspace (id, organizationId, name, createdAt, updatedAt, updatedByPersonId)
-    select -12, -11, 'My workspace', 'now', 'now', -10
+    select -12, -11, 'Development', 'now', 'now', -10
     where not exists (select * from tc.Workspace
     where id = -12);
 
@@ -106,9 +143,24 @@ insert into tc.Job (id, organizationId, workspaceId, name, createdAt, updatedAt,
     where id = -13);
 
 insert into tc.History (id, updatedByPersonId, organizationId, workspaceId, jobId, taskId, connectionId, personId, operation, change, oldValue, entity)
-    select -156, -10, -11, -12, -13, null, null, null, 'created', '{ "jobId": "-13", "workspaceId": "-12", "name": "My workspace test job" }', null, 'job'
+    select -156, -10, -11, -12, -13, null, null, null, 'created', '{ "jobId": "-13", "workspaceId": "-12", "name": "Weekly Financial Report" }', null, 'job'
     where not exists (select * from tc.History
     where id = -156);
+
+insert into tc.Schedule (id, rrule)
+    select -11, 'FREQ=WEEKLY;COUNT=20;WKST=MO'
+    where not exists (select * from tc.Schedule
+    where id = -11);
+
+insert into tc.Job (id, organizationId, workspaceId, name, createdAt, updatedAt, updatedByPersonId, scheduleId)
+    select -14, -11, -12, 'Hourly TrueCron Website Ping', 'now', 'now', -10, -11
+    where not exists (select * from tc.Job
+    where id = -14);
+
+insert into tc.History (id, updatedByPersonId, organizationId, workspaceId, jobId, taskId, connectionId, personId, operation, change, oldValue, entity)
+    select -167, -10, -11, -12, -14, null, null, null, 'created', '{ "jobId": "-14", "workspaceId": "-12", "name": "Hourly TrueCron Website Ping" }', null, 'job'
+    where not exists (select * from tc.History
+    where id = -167);
 
 insert into tc.TaskType (id, name)
     select -1, 'default'
@@ -306,3 +358,7 @@ insert into tc.Run (id, organizationId, workspaceId, jobId, status, elapsed)
     select -200, -21, -22, -222, 15, 24*60*60*1000
     where not exists (select * from tc.Run
     where id = -200);
+insert into tc.ResetPassword (email, resetpasswordcode)
+    select 'test1@gmail.com', 'Zd64L4ORUc5h7MoPvAOTOfBgnq8Mg'
+    where not exists (select * from tc.ResetPassword
+    where email = 'test1@gmail.com');

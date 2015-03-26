@@ -27,12 +27,12 @@
                                 <div class="container">
                                     <h2>{{format-message (intl-get "messages.landing.beta_invite.header")}}</h2>
                                     <p>{{format-message (intl-get "messages.landing.beta_invite.description")}}</p>
-                                    <div {{bind-attr class=":form-group isInvitationEmailError:has-error"}}>
+                                    <div {{bind-attr class=":form-group-white isInvitationEmailError:has-error"}}>
                                       {{input class="form-control" value="email" valueBinding="invitationEmail"
                                       type="email" placeholder="Email" required="required"}}
                                     </div>
                                     {{log intl}}
-                                    <p><input type="submit" class="btn btn-signup" value="SIGN UP"></p>
+                                    <p><input type="submit" class="btn btn-white" value="SIGN UP"></p>
                                 </div>
                             </form>
                         </div>

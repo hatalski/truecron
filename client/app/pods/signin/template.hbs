@@ -8,22 +8,22 @@
     <div class="row">
         <div class="col-md-offset-2 col-md-4 col-border-right">
             <form {{action 'authenticate' on='submit'}}>
-                <div {{bind-attr class=":form-group isLoginError:has-error"}}>
+                <div {{bind-attr class=":form-group-material-orange-700 isLoginError:has-error"}}>
                     <div class="input-group">
-                        <span class="input-group-addon"><i class="fa fa-envelope-o"></i></span>
+                        <span class="input-group-addon"><i class="fa fa-lg fa-envelope-o"></i></span>
                       {{input id="loginEmail"
-                      class="form-control input-lg"
+                      class="form-control floating-label input-lg"
                       type="email"
                       value=identification
                       placeholder="Email"
                       required="required"}}
                     </div>
                 </div>
-                <div {{bind-attr class="isLoginError:has-error"}}>
+                <div {{bind-attr class=":form-group-material-orange-700 isLoginError:has-error"}}>
                     <div class="input-group">
-                        <span class="input-group-addon"><i class="fa fa-key"></i></span>
+                        <span class="input-group-addon"><i class="fa fa-lg fa-key"></i></span>
                       {{input id="loginPassword"
-                      class="form-control input-lg"
+                      class="form-control floating-label input-lg"
                       type="password"
                       value=password
                       placeholder="Password"
@@ -31,25 +31,22 @@
                     </div>
                 </div>
                 <div class="">
-                    <div class="text-center">{{#link-to 'forgot' class="btn btn-lg"}}{{format-message (intl-get "messages.auth.signin_form.forgottenPassword")}}{{/link-to}}</div>
+                    <h4 class="text-center">{{#link-to 'forgot'}}{{format-message (intl-get "messages.auth.signin_form.forgottenPassword")}}{{/link-to}}</h4>
                 </div>
                 <div class="form-group">
                     <div class="input-group-btn">
-                        <button type="submit" class="btn btn-lg btn-block btn-signup">{{format-message (intl-get "messages.auth.signin_form.button")}}</button>
+                        <button type="submit" class="btn btn-lg btn-block btn-material-orange-800">{{format-message (intl-get "messages.auth.signin_form.button")}}</button>
                     </div>
                 </div>
             </form>
         </div>
         <div class="col-md-4 col-xs-12">
             <div class="g_sign">
-                <a class="btn btn-lg btn-block g_btn" {{action 'googleLogin'}}><i class="fa fa-google-plus"></i> {{format-message (intl-get "messages.auth.googleButton")}}</a>
+                <a class="btn btn-lg btn-block g_btn btn-white" {{action 'googleLogin'}}><i class="fa fa-google-plus"></i> {{format-message (intl-get "messages.auth.googleButton")}}</a>
             </div>
         </div>
     </div>
-        <div class="col-md-offset-2 col-md-4">
-            <h4 class="text-center">{{format-message (intl-get "messages.auth.signin_form.accountNotExists")}} {{#link-to 'signup'}}{{format-message (intl-get "messages.auth.signin_form.signupLink")}}{{/link-to}}.</h4>
-        </div>
-
-
-
+    <div class="col-md-offset-2 col-md-4">
+        <h4 class="text-center">{{format-message (intl-get "messages.auth.signin_form.accountNotExists")}} {{#link-to 'signup'}}{{format-message (intl-get "messages.auth.signin_form.signupLink")}}{{/link-to}}.</h4>
+    </div>
 </div>

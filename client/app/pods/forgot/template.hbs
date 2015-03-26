@@ -7,13 +7,12 @@
     </div>
     <div class="row">
         <div class="col-md-offset-4 col-md-4">
-            <form {{action "sendRecoveryCode" on="submit"}}>
-                <div {{bind-attr class=":form-group isEmailError:has-error"}}>
+            <form id="inputformrecovery" {{action "sendRecoveryCode" on="submit"}}>
+                <div {{bind-attr class=":form-group-material-orange-700 isEmailError:has-error"}}>
                     <div class="input-group">
-                        <span class="input-group-addon"><i class="fa fa-envelope-o"></i></span>
+                        <span class="input-group-addon"><i class="fa fa-lg fa-envelope-o"></i></span>
                       {{input id="email"
-                      value=signupEmail
-                      valueBinding="email"
+                      value=email
                       type="email"
                       placeholder="Email"
                       required="required"
@@ -22,10 +21,15 @@
                 </div>
                 <div class="form-group">
                     <div class="input-group-btn">
-                        <button type="submit" class="btn btn-lg btn-block btn-signup">{{format-message (intl-get "messages.auth.recovery_form.button")}}</button>
+                        <button type="submit" class="btn btn-lg btn-block btn-material-orange-800">{{format-message (intl-get "messages.auth.recovery_form.button")}}</button>
                     </div>
                 </div>
             </form>
+          {{#if isSuccess}}
+              <div id="divresultsuccess">
+                  <h4>An email was sent to you with further instructions on how to retrieve your password.</h4>
+              </div>
+          {{/if}}
         </div>
     </div>
 </div>

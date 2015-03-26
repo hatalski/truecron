@@ -495,7 +495,7 @@ if not HasSchemaVersion(15) then
     create table tc.ResetPassword
     (
         email               varchar(256) not null,
-        resetpasswordcode   bytea not null,
+        resetpasswordcode   varchar(1024) not null,
         createdAt           timestamp(0) with time zone not null default 'now',
         constraint          ResetPassword_Pk primary key (resetpasswordcode)
     );
