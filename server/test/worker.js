@@ -26,20 +26,20 @@ describe('Email task',
         });
     });
 
-describe('FTP task',
-    function()
-    {
-        it('has run', function(done)
-        {
-            var ftpTask = new FtpTask({host:'ftp.darvision.com', username:'anonymous', password:'@anonymous', protocol: 'ftp'}, 'ls .');
-            var ftpS3Log = new S3logger('_ftpS3LogTest');
-            ftpTask.logSubscribers.push(ftpS3Log);
-            ftpTask.run(function(){
-                expect(ftpTask.status).not.to.eql('waiting');
-                done();
-            });
-        });
-    });
+//describe('FTP task',
+//    function()
+//    {
+//        it('has run', function(done)
+//        {
+//            var ftpTask = new FtpTask({host:'ftp.darvision.com', username:'anonymous', password:'@anonymous', protocol: 'ftp'}, 'ls .');
+//            var ftpS3Log = new S3logger('_ftpS3LogTest');
+//            ftpTask.logSubscribers.push(ftpS3Log);
+//            ftpTask.run(function(){
+//                expect(ftpTask.status).not.to.eql('waiting');
+//                done();
+//            });
+//        });
+//    });
 
 //describe('Archive task',
 //    function()
