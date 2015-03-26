@@ -9,7 +9,7 @@ export default Ember.Controller.extend({
   actions: {
     confirmnewpassword: function() {
       var self = this;
-      var password = self.get('signupPassword');
+      var password = self.get('password');
       var isPasswordValid = password.length > 7;
       self.set('isPasswordError', !isPasswordValid);
       var isPasswordSame = password === self.get('signupPasswordConfirm');
