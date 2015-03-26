@@ -18,7 +18,7 @@ api.route('/resetpassword')
             return next(new apiErrors.InvalidParams('email is not specified.'));
         }
         var resetPasswordCode = req.body.resetpasswordcode;
-        if (!resetPasswordCode) {
+        if (resetPasswordCode === null || resetPasswordCode === undefined) {
             console.log('!!!resetPasswordCode NOT specified: '+resetPasswordCode);
             return next(new apiErrors.InvalidParams('resetPasswordCode is not specified.'));
         }

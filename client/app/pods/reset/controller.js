@@ -9,10 +9,10 @@ export default Ember.Controller.extend({
   actions: {
     confirmnewpassword: function() {
       var self = this;
-      var password = self.get('password');
+      var password = self.get('signupPassword');
       var isPasswordValid = password.length > 7;
       self.set('isPasswordError', !isPasswordValid);
-      var isPasswordSame = password === self.get('passwordConfirm');
+      var isPasswordSame = password === self.get('signupPasswordConfirm');
       self.set('isPasswordConfirmError', !isPasswordSame);
       if (isPasswordValid && isPasswordSame) {
         var wl = window.location.toString();
@@ -32,18 +32,19 @@ export default Ember.Controller.extend({
         });
         result.done(function(response) {
           Ember.Logger.log(response);
+          window.location = ENV.APP.SERVER_HOST+"/#/signin";
         });
         result.fail(function(error) {
           Ember.Logger.log(error);
-          Ember.$('#password').popover({
+          Ember.$('#inputConfirmPassword').popover({
             title: 'error.',
-            content: 'Error.',
+            content: 'User not found.',
             placement: 'bottom',
             trigger: 'manual'
           });
-          Ember.$('#password').popover('show');
+          Ember.$('#inputConfirmPassword').popover('show');
           setTimeout(function(){
-            Ember.$('#password').popover('hide');
+            Ember.$('#inputConfirmPassword').popover('hide');
           }, 5000);
         });
       }
