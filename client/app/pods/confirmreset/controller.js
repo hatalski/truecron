@@ -33,7 +33,7 @@ export default Ember.Controller.extend({
         data: JSON.stringify(requestData),
         crossDomain: true
       });
-      result.success(function (response) {
+      result.done(function (response) {
         console.log(response);
         window.location = ENV.APP.SERVER_HOST+"/#/reset?code="+response.resetpass.resetpasswordcode;
       });

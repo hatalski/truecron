@@ -8,7 +8,7 @@
     <div class="row">
         <div class="col-md-offset-4 col-md-4">
             <form {{action "confirmnewpassword" on="submit"}}>
-                <div {{bind-attr class=":form-group isPasswordError:has-error"}}>
+                <div {{bind-attr class=":form-group-material-orange-700 isPasswordError:has-error"}}>
                     <div class="input-group">
                         <span class="input-group-addon"><i class="fa fa-lg fa-key"></i></span>
                       {{input title="Password must contain at least 8 characters, including UPPER/lowercase and numbers."
@@ -22,11 +22,10 @@
                 </div>
                 <div {{bind-attr class=":form-group-material-orange-700 isPasswordConfirmError:has-error"}}>
                     <div class="input-group">
-                        <span class="input-group-addon"><i class="fa fa-key"></i></span>
+                        <span class="input-group-addon"><i class="fa fa-lg fa-key"></i></span>
                       {{input id="inputConfirmPassword"
                       type="password"
-                      value=signupPasswordConfirm
-                      valueBinding="passwordConfirm"
+                      value=passwordConfirm
                       placeholder="Enter password again"
                       class="form-control input-lg"}}
                     </div>

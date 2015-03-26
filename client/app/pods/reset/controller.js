@@ -12,7 +12,7 @@ export default Ember.Controller.extend({
       var password = self.get('password');
       var isPasswordValid = password.length > 7;
       self.set('isPasswordError', !isPasswordValid);
-      var isPasswordSame = password === self.get('signupPasswordConfirm');
+      var isPasswordSame = password === self.get('passwordConfirm');
       self.set('isPasswordConfirmError', !isPasswordSame);
       if (isPasswordValid && isPasswordSame) {
         var wl = window.location.toString();

@@ -27,7 +27,7 @@ export default Ember.Controller.extend(LoginControllerMixin, {
           data: JSON.stringify(requestData),
           crossDomain: true
         });
-        result.success(function(response) {
+        result.done(function(response) {
           console.log(response.message);
           Ember.$('#inputformrecovery').hide();
           self.set('isSuccess',true);
