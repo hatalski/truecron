@@ -11,8 +11,6 @@ export default Ember.Controller.extend({
       if (wl.search(/code=/) > 4){
         code = wl.slice(wl.search(/code=/) + 5);
       }
-      console.log('!!!code:'+code);
-      console.log('code.length: '+code.length);
       if (code.length < 41 & code.length > 1){
         this.set('checkCodeField', code);
         this.set('code', code);
@@ -24,7 +22,6 @@ export default Ember.Controller.extend({
         resetpasswordcode: code
       }};
       var urlfordbconfirmreset = ENV.APP.RESET_PASSWORD_HOST + 'confirmreset';
-      console.log(urlfordbconfirmreset);
       var result = Ember.$.ajax({
         url: urlfordbconfirmreset,
         type: 'POST',

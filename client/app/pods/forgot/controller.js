@@ -8,17 +8,13 @@ export default Ember.Controller.extend(LoginControllerMixin, {
       sendRecoveryCode: function() {
         var self = this;
         var email = self.get('email');
-        console.log('email for reset:'+email);
         var isEmailValid = validator.isEmail(email);
-        var requestData = {'resetpass':{ }};
+        var requestData = {'resetpass':{}};
         requestData.env = ENV.APP.SERVER_HOST;
-        console.log('ENV.APP.SERVER_HOST:'+ENV.APP.SERVER_HOST);
         this.set('isEmailError', !isEmailValid);
-
         if (isEmailValid) {
           requestData.resetpass = {email: email};
         }
-        console.log(ENV.APP.RESET_PASSWORD_HOST);
         var result = Ember.$.ajax({
           url: ENV.APP.RESET_PASSWORD_HOST,
           type: 'POST',
