@@ -504,6 +504,35 @@ if not HasSchemaVersion(15) then
 end if;
 end $$;
 
+do $$
+begin
+if not HasSchemaVersion(16) then
+    create table tc.Schedule
+    (
+        id                  bigserial,
+        dtStart             timestamp(2) with time zone not null default 'now',
+        dtEnd               timestamp(2) with time zone,
+        createdAt           timestamp(0) with time zone not null default 'now',
+        updatedAt           timestamp(0) with time zone not null default 'now',
+        rrule               text not null,
+        exrule              text,
+        rdate               text,
+        exdate              text,
+        constraint          Schedule_Pk primary key (id)
+    );
+
+    alter table tc.Job add column scheduleId bigint;
+    alter table tc.Job add constraint Job_Schedule_Fk foreign key (scheduleId) references tc.Schedule (id);
+
+    insert into tc.Schedule(dtStart, rrule)
+    select startsAt, rrule from tc.Job;
+
+    alter table tc.Job drop column startsAt;
+    alter table tc.Job drop column rrule;
+
+    perform CommitSchemaVersion(16, 'Added Schedule table and removed schedule fields from job table.');
+end if;
+end $$;
 
 -- Use the snippet as a template:
 --

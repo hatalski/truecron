@@ -42,7 +42,7 @@ Storage.prototype.initialize = Promise.method(function initialize() {
     this.Runs = require('./runs');
     this.History = require('./history');
     this.Connection = require('./connection');
-
+    this.Schedule = require('./schedule');
     return db.upgradeDatabaseIfNeeded(databaseOptions);
 });
 

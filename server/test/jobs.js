@@ -47,8 +47,9 @@ describe('JOBS API',
                     expect(res.body.job.name).to.eql('TestName1');
                     expect(res.body.job.active).to.eql(1);
                     expect(res.body.job.archived).to.eql(0);
-                    expect(res.body.job.startsAt).to.eql('2014-08-21T10:00:11.000Z');
-                    expect(res.body.job.rrule).to.eql('FREQ=DAILY;INTERVAL=1;BYDAY=MO;BYHOUR=12;BYMINUTE=0;BYSECOND=0');
+                    expect(res.body.job.scheduleId).not.eql(null);
+                    //expect(res.body.job.startsAt).to.eql('2014-08-21T10:00:11.000Z');
+                    //expect(res.body.job.rrule).to.eql('FREQ=DAILY;INTERVAL=1;BYDAY=MO;BYHOUR=12;BYMINUTE=0;BYSECOND=0');
                     expect(validator.isDate(res.body.job.createdAt)).to.be.ok();
                     expect(validator.isDate(res.body.job.updatedAt)).to.be.ok();
                     expect(res.status).to.eql(201);
@@ -75,8 +76,9 @@ describe('JOBS API',
                     expect(res.body.job.name).to.eql('TestName1');
                     expect(res.body.job.active).to.eql(1);
                     expect(res.body.job.archived).to.eql(0);
-                    expect(res.body.job.startsAt).to.eql('2014-08-21T10:00:11.000Z');
-                    expect(res.body.job.rrule).to.eql('FREQ=DAILY;INTERVAL=1;BYDAY=MO;BYHOUR=12;BYMINUTE=0;BYSECOND=0');
+                    expect(res.body.job.scheduleId).not.eql(null);
+                    //expect(res.body.job.startsAt).to.eql('2014-08-21T10:00:11.000Z');
+                    //expect(res.body.job.rrule).to.eql('FREQ=DAILY;INTERVAL=1;BYDAY=MO;BYHOUR=12;BYMINUTE=0;BYSECOND=0');
                     expect(validator.isDate(res.body.job.createdAt)).to.be.ok();
                     expect(validator.isDate(res.body.job.updatedAt)).to.be.ok();
                     expect(res.status).to.eql(201);
@@ -162,8 +164,10 @@ describe('JOBS API',
                 .authenticate(accessToken)
                 .end(function (e, res) {
                     expect(e).to.eql(null);
+                    log.info(res.body.job);
                     expect(res.header['content-type']).to.eql('application/json; charset=utf-8');
-                    expect(validator.isDate(res.body.job.startsAt)).to.be.ok();
+                    expect(res.body.job.scheduleId).not.eql(null);
+                    //expect(validator.isDate(res.body.job.startsAt)).to.be.ok();
                     expect(res.status).to.eql(200);
                     done();
                 });
@@ -181,7 +185,8 @@ describe('JOBS API',
                 .end(function (e, res) {
                     expect(e).to.eql(null);
                     expect(res.header['content-type']).to.eql('application/json; charset=utf-8');
-                    expect(validator.isDate(res.body.job.startsAt)).to.be.ok();
+                    expect(res.body.job.scheduleId).not.eql(null);
+                    //expect(validator.isDate(res.body.job.startsAt)).to.be.ok();
                     expect(res.status).to.eql(200);
                     done();
                 });

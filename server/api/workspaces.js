@@ -34,31 +34,52 @@ api.route('/workspaces')
     // List workspaces of the req.organization.
     //
     .get(common.parseListParams, function (req, res, next) {
-        if (!req.organization) {
-            return next(new apiErrors.InvalidParams('Organization is not specified.'));
-        }
-        var where = { organizationId: req.organization.id };
-        if (req.listParams.searchTerm) {
-            where = _.merge(where, { name: { like: req.listParams.searchTerm } });
-        }
-        var sort = req.listParams.sort || 'name';
 
-        storage.Workspace.findAndCountAll(req.context, {
-            where: where,
-            order: sort + ' ' + req.listParams.direction,
-            limit: req.listParams.limit,
-            offset: req.listParams.offset
-        }).then(function (result) {
-            res.json({
-                workspaces: result.rows.map(formatWorkspace),
-                meta: {
-                    total: result.count
-                }});
-        })
-            .catch(function (err) {
-                logger.error(err.toString());
-                next(err);
-            });
+        var getWorkspaces = function(where)
+        {
+            if (req.listParams.searchTerm) {
+                where = _.merge(where, { name: { like: req.listParams.searchTerm } });
+            }
+            var sort = req.listParams.sort || 'name';
+
+            storage.Workspace.findAndCountAll(req.context, {
+                where: where,
+                order: sort + ' ' + req.listParams.direction,
+                limit: req.listParams.limit,
+                offset: req.listParams.offset
+            }).then(function (result) {
+                res.json({
+                    workspaces: result.rows.map(formatWorkspace),
+                    meta: {
+                        total: result.count
+                    }});
+            })
+                .catch(function (err) {
+                    logger.error(err.toString());
+                    next(err);
+                });
+        };
+
+        if (!req.organization) {
+            storage.OrganizationAccess.getAccessibleOrganizations(req.context)
+                .then(function(result) {
+                    var orgIds = [];
+                    for(var orgId in result)
+                    {
+                        orgIds.push(orgId);
+                    }
+                    var where = { organizationId:  {in: orgIds } };
+
+                    getWorkspaces(where);
+                });
+            //return next(new apiErrors.InvalidParams('Organization is not specified.'));
+        }
+        else {
+            var where = {organizationId: req.organization.id};
+            getWorkspaces(where);
+        }
+
+
     })
     //
     // Add a new workspace to the req.organization or req.body.workspace.organizationId.

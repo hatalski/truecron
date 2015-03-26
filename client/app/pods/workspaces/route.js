@@ -4,6 +4,7 @@ export default Ember.Route.extend({
   model: function() {
     return {
       organizations: this.store.find('organization'),
+      tasks: this.store.find('task'),
       jobs: [{
         name: 'Job that never run',
         statusId: 0,

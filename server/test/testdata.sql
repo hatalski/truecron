@@ -95,8 +95,13 @@ insert into tc.History (id, updatedByPersonId, organizationId, workspaceId, jobI
     where not exists (select * from tc.History
     where id = -56);
 
-insert into tc.Job (id, organizationId, workspaceId, name, createdAt, updatedAt, updatedByPersonId, rrule)
-    select -13, -11, -12, 'My workspace test job', 'now', 'now', -10, 'FREQ=WEEKLY;COUNT=30;WKST=MO'
+insert into tc.Schedule (id, rrule)
+    select -10, 'FREQ=WEEKLY;COUNT=30;WKST=MO'
+    where not exists (select * from tc.Schedule
+    where id = -10);
+
+insert into tc.Job (id, organizationId, workspaceId, name, createdAt, updatedAt, updatedByPersonId, scheduleId)
+    select -13, -11, -12, 'My workspace test job', 'now', 'now', -10, -10
     where not exists (select * from tc.Job
     where id = -13);
 
@@ -286,8 +291,9 @@ insert into tc.History (id, updatedByPersonId, organizationId, workspaceId, jobI
     where not exists (select * from tc.History
     where id = -67);
 
-insert into tc.Job (id, organizationId, workspaceId, name, updatedByPersonId, rrule)
-    select -222, -21, -22, 'TestDataName1', -1, 'rruleTextTralala'
+
+insert into tc.Job (id, organizationId, workspaceId, name, updatedByPersonId)
+    select -222, -21, -22, 'TestDataName1', -1
     where not exists (select * from tc.Job
     where id = -222);
 
