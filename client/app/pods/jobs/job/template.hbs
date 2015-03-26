@@ -3,9 +3,8 @@
         <div class="row">
             <div class="col-md-5 truecron-input-margin">
                 <div class="form-group-material-orange-700">
-                    <input {{bind-attr value=model.name}} class="form-control floating-label input-lg" id="jobName" placeholder="Job's name" data-hint="Give it a meaningful name" type="text"/>
+                  {{input id="jobName" type="text" value=model.name class="form-control floating-label input-lg" placeholder="Name of the job" data-hint="Give it a meaningful name"}}
                 </div>
-                {{!--<h3 class="job-title"><span class="orange-dashed">{{model.name}}</span></h3>--}}
             </div>
             <div class="col-md-1">
                 <span class="btn btn-sm btn-truecron-icon"><i class="fa fa-trash fa-lg"></i></span>
