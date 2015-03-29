@@ -31,7 +31,7 @@ describe('FTP task',
     {
         it('has run', function(done)
         {
-            var ftpTask = new FtpTask({host:'ftp.darvision.com', username:'anonymous', password:'@anonymous', protocol: 'ftp'}, 'ls .');
+            var ftpTask = new FtpTask({host:'catless.ncl.ac.uk', username:'anonymous', password:'@anonymous', protocol: 'ftp'}, 'ls .');
             var ftpS3Log = new S3logger('_ftpS3LogTest');
             ftpTask.logSubscribers.push(ftpS3Log);
             ftpTask.run(function(){
