@@ -346,19 +346,23 @@ h2.pitch {
   color: #464646;
 }
 
-.dropdown-truecron span {
-  color: #fa5b00;
+//.dropdown-truecron span {
+//  color: #fa5b00;
+//}
+//
+//.panel-heading .fa-cog, .panel-heading .fa-filter {
+//  color: #fa5b00;
+//}
+
+.btn.btn-sm {
+  padding: 6px 12px;
 }
 
-.panel-heading .fa-cog, .panel-heading .fa-filter {
-  color: #fa5b00;
-}
-
-.btn-truecron-icon {
-  @include grad(#f7f6f2, #e4e6e5);
-  @include border-radius(2px);
-  border: solid 1px #b9cdd4;
-}
+//.btn-truecron-icon {
+//  @include grad(#f7f6f2, #e4e6e5);
+//  @include border-radius(2px);
+//  border: solid 1px #b9cdd4;
+//}
 
 .panel-heading .btn-signin .fa-long-arrow-left {
   color: #ff4e00;
@@ -518,10 +522,6 @@ a.list-group-item:hover, a.list-group-item:active, a.list-group-item:focus {
 
 .job-details-header {
   background-color: white;
-}
-
-.truecron-tasks-header h3 {
-  color: #3399ff;
 }
 
 .trucron-top-tasks {
@@ -808,4 +808,8 @@ a.list-group-item:hover, a.list-group-item:active, a.list-group-item:focus {
 /*add new job */
 .new-job-body {
   padding-top: 15px;
+}
+
+.truecron-checkbox-margin .radio + .radio, .checkbox + .checkbox {
+  margin: 10px 20px 10px 0;
 }

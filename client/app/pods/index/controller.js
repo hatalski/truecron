@@ -37,7 +37,7 @@ export default Ember.Controller.extend(LoginControllerMixin, {
           data: JSON.stringify(requestData),
           crossDomain: true
         });
-        result.success(function(data) {
+        result.done(function(data) {
           Ember.$('#invite_modal').modal({});
           self.set('invitationEmail', '');
           console.log(data);
@@ -74,7 +74,7 @@ export default Ember.Controller.extend(LoginControllerMixin, {
           data: JSON.stringify(requestData),
           crossDomain: true
         });
-        result.success(function(response) {
+        result.done(function(response) {
           console.log(response);
           var options = { identification: email, password: password };
           self.get('session').authenticate('authenticator:truecron', options);

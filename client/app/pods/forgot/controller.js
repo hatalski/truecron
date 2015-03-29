@@ -8,15 +8,13 @@ export default Ember.Controller.extend(LoginControllerMixin, {
       sendRecoveryCode: function() {
         var self = this;
         var email = self.get('email');
-        console.log('email for reset:'+email);
         var isEmailValid = validator.isEmail(email);
         var requestData = {'resetpass':{}};
+        requestData.env = ENV.APP.SERVER_HOST;
         this.set('isEmailError', !isEmailValid);
-
         if (isEmailValid) {
           requestData.resetpass = {email: email};
         }
-        console.log(ENV.APP.RESET_PASSWORD_HOST);
         var result = Ember.$.ajax({
           url: ENV.APP.RESET_PASSWORD_HOST,
           type: 'POST',
@@ -25,7 +23,7 @@ export default Ember.Controller.extend(LoginControllerMixin, {
           data: JSON.stringify(requestData),
           crossDomain: true
         });
-        result.success(function(response) {
+        result.done(function(response) {
           console.log(response.message);
           Ember.$('#inputformrecovery').hide();
           self.set('isSuccess',true);
@@ -41,24 +39,6 @@ export default Ember.Controller.extend(LoginControllerMixin, {
           setTimeout(function(){
             Ember.$('#email').popover('hide');
           }, 7000);
-          console.log(error);
-        });
-        var urlfordbreset = ENV.APP.RESET_PASSWORD_HOST+'db';
-        console.log(urlfordbreset);
-        //send ajax to db
-        result = Ember.$.ajax({
-          url: urlfordbreset,
-          type: 'POST',
-          contentType: 'application/json',
-          dataType: 'json',
-          data: JSON.stringify(requestData),
-          crossDomain: true
-        });
-        result.success(function(response) {
-          console.log(response.message);
-        });
-        result.error(function(error) {
-          console.log(error);
         });
       }
     }
