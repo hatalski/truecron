@@ -130,7 +130,7 @@
           {{else}}
               <div class="list-group">
                 {{#each job in model.workspace.jobs}}
-                  {{job-list-item job=job linkTo='jobs.job' action='selectJob'}}
+                  {{job-list-item job=job linkTo='jobs.job' action='selectJob' active=true}}
                 {{/each}}
               </div>
           {{/if}}
