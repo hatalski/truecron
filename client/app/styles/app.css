@@ -244,6 +244,15 @@ h2.pitch {
   border-top: solid 1px #c2cacd; }
 
 /*sidebar */
+.truecron-panel-btn {
+  margin: 0 1px; }
+
+.btn-new-job {
+  border: 1px solid transparent; }
+
+.truecron-side-panel {
+  margin-bottom: 0; }
+
 .truecron-title-margin {
   margin: 10px 0; }
 
