@@ -358,9 +358,9 @@ a.list-group-item:hover, a.list-group-item:active, a.list-group-item:focus {
   color: #aaa8a8; }
 
 .truecron-tab-active {
-  background-color: #eef4f8;
+  background-color: #eceff1 !important;
   background-image: none;
-  border-left: 1px solid #f06a21; }
+  border-left: 5px solid #f06a21; }
 
 .truecron-tab-failed {
   background-color: #f6edee;
