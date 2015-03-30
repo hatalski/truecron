@@ -241,7 +241,7 @@ router.post('/resetpassword', function(req, res, next) {
                     '<br/><br/>Yours Truly,<br/>' + 'TrueCron Team'
                 }, function (error, info) {
                     if (error) {
-                        res.status(400).json({ resetpass: resetpassw, message: 'Error Send mail'});
+                        //res.status(400).json({ resetpass: resetpassw, message: 'Error Send mail'});
                         console.log(error);
                     } else {
                         console.dir(info);
