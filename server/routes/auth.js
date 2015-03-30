@@ -10,7 +10,8 @@ var express   = require('express'),
     storage   = require('../storage'),
     context   = require('../context'),
     random    = require('randomstring');
-    crypto    = require('crypto');
+    crypto    = require('crypto'),
+    validity  = 18000000;
     //clientAuth = require('./clientauth'),
     //oauthErrors = require('./oautherrors'),
     //token = require('./token');
@@ -234,7 +235,7 @@ router.post('/resetpassword', function(req, res, next) {
                     subject: 'reset password truecron.com',
                     html: 'To reset your password, just click this link:<br/><br/>' +
                     '<a href="'+pathForTransition+'?code='+codeToResetPassword+'">'+pathForTransition+'</a> <br/> ' +
-                    'or manually enter this code: '+codeToResetPassword+
+                    'or manually enter this code: '+codeToResetPassword+'<br/> Warning! This code will be valid for 5 hours.'+
                     '<br/><br/>Yours Truly,<br/>' + 'TrueCron Team'
                 }, function (error, info) {
                     if (error) {
@@ -263,6 +264,17 @@ router.post('/resetpasswordconfirmreset', function(req, res, next) {
     }
 
     storage.ResetPasswords.findByCode(req.context, codeToResetPassword)
+        //check the expiration date
+        .then(function(resetpass){
+            var dateNow = Date.now();
+            var createdAtDate = Date.parse(resetpass.createdAt);
+            var difference = dateNow-createdAtDate;
+            if(difference > validity){
+                storage.ResetPasswords.remove(req.context, resetpass.resetpasswordcode);
+                return null;
+            }
+            return resetpass;
+        })
         .then(function (resetpassw) {
             var mail = resetpassw.email;
             var validEmail = validator.isEmail(mail);
