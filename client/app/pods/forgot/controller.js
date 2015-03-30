@@ -3,7 +3,9 @@ import ENV from 'true-cron/config/environment';
 import LoginControllerMixin from 'simple-auth/mixins/login-controller-mixin';
 
 export default Ember.Controller.extend(LoginControllerMixin, {
-  isSuccess: false,
+  isSuccess:      false,
+  isResultFalse:  false,
+  isWaiting:      false,
     actions: {
       sendRecoveryCode: function() {
         var self = this;
@@ -15,6 +17,8 @@ export default Ember.Controller.extend(LoginControllerMixin, {
         if (isEmailValid) {
           requestData.resetpass = {email: email};
         }
+        self.set('isWaiting',true);
+        self.set('isResultFalse',false);
         var result = Ember.$.ajax({
           url: ENV.APP.RESET_PASSWORD_HOST,
           type: 'POST',
@@ -24,21 +28,15 @@ export default Ember.Controller.extend(LoginControllerMixin, {
           crossDomain: true
         });
         result.done(function(response) {
+          self.set('isWaiting', false);
           console.log(response.message);
           Ember.$('#inputformrecovery').hide();
           self.set('isSuccess',true);
         });
         result.error(function(error) {
+          self.set('isWaiting', false);
+          self.set('isResultFalse', true);
           console.log(error);
-          Ember.$('#email').popover({
-            title: 'result.error',
-            placement: 'bottom',
-            trigger: 'manual'
-          });
-          Ember.$('#email').popover('show');
-          setTimeout(function(){
-            Ember.$('#email').popover('hide');
-          }, 7000);
         });
       }
     }

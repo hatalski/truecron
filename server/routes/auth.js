@@ -218,9 +218,6 @@ router.post('/resetpassword', function(req, res, next) {
         codeToResetPassword = codeToResetPassword.slice(codeToResetPassword.length - 40).toString();
         req.body.resetpass.resetpasswordcode = codeToResetPassword;
     }
-    console.log('!!!!!!!!!codeToResetPassword:'+codeToResetPassword);
-    console.log('length:'+codeToResetPassword.length);
-
     if (!validEmail) {
         return next(new apiErrors.InvalidParams('Email is not specified.'));
     }
@@ -241,20 +238,15 @@ router.post('/resetpassword', function(req, res, next) {
                     '<br/><br/>Yours Truly,<br/>' + 'TrueCron Team'
                 }, function (error, info) {
                     if (error) {
-                        //res.status(400).json({ resetpass: resetpassw, message: 'Error Send mail'});
                         console.log(error);
+                        res.status(400).json({ message: 'Error: An error occurred while sending mail.'});
                     } else {
                         console.dir(info);
                         console.log('Message sent: ' + info.messageId);
+                        res.status(201).json({ message: 'Email with a code to reset your password has been sent to the specified address'});
                     }
                 });
-                //res.status(201).json({ resetpass: resetpassw, message: '!!!!!!!!Email with a code to reset your password has been sent to the specified address'});
-            })
-            .catch(function (err) {
-                logger.error(err.toString());
-                return next(err);
             });
-        res.status(201).json({ message: 'Email with a code to reset your password has been sent to the specified address'});
     }
     else {
         res.status(400).json({ message: 'Email not valid!!!'});

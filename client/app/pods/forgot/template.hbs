@@ -31,6 +31,18 @@
                   <h4>An email was sent to you with further instructions on how to retrieve your password.</h4>
               </div>
           {{/if}}
+
+          {{#if isWaiting}}
+              <div>
+                  <h4>Wait please...</h4>
+              </div>
+          {{/if}}
+
+          {{#if isResultFalse}}
+              <div id="divresultfalse">
+                  <h4>An error has occurred, please try again.</h4>
+              </div>
+          {{/if}}
         </div>
     </div>
 </div>
