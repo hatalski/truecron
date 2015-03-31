@@ -5,7 +5,12 @@ import {
 
 moduleForModel('jobs/job/task', {
   // Specify the other units that are required for this test.
-  needs: []
+  needs: ['model:user',
+    'model:workspace',
+    'model:organization',
+    'model:job',
+    'model:job-tag',
+    'model:jobs.job.task']
 });
 
 test('it exists', function(assert) {
