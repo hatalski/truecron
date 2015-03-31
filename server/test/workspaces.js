@@ -30,6 +30,7 @@ describe('WORKSPACES API',
             api.getWorkspace(accessToken, testdata.AcmeCorp.id, testdata.MyWorkspace.id)
                 .then(function (res) {
                     expect(res.status).to.eql(200);
+                    log.info(res.body.workspace);
                     expect(res.body.workspace.id).to.be.eql(testdata.MyWorkspace.id);
                     expect(res.body.workspace.organizationId).to.be.eql(testdata.AcmeCorp.id);
                     expect(res.body.workspace.name).to.be.eql(testdata.MyWorkspace.name);

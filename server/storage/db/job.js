@@ -23,8 +23,7 @@ module.exports = function(sequelize, DataTypes) {
                 return this.getDataValue('archived') != 0;
             } },
         updatedByPersonId: { type: DataTypes.BIGINT },
-        startsAt: { type: DataTypes.DATE },
-        rrule: { type: DataTypes.TEXT, allowNull: false }
+        scheduleId: { type: DataTypes.BIGINT, allowNull: true}
     }, {
         schema: 'tc',
         tableName: 'job',
@@ -35,6 +34,7 @@ module.exports = function(sequelize, DataTypes) {
                 Job.belongsTo(models.Organization, { as: 'organization', foreignKey: 'organizationId' });
                 Job.belongsTo(models.Workspace, { as: 'workspace', foreignKey: 'workspaceId' });
                 Job.belongsTo(models.Person, { as: 'updatedBy', foreignKey: 'updatedByPersonId' });
+                Job.belongsTo(models.Schedule, { as: 'schedule', foreignKey: 'scheduleId' });
             }
         }
     });
