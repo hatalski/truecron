@@ -3,7 +3,6 @@
 module.exports = function(environment) {
   var ENV = {
     modulePrefix: 'true-cron',
-    podModulePrefix: 'true-cron/pods',
     environment: environment,
     baseURL: '/',
     locationType: 'hash',
