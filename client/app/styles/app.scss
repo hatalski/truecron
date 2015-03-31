@@ -23,7 +23,9 @@ body {
   background-color: $primary-bg-color;
   color: $primary-color;
 }
-
+hr {
+  border-top: 1px solid #c2c6c7;
+}
 .btn-signup {
   @include border-radius(2px);
 }
@@ -469,6 +471,9 @@ a.list-group-item:hover, a.list-group-item:active, a.list-group-item:focus {
 .truecron-tab-active {
   background-color: $primary-bg-color !important;
   background-image: none;
+  border-left: 5px solid #f06a21;
+}
+.truecron-active-border {
   border-left: 5px solid #f06a21;
 }
 

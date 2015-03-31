@@ -20,6 +20,7 @@
                         class="form-control floating-label input-lg"}}
                     </div>
                 </div>
+                <br>
                 <div {{bind-attr class=":form-group-material-orange-700 isPasswordError:has-error"}}>
                     <div class="input-group">
                         <span class="input-group-addon"><i class="fa fa-lg fa-key"></i></span>
@@ -32,6 +33,7 @@
                         pattern="(?=^.{8,}$)(?=.*\d)(?![.\n])(?=.*[A-Z])(?=.*[a-z]).*$" }}
                     </div>
                 </div>
+                <br>
                 <div {{bind-attr class=":form-group-material-orange-700 isPasswordConfirmError:has-error"}}>
                     <div class="input-group">
                         <span class="input-group-addon"><i class="fa fa-lg fa-key"></i></span>
@@ -42,6 +44,7 @@
                         class="form-control floating-label input-lg"}}
                     </div>
                 </div>
+                <br>
                 <div class="form-group">
                     <div class="input-group-btn">
                         <button type="submit" class="btn btn-lg btn-block btn-material-orange-800">{{format-message (intl-get "messages.auth.signup_form.button")}}</button>
