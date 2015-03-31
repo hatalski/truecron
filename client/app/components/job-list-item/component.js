@@ -45,8 +45,9 @@ export default Ember.Component.extend(RRuleParser, {
     }
   }.property(),
   recurrence: function() {
-    var o = RRule.parseString(this.get('job.rrule'));
-    var startsAt = this.get('job.startsAt');
+    // TODO: replace with schedule.rrule
+    var o = RRule.parseString('FREQ=WEEKLY;COUNT=30'); // this.get('job.rrule')
+    var startsAt; // this.get('job.startsAt')
     // console.log('startsAt : ' + startsAt);
     if (startsAt === undefined) {
       startsAt = new Date();
@@ -56,11 +57,11 @@ export default Ember.Component.extend(RRuleParser, {
     //var rule = new RRule(o);
     //var now = new Date();
     return {
-      text:    this.recurrenceRuleToText(this.get('job.rrule')),
+      text:    this.recurrenceRuleToText('FREQ=WEEKLY;COUNT=30'), // this.get('job.rrule')
       lastRun: new Date(),//'todo'rule.before(now, true),
       nextRun: new Date()//'todo'//rule.after(now, true)
-    };
-  }.property('job.rrule', 'job.startsAt'),
+    }.property();
+  },//.property('job.rrule', 'job.startsAt'),
   actions: {
     click: function() {
       "use strict";

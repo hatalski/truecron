@@ -10,8 +10,8 @@
 </div>
 {{!--<p class="list-group-item-text">{{job.rrule}}</p>--}}
 <p class="list-group-item-text truecron-job-item-p">schedule: <span class="truecron-job-item-span">{{recurrence.text}}</span></p>
-<p class="list-group-item-text truecron-job-item-p">last run: <span class="truecron-job-item-span">{{format-relative recurrence.lastRun}}</span></p>
-<p class="list-group-item-text truecron-job-item-p">time left to next run: <span class="truecron-job-item-span">{{format-relative recurrence.nextRun}}</span></p>
+<p class="list-group-item-text truecron-job-item-p">last run: <span class="truecron-job-item-span">{{recurrence.lastRun}}</span></p>
+<p class="list-group-item-text truecron-job-item-p">time left to next run: <span class="truecron-job-item-span">{{recurrence.nextRun}}</span></p>
 <p class="list-group-item-text">
   {{#each tag in job.tags}}
       <span class="label truecron-job-label">{{tag.name}}</span>
