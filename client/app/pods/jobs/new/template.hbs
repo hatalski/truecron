@@ -7,21 +7,24 @@
                 </div>
             </div>
             <div class="col-md-6 text-center truecron-title-margin">
-                <h3 class="text-warning">
-                    <span class="blue-dashed">Weekly on Monday, Friday, Thuesday, Sunday, Wednesday at 12:32:00 PM</span>
-                </h3>
+                <h5 class="text-warning">
+                    Weekly on Monday, Friday, Thuesday, Sunday, Wednesday at 12:32:00 PM
+                </h5>
             </div>
         </div>
         <div class="row">
-            <div class="col-md-6 run-history-info">
-                <h1>Run Schedule</h1>
+            <div class="col-md-6">
+                <div class="form-group-material-orange-700">
+                  {{input id="jobTags" type="text" value=tags class="form-control floating-label input-lg" placeholder="Job Tags" data-hint="Job tags"}}
+                </div>
+                {{!--<h1>Run Schedule</h1>--}}
             </div>
             <div class="col-md-3 text-center">
-                <h4>LAST RUN:</h4>
+                {{!--<h4>LAST RUN:</h4>--}}
                 <h4>July 6 12:32:00pm</h4>
             </div>
             <div class="col-md-3 text-center">
-                <h4>LAST RUN:</h4>
+                {{!--<h4>LAST RUN:</h4>--}}
                 <h4>July 8 12:32:00pm</h4>
             </div>
         </div>
@@ -31,113 +34,127 @@
     <div class="row">
         <div class="new-job-body">
             <form>
-                <div class="row truecron-title-margin">
-                    <div class="col-md-1">
-                        <h5>Starts:</h5>
-                    </div>
-                    <div class="col-md-2">
-                        <div class="form-group-material-orange-700">
-                          {{input id="startsOn" value=currentDate class="form-control floating-label input-lg" placeholder="Date" type="date"}}
-                        </div>
-                    </div>
-                    <div class="col-md-2">
-                        <div class="form-group-material-orange-700">
-                          {{input id="startsAt" value=currentTime class="form-control floating-label input-lg" placeholder="Time" type="time"}}
-                        </div>
-                    </div>
-                    <div class="col-md-3">
-                        <div class="form-group-material-orange-700">
-                            <select class="form-control floating-label input-lg" placeholder="Timezone">
-                              {{#each timezone in controller.zones}}
-                                  <option {{bind-attr value=timezone.name}}>{{timezone.name}} - {{timezone.abbr}} - {{timezone.offset}}</option>
-                              {{/each}}
-                            </select>
-                        </div>
-                    </div>
-                    <div class="col-md-1">
-                      {{currentZone}}
-                    </div>
-                </div>
-              <hr>
-                <div class="row truecron-title-margin">
-                    <div class="col-md-1">
-                        <h5>Ends:</h5>
-                    </div>
-                    <div class="col-md-1">
-                        <div class="radio radio-material-orange-700">
-                            <label for="radioNever">
-                              {{input id="radioNever" type="radio" name="endsOn" value="never" checked="checked"}} Never
-                            </label>
-                        </div>
-                    </div>
-                  <div class="col-md-1">
-                      <div class="radio radio-material-orange-700">
-                          <label>
-                            {{input type="radio" name="endsOn" value="after"}} After
-                          </label>
-                      </div>
-                  </div>
-                  <div class="col-md-2">
-                      <div class="form-group-material-orange-700">
-                        {{input id="endsAfter" type="number" value=endsAfter class="form-control form-control floating-label" placeholder="occurences"}}
-                      </div>
-                  </div>
-                  <div class="col-md-1">
-                      <div class="radio radio-material-orange-700">
-                          <label>
-                            {{input type="radio" name="endsOn" value="on"}} On
-                          </label>
-                      </div>
-                  </div>
-                    <div class="col-md-2">
-                        <div class="form-group-material-orange-700">
-                           {{input id="endsOnDate" type="date" value=endsOnDate class="form-control"}}
-                        </div>
-                    </div>
-                </div>
-                <hr/>
-                <div class="row truecron-title-margin">
-                    <div class="col-md-1">
-                        <h5>Repeats:</h5>
-                    </div>
-                    <div class="col-md-2">
-                        <div class="form-group-material-orange-700">
-                            <select class="form-control floating-label input-lg" placeholder="Rule">
-                                <option value="daily">Daily</option>
-                                <option value="weekly">Weekly</option>
-                            </select>
-                        </div>
-                    </div>
-                    <div class="col-md-2">
-                        <div class="form-group-material-orange-700">
-                            <select class="form-control floating-label input-lg" placeholder="Every">
-                                <option value="1">1</option>
-                                <option value="2">2</option>
-                            </select>
-                        </div>
-                    </div>
-                </div>
-              <hr>
-                <div class="row truecron-title-margin">
-                    <div class="col-md-1">
-                        <h5>Repeat on:</h5>
-                    </div>
-                    <div class="col-md-8">
-                        <div class="checkbox pull-left"></div>
-                        {{#each weekday in controller.weekdays}}
-                            <div class="checkbox checkbox-material-orange-700 pull-left">
-                                <label>
-                                    {{input type="checkbox" checked=false}} {{weekday}}
-                                </label>
-                            </div>
-                        {{/each}}
-                    </div>
-                </div>
-                <hr/>
                 <div class="row">
                     <div class="col-md-12">
-                        <div class="panel panel-material-blue-grey-100">
-                            <div class="panel-heading" id="excludeRule">
+                        <div class="panel panel-material-blue-grey-200 truecron-panel">
+                            <div class="panel-heading truecron-panel-heading" id="includeRule">
+                                <h4 class="panel-title">
+                                    <a data-toggle="collapse" data-parent="#accordion" href="#includeRulePanel" aria-expanded="true" aria-controls="includeRulePanel">
+                                        Schedule
+                                    </a>
+                                </h4>
+                            </div>
+                            <div id="includeRulePanel" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="includeRule">
+                                <div class="panel-body truecron-panel-body">
+                                    <div class="row">
+                                        <div class="col-md-1">
+                                            <h5>Starts:</h5>
+                                        </div>
+                                        <div class="col-md-2">
+                                            <div class="form-group-material-orange-700">
+                                              {{input id="startsOn" value=currentDate class="form-control floating-label input-lg" placeholder="Date" type="date"}}
+                                            </div>
+                                        </div>
+                                        <div class="col-md-2">
+                                            <div class="form-group-material-orange-700">
+                                              {{input id="startsAt" value=currentTime class="form-control floating-label input-lg" placeholder="Time" type="time"}}
+                                            </div>
+                                        </div>
+                                        <div class="col-md-3">
+                                            <div class="form-group-material-orange-700">
+                                                <select class="form-control floating-label input-lg" placeholder="Timezone">
+                                                  {{#each timezone in controller.zones}}
+                                                      <option {{bind-attr value=timezone.name}}>{{timezone.name}} - {{timezone.abbr}} - {{timezone.offset}}</option>
+                                                  {{/each}}
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-1">
+                                          {{currentZone}}
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-1">
+                                            <h5>Ends:</h5>
+                                        </div>
+                                        <div class="col-md-1">
+                                            <div class="radio radio-material-orange-700">
+                                                <label for="radioNever">
+                                                  {{input id="radioNever" type="radio" name="endsOn" value="never" checked="checked"}} Never
+                                                </label>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-1">
+                                            <div class="radio radio-material-orange-700">
+                                                <label>
+                                                  {{input type="radio" name="endsOn" value="after"}} After
+                                                </label>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-2">
+                                            <div class="form-group-material-orange-700">
+                                              {{input id="endsAfter" type="number" value=endsAfter class="form-control form-control floating-label" placeholder="occurences"}}
+                                            </div>
+                                        </div>
+                                        <div class="col-md-1">
+                                            <div class="radio radio-material-orange-700">
+                                                <label>
+                                                  {{input type="radio" name="endsOn" value="on"}} On
+                                                </label>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-2">
+                                            <div class="form-group-material-orange-700">
+                                              {{input id="endsOnDate" type="date" value=endsOnDate class="form-control"}}
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <hr/>
+                                    <div class="row">
+                                        <div class="col-md-1">
+                                            <h5>Repeats:</h5>
+                                        </div>
+                                        <div class="col-md-2">
+                                            <div class="form-group-material-orange-700">
+                                                <select class="form-control floating-label input-lg" placeholder="Rule">
+                                                    <option value="daily">Daily</option>
+                                                    <option value="weekly">Weekly</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-2">
+                                            <div class="form-group-material-orange-700">
+                                                <select class="form-control floating-label input-lg" placeholder="Every">
+                                                    <option value="1">1</option>
+                                                    <option value="2">2</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-1">
+                                            <h5>Repeat on:</h5>
+                                        </div>
+                                        <div class="col-md-8">
+                                            <div class="checkbox pull-left"></div>
+                                          {{#each weekday in controller.weekdays}}
+                                              <div class="checkbox checkbox-material-orange-700 pull-left">
+                                                  <label>
+                                                    {{input type="checkbox" checked=false}} {{weekday}}
+                                                  </label>
+                                              </div>
+                                          {{/each}}
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="panel panel-material-blue-grey-200 truecron-panel">
+                            <div class="panel-heading truecron-panel-heading" id="excludeRule">
                                 <h4 class="panel-title">
                                     <a data-toggle="collapse" data-parent="#accordion" href="#exceptionRulePanel" aria-expanded="true" aria-controls="exceptionRulePanel">
                                         Schedule Exceptions
@@ -145,7 +162,7 @@
                                 </h4>
                             </div>
                             <div id="exceptionRulePanel" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="excludeRule">
-                                <div class="panel-body">
+                                <div class="panel-body truecron-panel-body">
                                     <div class="row">
                                         <div class="col-md-1">
                                             <h5>Range:</h5>
