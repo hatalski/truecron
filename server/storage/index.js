@@ -42,7 +42,6 @@ Storage.prototype.initialize = Promise.method(function initialize() {
     this.Runs = require('./runs');
     this.History = require('./history');
     this.Connection = require('./connection');
-    this.Schedule = require('./schedule');
     this.ResetPasswords = require('./resetpasswords');
 
     return db.upgradeDatabaseIfNeeded(databaseOptions);
