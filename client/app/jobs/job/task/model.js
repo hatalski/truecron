@@ -13,6 +13,7 @@ var Task = DS.Model.extend({
   updatedBy: DS.belongsTo('user', { async: true }),
   job:       DS.belongsTo('job', { async: true }),
   taskTypeId:DS.attr('number', { defaultValue: 0 }),
+  messages: [],
   taskType:  function() {
     return {
       id:   this.get('taskTypeId'),
