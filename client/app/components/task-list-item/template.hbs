@@ -1,27 +1,25 @@
 <div class="panel panel-default">
     <div class="panel-heading truecron-first-heading" role="tab" id="task{{task.id}}">
-        <a data-toggle="collapse" data-parent="#accordion" href="#collapseTask{{task.id}}" aria-expanded="true" aria-controls="collapseTask{{task.id}}">
-            <div class="row">
-                <div class="col-md-1">
-                    <i class="fa fa-bars"></i>
-                </div>
-                <div class="col-md-1 text-center">
-                    <p>{{task.taskType.name}}</p>
-                </div>
-                <div class="col-md-3 text-center">
-                    <p>{{task.name}}</p>
-                </div>
-                <div class="col-md-4 text-center">
-                    <p>564 files were removed</p>
-                </div>
-                <div class="col-md-2 text-center trucron-underline">
-                    <p>0.68 sec</p>
-                </div>
-                <div class="col-md-1 text-right">
-                    <i class="fa fa-square"></i>
-                </div>
+        <div class="row" data-toggle="collapse" data-parent="#accordion" href="#collapseTask{{task.id}}" aria-expanded="true" aria-controls="collapseTask{{task.id}}">
+            <div class="col-md-1">
+                <i class="fa fa-bars"></i>
             </div>
-        </a>
+            <div class="col-md-1 text-center">
+                <p>{{task.taskType.name}}</p>
+            </div>
+            <div class="col-md-3 text-center">
+                <p>{{task.name}}</p>
+            </div>
+            <div class="col-md-4 text-center">
+                <p>564 files were removed</p>
+            </div>
+            <div class="col-md-2 text-center trucron-underline">
+                <p>0.68 sec</p>
+            </div>
+            <div class="col-md-1 text-right">
+                <i class="fa fa-square"></i>
+            </div>
+        </div>
     </div>
     <div id="collapseTask{{task.id}}" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="task{{task.id}}">
         <div class="panel-body truecron-panel-body">
