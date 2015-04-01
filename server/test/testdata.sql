@@ -358,7 +358,3 @@ insert into tc.Run (id, organizationId, workspaceId, jobId, status, elapsed)
     select -200, -21, -22, -222, 15, 24*60*60*1000
     where not exists (select * from tc.Run
     where id = -200);
-insert into tc.ResetPassword (email, resetpasswordcode)
-    select 'test1@gmail.com', 'Zd64L4ORUc5h7MoPvAOTOfBgnq8Mg'
-    where not exists (select * from tc.ResetPassword
-    where email = 'test1@gmail.com');

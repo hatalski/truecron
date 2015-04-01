@@ -225,7 +225,6 @@ router.post('/resetpassword', function(req, res, next) {
     if (!codeToResetPassword) {
         return next(new apiErrors.InvalidParams('resetPasswordCode is not specified.'));
     }
-console.log('!!!!!!pathForTransition: '+pathForTransition);
     if (validEmail) {
         storage.ResetPasswords.create(req.context, req.body.resetpass)
             .then(function (resetpassw) {

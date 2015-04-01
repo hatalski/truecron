@@ -22,7 +22,7 @@ describe('RESET PASSWORD API',
                 });
             });
         });
-        it.only('create a new data in DB and send email', function (done) {
+        it('create a new data in DB and send email', function (done) {
             superagent.post('https://dev.truecron.com' + '/auth/resetpassword')
                 .set('Content-Type', 'application/json')
                 .send({ 'resetpass': {
@@ -39,6 +39,24 @@ describe('RESET PASSWORD API',
                     done();
                 });
         });
+
+        it('create a new data in DB and send email without email should fail', function (done) {
+            superagent.post('https://dev.truecron.com' + '/auth/resetpassword')
+                .set('Content-Type', 'application/json')
+                .send({ 'resetpass': {
+                    'email': 'xxx'
+                }
+                })
+                .authenticate(accessToken)
+                .end(function (e, res) {
+                    expect(e).to.eql(null);
+                    expect(res.header['content-type']).to.eql('application/json; charset=utf-8');
+                    expect(res.body.error).to.be.an('object');
+                    expect(res.body.error.status).to.eql(400);
+                    done();
+                });
+        });
+
 
     }
 );
