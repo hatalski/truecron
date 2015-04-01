@@ -17,6 +17,7 @@ export default Ember.Controller.extend({
       "use strict";
       Ember.Logger.log('new task creation initiated');
       Ember.Logger.log(task);
+      this.modelFor('job').get('tasks').push(task);
       task.save();
       this.set('newTask', null);
       this.set('showNewTaskForm', false);
