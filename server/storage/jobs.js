@@ -61,29 +61,18 @@ var create = module.exports.create = Promise.method(function (context, attribute
     return using (models.transaction(), function (tx) {
 
         return workspaceAccess.ensureHasAccess(context, attributes.workspaceId,
-                                               workspaceAccess.WorkspaceRoles.Editor, tx)
+            workspaceAccess.WorkspaceRoles.Editor, tx)
             .then(function() {
-                logger.error(locals.attrs);
-                return models.Schedule.create({
-                    dtStart: locals.attrs.startsAt,
-                    rrule: locals.attrs.rrule
-                }, {transaction: tx});
+                return models.Job.create(locals.attrs, { transaction: tx });
             })
-                .then(function(schedule){
-                    locals.schedule = schedule;
-                    locals.attrs.scheduleId = schedule.id;
-                    return models.Job.create(locals.attrs, { transaction: tx });
-                })
-
             .then(function (job) {
                 locals.job = job;
                 return Promise.join(
                     history.logCreated(context.personId, {
-                                            organizationId: job.organizationId,
-                                            workspaceId: job.workspaceId,
-                                            scheduleId: job.scheduleId,
-                                            jobId: job.id
-                                        }, job, tx),
+                        organizationId: job.organizationId,
+                        workspaceId: job.workspaceId,
+                        jobId: job.id
+                    }, job, tx),
                     cache.put(getJobIdCacheKey(job.id), job));
             })
             .then(function() {
@@ -101,11 +90,9 @@ var create = module.exports.create = Promise.method(function (context, attribute
                 }
             })
             .then(function() {
-                locals.job.startsAt = locals.schedule.dtStart;
-                locals.job.rrule = locals.schedule.rrule;
                 return locals.job;
             });
-        })
+    })
         .catch(function (err) {
             logger.error('Failed to create a job, %s.', err.toString());
             throw err;
@@ -167,43 +154,21 @@ var update = module.exports.update = Promise.method(function (context, id, attri
                 if (job === null) {
                     throw new errors.NotFound();
                 }
-
                 locals.oldJob = job;
-
                 return job.updateAttributes(locals.attrs, { transaction: tx });
             })
-            .then(function(job)
-            {
-                return models.Schedule.findAndCountAll({ where : { id : job.scheduleId } }).then(function(schedule)
-                {
-                    if(schedule && schedule.rows.length > 0)
-                    {
-                        schedule = schedule.rows[0];
-                    }
-                    var attsToUpdate = {};
-                    attsToUpdate.dtStart = job.startsAt;
-                    attsToUpdate.rrule = job.rrule;
-                    schedule.updateAttributes(attsToUpdate, { transaction: tx })
-                        .then(function(schedule){
-                            locals.schedule = schedule;
-                            return schedule;
-                        });
-                }).then(function(){
-                    locals.job = job;
-                    return Promise.join(
-                        history.logUpdated(context.personId, {
-                            organizationId: job.organizationId,
-                            workspaceId: job.workspaceId,
-                            jobId: job.id,
-                            scheduleId: job.scheduleId
-                        }, job, locals.oldJob, tx),
-                        cache.put(getJobIdCacheKey(job.id), job),
-                        function () {
-                            locals.job.startsAt = locals.schedule.dtStart;
-                            locals.job.rrule = locals.schedule.rrule;
-                            return locals.job;
-                        });
-                });
+            .then(function (job) {
+                locals.job = job;
+                return Promise.join(
+                    history.logUpdated(context.personId, {
+                        organizationId: job.organizationId,
+                        workspaceId: job.workspaceId,
+                        jobId: job.id
+                    }, job, locals.oldJob, tx),
+                    cache.put(getJobIdCacheKey(job.id), job),
+                    function () {
+                        return locals.job;
+                    });
             })
             .then(function() {
                 if (locals.attrs.tags) {
@@ -224,14 +189,14 @@ var update = module.exports.update = Promise.method(function (context, id, attri
                     });
                 }
             })
-            .then (function(){
-                return locals.job;
-            });
-        })
-        .catch(function (err) {
-            logger.error('Failed to update the job %d, %s.', id, err.toString());
-            throw err;
+            .then (function() {
+            return locals.job;
         });
+    })
+    .catch(function (err) {
+        logger.error('Failed to update the job %d, %s.', id, err.toString());
+        throw err;
+    });
 });
 /**
  * Remove a job.
@@ -257,7 +222,7 @@ var remove = module.exports.remove = Promise.method(function (context, id) {
                             cache.remove(getJobIdCacheKey(locals.job.id)));
                     });
             });
-        })
+    })
         .catch(function (err) {
             logger.error('Failed to remove the job %d, %s.', id, err.toString());
             throw err;
