@@ -155,18 +155,21 @@ describe('JOBS API',
         it('update job with tags', function (done) {
             superagent.put(prefix + '/organizations/' + testdata.AcmeCorp.id + '/workspaces/' + testdata.MyWorkspace.id + '/jobs/' + id_to_delete)
                 .set('Content-Type', 'application/json')
-                .send({ 'job':  {
-                    'startsAt': '2014-08-21T10:00:11Z',
-                    'tags': ["updated edi"],
-                    'rrule': 'updatedFREQ=DAILY;INTERVAL=1;BYDAY=MO;BYHOUR=12;BYMINUTE=0;BYSECOND=0'
-                }
+                .send({
+                    'job': {
+                        'schedule': {
+                            'dtStart': '2014-08-21T10:00:11Z',
+                            'rrule': 'updatedFREQ=DAILY;INTERVAL=1;BYDAY=MO;BYHOUR=12;BYMINUTE=0;BYSECOND=0'
+                        },
+                        'tags': ["updated edi"]
+                    }
                 })
                 .authenticate(accessToken)
                 .end(function (e, res) {
                     expect(e).to.eql(null);
                     log.info(res.body.job);
                     expect(res.header['content-type']).to.eql('application/json; charset=utf-8');
-                    expect(res.body.job.scheduleId).not.eql(null);
+                    //expect(res.body.job.scheduleId).not.eql(null);
                     //expect(validator.isDate(res.body.job.startsAt)).to.be.ok();
                     expect(res.status).to.eql(200);
                     done();
@@ -176,10 +179,15 @@ describe('JOBS API',
         it('update job without tags', function (done) {
             superagent.put(prefix + '/jobs/' + id_to_delete)
                 .set('Content-Type', 'application/json')
-                .send({ 'job':  {
-                    'startsAt': '2014-08-21T10:00:11Z',
-                    'rrule': 'updatedFREQ=DAILY;INTERVAL=1;BYDAY=MO;BYHOUR=12;BYMINUTE=0;BYSECOND=0'
-                }
+                .send({
+                    'job': {
+                        'schedule': {
+                            'dtStart': '2014-08-21T10:00:11Z',
+                            'rrule': 'updatedFREQ=DAILY;INTERVAL=1;BYDAY=MO;BYHOUR=12;BYMINUTE=0;BYSECOND=0',
+                            'id' : -10
+                        },
+                        'scheduleId' : -10
+                    }
                 })
                 .authenticate(accessToken)
                 .end(function (e, res) {
