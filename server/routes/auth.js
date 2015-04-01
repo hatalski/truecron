@@ -208,12 +208,12 @@ router.post('/simple.json', function(req, res) {
     }
 });
 
-
-var codeToResetPassword = '';
 router.post('/resetpassword', function(req, res, next) {
+    var codeToResetPassword = '';
     var email = req.body.resetpass.email;
     var validEmail = validator.isEmail(email);
-    var pathForTransition = req.body.env+'/#/confirmreset';
+    var pathForTransition = req.body.env || 'https://dev.truecron.com';
+    pathForTransition += '/#/confirmreset';
     codeToResetPassword = crypto.randomBytes(64).toString('base64');
     if (codeToResetPassword.length > 40) {
         codeToResetPassword = codeToResetPassword.slice(codeToResetPassword.length - 40).toString();
@@ -225,7 +225,7 @@ router.post('/resetpassword', function(req, res, next) {
     if (!codeToResetPassword) {
         return next(new apiErrors.InvalidParams('resetPasswordCode is not specified.'));
     }
-
+console.log('!!!!!!pathForTransition: '+pathForTransition);
     if (validEmail) {
         storage.ResetPasswords.create(req.context, req.body.resetpass)
             .then(function (resetpassw) {
@@ -244,7 +244,7 @@ router.post('/resetpassword', function(req, res, next) {
                     } else {
                         console.dir(info);
                         console.log('Message sent: ' + info.messageId);
-                        res.status(201).json({ message: 'Email with a code to reset your password has been sent to the specified address'});
+                        res.status(201).json({ resetpass: resetpassw, message: 'Email with a code to reset your password has been sent to the specified address'});
                     }
                 });
             });

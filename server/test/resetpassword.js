@@ -22,7 +22,7 @@ describe('RESET PASSWORD API',
                 });
             });
         });
-        it.only('create a new data in DB', function (done) {
+        it.only('create a new data in DB and send email', function (done) {
             superagent.post('https://dev.truecron.com' + '/auth/resetpassword')
                 .set('Content-Type', 'application/json')
                 .send({ 'resetpass': {
