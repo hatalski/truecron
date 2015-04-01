@@ -71,8 +71,6 @@ router.post('/signup', function(req, res, next) {
                         return storage.Person.addEmail(req.context, person.id, { email: email, status: 'active' });
                     })
                     .then(function (addedEmail) {
-                        console.log('added email');
-                        console.dir(addedEmail);
                         // 3. Create "Personal" organization and add user as an admin of this organization
                         return storage.Organization.create(req.context, { name: 'Personal', email: email });
                     })
