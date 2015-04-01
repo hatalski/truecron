@@ -54,7 +54,7 @@ var SftpTask = function(connection, ftpCommands)
                         self.ftpClient.raw(command).exec(function (err, res) {
                             self.onError(err);
                             self.onError(res['error']);
-                            self.onMessage(res['data']);
+                            self.onMessage(index + ' ' + res['data']);
                             index++;
                             callFtp(index);
                         });
@@ -72,6 +72,7 @@ var SftpTask = function(connection, ftpCommands)
             };
 
             callFtp(0);
+
         }
     };
 

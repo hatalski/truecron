@@ -1,0 +1,56 @@
+<div class="container-fluid container-truecron">
+    <div class="row">
+        <div class="col-md-offset-2 col-md-8">
+            <h2 class="text-center">{{format-message (intl-get "messages.auth.signin_form.header")}}</h2>
+            <hr/>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-offset-2 col-md-4 col-border-right">
+            <form {{action 'authenticate' on='submit'}}>
+                <div {{bind-attr class=":form-group-material-orange-700 isLoginError:has-error"}}>
+                    <div class="input-group">
+                        <span class="input-group-addon"><i class="fa fa-lg fa-envelope-o"></i></span>
+                      {{input id="loginEmail"
+                        data-hint="Enter your account email"
+                        class="form-control floating-label input-lg"
+                        type="email"
+                        value=identification
+                        placeholder="Email"
+                        required="required"}}
+                    </div>
+                </div>
+              <br>
+                <div {{bind-attr class=":form-group-material-orange-700 isLoginError:has-error"}}>
+                    <div class="input-group">
+                        <span class="input-group-addon"><i class="fa fa-lg fa-key"></i></span>
+                      {{input id="loginPassword"
+                        data-hint="Enter your account password"
+                        class="form-control floating-label input-lg"
+                        type="password"
+                        value=password
+                        placeholder="Password"
+                        required="required"}}
+                    </div>
+                </div>
+                <br>
+                <div class="">
+                    <h4 class="text-center">{{#link-to 'forgot'}}{{format-message (intl-get "messages.auth.signin_form.forgottenPassword")}}{{/link-to}}</h4>
+                </div>
+                <div class="form-group">
+                    <div class="input-group-btn">
+                        <button type="submit" class="btn btn-lg btn-block btn-material-orange-800">{{format-message (intl-get "messages.auth.signin_form.button")}}</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+        <div class="col-md-4 col-xs-12">
+            <div class="g_sign">
+                <a class="btn btn-lg btn-block g_btn btn-white" {{action 'googleLogin'}}><i class="fa fa-google-plus"></i> {{format-message (intl-get "messages.auth.googleSignInButton")}}</a>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-offset-2 col-md-4">
+        <h4 class="text-center">{{format-message (intl-get "messages.auth.signin_form.accountNotExists")}} {{#link-to 'signup'}}{{format-message (intl-get "messages.auth.signin_form.signupLink")}}{{/link-to}}.</h4>
+    </div>
+</div>

@@ -26,7 +26,8 @@ var jobRunner = function(job, callBack, logger) {
 
             //var task = new taskWrapper(self.job.tasks.rows[index]);
 
-            var task = new FtpTask({host:'ftp.darvision.com', username:'anonymous', password:'@anonymous', protocol: 'ftp'}, 'ls .');
+            var task = new FtpTask({host:'ftp.darvision.com', username:'anonymous', password:'@anonymous', protocol: 'ftp'},
+                ['ls .']);
 
             if (task) {
                 if(self.logger) {

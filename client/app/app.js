@@ -10,7 +10,8 @@ var App = Ember.Application.extend({
   podModulePrefix: config.podModulePrefix,
   Resolver: Resolver,
   ready: function () {
-    this.intl.set('locales', ['en']);
+    var language = navigator.language || navigator.browserLanguage;
+    this.intl.set('locales', [language, 'en']);
     Ember.$.material.init();
   }
 });
