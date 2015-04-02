@@ -3,7 +3,7 @@
         <div class="row">
             <div class="col-md-5 truecron-input-margin">
                 <div class="form-group-material-orange-700">
-                  {{input id="jobName" type="text" value=model.name class="form-control floating-label input-lg" placeholder="Name of the job" data-hint="Give it a meaningful name"}}
+                    {{input id="jobName" type="text" value=model.name class="form-control floating-label input-lg" placeholder="Name of the job" data-hint="Give it a meaningful name"}}
                 </div>
             </div>
             <div class="col-md-1">
@@ -29,13 +29,17 @@
         </div>
     </div>
 </header>
-<div class="job-details-body">
-    <div class="row trucron-top-tasks">
+<div>
+    <div class="row">
         <div class="col-md-6 text-left">
-            <a class="btn btn-lg btn-material-blue-grey-400"><i class="fa fa-play"></i> Run</a>
+            <a class="btn btn-material-blue-grey-400">
+                {{!--<i class="fa fa-play"></i> --}}
+                Run Job</a>
         </div>
         <div class="col-md-6 text-right">
-            <a class="btn btn-lg btn-material-orange-800" {{action 'addTask'}}><i class="fa fa-plus"></i> New Task</a>
+            <a class="btn btn-material-orange-800" {{action 'addTask'}}>
+                {{!--<i class="fa fa-plus"></i> --}}
+                New Task</a>
         </div>
     </div>
     {{#if showNewTaskForm}}

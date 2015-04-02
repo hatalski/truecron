@@ -449,12 +449,6 @@ a.list-group-item:hover, a.list-group-item:active, a.list-group-item:focus {
 .job-details-header {
   background-color: white; }
 
-.trucron-top-tasks {
-  padding-top: 20px; }
-
-.job-details-body .col-md-2 .btn-signup {
-  margin-top: 1px; }
-
 .run-history-info {
   background-color: #eceff1; }
 
@@ -507,9 +501,6 @@ a.list-group-item:hover, a.list-group-item:active, a.list-group-item:focus {
 
 .trucron-top-tasks {
   padding-top: 10px; }
-
-.job-details-body .col-md-2 .btn-signup {
-  margin-top: 2px; }
 
 .arrow_box {
   position: relative;
