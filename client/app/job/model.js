@@ -14,7 +14,7 @@ var Job = DS.Model.extend({
   workspace:   DS.belongsTo('workspace', { async: true }),
   tags:        DS.hasMany('job-tag', { async: true }),
   //history:     DS.hasMany('job-history', { async: true }),
-  tasks:       DS.hasMany('jobs.job.task', { async: true }),
+  tasks:       DS.hasMany('task', { async: true }),
   statusId:    DS.attr('number', { defaultValue: 0 }),
   status:      function() {
     return {

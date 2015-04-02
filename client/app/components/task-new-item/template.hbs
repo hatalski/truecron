@@ -1,0 +1,138 @@
+<div class="row">
+    <div class="col-md-12">
+        <div class="truecron-new-task-title">
+            <div class="form-group-material-orange-700">
+              {{input id="taskName" type="text" value=task.name class="form-control floating-label input-lg" placeholder="Task Name" data-hint="Give it a meaningful name"}}
+            </div>
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-12">
+        <div class="panel panel-material-blue-grey-200 truecron-panel">
+            <div class="panel-heading truecron-panel-heading">Settings</div>
+            <div class="panel-body truecron-panel-body">
+                <div class="row">
+                    <br>
+                    <div class="col-md-2 text-right">
+                        <h5><strong>Type:</strong></h5>
+                    </div>
+                    <div class="col-xs-3">
+                        <div class="form-group-material-orange-700">
+                            <select class="form-control">
+                                <option>Delete files</option>
+                                <option>Archive files</option>
+                                <option>Format HDD</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-md-2 text-right">
+                        <h5><strong>Connections:</strong></h5>
+                    </div>
+                    <div class="col-xs-3">
+                        <div class="form-group-material-orange-700">
+                            <select class="form-control">
+                                <option>Local</option>
+                                <option>Remote</option>
+                                <option>Magic stuff</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <br>
+                    <div class="col-md-2 text-right">
+                        <h5><strong>Folders:</strong></h5>
+                    </div>
+                    <div class="col-xs-3">
+                        <div class="form-group-material-orange-700">
+                            <select class="form-control">
+                                <option>local</option>
+                                <option>remote</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-md-2 text-right">
+                        <h5><strong>File mask:</strong></h5>
+                    </div>
+                    <div class="col-xs-3">
+                        <div class="form-group-material-orange-700">
+                            <div class="form-group-material-orange-700">
+                                <input id="maskType" type="text" value="" class="form-control floating-label" placeholder="*.*" data-hint="Choose the mask">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-offset-7 col-md-3">
+                        <div class="checkbox checkbox-material-orange-700">
+                            <label>
+                                <input type="checkbox" checked=""> <strong>Delete my empty folders</strong>
+                            </label>
+                        </div>
+                    </div>
+                </div>
+                <hr>
+                <div class="row">
+                    <div class="col-md-2 text-right">
+                        <h5><strong>Failure conditions:</strong></h5>
+                    </div>
+                    <div class="col-md-1 text-center">
+                        <div class="checkbox checkbox-material-orange-700 truecron_checkbox">
+                            <label>
+                                <input type="checkbox">
+                            </label>
+                        </div>
+                    </div>
+                    <div class="col-md-1 text-left">
+                        <h5><strong>timeout:</strong></h5>
+                    </div>
+                    <div class="col-md-2 text-left">
+                        <div class="form-group-material-orange-700">
+                            <select class="form-control">
+                                <option>10 seconds</option>
+                                <option>20 seconds</option>
+                                <option>30 seconds</option>
+                                <option>40 seconds</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="panel-footer panel-footer-material-blue-grey-200 truecron-panel-heading">
+                <div class="row">
+                    <div class="col-md-offset-10 col-md-1 text-right">
+                        <a class="btn btn-sm btn-material-blue-grey-400 truecron-panel-btn" {{action 'create'}}>SAVE</a>
+                    </div>
+                    <div class="col-md-1 text-center">
+                        <a class="btn btn-sm btn-material-blue-grey-400 truecron-panel-btn" {{action 'cancel'}}>CANCEL</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+{{!--<div class="panel panel-default">--}}
+    {{!--<div class="panel-heading truecron-first-heading" role="tab" id="task{{task.id}}">--}}
+        {{!--<div class="row">--}}
+            {{!--<div class="col-md-1">--}}
+                {{!--<i class="fa fa-bars"></i>--}}
+            {{!--</div>--}}
+            {{!--<div class="col-md-1 text-center">--}}
+                {{!--<p>{{task.taskType.name}}</p>--}}
+            {{!--</div>--}}
+            {{!--<div class="col-md-3 text-center">--}}
+                {{!--<p>{{task.name}}</p>--}}
+            {{!--</div>--}}
+        {{!--</div>--}}
+    {{!--</div>--}}
+    {{!--<div id="collapseTask{{task.id}}" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="task{{task.id}}">--}}
+        {{!--<div class="panel-body truecron-panel-body">--}}
+            {{!--<button type="submit" class="btn btn-material-orange-700" {{action 'create'}}>Create Task</button>--}}
+            {{!--<button type="reset" class="btn btn-material-blue-grey-400" {{action 'cancel'}}>Cancel</button>--}}
+        {{!--</div>--}}
+    {{!--</div>--}}
+{{!--</div>--}}
+{{yield}}

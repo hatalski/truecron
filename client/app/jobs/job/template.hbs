@@ -35,266 +35,160 @@
             <a class="btn btn-lg btn-material-blue-grey-400"><i class="fa fa-play"></i> Run</a>
         </div>
         <div class="col-md-6 text-right">
-            <a class="btn btn-lg btn-material-orange-800"><i class="fa fa-plus"></i> New Task</a>
+            <a class="btn btn-lg btn-material-orange-800" {{action 'addTask'}}><i class="fa fa-plus"></i> New Task</a>
         </div>
     </div>
-<div class="row">
-    <div class="col-md-12">
-        <div class="truecron-new-task-title">
-            <div class="form-group-material-orange-700">
-              {{input id="taskName" type="text" value=model.name class="form-control floating-label input-lg" placeholder="Task Name" data-hint="Give it a meaningful name"}}
-            </div>
-        </div>
+    {{#if showNewTaskForm}}
+      {{task-new-item task=newTask onCreate="createTask" onCancel="cancelTaskCreation"}}
+    {{/if}}
+    <div class="panel-group truecron-accordion" id="accordion" role="tablist" aria-multiselectable="true">
+        {{#each task in model.tasks}}
+          {{task-list-item task=task}}
+        {{else}}
+          <p>No tasks</p>
+        {{/each}}
+        {{!--<div class="panel panel-default">--}}
+            {{!--<div class="panel-heading truecron-first-heading" role="tab" id="headingOne">--}}
+                {{!--<div class="row">--}}
+                    {{!--<div class="col-md-1">--}}
+                        {{!--<i class="fa fa-bars"></i>--}}
+                    {{!--</div>--}}
+                    {{!--<div class="col-md-2 text-center">--}}
+                        {{!--<p>delete</p>--}}
+                    {{!--</div>--}}
+                    {{!--<div class="col-md-2 text-center">--}}
+                        {{!--<p>clean folder</p>--}}
+                    {{!--</div>--}}
+                    {{!--<div class="col-md-4 text-center">--}}
+                        {{!--<p>564 files were removed</p>--}}
+                    {{!--</div>--}}
+                    {{!--<div class="col-md-2 text-center trucron-underline">--}}
+                        {{!--<p>0.68 sec</p>--}}
+                    {{!--</div>--}}
+                    {{!--<div class="col-md-1 text-right">--}}
+                        {{!--<i class="fa fa-square"></i>--}}
+                    {{!--</div>--}}
+                {{!--</div>--}}
+            {{!--</div>--}}
+            {{!--<div id="collapseOne" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingOne">--}}
+                {{!--<div class="panel-body truecron-panel-body">--}}
+                    {{!--<p>rm myFile.txt myFile1.txt myFile2.txt …etc…</p>--}}
+                    {{!--<p>rm myFile*.txt</p>--}}
+                    {{!--<p>rm -rf foldername</p>--}}
+                    {{!--<p>rm -rf *</p>--}}
+                {{!--</div>--}}
+            {{!--</div>--}}
+        {{!--</div>--}}
+        {{!--<div class="panel panel-default">--}}
+            {{!--<div class="panel-heading truecron-second-heading" role="tab" id="headingTwo">--}}
+                {{!--<div class="row">--}}
+                    {{!--<div class="col-md-1">--}}
+                        {{!--<i class="fa fa-bars"></i>--}}
+                    {{!--</div>--}}
+                    {{!--<div class="col-md-2 text-center">--}}
+                        {{!--<p>delete</p>--}}
+                    {{!--</div>--}}
+                    {{!--<div class="col-md-2 text-center">--}}
+                        {{!--<p>clean folder</p>--}}
+                    {{!--</div>--}}
+                    {{!--<div class="col-md-4 text-center">--}}
+                        {{!--<p>564 files were removed</p>--}}
+                    {{!--</div>--}}
+                    {{!--<div class="col-md-2 text-center trucron-underline">--}}
+                        {{!--<p>0.68 sec</p>--}}
+                    {{!--</div>--}}
+                    {{!--<div class="col-md-1 text-right">--}}
+                        {{!--<i class="fa fa-square"></i>--}}
+                    {{!--</div>--}}
+                {{!--</div>--}}
+            {{!--</div>--}}
+            {{!--<div id="collapseOne" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingOne">--}}
+                {{!--<div class="panel-body truecron-panel-body">--}}
+                    {{!--<p>rm myFile.txt myFile1.txt myFile2.txt …etc…</p>--}}
+                    {{!--<p>rm myFile*.txt</p>--}}
+                    {{!--<p>rm -rf foldername</p>--}}
+                    {{!--<p>rm -rf *</p>--}}
+                {{!--</div>--}}
+            {{!--</div>--}}
+        {{!--</div>--}}
+        {{!--<div class="panel panel-default">--}}
+            {{!--<div class="panel-heading truecron-error-heading" role="tab" id="headingTwo">--}}
+                {{!--<div class="row">--}}
+                    {{!--<div class="col-md-1">--}}
+                        {{!--<i class="fa fa-bars"></i>--}}
+                    {{!--</div>--}}
+                    {{!--<div class="col-md-2 text-center">--}}
+                        {{!--<p>delete</p>--}}
+                    {{!--</div>--}}
+                    {{!--<div class="col-md-2 text-center">--}}
+                        {{!--<p>clean folder</p>--}}
+                    {{!--</div>--}}
+                    {{!--<div class="col-md-4 text-center">--}}
+                        {{!--<p>564 files were removed</p>--}}
+                    {{!--</div>--}}
+                    {{!--<div class="col-md-2 text-center trucron-underline">--}}
+                        {{!--<p>0.68 sec</p>--}}
+                    {{!--</div>--}}
+                    {{!--<div class="col-md-1 text-right">--}}
+                        {{!--<i class="fa fa-square"></i>--}}
+                    {{!--</div>--}}
+                {{!--</div>--}}
+            {{!--</div>--}}
+            {{!--<div id="collapseOne" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingOne">--}}
+                {{!--<div class="panel-body truecron-panel-body">--}}
+                    {{!--<p>rm myFile.txt myFile1.txt myFile2.txt …etc…</p>--}}
+                    {{!--<p>rm myFile*.txt</p>--}}
+                    {{!--<p>rm -rf foldername</p>--}}
+                    {{!--<p>rm -rf *</p>--}}
+                {{!--</div>--}}
+            {{!--</div>--}}
+        {{!--</div>--}}
+        {{!--<div class="panel panel-default">--}}
+            {{!--<div class="panel-heading truecron-first-heading truecron-inactive-heading" role="tab" id="headingTwo">--}}
+                {{!--<div class="row">--}}
+                    {{!--<div class="col-md-1">--}}
+                        {{!--<i class="fa fa-bars"></i>--}}
+                    {{!--</div>--}}
+                    {{!--<div class="col-md-2 text-center">--}}
+                        {{!--<p>delete</p>--}}
+                    {{!--</div>--}}
+                    {{!--<div class="col-md-2 text-center">--}}
+                        {{!--<p>clean folder</p>--}}
+                    {{!--</div>--}}
+                    {{!--<div class="col-md-4 text-center">--}}
+                        {{!--<p>564 files were removed</p>--}}
+                    {{!--</div>--}}
+                    {{!--<div class="col-md-2 text-center trucron-underline">--}}
+                        {{!--<p>0.68 sec</p>--}}
+                    {{!--</div>--}}
+                    {{!--<div class="col-md-1 text-right">--}}
+                        {{!--<i class="fa fa-square"></i>--}}
+                    {{!--</div>--}}
+                {{!--</div>--}}
+            {{!--</div>--}}
+            {{!--<div id="collapseOne" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingOne">--}}
+                {{!--<div class="panel-body truecron-panel-body">--}}
+                    {{!--<p>rm myFile.txt myFile1.txt myFile2.txt …etc…</p>--}}
+                    {{!--<p>rm myFile*.txt</p>--}}
+                    {{!--<p>rm -rf foldername</p>--}}
+                    {{!--<p>rm -rf *</p>--}}
+                {{!--</div>--}}
+            {{!--</div>--}}
+        {{!--</div>--}}
+        {{!--<div class="panel panel-default">--}}
+            {{!--<div class="panel-heading" role="tab" id="headingThree">--}}
+                {{!--<h4 class="panel-title">--}}
+                    {{!--<a class="collapsed" data-toggle="collapse" data-parent="#accordion" href="#collapseThree" aria-expanded="false" aria-controls="collapseThree">--}}
+                        {{!--Collapsible Group Item #3--}}
+                    {{!--</a>--}}
+                {{!--</h4>--}}
+            {{!--</div>--}}
+            {{!--<div id="collapseThree" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingThree">--}}
+                {{!--<div class="panel-body">--}}
+                    {{!--Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. 3 wolf moon officia aute, non cupidatat skateboard dolor brunch. Food truck quinoa nesciunt laborum eiusmod. Brunch 3 wolf moon tempor, sunt aliqua put a bird on it squid single-origin coffee nulla assumenda shoreditch et. Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred nesciunt sapiente ea proident. Ad vegan excepteur butcher vice lomo. Leggings occaecat craft beer farm-to-table, raw denim aesthetic synth nesciunt you probably haven't heard of them accusamus labore sustainable VHS.--}}
+                {{!--</div>--}}
+            {{!--</div>--}}
+        {{!--</div>--}}
     </div>
-</div>
-<div class="row">
-    <div class="col-md-12">
-        <div class="panel panel-material-blue-grey-200 truecron-panel">
-            <div class="panel-heading truecron-panel-heading">Settings</div>
-            <div class="panel-body truecron-panel-body">
-                <div class="row">
-                    <br>
-                    <div class="col-md-2 text-right">
-                        <h5><strong>Type:</strong></h5>
-                    </div>
-                    <div class="col-xs-3">
-                        <div class="form-group-material-orange-700">
-                            <select class="form-control">
-                                <option>Delete files</option>
-                                <option>Archive files</option>
-                                <option>Format HDD</option>
-                            </select>
-                        </div>
-                    </div>
-                    <div class="col-md-2 text-right">
-                        <h5><strong>Connections:</strong></h5>
-                    </div>
-                    <div class="col-xs-3">
-                        <div class="form-group-material-orange-700">
-                            <select class="form-control">
-                                <option>Local</option>
-                                <option>Remote</option>
-                                <option>Magic stuff</option>
-                            </select>
-                        </div>
-                    </div>
-                </div>
-                <div class="row">
-                    <br>
-                    <div class="col-md-2 text-right">
-                        <h5><strong>Folders:</strong></h5>
-                    </div>
-                    <div class="col-xs-3">
-                        <div class="form-group-material-orange-700">
-                            <select class="form-control">
-                                <option>local</option>
-                                <option>remote</option>
-                            </select>
-                        </div>
-                    </div>
-                    <div class="col-md-2 text-right">
-                        <h5><strong>File mask:</strong></h5>
-                    </div>
-                        <div class="col-xs-3">
-                          <div class="form-group-material-orange-700">
-                              <div class="form-group-material-orange-700">
-                                <input id="maskType" type="text" value="" class="form-control floating-label" placeholder="*.*" data-hint="Choose the mask">
-                              </div>
-                        </div>
-                    </div>
-                </div>
-              <div class="row">
-                  <div class="col-md-offset-7 col-md-3">
-                      <div class="checkbox checkbox-material-orange-700">
-                          <label>
-                              <input type="checkbox" checked=""> <strong>Delete my empty folders</strong>
-                          </label>
-                      </div>
-                  </div>
-              </div>
-                <hr>
-              <div class="row">
-                  <div class="col-md-2 text-right">
-                      <h5><strong>Failure conditions:</strong></h5>
-                  </div>
-                  <div class="col-md-1 text-center">
-                      <div class="checkbox checkbox-material-orange-700 truecron_checkbox">
-                          <label>
-                              <input type="checkbox">
-                          </label>
-                      </div>
-                  </div>
-                  <div class="col-md-1 text-left">
-                      <h5><strong>timeout:</strong></h5>
-                  </div>
-                  <div class="col-md-2 text-left">
-                      <div class="form-group-material-orange-700">
-                          <select class="form-control">
-                              <option>10 seconds</option>
-                              <option>20 seconds</option>
-                              <option>30 seconds</option>
-                              <option>40 seconds</option>
-                          </select>
-                      </div>
-                  </div>
-              </div>
-            </div>
-            <div class="panel-footer panel-footer-material-blue-grey-200 truecron-panel-heading">
-                <div class="row">
-                    <div class="col-md-offset-10 col-md-1 text-right">
-                        <a class="btn btn-sm btn-material-blue-grey-400 truecron-panel-btn">SAVE</a>
-                    </div>
-                    <div class="col-md-1 text-center">
-                        <a class="btn btn-sm btn-material-blue-grey-400 truecron-panel-btn">CANCEL</a>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-<div class="panel-group truecron-accordion" id="accordion" role="tablist" aria-multiselectable="true">
-    <div class="panel panel-default">
-        <div class="panel-heading truecron-first-heading" role="tab" id="headingOne">
-            <div class="row">
-                <div class="col-md-1">
-                    <i class="fa fa-bars"></i>
-                </div>
-                <div class="col-md-2 text-center">
-                    <p>delete</p>
-                </div>
-                <div class="col-md-2 text-center">
-                    <p>clean folder</p>
-                </div>
-                <div class="col-md-4 text-center">
-                    <p>564 files were removed</p>
-                </div>
-                <div class="col-md-2 text-center trucron-underline">
-                    <p>0.68 sec</p>
-                </div>
-                <div class="col-md-1 text-right">
-                    <i class="fa fa-square"></i>
-                </div>
-            </div>
-        </div>
-        <div id="collapseOne" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingOne">
-            <div class="panel-body truecron-panel-body">
-                <p>rm myFile.txt myFile1.txt myFile2.txt …etc…</p>
-                <p>rm myFile*.txt</p>
-                <p>rm -rf foldername</p>
-                <p>rm -rf *</p>
-            </div>
-        </div>
-    </div>
-    <div class="panel panel-default">
-        <div class="panel-heading truecron-second-heading" role="tab" id="headingTwo">
-            <div class="row">
-                <div class="col-md-1">
-                    <i class="fa fa-bars"></i>
-                </div>
-                <div class="col-md-2 text-center">
-                    <p>delete</p>
-                </div>
-                <div class="col-md-2 text-center">
-                    <p>clean folder</p>
-                </div>
-                <div class="col-md-4 text-center">
-                    <p>564 files were removed</p>
-                </div>
-                <div class="col-md-2 text-center trucron-underline">
-                    <p>0.68 sec</p>
-                </div>
-                <div class="col-md-1 text-right">
-                    <i class="fa fa-square"></i>
-                </div>
-            </div>
-        </div>
-        <div id="collapseOne" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingOne">
-            <div class="panel-body truecron-panel-body">
-                <p>rm myFile.txt myFile1.txt myFile2.txt …etc…</p>
-                <p>rm myFile*.txt</p>
-                <p>rm -rf foldername</p>
-                <p>rm -rf *</p>
-            </div>
-        </div>
-    </div>
-    <div class="panel panel-default">
-        <div class="panel-heading truecron-error-heading" role="tab" id="headingTwo">
-            <div class="row">
-                <div class="col-md-1">
-                    <i class="fa fa-bars"></i>
-                </div>
-                <div class="col-md-2 text-center">
-                    <p>delete</p>
-                </div>
-                <div class="col-md-2 text-center">
-                    <p>clean folder</p>
-                </div>
-                <div class="col-md-4 text-center">
-                    <p>564 files were removed</p>
-                </div>
-                <div class="col-md-2 text-center trucron-underline">
-                    <p>0.68 sec</p>
-                </div>
-                <div class="col-md-1 text-right">
-                    <i class="fa fa-square"></i>
-                </div>
-            </div>
-        </div>
-        <div id="collapseOne" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingOne">
-            <div class="panel-body truecron-panel-body">
-                <p>rm myFile.txt myFile1.txt myFile2.txt …etc…</p>
-                <p>rm myFile*.txt</p>
-                <p>rm -rf foldername</p>
-                <p>rm -rf *</p>
-            </div>
-        </div>
-    </div>
-    <div class="panel panel-default">
-        <div class="panel-heading truecron-first-heading truecron-inactive-heading" role="tab" id="headingTwo">
-            <div class="row">
-                <div class="col-md-1">
-                    <i class="fa fa-bars"></i>
-                </div>
-                <div class="col-md-2 text-center">
-                    <p>delete</p>
-                </div>
-                <div class="col-md-2 text-center">
-                    <p>clean folder</p>
-                </div>
-                <div class="col-md-4 text-center">
-                    <p>564 files were removed</p>
-                </div>
-                <div class="col-md-2 text-center trucron-underline">
-                    <p>0.68 sec</p>
-                </div>
-                <div class="col-md-1 text-right">
-                    <i class="fa fa-square"></i>
-                </div>
-            </div>
-        </div>
-        <div id="collapseOne" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingOne">
-            <div class="panel-body truecron-panel-body">
-                <p>rm myFile.txt myFile1.txt myFile2.txt …etc…</p>
-                <p>rm myFile*.txt</p>
-                <p>rm -rf foldername</p>
-                <p>rm -rf *</p>
-            </div>
-        </div>
-    </div>
-    <div class="panel panel-default">
-        <div class="panel-heading" role="tab" id="headingThree">
-            <h4 class="panel-title">
-                <a class="collapsed" data-toggle="collapse" data-parent="#accordion" href="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
-                    Collapsible Group Item #3
-                </a>
-            </h4>
-        </div>
-        <div id="collapseThree" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingThree">
-            <div class="panel-body">
-                Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. 3 wolf moon officia aute, non cupidatat skateboard dolor brunch. Food truck quinoa nesciunt laborum eiusmod. Brunch 3 wolf moon tempor, sunt aliqua put a bird on it squid single-origin coffee nulla assumenda shoreditch et. Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred nesciunt sapiente ea proident. Ad vegan excepteur butcher vice lomo. Leggings occaecat craft beer farm-to-table, raw denim aesthetic synth nesciunt you probably haven't heard of them accusamus labore sustainable VHS.
-            </div>
-        </div>
-    </div>
-</div>
 </div>
 {{outlet}}
