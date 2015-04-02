@@ -61,7 +61,7 @@ describe('RESET PASSWORD API',
             superagent.post('https://dev.truecron.com' + '/auth/resetpassword')
                 .set('Content-Type', 'application/json')
                 .send({ 'resetpass': {
-                    'email': 'test@gmail.com'
+                    'email': 'ghostxx7@gmail.com'
                 }
                 })
                 .authenticate(accessToken)
