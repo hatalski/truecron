@@ -5,6 +5,9 @@ VAGRANTFILE_API_VERSION = "2"
 
 Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   config.vm.box = "ubuntu/trusty64"
+  config.vm.provider :virtualbox do |vb|
+    vb.customize ["modifyvm", :id, "--natdnshostresolver1", "on"]
+  end
 #  config.vm.synced_folder ".", "/vagrant", disabled: true
   config.vm.provision :shell, path: "provision/default.sh"
 

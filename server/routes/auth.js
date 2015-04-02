@@ -10,7 +10,8 @@ var express   = require('express'),
     storage   = require('../storage'),
     context   = require('../context'),
     random    = require('randomstring');
-    crypto    = require('crypto');
+    crypto    = require('crypto'),
+    validity  = 18000000;
     //clientAuth = require('./clientauth'),
     //oauthErrors = require('./oautherrors'),
     //token = require('./token');
@@ -205,27 +206,23 @@ router.post('/simple.json', function(req, res) {
     }
 });
 
-
-var codeToResetPassword = '';
 router.post('/resetpassword', function(req, res, next) {
+    var codeToResetPassword = '';
     var email = req.body.resetpass.email;
     var validEmail = validator.isEmail(email);
-    var pathForTransition = req.body.env+'/#/confirmreset';
+    var pathForTransition = req.body.env || 'https://dev.truecron.com';
+    pathForTransition += '/#/confirmreset';
     codeToResetPassword = crypto.randomBytes(64).toString('base64');
     if (codeToResetPassword.length > 40) {
         codeToResetPassword = codeToResetPassword.slice(codeToResetPassword.length - 40).toString();
         req.body.resetpass.resetpasswordcode = codeToResetPassword;
     }
-    console.log('!!!!!!!!!codeToResetPassword:'+codeToResetPassword);
-    console.log('length:'+codeToResetPassword.length);
-
     if (!validEmail) {
         return next(new apiErrors.InvalidParams('Email is not specified.'));
     }
     if (!codeToResetPassword) {
         return next(new apiErrors.InvalidParams('resetPasswordCode is not specified.'));
     }
-
     if (validEmail) {
         storage.ResetPasswords.create(req.context, req.body.resetpass)
             .then(function (resetpassw) {
@@ -234,25 +231,24 @@ router.post('/resetpassword', function(req, res, next) {
                     to: email,
                     subject: 'reset password truecron.com',
                     html: 'To reset your password, just click this link:<br/><br/>' +
-                    '<a href="'+pathForTransition+'?code='+codeToResetPassword+'">'+pathForTransition+'</a> <br/> ' +
-                    'or manually enter this code: '+codeToResetPassword+
+                    '<a href="' + pathForTransition + '?comde=' + codeToResetPassword + '">' + pathForTransition + '</a> <br/> ' +
+                    'or manually enter this code: ' + codeToResetPassword + '<br/> Warning! This code will be valid for 5 hours.' +
                     '<br/><br/>Yours Truly,<br/>' + 'TrueCron Team'
                 }, function (error, info) {
                     if (error) {
-                        //res.status(400).json({ resetpass: resetpassw, message: 'Error Send mail'});
                         console.log(error);
+                        res.status(400).json({message: 'Error: An error occurred while sending mail.'});
                     } else {
                         console.dir(info);
                         console.log('Message sent: ' + info.messageId);
+                        res.status(201).json({
+                            resetpass: resetpassw,
+                            message: 'Email with a code to reset your password has been sent to the specified address'
+                        });
                     }
                 });
-                //res.status(201).json({ resetpass: resetpassw, message: '!!!!!!!!Email with a code to reset your password has been sent to the specified address'});
-            })
-            .catch(function (err) {
-                logger.error(err.toString());
-                return next(err);
+
             });
-        res.status(201).json({ message: 'Email with a code to reset your password has been sent to the specified address'});
     }
     else {
         res.status(400).json({ message: 'Email not valid!!!'});
@@ -269,6 +265,17 @@ router.post('/resetpasswordconfirmreset', function(req, res, next) {
     }
 
     storage.ResetPasswords.findByCode(req.context, codeToResetPassword)
+        //check the expiration date
+        .then(function(resetpass){
+            var dateNow = Date.now();
+            var createdAtDate = Date.parse(resetpass.createdAt);
+            var difference = dateNow-createdAtDate;
+            if(difference > validity){
+                storage.ResetPasswords.remove(req.context, resetpass.resetpasswordcode);
+                return null;
+            }
+            return resetpass;
+        })
         .then(function (resetpassw) {
             var mail = resetpassw.email;
             var validEmail = validator.isEmail(mail);
