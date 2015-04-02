@@ -9,11 +9,14 @@ var LazyWrapper = require('./LazyWrapper');
  * @returns {Object} Returns the new reversed `LazyWrapper` object.
  */
 function lazyReverse() {
-  var filtered = this.filtered,
-      result = filtered ? new LazyWrapper(this) : this.clone();
-
-  result.dir = this.dir * -1;
-  result.filtered = filtered;
+  if (this.__filtered__) {
+    var result = new LazyWrapper(this);
+    result.__dir__ = -1;
+    result.__filtered__ = true;
+  } else {
+    result = this.clone();
+    result.__dir__ *= -1;
+  }
   return result;
 }
 
