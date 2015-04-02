@@ -16,10 +16,7 @@ var mailTask;
 describe('Email task',
     function() {
         it ('has run', function (done) {
-            mailTask = new smtpTask('welcome@truecron.com', 'ghostxx7@gmail.com', 'reset password truecron.com', 'Text', 'To reset your password, just click this link:<br/><br/>' +
-                '<a href="'+'?code='+'">'+'</a> <br/> ' +
-                'or manually enter this code: '+'<br/> Warning! This code will be valid for 5 hours.'+
-                '<br/><br/>Yours Truly,<br/>' + 'TrueCron Team');
+            mailTask = new smtpTask('sergey.sokur@truecron.com', 'sergey.sokur@truecron.com', 'subject', 'Text', '<br/>Html<br/>');
             var mailS3Log = new S3logger('_mailS3LogTest');
             mailTask.logSubscribers.push(mailS3Log);
             mailTask.run(function(){

@@ -228,50 +228,28 @@ router.post('/resetpassword', function(req, res, next) {
     if (validEmail) {
         storage.ResetPasswords.create(req.context, req.body.resetpass)
             .then(function (resetpassw) {
-
-
-                var smtpTask   = require('../worker/smtptask');
-                var mailTask;
-                var from = 'welcome@truecron.com',
-                    to = 'ghostxx7@gmail.com',
-                    subject = 'subject',
-                    text = 'text',
-                    html = 'To reset your password, just click this link:<br/><br/>' +
-                        '<a href="'+pathForTransition+'?code='+codeToResetPassword+'">'+pathForTransition+'</a> <br/> ' +
-                        'or manually enter this code: '+codeToResetPassword+'<br/> Warning! This code will be valid for 5 hours.'+
-                        '<br/><br/>Yours Truly,<br/>' + 'TrueCron Team';
-                mailTask = new smtpTask(from, to, subject, text, html);
-                mailTask.run(function () {
-                    if (mailTask.status != 'completed') {
-                        //console.log(error);
-                        res.status(400).json({ message: 'Error: An error occurred while sending mail.'});
-                    }
-                    else {
-                        res.status(201).json({ message: 'Email with a code to reset your password has been sent to the specified address'});
+                smtp.sendMail({
+                    from: 'welcome@truecron.com',
+                    to: email,
+                    subject: 'reset password truecron.com',
+                    html: 'To reset your password, just click this link:<br/><br/>' +
+                    '<a href="' + pathForTransition + '?comde=' + codeToResetPassword + '">' + pathForTransition + '</a> <br/> ' +
+                    'or manually enter this code: ' + codeToResetPassword + '<br/> Warning! This code will be valid for 5 hours.' +
+                    '<br/><br/>Yours Truly,<br/>' + 'TrueCron Team'
+                }, function (error, info) {
+                    if (error) {
+                        console.log(error);
+                        res.status(400).json({message: 'Error: An error occurred while sending mail.'});
+                    } else {
+                        console.dir(info);
+                        console.log('Message sent: ' + info.messageId);
+                        res.status(201).json({
+                            resetpass: resetpassw,
+                            message: 'Email with a code to reset your password has been sent to the specified address'
+                        });
                     }
                 });
 
-
-
-
-                //smtp.sendMail({
-                //    from: 'welcome@truecron.com',
-                //    to: email,
-                //    subject: 'reset password truecron.com',
-                //    html: 'To reset your password, just click this link:<br/><br/>' +
-                //    '<a href="'+pathForTransition+'?comde='+codeToResetPassword+'">'+pathForTransition+'</a> <br/> ' +
-                //    'or manually enter this code: '+codeToResetPassword+'<br/> Warning! This code will be valid for 5 hours.'+
-                //    '<br/><br/>Yours Truly,<br/>' + 'TrueCron Team'
-                //}, function (error, info) {
-                //    if (error) {
-                //        console.log(error);
-                //        res.status(400).json({ message: 'Error: An error occurred while sending mail.'});
-                //    } else {
-                //        console.dir(info);
-                //        console.log('Message sent: ' + info.messageId);
-                //        res.status(201).json({ resetpass: resetpassw, message: 'Email with a code to reset your password has been sent to the specified address'});
-                //    }
-                //});
             });
     }
     else {
