@@ -12,7 +12,7 @@ moduleForModel('job', {
     'model:organizations.organization.connection',
     'model:job',
     'model:job-tag',
-    'model:jobs.job.task']
+    'model:task']
 });
 
 test('it exists', function(assert) {
