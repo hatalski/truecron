@@ -16,7 +16,7 @@ var mailTask;
 describe('Email task',
     function() {
         it ('has run', function (done) {
-            mailTask = new smtpTask('sergey.sokur@truecron.com', 'sergey.sokur@truecron.com', 'Test', 'Text', '<b>Html</b>');
+            mailTask = new smtpTask('sergey.sokur@truecron.com', 'ghostxx7@gmail.com', 'Test', 'Text', '<b>Html</b>');
             var mailS3Log = new S3logger('_mailS3LogTest');
             mailTask.logSubscribers.push(mailS3Log);
             mailTask.run(function(){
