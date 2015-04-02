@@ -2,7 +2,8 @@ import Ember from 'ember';
 import RRuleParser from 'true-cron/mixins/rrule-parser';
 
 export default Ember.Component.extend(RRuleParser, {
-  tagName: 'span',
+  tagName: 'div',
+  classNames: ['list-group-item', 'truecron-group-item'],
   //classNames: ['list-group-item'],
   // attributeBindings: ['href'],
   // href: '#',
