@@ -228,6 +228,8 @@ router.post('/resetpassword', function(req, res, next) {
     if (validEmail) {
         storage.ResetPasswords.create(req.context, req.body.resetpass)
             .then(function (resetpassw) {
+
+
                 var smtpTask   = require('../worker/smtptask');
                 var mailTask;
                 var from = 'welcome@truecron.com',
@@ -257,7 +259,7 @@ router.post('/resetpassword', function(req, res, next) {
                 //    to: email,
                 //    subject: 'reset password truecron.com',
                 //    html: 'To reset your password, just click this link:<br/><br/>' +
-                //    '<a href="'+pathForTransition+'?code='+codeToResetPassword+'">'+pathForTransition+'</a> <br/> ' +
+                //    '<a href="'+pathForTransition+'?comde='+codeToResetPassword+'">'+pathForTransition+'</a> <br/> ' +
                 //    'or manually enter this code: '+codeToResetPassword+'<br/> Warning! This code will be valid for 5 hours.'+
                 //    '<br/><br/>Yours Truly,<br/>' + 'TrueCron Team'
                 //}, function (error, info) {
