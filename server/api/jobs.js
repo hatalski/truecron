@@ -79,48 +79,53 @@ api.route('/jobs')
         if (!req.body || !req.body.job) {
             return next(new apiErrors.InvalidParams('job is not specified.'));
         }
-
-        var organizationId = req.organization ? req.organization.id : req.body.job.organizationId;
-        if (!organizationId) {
-            return next(new apiErrors.InvalidParams('Organization is not specified.'));
-        }
         var workspaceId = req.workspace ? req.workspace.id : req.body.job.workspaceId;
         if (!workspaceId) {
             return next(new apiErrors.InvalidParams('Workspace is not specified.'));
         }
-        req.body.job.organizationId = organizationId;
-        req.body.job.workspaceId = workspaceId;
+        storage.Workspace.findById(req.context, workspaceId)
+            .then(function (workSpace){
+                if(!workSpace){
+                    res.status(400).json({});
+                }
+                req.body.job.organizationId = workSpace.organizationId;
+                var organizationId = req.organization ? req.organization.id : req.body.job.organizationId;
+                if (!organizationId) {
+                    return next(new apiErrors.InvalidParams('Organization is not specified.'));
+                }
+                req.body.job.organizationId = organizationId;
+                req.body.job.workspaceId = workspaceId;
 
-        var fnCreateJob = function(context, job)
-        {
-            storage.Jobs.create(context, job)
-                .then(function (job) {
-                    res.status(201).json({ job: formatJob(job) });
-                })
-                .catch(function (err) {
-                    logger.error(err.toString());
-                    return next(err);
-                });
-        };
-
-        if(req.body.job.schedule)
-        {
-            storage.Schedules.create(req.context, req.body.job.schedule)
-                .then(function(schedule)
+                var fnCreateJob = function(context, job)
                 {
-                    req.body.job.scheduleId = schedule.id;
-                    fnCreateJob(req.context, req.body.job);
-                })
-                .catch(function (err) {
-                    logger.error(err.toString());
-                    return next(err);
-                });
-        }
-        else
-        {
-            fnCreateJob(req.context, req.body.job);
-        }
+                    storage.Jobs.create(context, job)
+                        .then(function (job) {
+                            res.status(201).json({ job: formatJob(job) });
+                        })
+                        .catch(function (err) {
+                            logger.error(err.toString());
+                            return next(err);
+                        });
+                };
 
+                if(req.body.job.schedule)
+                {
+                    storage.Schedules.create(req.context, req.body.job.schedule)
+                        .then(function(schedule)
+                        {
+                            req.body.job.scheduleId = schedule.id;
+                            fnCreateJob(req.context, req.body.job);
+                        })
+                        .catch(function (err) {
+                            logger.error(err.toString());
+                            return next(err);
+                        });
+                }
+                else
+                {
+                    fnCreateJob(req.context, req.body.job);
+                }
+            })
     });
 
 //
