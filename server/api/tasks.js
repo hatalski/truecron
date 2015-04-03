@@ -13,7 +13,6 @@ var api = express.Router();
 //
 //add links
 //
-//+++++++++++++++++++++++++++++++
 function formatTask(task) {
     var tk = task.toJSON();
     var selfUrl = '/tasks/' + task.id;
@@ -23,7 +22,6 @@ function formatTask(task) {
     common.formatApiOutput(tk);
     return tk;
 }
-//+++++++++++++++++++++++
 api.route('/tasks')
     //
     // Get all tasks
@@ -58,28 +56,41 @@ api.route('/tasks')
         if (!req.body || !req.body.task) {
             return next(new apiErrors.InvalidParams('Task is not specified.'));
         }
-        var organizationId = req.organization ? req.organization.id : req.body.task.organizationId;
-        if (!organizationId) {
-            return next(new apiErrors.InvalidParams('organizationId is not specified.'));
-        }
-        var workspaceId = req.workspace ? req.workspace.id : req.body.task.workspaceId;
-        if (!workspaceId) {
-            return next(new apiErrors.InvalidParams('workspaceId is not specified.'));
-        }
         var jobId = req.job ? req.job.id : req.body.task.jobId;
         if (!jobId) {
             return next(new apiErrors.InvalidParams('jobId is not specified.'));
         }
-        req.body.task.organizationId = organizationId;
-        req.body.task.workspaceId = workspaceId;
-        req.body.task.jobId = jobId;
-        storage.Tasks.create(req.context, req.body.task)
-            .then(function (task) {
-                res.status(201).json({task: formatTask(task)});
-            })
-            .catch(function (err) {
-                logger.error(err.toString());
-                next(err);
+        //get job
+        storage.Jobs.findById(req.context, jobId)
+            .then(function(job){
+                req.body.task.workspaceId = job.workspaceId;
+                req.body.task.organizationId = job.organizationId;
+
+                var workspaceId = req.workspace ? req.workspace.id : req.body.task.workspaceId;
+                if (!workspaceId) {
+                    workspaceId = jobBody.workspaceId;
+                }
+                if (!workspaceId) {
+                    return next(new apiErrors.InvalidParams('workspaceId is not specified.'));
+                }
+                var organizationId = req.organization ? req.organization.id : req.body.task.organizationId;
+                if (!organizationId) {
+                    organizationId = jobBody.organizationId;
+                }
+                if (!organizationId) {
+                    return next(new apiErrors.InvalidParams('organizationId is not specified.'));
+                }
+                req.body.task.organizationId = organizationId;
+                req.body.task.workspaceId = workspaceId;
+                req.body.task.jobId = jobId;
+                storage.Tasks.create(req.context, req.body.task)
+                    .then(function (task) {
+                        res.status(201).json({task: formatTask(task)});
+                    })
+                    .catch(function (err) {
+                        logger.error(err.toString());
+                        next(err);
+                    });
             });
     });
 
