@@ -34,10 +34,8 @@
                         {{/if}}
                         </div>
                         <div class="col-md-6 text-right no-padding">
-                            {{#link-to 'jobs.new' class="btn btn-material-orange-800 btn-new-job"}}
-                                {{!--<i class="fa fa-plus fa-lg"></i>--}}
-                                New Job
-                            {{/link-to}}
+                            <a href="#" class="btn btn-material-orange-800 btn-new-job" {{action 'newJobClicked'}}>New Job</a>
+                            {{!--{{#link-to 'jobs.new' class="btn btn-material-orange-800 btn-new-job"}}New Job{{/link-to}}--}}
                         </div>
                     </div>
                 </div>

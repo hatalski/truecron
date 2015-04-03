@@ -32,5 +32,23 @@ export default Ember.Controller.extend({
   zone: 'GMT',
   zones: function() {
     return this.timezoneArray();
-  }.property()
+  }.property(),
+  actions: {
+    createNewJob: function() {
+      "use strict";
+      var self = this;
+      var newJob = self.get('model');
+      newJob.save().then(function() {
+        Ember.Logger.log('Job has been saved');
+        self.controllerFor('jobs').set('showJobDetails', false);
+        self.controllerFor('jobs').set('selectedJob', null);
+        self.transitionToRoute('jobs.job', newJob.get('workspace'), newJob);
+      });
+    },
+    cancelNewJob: function() {
+      "use strict";
+      this.controllerFor('jobs').set('showJobDetails', false);
+      this.controllerFor('jobs').set('selectedJob', null);
+    }
+  }
 });

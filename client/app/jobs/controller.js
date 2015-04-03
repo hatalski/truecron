@@ -14,10 +14,25 @@ export default Ember.Controller.extend({
     backToJobsList: function() {
       "use strict";
       this.set('showJobDetails', false);
+      this.transitionToRoute('jobs', this.get('model.workspace'));
     },
     changeWorkspace: function(workspace) {
       "use strict";
       this.transitionToRoute('jobs', workspace);
+    },
+    newJobClicked: function() {
+      "use strict";
+      var self = this;
+      var jobs = self.get('model.workspace.jobs');
+      Ember.Logger.log(jobs);
+      var newJob = self.store.createRecord('job', {
+        name: '',
+        organizationId: self.get('model.workspace.organization.id')
+      });
+      self.set('selectedJob', newJob);
+      self.set('showJobDetails', true);
+      jobs.pushObject(newJob);
+      self.transitionToRoute('jobs.new');
     }
   }
 });
