@@ -43,6 +43,26 @@
                 </div>
             </div>
           {{#if showJobDetails}}
+              <div class="container-fluid">
+                  <div class="row">
+                      <div class="panel panel-material-grey-100 truecron-side-panel">
+                          <div class="panel-heading truecron-panel-heading" role="tab" id="jobDetailsHeader">
+                              <div class="row">
+                                  <div class="col-md-9">
+                                      <h4 class="panel-title">
+                                          <p class="truecron-tab-p">Job Details</p>
+                                      </h4>
+                                  </div>
+                                  {{!--<div class="col-md-3 text-right">--}}
+                                      {{!--<a class="btn btn-sm btn-material-blue-grey-400 truecron-panel-btn">--}}
+                                          {{!--<i class="fa fa-filter fa-lg"></i>--}}
+                                      {{!--</a>--}}
+                                  {{!--</div>--}}
+                              </div>
+                          </div>
+                      </div>
+                  </div>
+              </div>
               <div class="list-group truecron-active-border">
                   {{job-list-item job=selectedJob linkTo='jobs.job' action='selectJob'}}
               </div>
@@ -97,7 +117,7 @@
                           </li>
                       </ul>
                   </div>
-                  <div id="collapseListGroup1" class="panel-collapse collapse" role="tabpanel" aria-labelledby="collapseListGroupHeading1" aria-expanded="true">
+                  <div id="collapseListGroup1" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="collapseListGroupHeading1" aria-expanded="true">
                       <ul class="list-group">
                           <li class="list-group-item truecron-sub-menu">
                               <div class="row">
@@ -185,7 +205,7 @@
                           </li>
                       </ul>
                   </div>
-                  <div id="collapseRevisionsTable" class="panel-collapse collapse" role="tabpanel" aria-labelledby="collapseRevisionHeading" aria-expanded="true">
+                  <div id="collapseRevisionsTable" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="collapseRevisionHeading" aria-expanded="true">
                       <ul class="list-group">
                           <li class="list-group-item truecron-sub-menu">
                               <div class="row">
