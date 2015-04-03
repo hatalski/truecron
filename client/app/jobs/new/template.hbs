@@ -3,7 +3,7 @@
         <div class="row">
             <div class="col-md-6 truecron-input-margin">
                 <div class="form-group-material-orange-700">
-                    {{input id="jobName" type="text" value=name class="form-control floating-label input-lg" placeholder="Name of the job" data-hint="Give it a meaningful name"}}
+                    {{input id="jobName" type="text" value=model.name class="form-control floating-label input-lg" placeholder="Name of the job" data-hint="Give it a meaningful name"}}
                 </div>
             </div>
             <div class="col-md-6 text-center truecron-title-margin">
@@ -20,11 +20,11 @@
                 {{!--<h1>Run Schedule</h1>--}}
             </div>
             <div class="col-md-3 text-center">
-                {{!--<h4>LAST RUN:</h4>--}}
+                <h4>LAST RUN:</h4>
                 <h4>July 6 12:32:00pm</h4>
             </div>
             <div class="col-md-3 text-center">
-                {{!--<h4>LAST RUN:</h4>--}}
+                <h4>LAST RUN:</h4>
                 <h4>July 8 12:32:00pm</h4>
             </div>
         </div>
@@ -34,6 +34,14 @@
     <div class="row">
         <div class="new-job-body">
             <form>
+                <div class="row">
+                    <div class="col-md-offset-8 col-md-2 text-right">
+                        <a class="btn btn-material-orange-800" {{action 'createNewJob'}}>Save</a>
+                    </div>
+                    <div class="col-md-2">
+                        <a class="btn btn-material-blue-grey-400" {{action 'cancelNewJob'}}>Cancel</a>
+                    </div>
+                </div>
                 <div class="row">
                     <div class="col-md-12">
                         <div class="panel panel-material-blue-grey-200 truecron-panel">
