@@ -26,6 +26,9 @@ body {
 p {
   font-size: 12pt;
 }
+//.list-group .list-group-item .list-group-item-heading {
+//  font-size: 14px;
+//}
 hr {
   border-top: 1px solid #c2c6c7;
 }
@@ -289,7 +292,7 @@ h2.pitch {
 
 /* sign-in sign-up */
 .container-truecron {
-  margin-top: 50px;
+  margin-top: 60px;
 }
 
 .g_sign {
@@ -355,7 +358,7 @@ tr:nth-child(odd) {
   padding-left: 0;
   padding-right: 0;
   position: fixed;
-  top: 50px;
+  top: 60px;
   left: 0px;
   z-index: 1000;
   display: block;
