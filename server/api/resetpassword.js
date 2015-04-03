@@ -19,7 +19,6 @@ api.route('/resetpassword')
         }
         var resetPasswordCode = req.body.resetpasswordcode;
         if (!resetPasswordCode) {
-            console.log('!!!resetPasswordCode NOT specified: '+resetPasswordCode);
             return next(new apiErrors.InvalidParams('resetPasswordCode is not specified.'));
         }
         storage.Resetpasswords.create(req.context, req.body)
