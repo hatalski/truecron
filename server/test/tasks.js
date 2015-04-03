@@ -126,8 +126,58 @@ describe('TASK API',
                     done();
                 });
         });
-        //id_task_to_delete=2;
+
         it('delete task', function (done) {
+            superagent.del(JOB_URL + '/tasks/' + id_task_to_delete)
+                .send()
+                .authenticate(accessToken)
+                .end(function (e, res) {
+                    expect(e).to.eql(null);
+                    expect(res.body.error).to.eql(undefined);
+                    expect(res.status).to.eql(204);
+                    done();
+                });
+        });
+
+        it('create a new task attributes only jobID', function (done) {
+            superagent.post(prefix + '/tasks')
+                .set('Content-Type', 'application/json')
+                .authenticate(accessToken)
+                .send({ 'task': {
+                    "jobId" : testdata.MyWorkspaceTestJob.id,
+                    "name": "TaskTestname",
+                    "active": 1,
+                    "taskTypeId": testdata.TestTaskType.id,
+                    "position": 1,
+                    "settings": {
+                        "target": "mycompany.com",
+                        "connection": null,
+                        "count": 5,
+                        "ttl": null,
+                        "timeout": null,
+                        "size": null
+                    },
+                    "timeout": "10"
+                }
+                })
+                .end(function (e, res) {
+                    expect(e).to.eql(null);
+                    expect(res.status).to.eql(201);
+                    expect(res.header['content-type']).to.eql('application/json; charset=utf-8');
+                    expect(res.body.error).to.eql(undefined);
+                    id_task_to_delete = res.body.task.id;
+                    expect(res.body.task.id).to.be.a('string');
+                    expect(res.body.task.name).to.eql('TaskTestname');
+                    expect(res.body.task.taskTypeId).to.eql(testdata.TestTaskType.id);
+                    expect(res.body.task.position).to.eql(1);
+                    expect(res.body.task.settings.target).to.eql('mycompany.com');
+                    expect(res.body.task.timeout).to.eql(10);
+                    expect(validator.isDate(res.body.task.createdAt)).to.be.ok();
+                    expect(validator.isDate(res.body.task.updatedAt)).to.be.ok();
+                    done();
+                });
+        });
+        it('delete task attributes only jobID', function (done) {
             superagent.del(JOB_URL + '/tasks/' + id_task_to_delete)
                 .send()
                 .authenticate(accessToken)
