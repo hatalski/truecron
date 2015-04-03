@@ -23,9 +23,9 @@ body {
   background-color: $primary-bg-color;
   color: $primary-color;
 }
-p {
-  font-size: 12pt;
-}
+//p {
+//  font-size: 12pt;
+//}
 //.list-group .list-group-item .list-group-item-heading {
 //  font-size: 14px;
 //}
@@ -344,12 +344,12 @@ tr:nth-child(odd) {
   border-bottom: solid 1px #cfd8dc;
 }
 
-.truecron-title-margin{
-  margin: 10px 0;
+.workspace-dropdown-padding {
+  margin-top: 10px;
 }
-.truecron-input-margin{
-  margin: 25px 0;
-}
+//.truecron-input-margin{
+//  margin: 25px 0;
+//}
 .list-group .list-group-item{
   padding: 10px 15px;
 }
@@ -373,7 +373,7 @@ tr:nth-child(odd) {
 }
 
 .dropdown-truecron {
-  font-size: 20px;
+//  font-size: 20px;
   color: #464646;
 }
 
@@ -523,8 +523,12 @@ a.list-group-item:hover, a.list-group-item:active, a.list-group-item:focus {
   border-bottom: 1px dashed #cccccc;
 }
 
-.job-details-header .col-md-1 {
-  padding-top: 20px;
+//.job-details-header .col-md-1 {
+//  padding-top: 20px;
+//}
+
+.job-details-header {
+  background-color: white;
 }
 
 .btn-truecron-icon .fa-trash {
@@ -540,10 +544,10 @@ a.list-group-item:hover, a.list-group-item:active, a.list-group-item:focus {
   border-color: #ee6820;
 }
 
-.blue-dashed {
-  @extend .dashed;
-  border-color: #3399ff;
-}
+//.blue-dashed {
+//  @extend .dashed;
+//  border-color: #3399ff;
+//}
 
 .trucron-tasks-header {
   text-align: center;
@@ -617,10 +621,6 @@ a.list-group-item:hover, a.list-group-item:active, a.list-group-item:focus {
 
 .trucron-tasks-header {
   text-align: center;
-}
-
-.job-details-header {
-  background-color: white;
 }
 
 .trucron-tasks-header h3 {
