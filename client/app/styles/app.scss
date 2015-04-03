@@ -298,9 +298,13 @@ h2.pitch {
 .g_sign {
   padding-top: 62px;
 }
-.input-lg {
-  height: 46px !important;
+.input-xl {
+  @extend .input-lg;
+  font-size: 24px;
 }
+//.input-lg {
+//  height: 46px !important;
+//}
 .g_btn {
   border: solid 1px #b2babc;
   @include border-radius(0px);
@@ -344,8 +348,11 @@ tr:nth-child(odd) {
   border-bottom: solid 1px #cfd8dc;
 }
 
-.workspace-dropdown-padding {
-  margin-top: 10px;
+.sidebar-title-margin {
+  margin-top: 11px;
+}
+.content-title-margin {
+  margin-top: 16px;
 }
 //.truecron-input-margin{
 //  margin: 25px 0;
