@@ -299,7 +299,7 @@ h2.pitch {
   padding-top: 62px;
 }
 .input-xl {
-  @extend .input-lg;
+  @extend .input-lg !optional;
   font-size: 24px;
 }
 //.input-lg {

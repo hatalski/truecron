@@ -1,37 +1,664 @@
-/*
-Sass::SyntaxError: ".input-xl" failed to @extend ".input-lg".
-The selector ".input-lg" was not found.
-Use "@extend .input-lg !optional" if the extend should be able to fail.
+/*main */
+body {
+  background-color: #eceff1;
+  color: #464748; }
 
+hr {
+  border-top: 1px solid #c2c6c7; }
 
-Backtrace:
-app.scss:302
-/Users/vitalihatalski/.rvm/gems/ruby-2.1.2@global/gems/sass-3.4.12/lib/sass/tree/visitors/extend.rb:61:in `block in check_extends_fired!'
-/Users/vitalihatalski/.rvm/gems/ruby-2.1.2@global/gems/sass-3.4.12/lib/sass/util/subset_map.rb:106:in `block in each_value'
-/Users/vitalihatalski/.rvm/gems/ruby-2.1.2@global/gems/sass-3.4.12/lib/sass/util/subset_map.rb:106:in `each'
-/Users/vitalihatalski/.rvm/gems/ruby-2.1.2@global/gems/sass-3.4.12/lib/sass/util/subset_map.rb:106:in `each_value'
-/Users/vitalihatalski/.rvm/gems/ruby-2.1.2@global/gems/sass-3.4.12/lib/sass/tree/visitors/extend.rb:50:in `check_extends_fired!'
-/Users/vitalihatalski/.rvm/gems/ruby-2.1.2@global/gems/sass-3.4.12/lib/sass/tree/visitors/extend.rb:16:in `visit'
-/Users/vitalihatalski/.rvm/gems/ruby-2.1.2@global/gems/sass-3.4.12/lib/sass/tree/root_node.rb:39:in `css_tree'
-/Users/vitalihatalski/.rvm/gems/ruby-2.1.2@global/gems/sass-3.4.12/lib/sass/tree/root_node.rb:29:in `render_with_sourcemap'
-/Users/vitalihatalski/.rvm/gems/ruby-2.1.2@global/gems/sass-3.4.12/lib/sass/engine.rb:368:in `_render_with_sourcemap'
-/Users/vitalihatalski/.rvm/gems/ruby-2.1.2@global/gems/sass-3.4.12/lib/sass/engine.rb:285:in `render_with_sourcemap'
-/Users/vitalihatalski/.rvm/gems/ruby-2.1.2@global/gems/sass-3.4.12/lib/sass/plugin/compiler.rb:490:in `update_stylesheet'
-/Users/vitalihatalski/.rvm/gems/ruby-2.1.2@global/gems/sass-3.4.12/lib/sass/plugin/compiler.rb:215:in `block in update_stylesheets'
-/Users/vitalihatalski/.rvm/gems/ruby-2.1.2@global/gems/sass-3.4.12/lib/sass/plugin/compiler.rb:209:in `each'
-/Users/vitalihatalski/.rvm/gems/ruby-2.1.2@global/gems/sass-3.4.12/lib/sass/plugin/compiler.rb:209:in `update_stylesheets'
-/Users/vitalihatalski/.rvm/gems/ruby-2.1.2@global/gems/sass-3.4.12/lib/sass/plugin.rb:82:in `update_stylesheets'
-/Users/vitalihatalski/.rvm/gems/ruby-2.1.2@global/gems/sass-3.4.12/lib/sass/exec/sass_scss.rb:361:in `watch_or_update'
-/Users/vitalihatalski/.rvm/gems/ruby-2.1.2@global/gems/sass-3.4.12/lib/sass/exec/sass_scss.rb:51:in `process_result'
-/Users/vitalihatalski/.rvm/gems/ruby-2.1.2@global/gems/sass-3.4.12/lib/sass/exec/base.rb:52:in `parse'
-/Users/vitalihatalski/.rvm/gems/ruby-2.1.2@global/gems/sass-3.4.12/lib/sass/exec/base.rb:19:in `parse!'
-/Users/vitalihatalski/.rvm/gems/ruby-2.1.2@global/gems/sass-3.4.12/bin/scss:13:in `<top (required)>'
-/Users/vitalihatalski/.rvm/rubies/ruby-2.1.2/bin/scss:23:in `load'
-/Users/vitalihatalski/.rvm/rubies/ruby-2.1.2/bin/scss:23:in `<main>'
-/Users/vitalihatalski/.rvm/gems/ruby-2.1.2/bin/ruby_executable_hooks:15:in `eval'
-/Users/vitalihatalski/.rvm/gems/ruby-2.1.2/bin/ruby_executable_hooks:15:in `<main>'
-*/
-body:before {
-  white-space: pre;
-  font-family: monospace;
-  content: "Sass::SyntaxError: \".input-xl\" failed to @extend \".input-lg\".\A The selector \".input-lg\" was not found.\A Use \"@extend .input-lg !optional\" if the extend should be able to fail.\A "; }
+.btn-signup {
+  -webkit-border-radius: 2px;
+  -moz-border-radius: 2px;
+  -ms-border-radius: 2px;
+  border-radius: 2px; }
+
+.btn-signup:hover, .btn-signup:active {
+  -webkit-border-radius: 2px;
+  -moz-border-radius: 2px;
+  -ms-border-radius: 2px;
+  border-radius: 2px; }
+
+.btn-signin {
+  -webkit-border-radius: 2px;
+  -moz-border-radius: 2px;
+  -ms-border-radius: 2px;
+  border-radius: 2px;
+  border: solid 1px #ff4e00; }
+
+.panel {
+  box-shadow: none;
+  -webkit-border-radius: 0px;
+  -moz-border-radius: 0px;
+  -ms-border-radius: 0px;
+  border-radius: 0px; }
+
+a {
+  color: #009dfe; }
+
+.navbar-truecron .dropdown .dropdown-menu > li > a:hover {
+  background: -webkit-linear-gradient(#f3f3f3, #e9e9e9);
+  background: -o-linear-gradient(#f3f3f3, #e9e9e9);
+  background: -moz-linear-gradient(#f3f3f3, #e9e9e9);
+  background: linear-gradient(#f3f3f3, #e9e9e9); }
+
+.navbar-truecron .nav .open > a, .navbar-truecron .nav .open > a:hover, .navbar-truecron .nav .open > a:focus {
+  background-color: #35617e; }
+
+.navbar-truecron .dropdown a:hover, .navbar-truecron .dropdown a:active, .navbar-truecron .dropdown a:focus, .navbar-truecron .dropdown li:visited {
+  background-color: #35617e;
+  background-image: none; }
+
+.navbar-truecron .dropdown .caret {
+  color: #ff5800; }
+
+/* teaser page styles */
+.teaser {
+  font-family: "Trebuchet MS";
+  font-size: 16pt; }
+
+.teaser .container-fluid {
+  max-width: 1200px; }
+
+.topper {
+  background: black url("teaser_bg.jpg") no-repeat center top; }
+
+.navbar .navbar-form {
+  margin-top: 0;
+  margin-bottom: 0; }
+
+.navbar-truecron {
+  background-color: #35617e; }
+
+.teaser .jumbotron {
+  background-color: transparent;
+  margin-bottom: 0;
+  box-shadow: none; }
+
+.teaser .topper .jumbotron {
+  padding-bottom: 0;
+  padding-left: 0;
+  padding-right: 0; }
+
+.teaser .middle .jumbotron {
+  padding: 0; }
+
+.navbar-brand-teaser {
+  background: url("white-logo-teaser.png") no-repeat center;
+  width: 270px; }
+
+.navbar-brand-truecron {
+  background: url("white-logo.png") no-repeat center;
+  width: 190px; }
+
+.teaser .col-xs-3 {
+  width: 30%; }
+
+.teaser .col-xs-9 {
+  width: 70%; }
+
+h2.pitch {
+  text-align: center;
+  font-size: 32pt;
+  color: #ffffff;
+  padding: 30px 0 5px; }
+
+.pitch-ext {
+  text-align: left;
+  color: white;
+  font-size: 24px;
+  padding-top: 20px; }
+
+.teaser .pitch-ext p {
+  margin: 3px 0;
+  font-size: 25px; }
+
+.interested_box p {
+  font-size: 16px; }
+
+.teaser .interested_box .btn-signup {
+  background-image: none;
+  background-color: white;
+  color: #ff9719;
+  text-shadow: none; }
+
+.interested_box .btn:hover, .btn:focus {
+  color: #333333; }
+
+.top_mac {
+  background: url("top_mac.png") no-repeat top right;
+  height: 336px; }
+
+.bottom_mac {
+  background: url("bottom_mac.png") no-repeat top right;
+  height: 301px; }
+
+.interested_box {
+  background-color: #ff9719;
+  color: white;
+  margin-top: 20px; }
+
+.problem-definition-header {
+  color: #ff9719;
+  text-align: center;
+  font-size: 58px;
+  font-weight: bold; }
+
+.airbag {
+  background: url("airbag.jpg") no-repeat left top;
+  height: 569px; }
+
+.footer_white {
+  background-color: white; }
+
+.footer_grey {
+  background-color: #e3e3e3; }
+
+.footer_white .problem-definition-header,
+.footer_grey .problem-definition-header {
+  font-size: 24px;
+  text-align: left;
+  padding-top: 30px; }
+
+.footer_white .jumbotron,
+.footer_grey .jumbotron {
+  padding-top: 0;
+  padding-bottom: 0; }
+
+.footer_white p {
+  line-height: 35px; }
+
+.middle {
+  background: url("teaser_border.png") repeat-x top; }
+
+.library {
+  background: url("library.jpg") no-repeat top left;
+  height: 466px; }
+
+.ballet {
+  background: url("teaser_ballet.jpg") no-repeat top;
+  height: 477px; }
+
+.hands {
+  background: url("teaser_hands.jpg") no-repeat;
+  height: 286px; }
+
+.grow {
+  background: url("teaser_grow.jpg") no-repeat;
+  height: 320px; }
+
+.middle_grey {
+  background-color: #d7d7d7; }
+
+.middle_white {
+  background-color: #ffffff; }
+
+.words {
+  background: url("teaser_words.png") no-repeat;
+  height: 337px; }
+
+.middle_grey .jumbotron p {
+  text-align: center;
+  font-size: 28px; }
+
+.teaser ul {
+  margin-top: 30px;
+  list-style-image: url("li.png"); }
+
+.teaser li {
+  padding-bottom: 15px; }
+
+.teaser .interested_box .form-control {
+  border-color: #ff9818;
+  border-radius: 0px; }
+
+.teaser footer {
+  background-color: black;
+  color: white;
+  text-align: center; }
+
+.teaser footer .jumbotron p {
+  font-size: 14px; }
+
+.teaser .navbar-fixed-top {
+  border: 0; }
+
+.teaser .navbar-border {
+  background-color: rgba(0, 0, 0, 0.2);
+  padding: 12px;
+  margin-top: 0; }
+
+/* sign-in sign-up */
+.container-truecron {
+  margin-top: 60px; }
+
+.g_sign {
+  padding-top: 62px; }
+
+.input-xl {
+  font-size: 24px; }
+
+.g_btn {
+  border: solid 1px #b2babc;
+  -webkit-border-radius: 0px;
+  -moz-border-radius: 0px;
+  -ms-border-radius: 0px;
+  border-radius: 0px; }
+
+.g_btn .fa {
+  color: #ff2a34; }
+
+.col-border-right {
+  border-right: solid 1px #c2cacd; }
+
+.col-border-top {
+  border-top: solid 1px #c2cacd; }
+
+/*sidebar */
+tr:nth-child(even) {
+  background-color: #f5f5f5; }
+
+tr:nth-child(odd) {
+  background-color: #fafafa; }
+
+.sidebar-table {
+  margin-bottom: 0; }
+
+.truecron-table-header {
+  background-color: #f5f5f5;
+  border-top: solid 1px #e4e4e4; }
+
+.truecron-panel-btn {
+  margin: 0 1px; }
+
+.btn-new-job {
+  border: 1px solid transparent; }
+
+.truecron-side-panel {
+  margin-bottom: 0;
+  border-top: solid 1px #cfd8dc;
+  border-bottom: solid 1px #cfd8dc; }
+
+.sidebar-title-margin {
+  margin-top: 11px; }
+
+.content-title-margin {
+  margin-top: 16px; }
+
+.list-group .list-group-item {
+  padding: 10px 15px; }
+
+.sidebar {
+  padding-left: 0;
+  padding-right: 0;
+  position: fixed;
+  top: 60px;
+  left: 0px;
+  z-index: 1000;
+  display: block;
+  overflow-x: hidden;
+  overflow-y: auto;
+  height: 100%;
+  background-color: #cfd8dc; }
+
+.dropdown-truecron li {
+  list-style: none; }
+
+.dropdown-truecron {
+  color: #464646; }
+
+.dropdown-truecron a, a:hover, .dropdown-truecron a:active {
+  text-decoration: none;
+  color: #464646; }
+
+.btn.btn-sm {
+  padding: 6px 12px; }
+
+.panel-heading .btn-signin .fa-long-arrow-left {
+  color: #ff4e00; }
+
+.panel-default > .panel-heading {
+  background-color: #f6f6f6;
+  background-image: none;
+  border-bottom: solid 1px #b9cdd8; }
+
+.panel-heading .col-md-12 {
+  padding-top: 15px; }
+
+.panel-heading .col-md-12 .fa-plus {
+  padding-right: 10px; }
+
+.no-padding {
+  padding-left: 0px;
+  padding-right: 0px; }
+
+.panel-default {
+  border: none; }
+
+.truecron-group-item:nth-child(even) {
+  background-color: #f5f5f5; }
+
+.truecron-group-item:nth-child(odd) {
+  background-color: #fafafa; }
+
+a.list-group-item:hover, a.list-group-item:active, a.list-group-item:focus {
+  background: #eceff1; }
+
+.truecron-job-item-p {
+  color: #74838a; }
+
+.truecron-job-item-span {
+  color: #303030; }
+
+.neverrun-job {
+  color: #888888; }
+
+.failed-job {
+  color: red; }
+
+.success-job {
+  color: #00ee05; }
+
+.running-job {
+  color: #35617e; }
+
+.truecron-job-label {
+  background-color: #baced7;
+  color: #303030; }
+
+.panel-default > .truecron-panel-heading {
+  background: -webkit-linear-gradient(#f9f9f9, #e9e9e9);
+  background: -o-linear-gradient(#f9f9f9, #e9e9e9);
+  background: -moz-linear-gradient(#f9f9f9, #e9e9e9);
+  background: linear-gradient(#f9f9f9, #e9e9e9); }
+
+.truecron-caret {
+  color: #fa5b00;
+  margin-right: 5px; }
+
+.truecron-tab-p {
+  margin: 8px 0;
+  color: #464748; }
+
+.truecron-sub-menu {
+  background: -webkit-linear-gradient(#f9f9f9, #e9e9e9);
+  background: -o-linear-gradient(#f9f9f9, #e9e9e9);
+  background: -moz-linear-gradient(#f9f9f9, #e9e9e9);
+  background: linear-gradient(#f9f9f9, #e9e9e9);
+  border-bottom: solid 1px #beccd4; }
+
+.list-group .truecron-sub-menu {
+  padding-bottom: 0px; }
+
+.truecron-sub-menu .fa-sort, .truecron-sub-menu .fa-sort-desc {
+  padding-left: 5px;
+  color: #aaa8a8; }
+
+.truecron-tab-active {
+  background-color: #eceff1 !important;
+  background-image: none;
+  border-left: 5px solid #f06a21; }
+
+.truecron-active-border {
+  border-left: 5px solid #f06a21; }
+
+.truecron-tab-failed {
+  background-color: #f6edee;
+  background-image: none; }
+
+.list-group .list-group-item .truecron-tab-normal {
+  background-color: #f7f9fa;
+  background-image: none; }
+
+.truecron-sub-filter {
+  background-color: #f6f6f6;
+  background-image: none; }
+
+.truecron-dropdown {
+  width: 100%;
+  text-align: left; }
+
+.caret-right {
+  float: right;
+  margin-top: 8px;
+  white-space: normal; }
+
+.truecron-form-control {
+  border-radius: 0px; }
+
+/*workspaces */
+.dashed, .orange-dashed {
+  border-bottom: 1px dashed #cccccc; }
+
+.job-details-header {
+  background-color: white; }
+
+.btn-truecron-icon .fa-trash {
+  color: #ee6820; }
+
+.job-title {
+  color: #ee6820; }
+
+.orange-dashed {
+  border-color: #ee6820; }
+
+.trucron-tasks-header {
+  text-align: center; }
+
+.job-details-header {
+  background-color: white; }
+
+.run-history-info {
+  background-color: #eceff1; }
+
+.run-history-info h4 {
+  color: #74838a; }
+
+.truecron-grey {
+  color: #333333; }
+
+.truecron-orange {
+  color: #ee6820; }
+
+.run-history-info a {
+  text-decoration: underline; }
+
+/* workspaces accordion */
+.truecron-accordion .truecron-panel-body {
+  background-color: #69757b;
+  color: white; }
+
+.truecron-accordion .truecron-first-heading {
+  background-color: #e7ecf0; }
+
+.truecron-accordion .truecron-second-heading {
+  background-color: #e0e6e9; }
+
+.truecron-accordion .truecron-error-heading {
+  background-color: #efe6e9; }
+
+.truecron-accordion .truecron-error-heading .trucron-underline {
+  color: red; }
+
+.truecron-accordion p {
+  margin: 0; }
+
+.truecron-inactive-heading p, .truecron-inactive-heading .trucron-underline {
+  color: #cccccc; }
+
+.trucron-underline {
+  text-decoration: underline; }
+
+.trucron-tasks-header {
+  text-align: center; }
+
+.trucron-tasks-header h3 {
+  color: #3399ff; }
+
+.trucron-top-tasks {
+  padding-top: 10px; }
+
+.arrow_box {
+  position: relative;
+  background: #fff9e6;
+  border: 1px solid #fee798;
+  text-align: center; }
+
+.arrow_box h3 {
+  margin-top: 10px;
+  color: #666666; }
+
+.arrow_box:after, .arrow_box:before {
+  left: 100%;
+  top: 50%;
+  border: solid transparent;
+  content: " ";
+  height: 0;
+  width: 0;
+  position: absolute;
+  pointer-events: none; }
+
+.arrow_box:after {
+  border-color: rgba(255, 249, 230, 0);
+  border-left-color: #fff9e6;
+  border-width: 7px;
+  margin-top: -7px; }
+
+.arrow_box:before {
+  border-color: rgba(254, 231, 152, 0);
+  border-left-color: #fee798;
+  border-width: 8px;
+  margin-top: -8px; }
+
+/* workspaces accordion */
+.truecron-accordion .truecron-panel-body {
+  background-color: #69757b;
+  color: white; }
+
+.truecron-accordion .truecron-first-heading {
+  background-color: #e7ecf0; }
+
+.truecron-accordion .truecron-second-heading {
+  background-color: #e0e6e9; }
+
+.truecron-accordion .truecron-error-heading {
+  background-color: #efe6e9; }
+
+.truecron-accordion .truecron-error-heading .trucron-underline {
+  color: red; }
+
+.truecron-accordion p {
+  margin: 0; }
+
+.truecron-inactive-heading p, .truecron-inactive-heading .trucron-underline {
+  color: #cccccc; }
+
+.trucron-underline {
+  text-decoration: underline; }
+
+/* Organizations */
+.truecron-org-header {
+  background-color: #d4dcdf;
+  margin-top: 10px;
+  padding-top: 3px;
+  padding-bottom: 3px; }
+
+.truecron-org-title {
+  background-color: #dbf2fa;
+  padding-top: 6px; }
+
+.org-title {
+  color: #ff7e44;
+  font-weight: bold; }
+
+.truecron-org-content {
+  padding-top: 6px;
+  border-bottom: 1px solid #c4c8d1; }
+
+/*index page */
+.truecron-index-header {
+  background-color: white;
+  width: 100%; }
+
+.arrow_box-left {
+  position: relative;
+  background: #fff9e6;
+  border: 1px solid #fee798;
+  text-align: center;
+  margin-top: 65px;
+  margin-bottom: 5px; }
+
+.arrow_box-left h3 {
+  margin-top: 10px;
+  color: #666666; }
+
+.arrow_box-left:after, .arrow_box-left:before {
+  right: 100%;
+  top: 50%;
+  border: solid transparent;
+  content: " ";
+  height: 0;
+  width: 0;
+  position: absolute;
+  pointer-events: none; }
+
+.arrow_box-left:after {
+  border-color: rgba(255, 249, 230, 0);
+  border-right-color: #fff9e6;
+  border-width: 7px;
+  margin-top: -7px; }
+
+.arrow_box-left:before {
+  border-color: rgba(254, 231, 152, 0);
+  border-right-color: #fee798;
+  border-width: 8px;
+  margin-top: -8px; }
+
+.truecron-index-body {
+  border: solid 1px #fee798;
+  background-color: #fffcf2;
+  margin-top: 10px; }
+
+.complex_task_icon {
+  background: url("complex_task_icon.png") no-repeat 20px 25px;
+  height: 66px; }
+
+.complex_task_git {
+  background: url("git_icon.png") no-repeat 20px 30px;
+  height: 81px; }
+
+.complex_task_icon_cog {
+  background: url("icon-cog-blue.png") no-repeat 20px 30px;
+  height: 81px; }
+
+/*add new job */
+.new-job-body {
+  padding-top: 15px; }
+
+.truecron-checkbox-margin .radio + .radio, .checkbox + .checkbox {
+  margin: 10px 20px 10px 0; }
+
+.truecron-panel-body {
+  background-color: #eceff1;
+  background-image: none;
+  border: none; }
+
+.truecron-panel {
+  box-shadow: none; }
+
+.truecron-panel-heading {
+  border-radius: 0px; }
+
+/* new task*/
+.truecron-new-task-title {
+  background-color: #ffffff;
+  border-top: solid 1px #cccccc;
+  padding: 20px 10px; }
+
+.panel-footer-material-blue-grey-200 {
+  background-color: #b0bec5;
+  padding: 5px; }
+
+.truecron_checkbox {
+  margin-top: 5px; }
+
+/*# sourceMappingURL=app.css.map */
