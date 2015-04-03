@@ -310,8 +310,18 @@ h2.pitch {
 }
 
 /*sidebar */
+tr:nth-child(even) {
+  background-color: #f5f5f5;
+}
+tr:nth-child(odd) {
+  background-color: #fafafa;
+}
 .sidebar-table {
   margin-bottom: 0;
+}
+.truecron-table-header {
+  background-color: #f5f5f5;
+  border-top: solid 1px #e4e4e4;
 }
 .truecron-panel-btn {
   margin: 0 1px;
@@ -321,6 +331,7 @@ h2.pitch {
 }
 .truecron-side-panel {
   margin-bottom: 0;
+  border-top: solid 1px #cfd8dc;
 }
 .truecron-title-margin{
   margin: 10px 0;
@@ -360,23 +371,9 @@ h2.pitch {
   color: #464646;
 }
 
-//.dropdown-truecron span {
-//  color: #fa5b00;
-//}
-//
-//.panel-heading .fa-cog, .panel-heading .fa-filter {
-//  color: #fa5b00;
-//}
-
 .btn.btn-sm {
   padding: 6px 12px;
 }
-
-//.btn-truecron-icon {
-//  @include grad(#f7f6f2, #e4e6e5);
-//  @include border-radius(2px);
-//  border: solid 1px #b9cdd4;
-//}
 
 .panel-heading .btn-signin .fa-long-arrow-left {
   color: #ff4e00;
@@ -404,11 +401,18 @@ h2.pitch {
 .panel-default {
   border: none;
 }
-
-.list-group-item {
+.truecron-group-item:nth-child(even) {
+  background-color: #f5f5f5;
+  border-bottom: solid 1px #b9cdd8;
+}
+.truecron-group-item:nth-child(odd) {
+  background-color: #fafafa;
+  border-bottom: solid 1px #b9cdd8;
+}
+/*.list-group-item {
   border: 1px solid #b9cdd8;
   @include grad(#f6fafd, #efeff1);
-}
+}*/
 
 a.list-group-item:hover, a.list-group-item:active, a.list-group-item:focus {
   background: $primary-bg-color;
@@ -454,6 +458,7 @@ a.list-group-item:hover, a.list-group-item:active, a.list-group-item:focus {
 
 .truecron-tab-p {
   margin: 8px 0;
+  color: #464748;
 }
 
 .truecron-sub-menu {
@@ -543,13 +548,13 @@ a.list-group-item:hover, a.list-group-item:active, a.list-group-item:focus {
   background-color: white;
 }
 
-.trucron-top-tasks {
-  padding-top: 20px;
-}
+//.trucron-top-tasks {
+//  padding-top: 20px;
+//}
 
-.job-details-body .col-md-2 .btn-signup {
-  margin-top: 1px;
-}
+//.job-details-body .col-md-2 .btn-signup {
+//  margin-top: 1px;
+//}
 
 .run-history-info {
   background-color: $primary-bg-color
@@ -621,9 +626,9 @@ a.list-group-item:hover, a.list-group-item:active, a.list-group-item:focus {
   padding-top: 10px;
 }
 
-.job-details-body .col-md-2 .btn-signup {
-  margin-top: 2px;
-}
+//.job-details-body .col-md-2 .btn-signup {
+//  margin-top: 2px;
+//}
 
 .arrow_box {
   position: relative;

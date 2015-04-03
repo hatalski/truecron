@@ -9,7 +9,7 @@ moduleForModel('workspace', 'Workspace', {
     'model:organization',
     'model:job-tag',
     'model:job',
-    'model:jobs.job.task',
+    'model:task',
     'model:organizations.organization.connection']
 });
 

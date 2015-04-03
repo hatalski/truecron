@@ -2,10 +2,13 @@ import Ember from 'ember';
 import RRuleParser from 'true-cron/mixins/rrule-parser';
 
 export default Ember.Component.extend(RRuleParser, {
-  tagName: 'span',
-  //classNames: ['list-group-item'],
-  // attributeBindings: ['href'],
-  // href: '#',
+  tagName: 'div',
+  classNames: ['list-group-item', 'truecron-group-item'],
+  classNameBindings: ['active::truecron-tab-active'],
+  click: function() {
+    "use strict";
+    this.sendAction('action', this.get('job'));
+  },
   //selectedRepeatRule: 'Daily',
   //repeatRules: ['Minutely', 'Hourly', 'Daily', 'Weekly', 'Monthly', 'Yearly'],
   //selectedRepeatEvery: 1,
@@ -61,18 +64,5 @@ export default Ember.Component.extend(RRuleParser, {
       lastRun: new Date(),//'todo'rule.before(now, true),
       nextRun: new Date()//'todo'//rule.after(now, true)
     }.property();
-  },//.property('job.rrule', 'job.startsAt'),
-  actions: {
-    click: function() {
-      "use strict";
-      Ember.Logger.log('component clicked');
-      this.sendAction('action', this.get('job'));
-      //if (this.get('linkTo')) {
-      //  this.transitionToRoute(this.get('linkTo'));
-      //} else {
-      //  Ember.Logger.log('linkTo parameter is NOT specified in job-list-item component.');
-      //  return;
-      //}
-    }
   }
 });
