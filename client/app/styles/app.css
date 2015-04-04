@@ -3,9 +3,6 @@ body {
   background-color: #eceff1;
   color: #464748; }
 
-p {
-  font-size: 12pt; }
-
 hr {
   border-top: 1px solid #c2c6c7; }
 
@@ -237,8 +234,8 @@ h2.pitch {
 .g_sign {
   padding-top: 62px; }
 
-.input-lg {
-  height: 46px !important; }
+.input-xl {
+  font-size: 24px; }
 
 .g_btn {
   border: solid 1px #b2babc;
@@ -281,11 +278,11 @@ tr:nth-child(odd) {
   border-top: solid 1px #cfd8dc;
   border-bottom: solid 1px #cfd8dc; }
 
-.truecron-title-margin {
-  margin: 10px 0; }
+.sidebar-title-margin {
+  margin-top: 11px; }
 
-.truecron-input-margin {
-  margin: 25px 0; }
+.content-title-margin {
+  margin-top: 16px; }
 
 .list-group .list-group-item {
   padding: 10px 15px; }
@@ -307,7 +304,6 @@ tr:nth-child(odd) {
   list-style: none; }
 
 .dropdown-truecron {
-  font-size: 20px;
   color: #464646; }
 
 .dropdown-truecron a, a:hover, .dropdown-truecron a:active {
@@ -430,11 +426,11 @@ a.list-group-item:hover, a.list-group-item:active, a.list-group-item:focus {
   border-radius: 0px; }
 
 /*workspaces */
-.dashed, .orange-dashed, .blue-dashed {
+.dashed, .orange-dashed {
   border-bottom: 1px dashed #cccccc; }
 
-.job-details-header .col-md-1 {
-  padding-top: 20px; }
+.job-details-header {
+  background-color: white; }
 
 .btn-truecron-icon .fa-trash {
   color: #ee6820; }
@@ -444,9 +440,6 @@ a.list-group-item:hover, a.list-group-item:active, a.list-group-item:focus {
 
 .orange-dashed {
   border-color: #ee6820; }
-
-.blue-dashed {
-  border-color: #3399ff; }
 
 .trucron-tasks-header {
   text-align: center; }
@@ -497,9 +490,6 @@ a.list-group-item:hover, a.list-group-item:active, a.list-group-item:focus {
 
 .trucron-tasks-header {
   text-align: center; }
-
-.job-details-header {
-  background-color: white; }
 
 .trucron-tasks-header h3 {
   color: #3399ff; }
