@@ -3,6 +3,17 @@ body {
   background-color: #eceff1;
   color: #464748; }
 
+.btn {
+  padding: 8px 20px; }
+
+.list-group .list-group-item {
+  border: 1px solid #cfd8dc; }
+
+.list-group .list-group-item .list-group-item-heading {
+  color: rgba(0, 0, 0, 0.77);
+  font-size: 14px;
+  line-height: 20px; }
+
 hr {
   border-top: 1px solid #c2c6c7; }
 
@@ -275,8 +286,7 @@ tr:nth-child(odd) {
 
 .truecron-side-panel {
   margin-bottom: 0;
-  border-top: solid 1px #cfd8dc;
-  border-bottom: solid 1px #cfd8dc; }
+  border-top: solid 1px #cfd8dc; }
 
 .sidebar-title-margin {
   margin-top: 11px; }
@@ -396,10 +406,10 @@ a.list-group-item:hover, a.list-group-item:active, a.list-group-item:focus {
 .truecron-tab-active {
   background-color: #eceff1 !important;
   background-image: none;
-  border-left: 5px solid #f06a21; }
+  border-left: 3px solid #f06a21; }
 
 .truecron-active-border {
-  border-left: 5px solid #f06a21; }
+  border-left: 3px solid #f06a21; }
 
 .truecron-tab-failed {
   background-color: #f6edee;

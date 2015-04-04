@@ -1,14 +1,11 @@
-{{!--<a href="#" {{action 'click'}} {{bind-attr class="active::truecron-tab-active"}}>--}}
-{{!--{{#link-to linkTo job.workspace job class='list-group-item' activeClass='truecron-tab-active'}}--}}
 <div class="row">
     <div class="col-md-10">
-        <h4 class="list-group-item-heading">{{job.name}}</h4>
+        <h5 class="list-group-item-heading">{{job.name}}</h5>
     </div>
     <div {{bind-attr class=":col-md-2 :text-right jobStateColorClass"}}>
         <span><i {{bind-attr class=":fa jobStateIconClass"}}></i></span>
     </div>
 </div>
-{{!--<p class="list-group-item-text">{{job.rrule}}</p>--}}
 <p class="list-group-item-text truecron-job-item-p">schedule: <span class="truecron-job-item-span">{{recurrence.text}}</span></p>
 <p class="list-group-item-text truecron-job-item-p">last run: <span class="truecron-job-item-span">{{recurrence.lastRun}}</span></p>
 <p class="list-group-item-text truecron-job-item-p">time left to next run: <span class="truecron-job-item-span">{{recurrence.nextRun}}</span></p>
@@ -18,5 +15,3 @@
   {{/each}}
 </p>
 {{yield}}
-{{!--</a>--}}
-{{!--{{/link-to}}--}}

@@ -4,7 +4,11 @@ import RRuleParser from 'true-cron/mixins/rrule-parser';
 export default Ember.Component.extend(RRuleParser, {
   tagName: 'div',
   classNames: ['list-group-item', 'truecron-group-item'],
-  classNameBindings: ['active::truecron-tab-active'],
+  classNameBindings: ['active:truecron-tab-active'],
+  active: Ember.computed('selected',function() {
+    "use strict";
+    return this.get('selected.id') === this.get('job.id');
+  }),
   click: function() {
     "use strict";
     this.sendAction('action', this.get('job'));
