@@ -3,7 +3,6 @@ import JobStatuses from 'true-cron/models/job-status';
 
 var Job = DS.Model.extend({
   workspaceId: DS.attr(),
-  // organizationId: DS.attr(),
   name:        DS.attr('string'),
   startsAt:    DS.attr('date'),
   rrule:       DS.attr('string'),

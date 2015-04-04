@@ -7,17 +7,19 @@ export default Ember.Controller.extend({
     selectJob: function(job) {
       "use strict";
       Ember.Logger.log('select new job', job);
-      this.set('selectedJob', job);
+      // this.set('selectedJob', job);
       this.set('showJobDetails', true);
       this.transitionToRoute('jobs.job', job);
     },
     backToJobsList: function() {
       "use strict";
       this.set('showJobDetails', false);
-      this.transitionToRoute('jobs', this.get('model.workspace'));
+      //this.transitionToRoute('jobs', this.get('model.workspace'));
     },
     changeWorkspace: function(workspace) {
       "use strict";
+      this.set('selectedJob', null);
+      this.set('showJobDetails', false);
       this.transitionToRoute('jobs', workspace);
     },
     newJobClicked: function() {
