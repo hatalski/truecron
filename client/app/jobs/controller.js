@@ -32,6 +32,7 @@ export default Ember.Controller.extend({
         name: '',
         workspaceId: self.get('model.workspace.id')
       });
+      self.set('selectedJob', false);
       self.set('newJob', newJob);
       self.set('showJobDetails', true);
       // jobs.pushObject(newJob);
