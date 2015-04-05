@@ -3,6 +3,7 @@ import Ember from 'ember';
 export default Ember.Controller.extend({
   showJobDetails: false,
   selectedJob: null,
+  newJob: null,
   actions: {
     selectJob: function(job) {
       "use strict";
@@ -29,11 +30,11 @@ export default Ember.Controller.extend({
       Ember.Logger.log(jobs);
       var newJob = self.store.createRecord('job', {
         name: '',
-        organizationId: self.get('model.workspace.organization.id')
+        workspaceId: self.get('model.workspace.id')
       });
-      self.set('selectedJob', newJob);
+      self.set('newJob', newJob);
       self.set('showJobDetails', true);
-      jobs.pushObject(newJob);
+      // jobs.pushObject(newJob);
       self.transitionToRoute('jobs.new');
     }
   }

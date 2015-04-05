@@ -27,6 +27,9 @@
                         <div class="col-md-3 text-right no-padding">
                             {{#link-to 'workspaces.workspace.settings' model.workspace class="btn btn-sm btn-material-blue-grey-400"}}<i class="fa fa-cog fa-lg"></i>{{/link-to}}
                         </div>
+                    </div>
+                {{#unless newJob}}
+                    <div class="row">
                         <div class="col-md-6 text-left no-padding">
                         {{#if showJobDetails}}
                             <a class="btn btn-flat btn-signin btn-material-orange-800" {{action 'backToJobsList'}}><i class="fa fa-lg fa-long-arrow-left"></i> Back to Jobs</a>
@@ -36,6 +39,7 @@
                             <a href="#" class="btn btn-material-orange-800 btn-new-job" {{action 'newJobClicked'}}>New Job</a>
                         </div>
                     </div>
+                {{/unless}}
                 </div>
             </div>
           {{#if showJobDetails}}
@@ -55,7 +59,12 @@
                   </div>
               </div>
               <div class="list-group truecron-active-border">
-                  {{job-list-item job=selectedJob selected=selectedJob linkTo='jobs.job' action='selectJob'}}
+                  {{#if newJob}}
+                    {{job-list-item job=newJob selected=newJob linkTo='jobs.job' action='selectJob'}}
+                  {{/if}}
+                  {{#if selectedJob}}
+                    {{job-list-item job=selectedJob selected=selectedJob linkTo='jobs.job' action='selectJob'}}
+                  {{/if}}
               </div>
               <div class="panel panel-material-grey-100 truecron-side-panel">
                   <div class="panel-heading truecron-panel-heading" role="tab" id="collapseRunHistoryHeading">

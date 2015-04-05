@@ -32,14 +32,16 @@
 </header>
 <div class="container-fluid">
     <div class="row">
-        <div class="new-job-body">
+        <div class="new-job-body col-md-12">
             <form>
                 <div class="row">
-                    <div class="col-md-offset-8 col-md-2 text-right">
-                        <a class="btn btn-material-orange-800" {{action 'createNewJob'}}>Save</a>
-                    </div>
-                    <div class="col-md-2">
-                        <a class="btn btn-material-blue-grey-400" {{action 'cancelNewJob'}}>Cancel</a>
+                    <div class="col-md-6 text-left">
+                        <div class="btn-group">
+                            <a class="btn btn-success" {{action 'createNewJob'}}>Save job</a>
+                        </div>
+                        <div class="btn-group">
+                            <a class="btn btn-default" {{action 'cancelNewJob'}}>Cancel</a>
+                        </div>
                     </div>
                 </div>
                 <div class="row">
@@ -262,5 +264,4 @@
         </div>
     </div>
 </div>
-
 {{outlet}}
