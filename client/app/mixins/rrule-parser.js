@@ -1,6 +1,21 @@
 import Ember from 'ember';
 
 export default Ember.Mixin.create({
+  weekdays: moment.weekdays(),
+  months: moment.months(),
+  selectedRepeatRule: 'Daily',
+  repeatRules: ['Minutely', 'Hourly', 'Daily', 'Weekly', 'Monthly', 'Yearly'],
+  selectedRepeatEvery: 1,
+  repeatEvery: function() {
+    switch (this.get('selectedRepeatRule')) {
+      case 'Minutely':
+        return [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36,37,38,39,40,41,42,43,44,45,46,47,48,49,50,51,52,53,54,55,56,57,58,59,60];
+      case 'Hourly':
+        return [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24];
+      default:
+        return [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30];
+    }
+  }.property('selectedRepeatRule'),
   getDayName: function(day) {
     "use strict";
     switch(day)
@@ -143,42 +158,42 @@ export default Ember.Mixin.create({
     }
 
     var text = everyText + monthsText + daysText + startsOnText + untilText + countText;
-    Ember.$.each(rules, function(index, rule) {
-      switch(rule) {
-        //case 'FREQ':
-        //  break;
-        //case 'DTSTART':
-        //  break;
-        //case 'UNTIL':
-        //  break;
-        //case 'COUNT':
-        //  break;
-        //case 'INTERVAL':
-        //  break;
-        //case 'WKST':
-        //  break;
-        //case 'BYDAY':
-        //  break;
-        //case 'BYMONTH':
-        //  break;
-        case 'BYSETPOS':
-          break;
-        case 'BYMONTHDAY':
-          break;
-        case 'BYYEARDAY':
-          break;
-        case 'BYWEEKNO':
-          break;
-        case 'BYHOUR':
-          break;
-        case 'BYMINUTE':
-          break;
-        case 'BYSECOND':
-          break;
-        case 'BYEASTER':
-          break;
-      }
-    });
+    //Ember.$.each(rules, function(index, rule) {
+    //  switch(rule) {
+    //    //case 'FREQ':
+    //    //  break;
+    //    //case 'DTSTART':
+    //    //  break;
+    //    //case 'UNTIL':
+    //    //  break;
+    //    //case 'COUNT':
+    //    //  break;
+    //    //case 'INTERVAL':
+    //    //  break;
+    //    //case 'WKST':
+    //    //  break;
+    //    //case 'BYDAY':
+    //    //  break;
+    //    //case 'BYMONTH':
+    //    //  break;
+    //    case 'BYSETPOS':
+    //      break;
+    //    case 'BYMONTHDAY':
+    //      break;
+    //    case 'BYYEARDAY':
+    //      break;
+    //    case 'BYWEEKNO':
+    //      break;
+    //    case 'BYHOUR':
+    //      break;
+    //    case 'BYMINUTE':
+    //      break;
+    //    case 'BYSECOND':
+    //      break;
+    //    case 'BYEASTER':
+    //      break;
+    //  }
+    //});
 
     return text;
   }

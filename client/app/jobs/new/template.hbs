@@ -151,9 +151,11 @@
                                         </div>
                                         <div class="col-md-2">
                                             <div class="form-group-material-orange-700">
+                                                {{log repeatRules}}
                                                 <select class="form-control floating-label input-lg" placeholder="Rule">
-                                                    <option value="daily">Daily</option>
-                                                    <option value="weekly">Weekly</option>
+                                                    {{#each repeat in repeatRules}}
+                                                        <option value="{{repeat}}">{{repeat}}</option>
+                                                    {{/each}}
                                                 </select>
                                             </div>
                                         </div>
