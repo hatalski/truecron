@@ -1,6 +1,7 @@
 import Ember from 'ember';
+import RRuleParser from 'true-cron/mixins/rrule-parser';
 
-export default Ember.Controller.extend({
+export default Ember.Controller.extend(RRuleParser, {
   needs: ['jobs'],
   name: '',
   currentDate: moment().format('YYYY-MM-DD'),
@@ -29,7 +30,6 @@ export default Ember.Controller.extend({
     }
     return result;
   },
-  weekdays: moment.weekdays(),
   zone: 'GMT',
   zones: function() {
     return this.timezoneArray();
