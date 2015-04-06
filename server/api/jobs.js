@@ -65,6 +65,7 @@ api.route('/jobs')
                     });
                 }
                 else {
+                    job.schedule = null;
                     fnResult(i, result);
                 }
             }
