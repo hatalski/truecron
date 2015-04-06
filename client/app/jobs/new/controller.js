@@ -1,6 +1,7 @@
 import Ember from 'ember';
 
 export default Ember.Controller.extend({
+  needs: ['jobs'],
   name: '',
   currentDate: moment().format('YYYY-MM-DD'),
   currentTime: moment().format('HH:mm'),
@@ -47,8 +48,11 @@ export default Ember.Controller.extend({
     },
     cancelNewJob: function() {
       "use strict";
-      this.controllerFor('jobs').set('showJobDetails', false);
-      this.controllerFor('jobs').set('selectedJob', null);
+      var job = this.get('model');
+      Ember.Logger.log('cancel job: ', job);
+      this.get('controllers.jobs').set('showJobDetails', false);
+      this.get('controllers.jobs').set('newJob', null);
+      this.transitionToRoute('jobs', job.get('workspaceId'));
     }
   }
 });

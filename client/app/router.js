@@ -10,6 +10,12 @@ Router.map(function() {
   this.route("signin");
   this.route("forgot");
   this.route("profile");
+  this.route('reset');
+  this.route('confirmreset');
+  this.route('policy', function() {
+    this.route('privacy');
+    this.route('eula');
+  });
   this.resource("workspaces", function() {
     "use strict";
     this.route("workspace", { path: "/:workspace_id" }, function() {
@@ -51,12 +57,6 @@ Router.map(function() {
       });
       this.resource("vcs");
     });
-  });
-  this.route('reset');
-  this.route('confirmreset');
-  this.route('policy', function() {
-    this.route('privacy');
-    this.route('eula');
   });
 });
 

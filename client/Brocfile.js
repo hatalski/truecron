@@ -54,6 +54,7 @@ app.import('bower_components/jquery/dist/jquery.js');
 app.import('bower_components/JavaScript-MD5/js/md5.js');
 app.import('bower_components/socket.io-client/socket.io.js');
 app.import('bower_components/bootstrap/dist/js/bootstrap.js');
+app.import('bower_components/selectize/dist/js/selectize.js');
 app.import('bower_components/arrive/minified/arrive.min.js');
 app.import('bower_components/bootstrap-material-design/dist/js/material.js');
 app.import('bower_components/bootstrap-material-design/dist/js/ripples.js');
