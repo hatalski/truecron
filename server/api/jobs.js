@@ -34,11 +34,11 @@ api.route('/jobs')
         }
         var sort = req.listParams.sort || 'name';
 
-        var fnResult = function(i, result)
+        var fnResult = function(isLast, result)
         {
-            if(i >= result.rows.length - 1)
+            if(isLast)
             {
-                res.json({
+                res.status(200).json({
                     jobs: result.rows.map(formatJob),
                     meta: {
                         total: result.count
@@ -53,7 +53,9 @@ api.route('/jobs')
             limit: req.listParams.limit,
             offset: req.listParams.offset
         }).then(function (result) {
-            for(var i = 0; i<result.rows.length; i++)
+            var maxIndexOnCurrentPage = req.listParams.offset + req.listParams.limit;
+            var coountJobs = result.count > maxIndexOnCurrentPage ? maxIndexOnCurrentPage : result.count;
+            for(var i = req.listParams.offset; i<coountJobs; i++)
             {
                 var job = result.rows[i];
                 if (job.scheduleId) {
@@ -61,11 +63,11 @@ api.route('/jobs')
                         job.schedule = schedule;
                     }).then(function()
                     {
-                        fnResult(i, result);
+                        fnResult(i == coountJobs, result);
                     });
                 }
                 else {
-                    fnResult(i, result);
+                    fnResult(i == coountJobs, result);
                 }
             }
 
