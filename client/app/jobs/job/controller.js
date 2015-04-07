@@ -33,6 +33,19 @@ export default Ember.Controller.extend({
       Ember.Logger.log('new task creation cancelled');
       this.set('newTask', null);
       this.set('showNewTaskForm', false);
+    },
+    addJobTag: function(tagName) {
+      "use strict";
+      var job = this.get('model');
+      //var newTag = this.store.createRecord('job-tag', {
+      //  name: tagName,
+      //  job: job
+      //});
+      //if (!job.get('tags')) {
+      //    job.set('tags', []);
+      //}
+      job.get('tags').pushObject(tagName);
+      job.save();
     }
   }
 });

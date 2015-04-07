@@ -12,8 +12,11 @@ var Job = DS.Model.extend({
   updatedAt:   DS.attr('date', { defaultValue: new Date() }),
   updatedBy:   DS.belongsTo('user', { async: true }),
   workspace:   DS.belongsTo('workspace', { async: true }),
-  tags:        DS.hasMany('job-tag', { async: true }),
-  //history:     DS.hasMany('job-history', { async: true }),
+  // tags will be send as array to server-side,
+  // no need to have job-tags model, since there is no API for tags
+  tags:        DS.attr({ defaultValue: []}),
+  // tags:        DS.hasMany('job-tag', { async: true }),
+  // history:     DS.hasMany('job-history', { async: true }),
   tasks:       DS.hasMany('task', { async: true }),
   statusId:    DS.attr('number', { defaultValue: 0 }),
   status:      function() {

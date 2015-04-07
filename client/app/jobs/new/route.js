@@ -4,7 +4,7 @@ export default Ember.Route.extend({
   model: function() {
     "use strict";
     var selectedJob = this.controllerFor('jobs').get('newJob');
-    Ember.Logger.log(selectedJob);
+    Ember.Logger.log('new job on new route: ', selectedJob);
     return selectedJob;
   },
   afterModel: function(model) {

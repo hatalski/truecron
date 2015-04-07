@@ -47,6 +47,8 @@ app.import('bower_components/font-awesome/fonts/fontawesome-webfont.svg', { dest
 app.import('bower_components/font-awesome/fonts/fontawesome-webfont.ttf', { destDir: "fonts"});
 app.import('bower_components/font-awesome/fonts/fontawesome-webfont.woff', { destDir: "fonts"});
 app.import('bower_components/font-awesome/fonts/fontawesome-webfont.woff2', { destDir: "fonts"});
+app.import('bower_components/selectize/dist/css/selectize.css');
+app.import('bower_components/selectize/dist/css/selectize.bootstrap3.css');
 
 // js
 app.import('bower_components/jquery/dist/jquery.js');
