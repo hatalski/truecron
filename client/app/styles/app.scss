@@ -604,40 +604,6 @@ a.list-group-item:hover, a.list-group-item:active, a.list-group-item:focus {
   text-decoration: underline;
 }
 
-/* workspaces accordion */
-.truecron-accordion .truecron-panel-body {
-  background-color: #69757b;
-  color: white;
-}
-
-.truecron-accordion .truecron-first-heading {
-  background-color: #e7ecf0;
-}
-
-.truecron-accordion .truecron-second-heading {
-  background-color: #e0e6e9;
-}
-
-.truecron-accordion .truecron-error-heading {
-  background-color: #efe6e9;
-}
-
-.truecron-accordion .truecron-error-heading .trucron-underline {
-  color: red;
-}
-
-.truecron-accordion p {
-  margin: 0;
-}
-
-.truecron-inactive-heading p, .truecron-inactive-heading .trucron-underline {
-  color: #cccccc;
-}
-
-.trucron-underline {
-  text-decoration: underline;
-}
-
 .trucron-tasks-header {
   text-align: center;
 }
@@ -693,36 +659,22 @@ a.list-group-item:hover, a.list-group-item:active, a.list-group-item:focus {
 
 /* workspaces accordion */
 .truecron-accordion .truecron-panel-body {
-  background-color: #69757b;
-  color: white;
+  background-color: #cfd8dc;
+  color: $primary-color;
 }
 
 .truecron-accordion .truecron-first-heading {
-  background-color: #e7ecf0;
-}
-
-.truecron-accordion .truecron-second-heading {
-  background-color: #e0e6e9;
-}
-
-.truecron-accordion .truecron-error-heading {
-  background-color: #efe6e9;
-}
-
-.truecron-accordion .truecron-error-heading .trucron-underline {
-  color: red;
+  color: $primary-color;
+  border-top: solid 1px #cccccc;
+  border-bottom: solid 1px #cccccc;
 }
 
 .truecron-accordion p {
   margin: 0;
 }
 
-.truecron-inactive-heading p, .truecron-inactive-heading .trucron-underline {
+.truecron-inactive-heading p, .truecron-inactive-heading {
   color: #cccccc;
-}
-
-.trucron-underline {
-  text-decoration: underline;
 }
 
 /* Organizations */
