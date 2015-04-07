@@ -34,19 +34,6 @@ api.route('/jobs')
         }
         var sort = req.listParams.sort || 'name';
 
-        var fnResult = function(isLast, result)
-        {
-            if(isLast)
-            {
-                res.status(200).json({
-                    jobs: result.rows.map(formatJob),
-                    meta: {
-                        total: result.count
-                    }
-                });
-            }
-        };
-
         storage.Jobs.findAndCountAll(req.context, req.workspace, {
             where: where,
             order: sort + ' ' + req.listParams.direction,
@@ -55,22 +42,25 @@ api.route('/jobs')
         }).then(function (result) {
             var maxIndexOnCurrentPage = req.listParams.offset + req.listParams.limit;
             var coountJobs = result.count > maxIndexOnCurrentPage ? maxIndexOnCurrentPage : result.count;
-            for(var i = req.listParams.offset; i<coountJobs; i++)
+            for(var i = req.listParams.offset; i < coountJobs; i++)
             {
                 var job = result.rows[i];
+
                 if (job.scheduleId) {
                     storage.Schedules.findById(req.context, job.scheduleId).then(function(schedule){
                         job.schedule = schedule;
-                    }).then(function()
-                    {
-                        fnResult(i == coountJobs, result);
                     });
                 }
-                else {
-                    fnResult(i == coountJobs, result);
-                }
             }
-
+            return result;
+        })
+            .then (function(result){
+            res.status(200).json({
+                jobs: result.rows.map(formatJob),
+                meta: {
+                    total: result.count
+                }
+            });
         });
     })
 
