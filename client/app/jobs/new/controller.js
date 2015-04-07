@@ -39,10 +39,12 @@ export default Ember.Controller.extend(RRuleParser, {
       "use strict";
       var self = this;
       var newJob = self.get('model');
+      Ember.Logger.log('new job is about to save: ', newJob);
       newJob.save().then(function() {
         Ember.Logger.log('Job has been saved');
         self.controllerFor('jobs').set('showJobDetails', false);
         self.controllerFor('jobs').set('selectedJob', null);
+        self.controllerFor('jobs').set('newJob', null);
         self.transitionToRoute('jobs.job', newJob.get('workspace'), newJob);
       });
     },
