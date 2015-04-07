@@ -1,45 +1,71 @@
 <header class="job-details-header">
     <div class="container-fluid">
         <div class="row">
-            <div class="col-md-6 truecron-input-margin">
+            <div class="col-md-6">
                 <div class="form-group-material-orange-700">
-                    {{input id="jobName" type="text" value=model.name class="form-control floating-label input-lg" placeholder="Name of the job" data-hint="Give it a meaningful name"}}
+                    <h3 class="content-title-margin">{{input id="jobName" type="text" value=model.name class="form-control input-xl" placeholder="Name of the job"}}</h3>
                 </div>
             </div>
-            <div class="col-md-6 text-center truecron-title-margin">
-                <h5 class="text-warning">
-                    Weekly on Monday, Friday, Thuesday, Sunday, Wednesday at 12:32:00 PM
-                </h5>
+            {{!--<div class="col-md-1">--}}
+                {{!--<span class="btn btn-sm btn-material-blue-grey-400"><i class="fa fa-trash fa-lg"></i></span>--}}
+            {{!--</div>--}}
+            <div class="col-md-6">
+                <h4>Weekly on Monday, Friday, Thuesday, Sunday, Wensday at 12:32:00 PM</h4>
             </div>
         </div>
         <div class="row">
             <div class="col-md-6">
-                <div class="form-group-material-orange-700">
-                  {{input id="jobTags" type="text" value=tags class="form-control floating-label input-lg" placeholder="Job Tags" data-hint="Job tags"}}
-                </div>
-                {{!--<h1>Run Schedule</h1>--}}
+                {{input id="jobTags" type="text" value=model.tags class="form-control input-lg" placeholder="Tags"}}
             </div>
-            <div class="col-md-3 text-center">
-                <h4>LAST RUN:</h4>
-                <h4>July 6 12:32:00pm</h4>
+            <div class="col-md-3">
+                <h5>Last run: <span class="truecron-grey">July 6 12:32:00 PM</span></h5>
             </div>
-            <div class="col-md-3 text-center">
-                <h4>LAST RUN:</h4>
-                <h4>July 8 12:32:00pm</h4>
+            <div class="col-md-3">
+                <h5>Next run: <span class="truecron-grey">July 8 12:32:00 PM</span></h5>
             </div>
         </div>
+        {{!--<div class="row">--}}
+            {{!--<div class="col-md-6 truecron-input-margin">--}}
+                {{!--<div class="form-group-material-orange-700">--}}
+                    {{!--{{input id="jobName" type="text" value=model.name class="form-control floating-label input-lg" placeholder="Name of the job" data-hint="Give it a meaningful name"}}--}}
+                {{!--</div>--}}
+            {{!--</div>--}}
+            {{!--<div class="col-md-6 text-center truecron-title-margin">--}}
+                {{!--<h5 class="text-warning">--}}
+                    {{!--Weekly on Monday, Friday, Thuesday, Sunday, Wednesday at 12:32:00 PM--}}
+                {{!--</h5>--}}
+            {{!--</div>--}}
+        {{!--</div>--}}
+        {{!--<div class="row">--}}
+            {{!--<div class="col-md-6">--}}
+                {{!--<div class="form-group-material-orange-700">--}}
+                  {{!--{{input id="jobTags" type="text" value=tags class="form-control floating-label input-lg" placeholder="Job Tags" data-hint="Job tags"}}--}}
+                {{!--</div>--}}
+                {{!--<h1>Run Schedule</h1>--}}
+            {{!--</div>--}}
+            {{!--<div class="col-md-3 text-center">--}}
+                {{!--<h4>LAST RUN:</h4>--}}
+                {{!--<h4>July 6 12:32:00pm</h4>--}}
+            {{!--</div>--}}
+            {{!--<div class="col-md-3 text-center">--}}
+                {{!--<h4>LAST RUN:</h4>--}}
+                {{!--<h4>July 8 12:32:00pm</h4>--}}
+            {{!--</div>--}}
+        {{!--</div>--}}
     </div>
 </header>
 <div class="container-fluid">
     <div class="row">
-        <div class="new-job-body">
+        <div class="new-job-body col-md-12">
             <form>
                 <div class="row">
-                    <div class="col-md-offset-8 col-md-2 text-right">
-                        <a class="btn btn-material-orange-800" {{action 'createNewJob'}}>Save</a>
-                    </div>
-                    <div class="col-md-2">
-                        <a class="btn btn-material-blue-grey-400" {{action 'cancelNewJob'}}>Cancel</a>
+                    <div class="col-md-6 text-left">
+                        <div class="btn-group">
+                            <a class="btn btn-success" {{action 'createNewJob'}}>Save job</a>
+                        </div>
+                        <div class="btn-group">
+                            <a class="btn btn-default" {{action 'cancelNewJob'}}>Cancel</a>
+                        </div>
                     </div>
                 </div>
                 <div class="row">
@@ -125,9 +151,11 @@
                                         </div>
                                         <div class="col-md-2">
                                             <div class="form-group-material-orange-700">
+                                                {{log repeatRules}}
                                                 <select class="form-control floating-label input-lg" placeholder="Rule">
-                                                    <option value="daily">Daily</option>
-                                                    <option value="weekly">Weekly</option>
+                                                    {{#each repeat in repeatRules}}
+                                                        <option value="{{repeat}}">{{repeat}}</option>
+                                                    {{/each}}
                                                 </select>
                                             </div>
                                         </div>
@@ -262,5 +290,4 @@
         </div>
     </div>
 </div>
-
 {{outlet}}

@@ -1,6 +1,8 @@
 import Ember from 'ember';
+import RRuleParser from 'true-cron/mixins/rrule-parser';
 
-export default Ember.Controller.extend({
+export default Ember.Controller.extend(RRuleParser, {
+  needs: ['jobs'],
   name: '',
   currentDate: moment().format('YYYY-MM-DD'),
   currentTime: moment().format('HH:mm'),
@@ -28,7 +30,6 @@ export default Ember.Controller.extend({
     }
     return result;
   },
-  weekdays: moment.weekdays(),
   zone: 'GMT',
   zones: function() {
     return this.timezoneArray();
@@ -47,8 +48,11 @@ export default Ember.Controller.extend({
     },
     cancelNewJob: function() {
       "use strict";
-      this.controllerFor('jobs').set('showJobDetails', false);
-      this.controllerFor('jobs').set('selectedJob', null);
+      var job = this.get('model');
+      Ember.Logger.log('cancel job: ', job);
+      this.get('controllers.jobs').set('showJobDetails', false);
+      this.get('controllers.jobs').set('newJob', null);
+      this.transitionToRoute('jobs', job.get('workspaceId'));
     }
   }
 });

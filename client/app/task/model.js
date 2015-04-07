@@ -3,8 +3,6 @@ import TaskTypes from 'true-cron/models/task-type';
 
 var Task = DS.Model.extend({
   jobId:     DS.attr(),
-  organizationId: DS.attr(),
-  workspaceId: DS.attr(),
   name:      DS.attr('string'),
   active:    DS.attr('boolean', { defaultValue: true }),
   settings:  DS.attr('string'),
