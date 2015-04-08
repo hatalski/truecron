@@ -3,8 +3,12 @@ import Ember from 'ember';
 export default Ember.Controller.extend({
   needs: ['jobs'],
   jobs: Ember.computed.alias("controllers.jobs"),
+
+  websocket: Ember.inject.service(),
+
   showNewTaskForm: false,
   newTask: null,
+
   actions: {
     addTask: function() {
       "use strict";

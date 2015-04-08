@@ -21,4 +21,7 @@ var secureServer = https.createServer(options, app).listen(config.get('SECURE_PO
 	log.info('Express https server listening on port ' + this.address().port);
 });
 
-app.registerSockets(secureServer);
+require('./server/lib/sockets');
+// app.registerSockets(secureServer);
+
+module.exports = secureServer;

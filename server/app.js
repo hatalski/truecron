@@ -9,10 +9,6 @@ var validator = require('./lib/validator');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 
-var session = require('express-session');
-var redisClient = require('./lib/redis');
-var RedisStore = require('connect-redis')(session);
-
 var routes = require('./routes/index');
 var auth = require('./routes/auth');
 var beta = require('./routes/beta');
@@ -44,18 +40,6 @@ app.use(validator.expressValidator());
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 app.use('/bower_components',  express.static(__dirname + '/bower_components'));
-
-app.use(cookieParser('TrueCron')); // dv: hack to fix problem with passport and redis session. @see https://github.com/jaredhanson/passport/issues/244
-app.use(session({
-    store: new RedisStore({host: config.get('REDIS_HOST'), port: config.get('REDIS_PORT'), client: redisClient}), //client: redisClient
-    secret: config.get('SESSION_SECRET') || '3rrr',
-    cookie : {
-        expires: false,
-        domain: config.get('COOKIE_DOMAIN') || 'dev.truecron.com'
-    },
-    resave: true,
-    saveUninitialized: true
-}));
 
 app.use(function(req, res, next) {
     res.header("Access-Control-Allow-Origin", "*");
@@ -147,22 +131,4 @@ storage.initialize()
 
 app.storage = storage;
 
-//
-// Register sockets
-//
-app.registerSockets = function(server)
-{
-    global.socketIO = require('socket.io')(server);
-    logger.info('socket.io started');
-    global.socketIO.on('connection', function(socket){
-        logger.info('socket client connected');
-        socket.on('disconnect', function(){
-            logger.info('socket client disconnected');
-        });
-        socket.on('ping', function(){
-            logger.info('ping received');
-            socket.emit('pong');
-        });
-    });
-};
 module.exports = app;
