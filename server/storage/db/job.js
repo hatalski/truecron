@@ -34,7 +34,7 @@ module.exports = function(sequelize, DataTypes) {
                 Job.belongsTo(models.Organization, { as: 'organization', foreignKey: 'organizationId' });
                 Job.belongsTo(models.Workspace, { as: 'workspace', foreignKey: 'workspaceId' });
                 Job.belongsTo(models.Person, { as: 'updatedBy', foreignKey: 'updatedByPersonId' });
-                Job.belongsTo(models.Schedule, { as: 'schedule', foreignKey: 'scheduleId' });
+                //Job.hasOne(models.Schedules, { as: 'schedule', foreignKey: 'scheduleId' });
             }
         }
     });
