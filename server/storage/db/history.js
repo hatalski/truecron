@@ -24,8 +24,8 @@ module.exports = function(sequelize, DataTypes) {
                 History.belongsTo(models.Person, { as: 'updatedBy', foreignKey: 'updatedByPersonId' });
                 History.belongsTo(models.Organization, { as: 'organization', foreignKey: 'organizationId' });
                 History.belongsTo(models.Workspace, { as: 'workspace', foreignKey: 'workspaceId' });
-                History.belongsTo(models.Job, { as: 'job', foreignKey: 'jobId' });
-                History.belongsTo(models.Task, { as: 'task', foreignKey: 'taskId' });
+                //History.belongsTo(models.Jobs, { as: 'job', foreignKey: { name : 'jobId', allowNull: false} });
+                //History.belongsTo(models.Tasks, { as: 'task', foreignKey: { name : 'taskId', allowNull: false} });
                 History.belongsTo(models.Connection, { as: 'connection', foreignKey: 'connectionId' });
                 History.belongsTo(models.Person, { as: 'person', foreignKey: 'personId' });
             }

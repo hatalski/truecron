@@ -10,13 +10,17 @@ var api = express.Router();
 
 function formatJob(datajob) {
     var job = datajob.toJSON();
+
     var selfUrl = '/jobs/' + job.id;
+
     job.links = {
         self:    selfUrl,
         tasks:   selfUrl + '/tasks',
         history: selfUrl + '/history'
     };
     common.formatApiOutput(job);
+    delete job['scheduleid'];
+    delete job['scheduleId'];
     return job;
 }
 
@@ -42,25 +46,45 @@ api.route('/jobs')
         }).then(function (result) {
             var maxIndexOnCurrentPage = req.listParams.offset + req.listParams.limit;
             var coountJobs = result.count > maxIndexOnCurrentPage ? maxIndexOnCurrentPage : result.count;
-            for(var i = req.listParams.offset; i < coountJobs; i++)
-            {
-                var job = result.rows[i];
 
-                if (job.scheduleId) {
+            var response = [];
+            var complete = function(){
+                res.status(200).json({
+                    jobs: response,
+                    meta: {
+                        total: result.count
+                    }
+                })
+            };
+
+            var processNextItem = function(index)
+            {
+                if(index >= coountJobs)
+                {
+                    complete();
+                    return;
+                }
+
+                var job = result.rows[index];
+
+                response.push(job ? formatJob(job) : null);
+
+                index++;
+
+                if (job && job.scheduleId) {
                     storage.Schedules.findById(req.context, job.scheduleId).then(function(schedule){
-                        job.schedule = schedule;
+                        response[index - 1].schedule = schedule;
+                        processNextItem(index);
                     });
                 }
-            }
-            return result;
-        })
-            .then (function(result){
-            res.status(200).json({
-                jobs: result.rows.map(formatJob),
-                meta: {
-                    total: result.count
+                else
+                {
+                    response[index - 1].schedule = null;
+                    processNextItem(index);
                 }
-            });
+            };
+
+            processNextItem(0);
         });
     })
 
@@ -88,11 +112,18 @@ api.route('/jobs')
                 req.body.job.organizationId = organizationId;
                 req.body.job.workspaceId = workspaceId;
 
-                var fnCreateJob = function(context, job)
+                var fnCreateJob = function(context, job, schedule)
                 {
                     storage.Jobs.create(context, job)
                         .then(function (job) {
-                            res.status(201).json({ job: formatJob(job) });
+                            if(schedule)
+                            {
+                                var formatedJob = formatJob(job);
+                                formatedJob.schedule = schedule.toJSON();
+                                res.status(201).json({ job: formatedJob });
+                            }
+                            else
+                                res.status(201).json({ job: formatJob(job) });
                         })
                         .catch(function (err) {
                             logger.error(err.toString());
@@ -106,7 +137,7 @@ api.route('/jobs')
                         .then(function(schedule)
                         {
                             req.body.job.scheduleId = schedule.id;
-                            fnCreateJob(req.context, req.body.job);
+                            fnCreateJob(req.context, req.body.job, schedule);
                         })
                         .catch(function (err) {
                             logger.error(err.toString());

@@ -36,8 +36,10 @@ describe('JOBS API',
                     'active': 1,
                     'archived': 0,
                     'tags': ["edi", "production"],
-                    'startsAt': '2014-08-21T10:00:11Z',
-                    'rrule': 'FREQ=DAILY;INTERVAL=1;BYDAY=MO;BYHOUR=12;BYMINUTE=0;BYSECOND=0'
+                    'schedule': {
+                        'dtStart': '2014-08-21T10:00:11Z',
+                        'rrule': 'FREQ=DAILY;INTERVAL=1;BYDAY=MO;BYHOUR=12;BYMINUTE=0;BYSECOND=0'
+                    }
                 }
                 })
                 .authenticate(accessToken)
@@ -48,7 +50,9 @@ describe('JOBS API',
                     expect(res.body.job.name).to.eql('TestName1');
                     expect(res.body.job.active).to.eql(1);
                     expect(res.body.job.archived).to.eql(0);
-                    expect(res.body.job.scheduleId).not.eql(null);
+                    expect(res.body.job.scheduleId == undefined);
+                    expect(res.body.job.schedule).not.eql(null);
+                    expect(res.body.job.schedule != 'undefined');
                     expect(validator.isDate(res.body.job.createdAt)).to.be.ok();
                     expect(validator.isDate(res.body.job.updatedAt)).to.be.ok();
                     expect(res.status).to.eql(201);
@@ -65,8 +69,10 @@ describe('JOBS API',
                     'active': 1,
                     'archived': 0,
                     'tags': ["edi", "production"],
-                    'startsAt': '2014-08-21T10:00:11Z',
-                    'rrule': 'FREQ=DAILY;INTERVAL=1;BYDAY=MO;BYHOUR=12;BYMINUTE=0;BYSECOND=0'
+                    'schedule': {
+                        'dtStart': '2014-08-21T10:00:11Z',
+                        'rrule': 'FREQ=DAILY;INTERVAL=1;BYDAY=MO;BYHOUR=12;BYMINUTE=0;BYSECOND=0'
+                    }
                 }
                 })
                 .authenticate(accessToken)
@@ -77,7 +83,8 @@ describe('JOBS API',
                     expect(res.body.job.name).to.eql('TestName3');
                     expect(res.body.job.active).to.eql(1);
                     expect(res.body.job.archived).to.eql(0);
-                    expect(res.body.job.scheduleId).not.eql(null);
+                    expect(res.body.job.scheduleId == undefined);
+                    expect(res.body.job.schedule).not.eql(null);
                     expect(validator.isDate(res.body.job.createdAt)).to.be.ok();
                     expect(validator.isDate(res.body.job.updatedAt)).to.be.ok();
                     expect(res.status).to.eql(201);
@@ -92,8 +99,10 @@ describe('JOBS API',
                     'name': 'TestName1',
                     'active': 1,
                     'archived': 0,
-                    'startsAt': '2014-08-21T10:00:11Z',
-                    'rrule': 'FREQ=DAILY;INTERVAL=1;BYDAY=MO;BYHOUR=12;BYMINUTE=0;BYSECOND=0'
+                    'schedule': {
+                        'dtStart': '2014-08-21T10:00:11Z',
+                        'rrule': 'FREQ=DAILY;INTERVAL=1;BYDAY=MO;BYHOUR=12;BYMINUTE=0;BYSECOND=0'
+                    }
                 }
                 })
                 .authenticate(accessToken)
@@ -104,9 +113,8 @@ describe('JOBS API',
                     expect(res.body.job.name).to.eql('TestName1');
                     expect(res.body.job.active).to.eql(1);
                     expect(res.body.job.archived).to.eql(0);
-                    expect(res.body.job.scheduleId).not.eql(null);
-                    //expect(res.body.job.startsAt).to.eql('2014-08-21T10:00:11.000Z');
-                    //expect(res.body.job.rrule).to.eql('FREQ=DAILY;INTERVAL=1;BYDAY=MO;BYHOUR=12;BYMINUTE=0;BYSECOND=0');
+                    expect(res.body.job.scheduleId == undefined);
+                    expect(res.body.job.schedule).not.eql(null);
                     expect(validator.isDate(res.body.job.createdAt)).to.be.ok();
                     expect(validator.isDate(res.body.job.updatedAt)).to.be.ok();
                     expect(res.status).to.eql(201);
@@ -122,8 +130,10 @@ describe('JOBS API',
                     'name': 'TestName',
                     'tags': ["edi", "production"],
                     'updatedByPersonId':'1',
-                    'startsAt': '2014-08-21T10:00:11Z',
-                    'rrule': 'FREQ=DAILY;INTERVAL=1;BYDAY=MO;BYHOUR=12;BYMINUTE=0;BYSECOND=0'
+                    'schedule': {
+                        'dtStart': '2014-08-21T10:00:11Z',
+                        'rrule': 'FREQ=DAILY;INTERVAL=1;BYDAY=MO;BYHOUR=12;BYMINUTE=0;BYSECOND=0'
+                    }
                 }
                 })
                 .authenticate(accessToken)
@@ -159,6 +169,7 @@ describe('JOBS API',
                     expect(res.header['content-type']).to.eql('application/json; charset=utf-8');
                     expect(res.body.error).to.eql(undefined);
                     expect(res.body.job.id).to.be.a('string');
+                    expect(res.body.job.schedule != undefined);
                     expect(validator.isDate(res.body.job.createdAt)).to.be.ok();
                     expect(validator.isDate(res.body.job.updatedAt)).to.be.ok();
                     expect(res.status).to.eql(200);
