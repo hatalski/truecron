@@ -785,6 +785,22 @@ a.list-group-item:hover, a.list-group-item:active, a.list-group-item:focus {
 .truecron-panel-heading{
   border-radius: 0px;
 }
+.truecron-p-padding{
+  padding-left: 20px;
+}
+.truecron-p-double-padding{
+  padding-left: 40px;
+}
+.truecron-exclusion-border {
+  border-bottom: solid 1px #cccccc;
+}
+.truecron-exclusion-border:first-child {
+  border-bottom: solid 1px #cccccc;
+  border-top: solid 1px #cccccc;
+}
+.truecron-no-margin {
+  margin: 0;
+}
 /* new task*/
 .truecron-new-task-title{
   background-color: #ffffff;
