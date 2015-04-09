@@ -5,20 +5,20 @@ import Ember from 'ember';
 export default Ember.Service.extend({
   _setup: function() {
     "use strict";
-    let socket = this.socket = io(`${window.location.hostname}:8080`);
+    let socket = this.socket = io('https://dev.truecron.com/');
 
     this.subscribers = [];
-
-    socket.on('message', function (data) {
+    socket.on('pong', function (data) {
       if (!this.subscribers) { return; }
       let message = JSON.parse(data);
       this.subscribers.forEach( (callback) => callback(message) );
     }.bind(this));
+    socket.emit('ping', 'test');
 
   }.on('init'),
 
   sendMessage: function (message) {
-    this.socket.emit('message', message);
+    this.socket.emit('ping', message);
   },
 
   subscribe: function (callback) {

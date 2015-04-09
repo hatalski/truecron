@@ -48,6 +48,7 @@ export default Ember.Controller.extend({
       //if (!job.get('tags')) {
       //    job.set('tags', []);
       //}
+      this.get('websocket').sendMessage('test');
       job.get('tags').pushObject(tagName);
       job.save();
     }
