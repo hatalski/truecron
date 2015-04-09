@@ -83,6 +83,7 @@ describe('JOBS API',
                     expect(res.body.job.name).to.eql('TestName3');
                     expect(res.body.job.active).to.eql(1);
                     expect(res.body.job.archived).to.eql(0);
+                    expect(res.body.job.tags).to.eql(["edi", "production"]);
                     expect(res.body.job.scheduleId == undefined);
                     expect(res.body.job.schedule).not.eql(null);
                     expect(validator.isDate(res.body.job.createdAt)).to.be.ok();
