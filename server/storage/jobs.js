@@ -78,6 +78,7 @@ var create = module.exports.create = Promise.method(function (context, attribute
             .then(function() {
                 if (locals.attrs.tags) {
                     var tags;
+                    locals.job.dataValues.tags = [];
                     var arrayData = locals.attrs.tags;
                     // TODO: replace with promises (sequential foreach)
                     arrayData.forEach(function (tag) {
@@ -85,6 +86,7 @@ var create = module.exports.create = Promise.method(function (context, attribute
                             jobId: locals.job.id,
                             tag: tag.toString()
                         };
+                        locals.job.dataValues.tags.push(tag);
                         models.JobTag.create(tags);
                     });
                 }
