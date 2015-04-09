@@ -22,13 +22,119 @@
         </div>
     </div>
     <div id="collapseTask{{task.id}}" class="panel-collapse collapse" role="tabpanel" aria-labelledby="task{{task.id}}">
-        <div class="panel-body truecron-panel-body">
+        <div class="navbar navbar-material-blue-grey-200 sidebar-table">
+            <div class="navbar-collapse collapse navbar-material-blue-grey-collapse">
+                <ul class="nav navbar-nav">
+                    <li class="active"><a href="#output" aria-controls="output" role="tab" data-toggle="tab">Output</a></li>
+                    <li><a href="#settings" aria-controls="settings" role="tab" data-toggle="tab">Settings</a></li>
+                </ul>
+            </div>
+        </div>
+      <div class="tab-content">
+        <div role="tabpanel" class="panel-body truecron-panel-body tab-pane active" id="output{{task.id}}" >
             <p>rm myFile.txt myFile1.txt myFile2.txt …etc…</p>
             <p>rm myFile*.txt</p>
             <p>rm -rf foldername</p>
             <p>rm -rf *</p>
             <p class="text-right">Download Full Log <a class="btn btn-sm btn-material-blue-grey-400"><i class="fa fa-download"></i> </a></p>
         </div>
+        <div role="tabpanel" class="panel-body truecron-panel-body tab-pane" id="settings{{task.id}}">
+                <div class="row">
+                    <br>
+                    <div class="col-md-2 text-right">
+                        <h5><strong>Type:</strong></h5>
+                    </div>
+                    <div class="col-xs-3">
+                        <div class="form-group-material-orange-700">
+                            <select class="form-control">
+                                <option>Delete files</option>
+                                <option>Archive files</option>
+                                <option>Format HDD</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-md-2 text-right">
+                        <h5><strong>Connections:</strong></h5>
+                    </div>
+                    <div class="col-xs-3">
+                        <div class="form-group-material-orange-700">
+                            <select class="form-control">
+                                <option>Local</option>
+                                <option>Remote</option>
+                                <option>Magic stuff</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <br>
+                    <div class="col-md-2 text-right">
+                        <h5><strong>Folders:</strong></h5>
+                    </div>
+                    <div class="col-xs-3">
+                        <div class="form-group-material-orange-700">
+                            <select class="form-control">
+                                <option>local</option>
+                                <option>remote</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-md-2 text-right">
+                        <h5><strong>File mask:</strong></h5>
+                    </div>
+                    <div class="col-xs-3">
+                        <div class="form-group-material-orange-700">
+                            <div class="form-group-material-orange-700">
+                                <input id="maskType" type="text" value="" class="form-control floating-label" placeholder="*.*" data-hint="Choose the mask">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-offset-7 col-md-3">
+                        <div class="checkbox checkbox-material-orange-700">
+                            <label>
+                                <input type="checkbox" checked=""> <strong>Delete my empty folders</strong>
+                            </label>
+                        </div>
+                    </div>
+                </div>
+                <hr>
+                <div class="row">
+                    <div class="col-md-2 text-right">
+                        <h5><strong>Failure conditions:</strong></h5>
+                    </div>
+                    <div class="col-md-1 text-center">
+                        <div class="checkbox checkbox-material-orange-700 truecron_checkbox">
+                            <label>
+                                <input type="checkbox">
+                            </label>
+                        </div>
+                    </div>
+                    <div class="col-md-1 text-left">
+                        <h5><strong>timeout:</strong></h5>
+                    </div>
+                    <div class="col-md-2 text-left">
+                        <div class="form-group-material-orange-700">
+                            <select class="form-control">
+                                <option>10 seconds</option>
+                                <option>20 seconds</option>
+                                <option>30 seconds</option>
+                                <option>40 seconds</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-offset-10 col-md-1 text-right">
+                        <a class="btn btn-sm btn-material-orange-800 truecron-panel-btn">SAVE</a>
+                    </div>
+                    <div class="col-md-1 text-center">
+                        <a class="btn btn-sm btn-material-blue-grey-400 truecron-panel-btn">CANCEL</a>
+                    </div>
+                </div>
+        </div>
+      </div>
     </div>
 </div>
 {{yield}}
