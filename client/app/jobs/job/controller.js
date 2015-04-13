@@ -3,8 +3,12 @@ import Ember from 'ember';
 export default Ember.Controller.extend({
   needs: ['jobs'],
   jobs: Ember.computed.alias("controllers.jobs"),
+
+  websocket: Ember.inject.service(),
+
   showNewTaskForm: false,
   newTask: null,
+
   actions: {
     addTask: function() {
       "use strict";
@@ -44,8 +48,13 @@ export default Ember.Controller.extend({
       //if (!job.get('tags')) {
       //    job.set('tags', []);
       //}
+      this.get('websocket').sendMessage('test');
       job.get('tags').pushObject(tagName);
       job.save();
+    },
+    runJob: function() {
+      "use strict";
+      this.get('websocket').sendMessage('running job');
     }
   }
 });
