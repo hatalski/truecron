@@ -1,21 +1,16 @@
-var redis = require('socket.io-redis');
+var io = require('../../server');
+// test
+console.dir(io);
 
-var httpsServer = require('../../server');
-var logger = require('./logger');
-var config = require('./config');
-
-var io = require('socket.io')(httpsServer);
-io.adapter(redis({ host: config.get('REDIS_HOST'), port: config.get('REDIS_PORT') }));
-logger.info('socket.io started');
-io.on('connection', function(socket) {
-    logger.info('socket client connected');
-    socket.on('disconnect', function(){
-        logger.info('socket client disconnected');
-    });
-    socket.on('ping', function(){
-        logger.info('ping received');
-        socket.emit('pong');
-    });
-});
+//io.on('connection', function(socket) {
+//    console.log('socket.io client has been connected');
+//    socket.on('disconnect', function(){
+//        console.info('socket client disconnected');
+//    });
+//    socket.on('ping', function() {
+//        console.info('ping received');
+//        io.emit('pong');
+//    });
+//});
 
 module.exports = io;

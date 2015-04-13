@@ -1,4 +1,7 @@
 #!/usr/bin/env node
+
+console.log('dirname', __dirname);
+
 var https = require('https');
 var http = require('http');
 var fs = require('fs');
@@ -21,7 +24,23 @@ var secureServer = https.createServer(options, app).listen(config.get('SECURE_PO
 	log.info('Express https server listening on port ' + this.address().port);
 });
 
-require('./server/lib/sockets');
+var io = require('socket.io')(secureServer);
+var redis = require('socket.io-redis');
+
+io.adapter(redis({ host: config.get('REDIS_HOST'), port: config.get('REDIS_PORT') }));
+
+io.on('connection', function(socket) {
+    console.log('socket.io client has been connected');
+    socket.on('disconnect', function(){
+        console.info('socket client disconnected');
+    });
+    socket.on('ping', function(message) {
+        console.info('ping received', message);
+        io.emit('pong');
+    });
+});
+
+//var sockets = require('./server/lib/sockets');
 // app.registerSockets(secureServer);
 
 module.exports = secureServer;

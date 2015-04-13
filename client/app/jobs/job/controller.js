@@ -51,6 +51,10 @@ export default Ember.Controller.extend({
       this.get('websocket').sendMessage('test');
       job.get('tags').pushObject(tagName);
       job.save();
+    },
+    runHob: function() {
+      "use strict";
+      this.get('websocket').sendMessage('running job');
     }
   }
 });
