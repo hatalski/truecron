@@ -3,6 +3,9 @@ body {
   background-color: #eceff1;
   color: #464748; }
 
+.navbar {
+  min-height: 60px; }
+
 .btn {
   padding: 8px 20px; }
 
@@ -274,6 +277,9 @@ tr:nth-child(even) {
 tr:nth-child(odd) {
   background-color: #fafafa; }
 
+.btn-back {
+  color: #ef6c00; }
+
 .sidebar-table {
   margin-bottom: 0; }
 
@@ -339,6 +345,9 @@ tr:nth-child(odd) {
 
 .panel-heading .col-md-12 .fa-plus {
   padding-right: 10px; }
+
+.truecron-sidebar-padding {
+  padding-left: 7px; }
 
 .no-padding {
   padding-left: 0px;
