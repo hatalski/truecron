@@ -48,7 +48,9 @@ app.import('bower_components/font-awesome/fonts/fontawesome-webfont.ttf', { dest
 app.import('bower_components/font-awesome/fonts/fontawesome-webfont.woff', { destDir: "fonts"});
 app.import('bower_components/font-awesome/fonts/fontawesome-webfont.woff2', { destDir: "fonts"});
 app.import('bower_components/selectize/dist/css/selectize.css');
-app.import('bower_components/selectize/dist/css/selectize.bootstrap3.css');
+app.import('bower_components/selectize/dist/css/selectize.default.css');
+//app.import('bower_components/selectize/dist/css/selectize.bootstrap3.css');
+app.import('bower_components/sweetalert/lib/sweet-alert.css');
 
 // js
 app.import('bower_components/jquery/dist/jquery.js');
@@ -66,6 +68,7 @@ app.import('bower_components/rrule/lib/nlp.js');
 app.import('bower_components/moment/min/moment.min.js');
 app.import('bower_components/moment-timezone/builds/moment-timezone-with-data.js');
 app.import('bower_components/validator-js/validator.min.js');
+app.import('bower_components/sweetalert/lib/sweet-alert.js');
 
 // Use `app.import` to add additional libraries to the generated
 // output files.
