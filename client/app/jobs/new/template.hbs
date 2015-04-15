@@ -1,3 +1,31 @@
+{{!--<header class="job-details-header">--}}
+    {{!--<div class="container-fluid">--}}
+        {{!--<div class="row">--}}
+            {{!--<div class="col-sm-6">--}}
+                {{!--<div class="form-group-material-orange-700">--}}
+                    {{!--<h3 class="content-title-margin">{{input id="jobName" type="text" value=model.name class="form-control input-xl" placeholder="Name of the job"}}</h3>--}}
+                {{!--</div>--}}
+            {{!--</div>--}}
+            {{!--<div class="col-sm-1">--}}
+                {{!--<span class="btn btn-sm btn-material-blue-grey-400"><i class="fa fa-trash fa-lg"></i></span>--}}
+            {{!--</div>--}}
+            {{!--<div class="col-sm-6">--}}
+                {{!--<h4>Weekly on Monday, Friday, Thuesday, Sunday, Wensday at 12:32:00 PM</h4>--}}
+            {{!--</div>--}}
+        {{!--</div>--}}
+        {{!--<div class="row">--}}
+            {{!--<div class="col-md-6">--}}
+                {{!--{{input id="jobTags" type="text" value=model.tags class="form-control input-lg" placeholder="Tags"}}--}}
+            {{!--</div>--}}
+            {{!--<div class="col-md-3">--}}
+                {{!--<h5>Last run: <span class="truecron-grey">July 6 12:32:00 PM</span></h5>--}}
+            {{!--</div>--}}
+            {{!--<div class="col-md-3">--}}
+                {{!--<h5>Next run: <span class="truecron-grey">July 8 12:32:00 PM</span></h5>--}}
+            {{!--</div>--}}
+        {{!--</div>--}}
+    {{!--</div>--}}
+{{!--</header>--}}
 <header class="job-details-header">
     <div class="container-fluid">
         <div class="row">
@@ -6,70 +34,60 @@
                     <h3 class="content-title-margin">{{input id="jobName" type="text" value=model.name class="form-control input-xl" placeholder="Name of the job"}}</h3>
                 </div>
             </div>
-            {{!--<div class="col-md-1">--}}
-                {{!--<span class="btn btn-sm btn-material-blue-grey-400"><i class="fa fa-trash fa-lg"></i></span>--}}
-            {{!--</div>--}}
-            <div class="col-md-6">
-                <h4>Weekly on Monday, Friday, Thuesday, Sunday, Wensday at 12:32:00 PM</h4>
+            <div class="col-md-1">
+                <h4 class="text-right truecron-grey hidden-sm hidden-xs">Run:</h4>
+                <h4 class="truecron-grey hidden-lg hidden-md">Run:</h4>
+            </div>
+            <div class="col-md-5">
+                <h4 class="truecron-orange">Weekly on Monday, Friday, Thuesday, Sunday, Wensday at 12:32:00 PM</h4>
             </div>
         </div>
         <div class="row">
             <div class="col-md-6">
-                {{input id="jobTags" type="text" value=model.tags class="form-control input-lg" placeholder="Tags"}}
+                {{job-tags job=model action="addJobTag"}}
             </div>
-            <div class="col-md-3">
-                <h5>Last run: <span class="truecron-grey">July 6 12:32:00 PM</span></h5>
+            <div class="col-md-1">
+                <h4 class="text-right truecron-grey hidden-sm hidden-xs">Exclude:</h4>
+                <h4 class="truecron-grey hidden-md hidden-lg">Exclude:</h4>
             </div>
-            <div class="col-md-3">
-                <h5>Next run: <span class="truecron-grey">July 8 12:32:00 PM</span></h5>
+            <div class="col-md-5">
+                <h4 class="truecron-orange">Sunday 8 March 2015</h4>
             </div>
         </div>
-        {{!--<div class="row">--}}
-            {{!--<div class="col-md-6 truecron-input-margin">--}}
-                {{!--<div class="form-group-material-orange-700">--}}
-                    {{!--{{input id="jobName" type="text" value=model.name class="form-control floating-label input-lg" placeholder="Name of the job" data-hint="Give it a meaningful name"}}--}}
-                {{!--</div>--}}
-            {{!--</div>--}}
-            {{!--<div class="col-md-6 text-center truecron-title-margin">--}}
-                {{!--<h5 class="text-warning">--}}
-                    {{!--Weekly on Monday, Friday, Thuesday, Sunday, Wednesday at 12:32:00 PM--}}
-                {{!--</h5>--}}
-            {{!--</div>--}}
-        {{!--</div>--}}
-        {{!--<div class="row">--}}
-            {{!--<div class="col-md-6">--}}
-                {{!--<div class="form-group-material-orange-700">--}}
-                  {{!--{{input id="jobTags" type="text" value=tags class="form-control floating-label input-lg" placeholder="Job Tags" data-hint="Job tags"}}--}}
-                {{!--</div>--}}
-                {{!--<h1>Run Schedule</h1>--}}
-            {{!--</div>--}}
-            {{!--<div class="col-md-3 text-center">--}}
-                {{!--<h4>LAST RUN:</h4>--}}
-                {{!--<h4>July 6 12:32:00pm</h4>--}}
-            {{!--</div>--}}
-            {{!--<div class="col-md-3 text-center">--}}
-                {{!--<h4>LAST RUN:</h4>--}}
-                {{!--<h4>July 8 12:32:00pm</h4>--}}
-            {{!--</div>--}}
-        {{!--</div>--}}
+        <div class="row">
+            <div class="col-md-2">
+                <h4 class="text-right truecron-grey hidden-sm hidden-xs">Last run:</h4>
+                <h4 class="truecron-grey hidden-md hidden-lg">Last run:</h4>
+            </div>
+            <div class="col-md-4">
+                <h4>July 6 12:32:00 PM</h4>
+            </div>
+            <div class="col-md-2">
+                <h4 class="text-right truecron-grey hidden-sm hidden-xs">Next run:</h4>
+                <h4 class="truecron-grey hidden-md hidden-lg">Next run:</h4>
+            </div>
+            <div class="col-md-4">
+                <h4>July 8 12:32:00 PM</h4>
+            </div>
+        </div>
     </div>
 </header>
 <div class="container-fluid">
     <div class="row">
-        <div class="new-job-body col-md-12">
+        <div class="new-job-body col-sm-12">
             <form>
                 <div class="row">
-                    <div class="col-md-6 text-left">
+                    <div class="col-sm-12 text-right">
                         <div class="btn-group">
-                            <a class="btn btn-success" {{action 'createNewJob'}}>Save job</a>
+                            <a class="btn btn-material-orange-700" {{action 'createNewJob'}}>Save job</a>
                         </div>
                         <div class="btn-group">
-                            <a class="btn btn-default" {{action 'cancelNewJob'}}>Cancel</a>
+                            <a class="btn btn-material-blue-grey-400" {{action 'cancelNewJob'}}>Cancel</a>
                         </div>
                     </div>
                 </div>
                 <div class="row">
-                    <div class="col-md-12">
+                    <div class="col-sm-12">
                         <div class="panel panel-material-blue-grey-200 truecron-panel">
                             <div class="panel-heading truecron-panel-heading" id="includeRule">
                                 <h4 class="panel-title">
@@ -81,22 +99,22 @@
                             <div id="includeRulePanel" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="includeRule">
                                 <div class="panel-body truecron-panel-body">
                                     <div class="row">
-                                        <div class="col-md-1">
+                                        <div class="col-sm-1">
                                             <h5>Starts:</h5>
                                         </div>
-                                        <div class="col-md-2">
+                                        <div class="col-sm-3">
                                             <div class="form-group-material-orange-700">
-                                              {{input id="startsOn" value=currentDate class="form-control floating-label input-lg" placeholder="Date" type="date"}}
+                                              {{input id="startsOn" value=currentDate class="form-control floating-label" placeholder="Date" type="date"}}
                                             </div>
                                         </div>
-                                        <div class="col-md-2">
+                                        <div class="col-sm-3">
                                             <div class="form-group-material-orange-700">
-                                              {{input id="startsAt" value=currentTime class="form-control floating-label input-lg" placeholder="Time" type="time"}}
+                                              {{input id="startsAt" value=currentTime class="form-control floating-label" placeholder="Time" type="time"}}
                                             </div>
                                         </div>
-                                        <div class="col-md-3">
+                                        <div class="col-sm-4">
                                             <div class="form-group-material-orange-700">
-                                                <select class="form-control floating-label input-lg" placeholder="Timezone">
+                                                <select class="form-control floating-label" placeholder="Timezone">
                                                   {{#each timezone in controller.zones}}
                                                       <option {{bind-attr value=timezone.name}}>{{timezone.name}} - {{timezone.abbr}} - {{timezone.offset}}</option>
                                                   {{/each}}
@@ -104,41 +122,41 @@
                                             </div>
                                             <br>
                                         </div>
-                                        <div class="col-md-1">
+                                        <div class="col-sm-1">
                                           {{currentZone}}
                                         </div>
                                     </div>
                                     <div class="row">
-                                        <div class="col-md-1">
+                                        <div class="col-sm-1">
                                             <h5>Ends:</h5>
                                         </div>
-                                        <div class="col-md-1">
+                                        <div class="col-sm-2">
                                             <div class="radio radio-material-orange-700">
                                                 <label for="radioNever">
                                                   {{input id="radioNever" type="radio" name="endsOn" value="never" checked="checked"}} Never
                                                 </label>
                                             </div>
                                         </div>
-                                        <div class="col-md-1">
+                                        <div class="col-sm-2">
                                             <div class="radio radio-material-orange-700">
                                                 <label>
                                                   {{input type="radio" name="endsOn" value="after"}} After
                                                 </label>
                                             </div>
                                         </div>
-                                        <div class="col-md-2">
+                                        <div class="col-sm-2">
                                             <div class="form-group-material-orange-700">
                                               {{input id="endsAfter" type="number" value=endsAfter class="form-control form-control floating-label" placeholder="occurences"}}
                                             </div>
                                         </div>
-                                        <div class="col-md-1">
+                                        <div class="col-sm-2">
                                             <div class="radio radio-material-orange-700">
                                                 <label>
                                                   {{input type="radio" name="endsOn" value="on"}} On
                                                 </label>
                                             </div>
                                         </div>
-                                        <div class="col-md-2">
+                                        <div class="col-sm-3">
                                             <div class="form-group-material-orange-700">
                                               {{input id="endsOnDate" type="date" value=endsOnDate class="form-control"}}
                                             </div>
@@ -146,22 +164,22 @@
                                     </div>
                                     <hr>
                                     <div class="row">
-                                        <div class="col-md-1">
+                                        <div class="col-sm-1">
                                             <h5>Repeats:</h5>
                                         </div>
-                                        <div class="col-md-2">
+                                        <div class="col-sm-3">
                                             <div class="form-group-material-orange-700">
                                                 {{log repeatRules}}
-                                                <select class="form-control floating-label input-lg" placeholder="Rule">
+                                                <select class="form-control floating-label" placeholder="Rule">
                                                     {{#each repeat in repeatRules}}
                                                         <option value="{{repeat}}">{{repeat}}</option>
                                                     {{/each}}
                                                 </select>
                                             </div>
                                         </div>
-                                        <div class="col-md-2">
+                                        <div class="col-sm-3">
                                             <div class="form-group-material-orange-700">
-                                                <select class="form-control floating-label input-lg" placeholder="Every">
+                                                <select class="form-control floating-label" placeholder="Every">
                                                     <option value="1">1</option>
                                                     <option value="2">2</option>
                                                 </select>
@@ -170,10 +188,10 @@
                                     </div>
                                     <br>
                                     <div class="row">
-                                        <div class="col-md-1">
+                                        <div class="col-sm-1">
                                             <h5>Repeat on:</h5>
                                         </div>
-                                        <div class="col-md-8">
+                                        <div class="col-sm-11">
                                             <div class="checkbox pull-left"></div>
                                           {{#each weekday in controller.weekdays}}
                                               <div class="checkbox checkbox-material-orange-700 pull-left">
@@ -190,7 +208,7 @@
                     </div>
                 </div>
                 <div class="row">
-                    <div class="col-md-12">
+                    <div class="col-sm-12">
                         <div class="panel panel-material-blue-grey-200 truecron-panel">
                             <div class="panel-heading truecron-panel-heading" id="excludeRule">
                                 <h4 class="panel-title">
@@ -202,20 +220,20 @@
                             <div id="exceptionRulePanel" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="excludeRule">
                                 <div class="panel-body truecron-panel-body">
                                     <div class="row">
-                                        <div class="col-md-1">
+                                        <div class="col-sm-1">
                                             <h5>Range:</h5>
                                         </div>
-                                        <div class="col-md-2">
+                                        <div class="col-sm-3">
                                             <div class="form-group form-group-material-orange-700">
-                                              {{input type="text" value=excludeFromDate class="form-control floating-label input-lg" placeholder="Exclude From"}}
+                                              {{input type="text" value=excludeFromDate class="form-control floating-label" placeholder="Exclude From"}}
                                             </div>
                                         </div>
-                                        <div class="col-md-2">
+                                        <div class="col-sm-3">
                                             <div class="form-group form-group-material-orange-700">
-                                              {{input type="text" value=excludeToDate class="form-control floating-label input-lg" placeholder="Exclude To"}}
+                                              {{input type="text" value=excludeToDate class="form-control floating-label" placeholder="Exclude To"}}
                                             </div>
                                         </div>
-                                        <div class="col-md-2">
+                                        <div class="col-sm-5">
                                             <div class="form-group form-group-material-orange-700">
                                                 <div class="input-group-btn">
                                                     <button type="submit" class="btn btn-material-blue-grey-400">Exclude Date Range</button>
@@ -224,24 +242,14 @@
                                         </div>
                                     </div>
                                     <div class="row">
-                                        <div class="col-md-12 truecron-exclusion-border">
+                                        <div class="col-sm-12 truecron-exclusion-border">
                                             <p class="truecron-no-margin"><a class="btn btn-sm btn-material-blue-grey-400"><i class="fa fa-trash"></i></a><span class="truecron-p-double-padding">Sunday</span><span class="truecron-p-padding">Mar / 8 / 2015</span><span class="truecron-p-padding">to</span><span class="truecron-p-padding">--- / -- / ----</span></p>
                                         </div>
-                                        <div class="col-md-12 truecron-exclusion-border">
+                                        <div class="col-sm-12 truecron-exclusion-border">
                                             <p class="truecron-no-margin"><a class="btn btn-sm btn-material-blue-grey-400"><i class="fa fa-trash"></i></a><span class="truecron-p-double-padding">Monday</span><span class="truecron-p-padding">Mar / 9 / 2015</span><span class="truecron-p-padding">to</span><span class="truecron-p-padding">Mar / 10 / 2015</span></p>
                                         </div>
-                                        <div class="col-md-12 truecron-exclusion-border">
+                                        <div class="col-sm-12 truecron-exclusion-border">
                                             <p class="truecron-no-margin"><a class="btn btn-sm btn-material-blue-grey-400"><i class="fa fa-trash"></i></a><span class="truecron-p-double-padding">Monday</span><span class="truecron-p-padding">Mar / 9 / 2015</span><span class="truecron-p-padding">to</span><span class="truecron-p-padding">Mar / 10 / 2015</span></p>
-                                        </div>
-                                    </div>
-                                    <div class="row">
-                                        <div class="col-md-12 text-right">
-                                            <div class="btn-group">
-                                                <a class="btn btn-material-orange-700">Save job</a>
-                                            </div>
-                                            <div class="btn-group">
-                                                <a class="btn btn-material-blue-grey-400">Cancel</a>
-                                            </div>
                                         </div>
                                     </div>
                                 </div>
@@ -250,7 +258,17 @@
                     </div>
                 </div>
                 <div class="row">
-                    <div class="col-md-12">
+                    <div class="col-sm-12 text-right">
+                        <div class="btn-group">
+                            <a class="btn btn-material-orange-700" {{action 'createNewJob'}}>Save job</a>
+                        </div>
+                        <div class="btn-group">
+                            <a class="btn btn-material-blue-grey-400" {{action 'cancelNewJob'}}>Cancel</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-12">
                         <table class="table table-striped table-hover">
                             <thead>
                             <tr>
