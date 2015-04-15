@@ -26,14 +26,24 @@ var getJobIdCacheKey = function(jobId) {
 // Jobs
 //
 
+models.JobTag.belongsTo(models.Job)
+models.Job.hasMany(models.JobTag);
+
 var findAndCountAll = module.exports.findAndCountAll = Promise.method(function (context, workspace, options) {
     return workspaceAccess.ensureHasAccess(context, tools.getId(workspace), workspaceAccess.WorkspaceRoles.Viewer)
         .then(function () {
-            options = _.merge(options || {}, { where: { workspaceId: tools.getId(workspace) } });
+            options = _.merge(options || {}, {  where: { workspaceId: tools.getId(workspace) }, include: [{
+                model: models.JobTag }]
+            });
+            //options = _.merge(options || {}, { where: { workspaceId: tools.getId(workspace) } });
+            console.log('!!!!!!!!1');
             return models.Job.findAndCountAll(options);
         })
         .then(function (result) {
+            console.log('!!!!!!!!2');
             result.rows.forEach(function(job) { cache.put(getJobIdCacheKey(job.id), job); });
+            console.log('!!!!!!!!3');
+            console.log(JSON.stringify(result));
             return result;
         })
         .catch(function (err) {
