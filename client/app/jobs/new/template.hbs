@@ -34,39 +34,35 @@
                     <h3 class="content-title-margin">{{input id="jobName" type="text" value=model.name class="form-control input-xl" placeholder="Name of the job"}}</h3>
                 </div>
             </div>
-            <div class="col-md-1">
-                <h4 class="text-right truecron-grey hidden-sm hidden-xs">Run:</h4>
-                <h4 class="truecron-grey hidden-lg hidden-md">Run:</h4>
-            </div>
-            <div class="col-md-5">
-                <h4 class="truecron-orange">Weekly on Monday, Friday, Thuesday, Sunday, Wensday at 12:32:00 PM</h4>
-            </div>
-        </div>
-        <div class="row">
             <div class="col-md-6">
                 {{job-tags job=model action="addJobTag"}}
             </div>
+        </div>
+        <div class="row">
             <div class="col-md-1">
-                <h4 class="text-right truecron-grey hidden-sm hidden-xs">Exclude:</h4>
-                <h4 class="truecron-grey hidden-md hidden-lg">Exclude:</h4>
+                <h4 class="truecron-grey">Run:</h4>
+            </div>
+            <div class="col-md-5">
+                <h4 class="truecron-orange">Weekly on Sunday, Monday, Tuesday, Wednesday, Friday at 12:32:00 PM</h4>
+            </div>
+            <div class="col-md-1">
+                <h4 class="truecron-grey">Exclude:</h4>
             </div>
             <div class="col-md-5">
                 <h4 class="truecron-orange">Sunday 8 March 2015</h4>
             </div>
         </div>
         <div class="row">
-            <div class="col-md-2">
-                <h4 class="text-right truecron-grey hidden-sm hidden-xs">Last run:</h4>
-                <h4 class="truecron-grey hidden-md hidden-lg">Last run:</h4>
+            <div class="col-md-1">
+                <h4 class="truecron-grey">Last run:</h4>
             </div>
-            <div class="col-md-4">
+            <div class="col-md-5">
                 <h4>July 6 12:32:00 PM</h4>
             </div>
-            <div class="col-md-2">
-                <h4 class="text-right truecron-grey hidden-sm hidden-xs">Next run:</h4>
-                <h4 class="truecron-grey hidden-md hidden-lg">Next run:</h4>
+            <div class="col-md-1">
+                <h4 class="truecron-grey">Next run:</h4>
             </div>
-            <div class="col-md-4">
+            <div class="col-md-5">
                 <h4>July 8 12:32:00 PM</h4>
             </div>
         </div>
