@@ -17,8 +17,9 @@
   <body>
     {{content-for 'body'}}
 
-    <script src="assets/vendor.js"></script>
-    <script src="assets/true-cron.js"></script>
+    <script type="text/javascript" src="assets/intl/polyfill/Intl.complete.js"></script>
+    <script type="text/javascript" src="assets/vendor.js"></script>
+    <script type="text/javascript" src="assets/true-cron.js"></script>
 
     {{content-for 'body-footer'}}
   </body>
