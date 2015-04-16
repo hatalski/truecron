@@ -5,7 +5,7 @@
             <div class="panel-heading">
                 <div class="container-fluid">
                     <div class="row">
-                        <div class="col-sm-9 no-padding">
+                        <div class="col-xs-9 no-padding">
                             <div class="dropdown dropdown-truecron">
                                 <div class="dropdown-toggle" data-toggle="dropdown" aria-expanded="true">
                                     <a href="#" class="dropdown-toggle" data-toggle="dropdown">
@@ -24,18 +24,18 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="col-sm-3 text-right no-padding">
+                        <div class="col-xs-3 text-right no-padding">
                             {{#link-to 'workspaces.workspace.settings' model.workspace class="btn btn-sm btn-material-blue-grey-400"}}<i class="fa fa-cog fa-lg"></i>{{/link-to}}
                         </div>
                     </div>
                 {{#unless newJob}}
                     <div class="row">
-                        <div class="col-sm-6 text-left no-padding">
+                        <div class="col-xs-12 col-sm-6 text-left no-padding">
                         {{#if showJobDetails}}
                             <h4><a href="#" class="btn-back" {{action 'backToJobsList'}}><i class="fa fa-lg fa-arrow-left"></i> Back to Jobs</a></h4>
                         {{/if}}
                         </div>
-                        <div class="col-sm-6 text-right no-padding">
+                        <div class="col-xs-12 col-sm-6 text-right no-padding">
                             <a href="#" class="btn btn-material-orange-800 btn-new-job" {{action 'newJobClicked'}}>New Job</a>
                         </div>
                     </div>
@@ -48,7 +48,7 @@
                       <div class="panel panel-material-grey-100 truecron-side-panel">
                           <div class="panel-heading truecron-panel-heading" role="tab" id="jobDetailsHeader">
                               <div class="row">
-                                  <div class="col-md-9">
+                                  <div class="col-xs-12">
                                       <h4 class="panel-title">
                                           <p class="truecron-tab-p">Job Details</p>
                                       </h4>
@@ -69,14 +69,14 @@
               <div class="panel panel-material-grey-100 panel-without-margin">
                   <div class="panel-heading truecron-panel-heading" role="tab" id="collapseRunHistoryHeading">
                       <div class="row">
-                          <div class="col-sm-9">
+                          <div class="col-xs-9">
                               <h4 class="panel-title">
                                   <a data-toggle="collapse" href="#collapseListGroup1" aria-expanded="true" aria-controls="collapseListGroup1">
-                                      <p class="truecron-tab-p"><span class="caret truecron-caret"></span>Run History</p>
+                                      <p class="truecron-tab-p"><span class="caret truecron-caret"></span>Runs</p>
                                   </a>
                               </h4>
                           </div>
-                          <div class="col-sm-3 text-right">
+                          <div class="col-xs-3 text-right">
                               <a class="btn btn-sm btn-material-blue-grey-400 truecron-panel-btn"
                                  data-toggle="collapse" href="#collapseRunHistoryFilter" aria-expanded="true" aria-controls="collapseRunHistoryFilter">
                                   <i class="fa fa-filter fa-lg"></i>
@@ -121,29 +121,29 @@
                       <ul class="list-group">
                           <li class="list-group-item truecron-sub-menu">
                               <div class="row">
-                                  <div class="col-sm-12 no-padding">
+                                  <div class="col-xs-12 no-padding">
                                       <table class="table table-hover sidebar-table">
                                           <thead class="truecron-table-header">
                                               <tr>
-                                                  <th><span class="truecron-sidebar-padding">Triggerd by</span><i class="fa fa-sort"></i></th>
+                                                  <th class="hidden-sm hidden-xs hidden-md"><span class="truecron-sidebar-padding">Triggered</span><i class="fa fa-sort"></i></th>
                                                   <th><span class="truecron-sidebar-padding">Date</span><i class="fa fa-sort-desc"></i></th>
                                                   <th>Duration<i class="fa fa-sort"></i></th>
                                               </tr>
                                           </thead>
                                           <tbody>
                                               <tr>
-                                                  <td><span class="truecron-sidebar-padding">Schedule</span></td>
-                                                  <td>Jul 10 10:43:34</td>
+                                                  <td class="hidden-sm hidden-xs hidden-md"><span class="truecron-sidebar-padding">Schedule</span></td>
+                                                  <td>Jul 10 10:43 PM</td>
                                                   <td>2.34s</td>
                                               </tr>
                                               <tr class="danger truecron-active-border">
-                                                  <td><span class="truecron-sidebar-padding">Lev Kurts</span></td>
-                                                  <td>Jul 5 12:32:00</td>
+                                                  <td class="hidden-sm hidden-xs hidden-md"><span class="truecron-sidebar-padding">Lev Kurts</span></td>
+                                                  <td>Jul 5 12:32 PM</td>
                                                   <td>0.68s</td>
                                               </tr>
                                               <tr>
-                                                  <td><span class="truecron-sidebar-padding">Schedule</span></td>
-                                                  <td>Jul 10 10:43:34</td>
+                                                  <td class="hidden-sm hidden-xs hidden-md"><span class="truecron-sidebar-padding">Schedule</span></td>
+                                                  <td>Jul 10 10:43 PM</td>
                                                   <td>2.34s</td>
                                               </tr>
                                           </tbody>
@@ -157,14 +157,14 @@
               <div class="panel panel-material-grey-100 panel-without-margin">
                   <div class="panel-heading truecron-panel-heading truecron-panel-border" role="tab" id="collapseRevisionHeading">
                       <div class="row">
-                          <div class="col-sm-9">
+                          <div class="col-xs-9">
                               <h4 class="panel-title">
                                   <a data-toggle="collapse" href="#collapseRevisionsTable" aria-expanded="true" aria-controls="collapseRevisionsTable">
-                                      <p class="truecron-tab-p"><span class="caret truecron-caret"></span>Revision History</p>
+                                      <p class="truecron-tab-p"><span class="caret truecron-caret"></span>Revisions</p>
                                   </a>
                               </h4>
                           </div>
-                          <div class="col-sm-3 text-right">
+                          <div class="col-xs-3 text-right">
                               <a class="btn btn-sm btn-material-blue-grey-400 truecron-panel-btn"
                                  data-toggle="collapse" href="#collapseRevisionFilter" aria-expanded="true" aria-controls="collapseRevisionFilter">
                                   <i class="fa fa-filter fa-lg"></i>
@@ -177,20 +177,20 @@
                           <li class="list-group-item">
                               <div class="row">
                                   <div class="col-xs-12">
-                                      <p class="form-control-static">Date Range</p>
+                                      <p class="form-control-static">Dates</p>
                                   </div>
                                   <div class="col-xs-6">
                                       <div class="form-group-material-orange-700">
-                                          <input type="date" class="form-control truecron-form-control" placeholder=".col-xs-6">
+                                          <input type="date" class="form-control truecron-form-control">
                                       </div>
                                   </div>
                                   <div class="col-xs-6">
                                       <div class="form-group-material-orange-700">
-                                          <input type="date" class="form-control truecron-form-control" placeholder=".col-xs-6">
+                                          <input type="date" class="form-control truecron-form-control">
                                       </div>
                                   </div>
                                   <div class="col-xs-12">
-                                      <p class="form-control-static">Changed by</p>
+                                      <p class="form-control-static">Changed</p>
                                   </div>
                                   <div class="col-xs-6">
                                       <div class="form-group-material-orange-700">
@@ -209,30 +209,30 @@
                       <ul class="list-group">
                           <li class="list-group-item truecron-sub-menu">
                               <div class="row">
-                                  <div class="col-sm-12 no-padding">
+                                  <div class="col-xs-12 no-padding">
                                       <table class="table table-hover sidebar-table">
                                           <thead class="truecron-table-header">
                                             <tr>
-                                                <th><span class="truecron-sidebar-padding">Changed by </span><i class="fa fa-sort"></i></th>
+                                                <th class="hidden-sm hidden-xs hidden-md"><span class="truecron-sidebar-padding">Changed</span><i class="fa fa-sort"></i></th>
                                                 <th>Date <i class="fa fa-sort-desc"></i></th>
-                                                <th>Revision <i class="fa fa-sort"></i></th>
+                                                <th>Rev# <i class="fa fa-sort"></i></th>
                                             </tr>
                                           </thead>
                                           <tbody>
                                             <tr>
-                                                <td><span class="truecron-sidebar-padding">Vitali Hatalski</span></td>
-                                                <td>Jul 3 10:22:00pm</td>
-                                                <td>rev# 1.06</td>
+                                                <td class="hidden-sm hidden-xs hidden-md"><span class="truecron-sidebar-padding">Vitali Hatalski</span></td>
+                                                <td>Jul 3 10:22 PM</td>
+                                                <td>1.06</td>
                                             </tr>
                                             <tr>
-                                                <td><span class="truecron-sidebar-padding">Vitali Hatalski</span></td>
-                                                <td>Jul 3 3:02:00pm</td>
-                                                <td>rev# 1.05</td>
+                                                <td class="hidden-sm hidden-xs hidden-md"><span class="truecron-sidebar-padding">Vitali Hatalski</span></td>
+                                                <td>Jul 3 03:02 PM</td>
+                                                <td>1.05</td>
                                             </tr>
                                             <tr>
-                                                <td><span class="truecron-sidebar-padding">Vitali Hatalski</span></td>
-                                                <td>Jul 3 1:12:00pm</td>
-                                                <td>rev# 1.04</td>
+                                                <td class="hidden-sm hidden-xs hidden-md"><span class="truecron-sidebar-padding">Vitali Hatalski</span></td>
+                                                <td>Jul 3 01:12 PM</td>
+                                                <td>1.04</td>
                                             </tr>
                                           </tbody>
                                       </table>
@@ -248,12 +248,12 @@
                       <div class="panel panel-material-grey-100 truecron-side-panel">
                           <div class="panel-heading truecron-panel-heading" role="tab" id="jobsHeader">
                               <div class="row">
-                                  <div class="col-sm-9">
+                                  <div class="col-xs-9">
                                       <h4 class="panel-title">
                                           <p class="truecron-tab-p">Job List</p>
                                       </h4>
                                   </div>
-                                  <div class="col-sm-3 text-right">
+                                  <div class="col-xs-3 text-right">
                                       <a class="btn btn-sm btn-material-blue-grey-400 truecron-panel-btn" data-toggle="collapse" href="#collapseJobFilter" aria-expanded="true" aria-controls="jobsHeader">
                                           <i class="fa fa-filter fa-lg"></i>
                                       </a>
