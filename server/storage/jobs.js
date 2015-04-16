@@ -25,13 +25,30 @@ var getJobIdCacheKey = function(jobId) {
 //
 // Jobs
 //
-
+var allFindedJobs;
 var findAndCountAll = module.exports.findAndCountAll = Promise.method(function (context, workspace, options) {
     return workspaceAccess.ensureHasAccess(context, tools.getId(workspace), workspaceAccess.WorkspaceRoles.Viewer)
         .then(function () {
             options = _.merge(options || {}, { where: { workspaceId: tools.getId(workspace) } });
             return models.Job.findAndCountAll(options);
         })
+        .then (function(allJobs){
+        allFindedJobs = allJobs;
+        return models.JobTag.findAll();
+    })
+        .then (function(allTags){
+        for (var i = 0; i < allFindedJobs.rows.length; i++){
+            for (var j = 0; j < allTags.length; j++) {
+                if (allTags[j].dataValues.jobId == allFindedJobs.rows[i].dataValues.id){
+                    if(!allFindedJobs.rows[i].dataValues.tags){
+                        allFindedJobs.rows[i].dataValues.tags = [];
+                    }
+                    allFindedJobs.rows[i].dataValues.tags.push(allTags[j].dataValues.tag);
+                }
+            }
+        }
+        return allFindedJobs;
+    })
         .then(function (result) {
             result.rows.forEach(function(job) { cache.put(getJobIdCacheKey(job.id), job); });
             return result;
@@ -41,6 +58,38 @@ var findAndCountAll = module.exports.findAndCountAll = Promise.method(function (
             throw err;
         });
 });
+
+////////
+//models.JobTag.belongsTo(models.Job)
+//models.Job.hasMany(models.JobTag);
+//var JT = models.JobTag;
+
+//var findAndCountAll = module.exports.findAndCountAll = Promise.method(function (context, workspace, options) {
+//    return workspaceAccess.ensureHasAccess(context, tools.getId(workspace), workspaceAccess.WorkspaceRoles.Viewer)
+//        .then(function () {
+//            console.log('!!!!!!!!0');
+//            options = _.merge(options || {}, { include: [{
+//                model: models.JobTag }]
+//            });
+//            //options = _.merge(options || {}, { where: { workspaceId: tools.getId(workspace) } });
+//            console.log('!!!!!!!!1');
+//            return models.Job.findAndCountAll(options);
+//        })
+//        .then(function (result) {
+//            console.log('!!!!!!!!2');
+//            result.rows.forEach(function(job) { cache.put(getJobIdCacheKey(job.id), job); });
+//            console.log('!!!!!!!!3');
+//            console.log('!!!!!result:'+JSON.stringify(result));
+//            return result;
+//        })
+//        .catch(function (err) {
+//            logger.error('Failed to list jobs, %s.', err.toString());
+//            throw err;
+//        });
+//});
+
+
+
 /**
  * Create a new job.
  */
