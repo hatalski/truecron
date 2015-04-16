@@ -39,7 +39,7 @@ var findAndCountAll = module.exports.findAndCountAll = Promise.method(function (
         .then (function(allTags){
         for (var i = 0; i < allFindedJobs.rows.length; i++){
             for (var j = 0; j < allTags.length; j++) {
-                if (allTags[j].dataValues.JobId == allFindedJobs.rows[i].dataValues.id){
+                if (allTags[j].dataValues.jobId == allFindedJobs.rows[i].dataValues.id){
                     if(!allFindedJobs.rows[i].dataValues.tags){
                         allFindedJobs.rows[i].dataValues.tags = [];
                     }
