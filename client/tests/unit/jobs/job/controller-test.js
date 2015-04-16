@@ -5,7 +5,7 @@ import {
 
 moduleFor('controller:jobs/job', {
   // Specify the other units that are required for this test.
-  needs: ['controller:jobs']
+  needs: ['controller:jobs', 'service:websocket']
 });
 
 // Replace this with your real tests.

@@ -2,15 +2,16 @@
  * Created by estet on 1/4/15.
  */
 var LogSubscriber = require('./logSubscriber');
-var util        = require('util');
-var app = require('../../app');
+var util          = require('util');
+var app           = require('../../app');
+var io            = require('../../lib/sockets');
 
 var socketLog = function(key)
 {
     var self = this;
     self.send = function(message)
     {
-        global.socketIO.emit(key, message);
+        io.emit(key, message);
     };
 
     self.stop = function(callback)
