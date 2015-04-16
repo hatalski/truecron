@@ -280,6 +280,9 @@ tr:nth-child(odd) {
 .btn-back {
   color: #ef6c00; }
 
+.btn-back-padding {
+  padding-top: 8px; }
+
 .sidebar-table {
   margin-bottom: 0; }
 
@@ -461,7 +464,8 @@ a.list-group-item:hover, a.list-group-item:active, a.list-group-item:focus {
   border-bottom: 1px dashed #cccccc; }
 
 .job-details-header {
-  background-color: white; }
+  background-color: white;
+  padding-top: 10px; }
 
 .btn-truecron-icon .fa-trash {
   color: #ee6820; }
@@ -579,11 +583,12 @@ a.list-group-item:hover, a.list-group-item:active, a.list-group-item:focus {
   background: #fff9e6;
   border: 1px solid #fee798;
   text-align: center;
-  margin-top: 65px;
-  margin-bottom: 5px; }
+  margin-top: 69px;
+  margin-bottom: 18px; }
 
 .arrow_box-left h3 {
-  margin-top: 10px;
+  margin-top: 5px;
+  margin-bottom: 5px;
   color: #666666; }
 
 .arrow_box-left:after, .arrow_box-left:before {
@@ -611,7 +616,8 @@ a.list-group-item:hover, a.list-group-item:active, a.list-group-item:focus {
 .truecron-index-body {
   border: solid 1px #fee798;
   background-color: #fffcf2;
-  margin-top: 10px; }
+  margin-top: 10px;
+  padding-right: 5px; }
 
 .complex_task_icon {
   background: url("complex_task_icon.png") no-repeat 20px 25px;
@@ -626,9 +632,6 @@ a.list-group-item:hover, a.list-group-item:active, a.list-group-item:focus {
   height: 81px; }
 
 /*add new job */
-.new-job-body {
-  padding-top: 15px; }
-
 .truecron-checkbox-margin .radio + .radio, .checkbox + .checkbox {
   margin: 10px 20px 10px 0; }
 
