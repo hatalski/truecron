@@ -25,18 +25,21 @@
                             </div>
                         </div>
                         <div class="col-xs-3 text-right no-padding">
-                            {{#link-to 'workspaces.workspace.settings' model.workspace class="btn btn-sm btn-material-blue-grey-400"}}<i class="fa fa-cog fa-lg"></i>{{/link-to}}
+                            {{#link-to 'workspaces.workspace.settings' model.workspace class="btn btn-flat btn-sm btn-material-blue-grey-400"}}<i class="fa fa-cog fa-lg"></i>{{/link-to}}
                         </div>
                     </div>
                 {{#unless newJob}}
                     <div class="row">
-                        <div class="col-xs-12 col-sm-6 text-left no-padding">
+                        <div class="col-xs-6 col-sm-6 text-left no-padding">
                         {{#if showJobDetails}}
-                            <h4 class="btn-back-padding"><a href="#" class="btn-back" {{action 'backToJobsList'}}><i class="fa fa-angle-left"></i> <u>Back</u></a></h4>
+                            {{!--<h4 class="btn-back-padding">--}}
+                                {{!--<a href="#" class="btn-back" {{action 'backToJobsList'}}><i class="fa fa-angle-left"></i> <u>Back</u></a>--}}
+                                <a href="#" class="btn btn-flat btn-raised btn-material-orange-800" {{action 'backToJobsList'}}><i class="fa fa-angle-left"></i> Back</a>
+                            {{!--</h4>--}}
                         {{/if}}
                         </div>
-                        <div class="col-xs-12 col-sm-6 text-right no-padding">
-                            <a href="#" class="btn btn-material-orange-800 btn-new-job" {{action 'newJobClicked'}}>New Job</a>
+                        <div class="col-xs-6 col-sm-6 text-right no-padding">
+                            <a href="#" class="btn btn-raised btn-material-orange-800 btn-new-job" {{action 'newJobClicked'}}>New Job</a>
                         </div>
                     </div>
                 {{/unless}}
@@ -77,7 +80,7 @@
                               </h4>
                           </div>
                           <div class="col-xs-3 text-right">
-                              <a class="btn btn-sm btn-material-blue-grey-400 truecron-panel-btn"
+                              <a class="btn btn-sm btn-flat btn-material-blue-grey-400 truecron-panel-btn"
                                  data-toggle="collapse" href="#collapseRunHistoryFilter" aria-expanded="true" aria-controls="collapseRunHistoryFilter">
                                   <i class="fa fa-filter fa-lg"></i>
                               </a>
@@ -165,7 +168,7 @@
                               </h4>
                           </div>
                           <div class="col-xs-3 text-right">
-                              <a class="btn btn-sm btn-material-blue-grey-400 truecron-panel-btn"
+                              <a class="btn btn-sm btn-flat btn-material-blue-grey-400 truecron-panel-btn"
                                  data-toggle="collapse" href="#collapseRevisionFilter" aria-expanded="true" aria-controls="collapseRevisionFilter">
                                   <i class="fa fa-filter fa-lg"></i>
                               </a>
@@ -254,7 +257,7 @@
                                       </h4>
                                   </div>
                                   <div class="col-xs-3 text-right">
-                                      <a class="btn btn-sm btn-material-blue-grey-400 truecron-panel-btn" data-toggle="collapse" href="#collapseJobFilter" aria-expanded="true" aria-controls="jobsHeader">
+                                      <a class="btn btn-sm btn-flat btn-material-blue-grey-400 truecron-panel-btn" data-toggle="collapse" href="#collapseJobFilter" aria-expanded="true" aria-controls="jobsHeader">
                                           <i class="fa fa-filter fa-lg"></i>
                                       </a>
                                   </div>

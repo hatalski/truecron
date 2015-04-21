@@ -1,3 +1,5 @@
+@import "selectize";
+
 $primary-bg-color: #eceff1;
 $primary-color: #464748;
 
@@ -20,6 +22,11 @@ $primary-color: #464748;
 body {
   background-color: $primary-bg-color;
   color: $primary-color;
+}
+
+// application loading div class
+.ember-application .no-ember {
+  display: none;
 }
 
 .navbar {
@@ -366,7 +373,7 @@ tr:nth-child(odd) {
   margin-top: 11px;
 }
 .content-title-margin {
-  margin-top: 16px;
+  margin-top: 6px;
 }
 //.truecron-input-margin{
 //  margin: 25px 0;

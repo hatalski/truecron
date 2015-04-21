@@ -1,7 +1,13 @@
+.selectize-control.multi .selectize-input, .selectize-control.multi .selectize-input.input-active {
+  border: 1px solid #78909C; }
+
 /*main */
 body {
   background-color: #eceff1;
   color: #464748; }
+
+.ember-application .no-ember {
+  display: none; }
 
 .navbar {
   min-height: 60px; }
@@ -304,7 +310,7 @@ tr:nth-child(odd) {
   margin-top: 11px; }
 
 .content-title-margin {
-  margin-top: 16px; }
+  margin-top: 6px; }
 
 .list-group .list-group-item {
   padding: 10px 15px; }

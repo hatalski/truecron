@@ -31,57 +31,64 @@
         <div class="row">
             <div class="col-md-6">
                 <div class="form-group-material-orange-700">
-                    <h3>{{input id="jobName" type="text" value=model.name class="form-control input-xl" placeholder="Name of the job"}}</h3>
+                    <h3 class="content-title-margin">{{input id="jobName" type="text" value=model.name class="form-control input-xl" placeholder="Name of the job"}}</h3>
                 </div>
             </div>
             <div class="col-md-6">
-                {{job-tags job=model action="addJobTag"}}
+                <h3 class="content-title-margin">
+                    {{job-tags job=model action="addJobTag"}}
+                </h3>
             </div>
         </div>
         <div class="row">
-            <div class="col-md-1">
-                <h4 class="truecron-grey">Run:</h4>
-            </div>
-            <div class="col-md-5">
-                <h4 class="truecron-orange">Weekly on Sunday, Monday, Tuesday, Wednesday, Friday at 12:32:00 PM</h4>
-            </div>
-            <div class="col-md-1">
-                <h4 class="truecron-grey">Exclude:</h4>
-            </div>
-            <div class="col-md-5">
-                <h4 class="truecron-orange">Sunday 8 March 2015</h4>
+            <div class="col-xs-12 text-right">
+                <div class="btn-group">
+                    <a class="btn btn-flat btn-success" {{action 'createNewJob'}}>Save job</a>
+                </div>
+                <div class="btn-group">
+                    <a class="btn btn-flat btn-material-blue-grey-400" {{action 'cancelNewJob'}}>Cancel</a>
+                </div>
             </div>
         </div>
-        <div class="row hidden-xs hidden-sm">
-            <div class="col-md-1">
-                <h4 class="truecron-grey">Last run:</h4>
-            </div>
-            <div class="col-md-5">
-                <h4>July 6 12:32:00 PM</h4>
-            </div>
-            <div class="col-md-1">
-                <h4 class="truecron-grey">Next run:</h4>
-            </div>
-            <div class="col-md-5">
-                <h4>July 8 12:32:00 PM</h4>
-            </div>
-        </div>
+        {{!--<div class="row">--}}
+            {{!--<div class="col-md-1">--}}
+                {{!--<h4 class="truecron-grey">Run:</h4>--}}
+            {{!--</div>--}}
+            {{!--<div class="col-md-5">--}}
+                {{!--<h4 class="truecron-orange">Weekly on Sunday, Monday, Tuesday, Wednesday, Friday at 12:32:00 PM</h4>--}}
+            {{!--</div>--}}
+            {{!--<div class="col-md-1">--}}
+                {{!--<h4 class="truecron-grey">Exclude:</h4>--}}
+            {{!--</div>--}}
+            {{!--<div class="col-md-5">--}}
+                {{!--<h4 class="truecron-orange">Sunday 8 March 2015</h4>--}}
+            {{!--</div>--}}
+        {{!--</div>--}}
+        {{!--<div class="row hidden-xs hidden-sm">--}}
+            {{!--<div class="col-md-1">--}}
+                {{!--<h4 class="truecron-grey">Last run:</h4>--}}
+            {{!--</div>--}}
+            {{!--<div class="col-md-5">--}}
+                {{!--<h4>July 6 12:32:00 PM</h4>--}}
+            {{!--</div>--}}
+            {{!--<div class="col-md-1">--}}
+                {{!--<h4 class="truecron-grey">Next run:</h4>--}}
+            {{!--</div>--}}
+            {{!--<div class="col-md-5">--}}
+                {{!--<h4>July 8 12:32:00 PM</h4>--}}
+            {{!--</div>--}}
+        {{!--</div>--}}
     </div>
 </header>
 <div class="container-fluid">
     <div class="row">
+        <div class="col-xs-12 text-center">
+            <a class="btn btn-flat btn-material-orange-800" {{action 'editSchedule'}}>Weekly <span style="color:#000">on</span> Sunday, Monday, Tuesday, Wednesday, Friday <span style="color:#000">at</span> 12:32:00 PM <span style="color:#000">excluding</span> Sunday 8 March 2015</a>
+        </div>
+    </div>
+    <div class="row">
         <div class="col-sm-12">
             <form>
-                <div class="row">
-                    <div class="col-sm-12 text-right">
-                        <div class="btn-group">
-                            <a class="btn btn-material-orange-700" {{action 'createNewJob'}}>Save job</a>
-                        </div>
-                        <div class="btn-group">
-                            <a class="btn btn-material-blue-grey-400" {{action 'cancelNewJob'}}>Cancel</a>
-                        </div>
-                    </div>
-                </div>
                 <div class="row">
                     <div class="col-sm-12">
                         <div class="panel panel-material-blue-grey-200 truecron-panel">
@@ -229,20 +236,20 @@
                                         <div class="col-sm-4">
                                             <div class="form-group form-group-material-orange-700">
                                                 <div class="input-group-btn">
-                                                    <button type="submit" class="btn btn-material-blue-grey-400">Exclude<span class="hidden-xs hidden-sm"> Date Range</span></button>
+                                                    <button type="submit" class="btn btn-sm btn-flat btn-raised btn-success">Exclude<span class="hidden-xs hidden-sm"> Date Range</span></button>
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
                                     <div class="row">
                                         <div class="col-sm-12 truecron-exclusion-border">
-                                            <p class="truecron-no-margin"><a class="btn btn-sm btn-material-blue-grey-400"><i class="fa fa-trash"></i></a><span class="truecron-p-double-padding">Sunday</span><span class="truecron-p-padding">Mar / 8 / 2015</span><span class="truecron-p-padding">to</span><span class="truecron-p-padding">--- / -- / ----</span></p>
+                                            <p class="truecron-no-margin"><a class="btn btn-flat btn-sm btn-material-orange-800"><i class="fa fa-trash"></i></a><span class="truecron-p-double-padding">Sunday</span><span class="truecron-p-padding">Mar / 8 / 2015</span><span class="truecron-p-padding">to</span><span class="truecron-p-padding">--- / -- / ----</span></p>
                                         </div>
                                         <div class="col-sm-12 truecron-exclusion-border">
-                                            <p class="truecron-no-margin"><a class="btn btn-sm btn-material-blue-grey-400"><i class="fa fa-trash"></i></a><span class="truecron-p-double-padding">Monday</span><span class="truecron-p-padding">Mar / 9 / 2015</span><span class="truecron-p-padding">to</span><span class="truecron-p-padding">Mar / 10 / 2015</span></p>
+                                            <p class="truecron-no-margin"><a class="btn btn-flat btn-sm btn-material-orange-800"><i class="fa fa-trash"></i></a><span class="truecron-p-double-padding">Monday</span><span class="truecron-p-padding">Mar / 9 / 2015</span><span class="truecron-p-padding">to</span><span class="truecron-p-padding">Mar / 10 / 2015</span></p>
                                         </div>
                                         <div class="col-sm-12 truecron-exclusion-border">
-                                            <p class="truecron-no-margin"><a class="btn btn-sm btn-material-blue-grey-400"><i class="fa fa-trash"></i></a><span class="truecron-p-double-padding">Monday</span><span class="truecron-p-padding">Mar / 9 / 2015</span><span class="truecron-p-padding">to</span><span class="truecron-p-padding">Mar / 10 / 2015</span></p>
+                                            <p class="truecron-no-margin"><a class="btn btn-flat btn-sm btn-material-orange-800"><i class="fa fa-trash"></i></a><span class="truecron-p-double-padding">Monday</span><span class="truecron-p-padding">Mar / 9 / 2015</span><span class="truecron-p-padding">to</span><span class="truecron-p-padding">Mar / 10 / 2015</span></p>
                                         </div>
                                     </div>
                                 </div>
@@ -253,10 +260,10 @@
                 <div class="row">
                     <div class="col-xs-12 text-right">
                         <div class="btn-group">
-                            <a class="btn btn-material-orange-700" {{action 'createNewJob'}}>Save job</a>
+                            <a class="btn btn-raised btn-success" {{action 'createNewJob'}}>Save job</a>
                         </div>
                         <div class="btn-group">
-                            <a class="btn btn-material-blue-grey-400" {{action 'cancelNewJob'}}>Cancel</a>
+                            <a class="btn btn-raised btn-material-blue-grey-400" {{action 'cancelNewJob'}}>Cancel</a>
                         </div>
                     </div>
                 </div>
