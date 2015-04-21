@@ -55,6 +55,12 @@ export default Ember.Controller.extend({
     runJob: function() {
       "use strict";
       this.get('websocket').sendMessage('running job');
+    },
+    removeJob: function(done) {
+      "use strict";
+      var job = this.get('model');
+      job.deleteRecord();
+      job.save().then(done);
     }
   }
 });
