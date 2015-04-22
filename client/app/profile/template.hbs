@@ -9,12 +9,14 @@
                 <div class="panel-body truecron-panel-body">
                     <div class="row">
                         <div class="col-md-2">
-                            <h5>User Name</h5>
+                            <h5>Email</h5>
                         </div>
                         <div class="col-md-10">
                             <div class="form-group-material-orange-700">
                                 <div class="form-control-wrapper">
-                                    <input id="userName" type="text" value="" class="form-control empty" data-hint="Enter user name">
+                                    {{#each userEmail in model.emails}}
+                                        <span>{{userEmail.email}}</span>
+                                    {{/each}}
                                 </div>
                             </div>
                         </div>
@@ -26,19 +28,7 @@
                         <div class="col-md-10">
                             <div class="form-group-material-orange-700">
                                 <div class="form-control-wrapper">
-                                    <input id="fullName" type="text" value="" class="form-control empty" data-hint="Enter full name">
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-md-2">
-                            <h5>Email</h5>
-                        </div>
-                        <div class="col-md-10">
-                            <div class="form-group-material-orange-700">
-                                <div class="form-control-wrapper">
-                                    <input id="email" type="text" value="" class="form-control empty" data-hint="Enter Email">
+                                    {{input id="userName" type="text" value=model.name disabled=true class="form-control empty" data-hint="Enter user name"}}
                                 </div>
                             </div>
                         </div>
@@ -57,7 +47,14 @@
                         <div class="col-md-10">
                             <div class="form-group-material-orange-700">
                                 <div class="form-control-wrapper">
-                                    <input id="pass" type="password" value="" class="form-control empty" data-hint="Enter password">
+                                    {{input id="password"
+                                        type="password"
+                                        value=model.password
+                                        disabled=true
+                                        class="form-control empty"
+                                        required=true
+                                        placeholder="Password (more than 8 characters in length)"
+                                        pattern="(?=^.{8,}$)(?=.*\d)(?![.\n])(?=.*[A-Z])(?=.*[a-z]).*$"}}
                                 </div>
                             </div>
                         </div>
@@ -95,44 +92,44 @@
                     </div>
                 </div>
             </div>
-            <div class="panel panel-material-blue-grey-200">
-                <div class="panel-heading truecron-panel-heading">
-                    <h3 class="panel-title">GitHub Profile</h3>
-                </div>
-                <div class="panel-body truecron-panel-body">
-                    <div class="row">
-                        <div class="col-md-2">
-                            <h5>GitHub Profile</h5>
-                        </div>
-                        <div class="col-md-10">
-                            <div class="form-group-material-orange-700">
-                                <div class="form-control-wrapper">
-                                    <input id="github" type="text" value="" class="form-control empty" data-hint="Enter GitHub Profile">
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="panel panel-material-blue-grey-200">
-                <div class="panel-heading truecron-panel-heading">
-                    <h3 class="panel-title">API Token</h3>
-                </div>
-                <div class="panel-body truecron-panel-body">
-                    <div class="row">
-                        <div class="col-md-2">
-                            <h5>API Token</h5>
-                        </div>
-                        <div class="col-md-10">
-                            <div class="form-group-material-orange-700">
-                                <div class="form-control-wrapper">
-                                    <input id="API" type="text" value="" class="form-control empty" data-hint="Enter API Token">
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
+            {{!--<div class="panel panel-material-blue-grey-200">--}}
+                {{!--<div class="panel-heading truecron-panel-heading">--}}
+                    {{!--<h3 class="panel-title">GitHub Profile</h3>--}}
+                {{!--</div>--}}
+                {{!--<div class="panel-body truecron-panel-body">--}}
+                    {{!--<div class="row">--}}
+                        {{!--<div class="col-md-2">--}}
+                            {{!--<h5>GitHub Profile</h5>--}}
+                        {{!--</div>--}}
+                        {{!--<div class="col-md-10">--}}
+                            {{!--<div class="form-group-material-orange-700">--}}
+                                {{!--<div class="form-control-wrapper">--}}
+                                    {{!--<input id="github" type="text" value="" class="form-control empty" data-hint="Enter GitHub Profile">--}}
+                                {{!--</div>--}}
+                            {{!--</div>--}}
+                        {{!--</div>--}}
+                    {{!--</div>--}}
+                {{!--</div>--}}
+            {{!--</div>--}}
+            {{!--<div class="panel panel-material-blue-grey-200">--}}
+                {{!--<div class="panel-heading truecron-panel-heading">--}}
+                    {{!--<h3 class="panel-title">API Token</h3>--}}
+                {{!--</div>--}}
+                {{!--<div class="panel-body truecron-panel-body">--}}
+                    {{!--<div class="row">--}}
+                        {{!--<div class="col-md-2">--}}
+                            {{!--<h5>API Token</h5>--}}
+                        {{!--</div>--}}
+                        {{!--<div class="col-md-10">--}}
+                            {{!--<div class="form-group-material-orange-700">--}}
+                                {{!--<div class="form-control-wrapper">--}}
+                                    {{!--<input id="API" type="text" value="" class="form-control empty" data-hint="Enter API Token">--}}
+                                {{!--</div>--}}
+                            {{!--</div>--}}
+                        {{!--</div>--}}
+                    {{!--</div>--}}
+                {{!--</div>--}}
+            {{!--</div>--}}
         </div>
     </div>
 </div>
