@@ -134,6 +134,9 @@
                                               </tr>
                                           </thead>
                                           <tbody>
+                                              {{#each run in selectedJob.runs}}
+                                                  {{run-list-item item=run}}
+                                              {{/each}}
                                               <tr>
                                                   <td class="hidden-sm hidden-xs hidden-md"><span class="truecron-sidebar-padding">Schedule</span></td>
                                                   <td>Jul 10 10:43 PM</td>
@@ -218,16 +221,14 @@
                                             <tr>
                                                 <th class="hidden-sm hidden-xs hidden-md"><span class="truecron-sidebar-padding">Changed</span><i class="fa fa-sort"></i></th>
                                                 <th>Date<i class="fa fa-sort-desc"></i></th>
-                                                <th>#<i class="fa fa-sort"></i></th>
+                                                <th>Rev#<i class="fa fa-sort"></i></th>
                                             </tr>
                                           </thead>
                                           <tbody>
                                           {{#each history in selectedJob.history}}
-                                              <tr>
-                                                  <td class="hidden-sm hidden-xs hidden-md"><span class="truecron-sidebar-padding">{{history.updatedBy.name}}</span></td>
-                                                  <td>{{history.createdAt}}</td>
-                                                  <td>{{history.id}}</td>
-                                              </tr>
+                                              {{history-list-item item=history}}
+                                          {{else}}
+                                              <td colspan="3"><span class="truecron-sidebar-padding">Job's never been run</span></td>
                                           {{/each}}
                                           </tbody>
                                       </table>
@@ -284,7 +285,9 @@
               </div>
               <div class="list-group">
                 {{#each job in model.workspace.jobs}}
-                  {{job-list-item job=job linkTo='jobs.job' selected=selectedJob action='selectJob'}}
+                    {{job-list-item job=job linkTo='jobs.job' selected=selectedJob action='selectJob'}}
+                {{else}}
+                    <td colspan="3"><span class="truecron-sidebar-padding">Job has no audit records</span></td>
                 {{/each}}
               </div>
           {{/if}}
