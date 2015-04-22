@@ -9,8 +9,9 @@ moduleForModel('workspace', 'Workspace', {
     'model:user',
     'model:email',
     'model:organization',
-    'model:job-tag',
     'model:job',
+    'model:history',
+    'model:run',
     'model:task',
     'model:organizations.organization.connection']
 });

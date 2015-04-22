@@ -134,21 +134,11 @@
                                               </tr>
                                           </thead>
                                           <tbody>
-                                              <tr>
-                                                  <td class="hidden-sm hidden-xs hidden-md"><span class="truecron-sidebar-padding">Schedule</span></td>
-                                                  <td>Jul 10 10:43 PM</td>
-                                                  <td>2.34s</td>
-                                              </tr>
-                                              <tr class="danger truecron-active-border">
-                                                  <td class="hidden-sm hidden-xs hidden-md"><span class="truecron-sidebar-padding">Lev Kurts</span></td>
-                                                  <td>Jul 5 12:32 PM</td>
-                                                  <td>0.68s</td>
-                                              </tr>
-                                              <tr>
-                                                  <td class="hidden-sm hidden-xs hidden-md"><span class="truecron-sidebar-padding">Schedule</span></td>
-                                                  <td>Jul 10 10:43 PM</td>
-                                                  <td>2.34s</td>
-                                              </tr>
+                                              {{#each run in selectedJob.runs}}
+                                                  {{run-list-item item=run}}
+                                              {{else}}
+                                                  <td colspan="3"><span class="truecron-sidebar-padding">Job's never been run</span></td>
+                                              {{/each}}
                                           </tbody>
                                       </table>
                                   </div>
@@ -217,26 +207,16 @@
                                           <thead class="truecron-table-header">
                                             <tr>
                                                 <th class="hidden-sm hidden-xs hidden-md"><span class="truecron-sidebar-padding">Changed</span><i class="fa fa-sort"></i></th>
-                                                <th>Date <i class="fa fa-sort-desc"></i></th>
-                                                <th>Rev# <i class="fa fa-sort"></i></th>
+                                                <th>Date<i class="fa fa-sort-desc"></i></th>
+                                                <th>Rev#<i class="fa fa-sort"></i></th>
                                             </tr>
                                           </thead>
                                           <tbody>
-                                            <tr>
-                                                <td class="hidden-sm hidden-xs hidden-md"><span class="truecron-sidebar-padding">Vitali Hatalski</span></td>
-                                                <td>Jul 3 10:22 PM</td>
-                                                <td>1.06</td>
-                                            </tr>
-                                            <tr>
-                                                <td class="hidden-sm hidden-xs hidden-md"><span class="truecron-sidebar-padding">Vitali Hatalski</span></td>
-                                                <td>Jul 3 03:02 PM</td>
-                                                <td>1.05</td>
-                                            </tr>
-                                            <tr>
-                                                <td class="hidden-sm hidden-xs hidden-md"><span class="truecron-sidebar-padding">Vitali Hatalski</span></td>
-                                                <td>Jul 3 01:12 PM</td>
-                                                <td>1.04</td>
-                                            </tr>
+                                          {{#each history in selectedJob.history}}
+                                              {{history-list-item item=history}}
+                                          {{else}}
+                                              <td colspan="3"><span class="truecron-sidebar-padding">Job has not been created yet</span></td>
+                                          {{/each}}
                                           </tbody>
                                       </table>
                                   </div>
@@ -292,7 +272,7 @@
               </div>
               <div class="list-group">
                 {{#each job in model.workspace.jobs}}
-                  {{job-list-item job=job linkTo='jobs.job' selected=selectedJob action='selectJob'}}
+                    {{job-list-item job=job linkTo='jobs.job' selected=selectedJob action='selectJob'}}
                 {{/each}}
               </div>
           {{/if}}

@@ -3,9 +3,18 @@ import {
   test
 } from 'ember-qunit';
 
-moduleForModel('jobs/job/run', {
+moduleForModel('run', {
   // Specify the other units that are required for this test.
-  needs: []
+  needs: [
+    'model:user',
+    'model:email',
+    'model:organization',
+    'model:workspace',
+    'model:job',
+    'model:history',
+    'model:task',
+    'model:organizations.organization.connection'
+  ]
 });
 
 test('it exists', function(assert) {

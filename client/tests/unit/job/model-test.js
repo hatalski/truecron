@@ -12,7 +12,8 @@ moduleForModel('job', {
     'model:organization',
     'model:organizations.organization.connection',
     'model:job',
-    'model:job-tag',
+    'model:history',
+    'model:run',
     'model:task']
 });
 
