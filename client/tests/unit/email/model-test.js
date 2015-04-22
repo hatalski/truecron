@@ -3,16 +3,15 @@ import {
   test
 } from 'ember-qunit';
 
-moduleForModel('user', 'User', {
+moduleForModel('email', {
   // Specify the other units that are required for this test.
   needs: [
-    'model:job',
-    'model:email'
+      'model:user'
   ]
 });
 
-test('it exists', function() {
+test('it exists', function(assert) {
   var model = this.subject();
   // var store = this.store();
-  ok(!!model);
+  assert.ok(!!model);
 });

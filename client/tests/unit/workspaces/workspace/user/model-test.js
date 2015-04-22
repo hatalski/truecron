@@ -5,7 +5,10 @@ import {
 
 moduleForModel('workspaces/workspace/user', 'WorkspacesWorkspaceUser', {
   // Specify the other units that are required for this test.
-  needs: ['model:user']
+  needs: [
+    'model:user',
+    'model:email'
+  ]
 });
 
 test('it exists', function() {

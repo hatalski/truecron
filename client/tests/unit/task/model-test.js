@@ -7,6 +7,7 @@ moduleForModel('task', {
   // Specify the other units that are required for this test.
   needs: [
     'model:user',
+    'model:email',
     'model:job',
     'model:job-tag',
     'model:workspace'
