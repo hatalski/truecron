@@ -10,6 +10,7 @@ export default Ember.Component.extend({
     Ember.Logger.log('tags are: ', self.get('job.tags'));
 
     Ember.$('#jobTags').selectize({
+      plugins: ['remove_button'],
       delimiter: ',',
       persist: false,
       items: self.get('job.tags'),
