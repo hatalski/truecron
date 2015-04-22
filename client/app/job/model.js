@@ -4,6 +4,9 @@ import JobStatuses from 'true-cron/models/job-status';
 var Job = DS.Model.extend({
   workspaceId: DS.attr(),
   name:        DS.attr('string'),
+  // tags will be send as array to server-side,
+  // no need to have job-tags model, since there is no API for tags
+  tags:        DS.attr({ defaultValue: []}),
   startsAt:    DS.attr('date'),
   rrule:       DS.attr('string'),
   active:      DS.attr('boolean', { defaultValue: true }),
@@ -12,11 +15,8 @@ var Job = DS.Model.extend({
   updatedAt:   DS.attr('date', { defaultValue: new Date() }),
   updatedBy:   DS.belongsTo('user', { async: true }),
   workspace:   DS.belongsTo('workspace', { async: true }),
-  // tags will be send as array to server-side,
-  // no need to have job-tags model, since there is no API for tags
-  tags:        DS.attr({ defaultValue: []}),
-  // tags:        DS.hasMany('job-tag', { async: true }),
-  // history:     DS.hasMany('job-history', { async: true }),
+  runs:        DS.hasMany('run', { async: true }),
+  history:     DS.hasMany('history', { async: true }),
   tasks:       DS.hasMany('task', { async: true }),
   statusId:    DS.attr('number', { defaultValue: 0 }),
   status:      function() {

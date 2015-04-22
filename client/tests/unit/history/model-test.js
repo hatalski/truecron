@@ -3,15 +3,17 @@ import {
   test
 } from 'ember-qunit';
 
-moduleForModel('task', {
+moduleForModel('history', {
   // Specify the other units that are required for this test.
   needs: [
+    'model:organization',
+    'model:workspace',
+    'model:job',
+    'model:run',
+    'model:task',
     'model:user',
     'model:email',
-    'model:job',
-    'model:history',
-    'model:run',
-    'model:workspace'
+    'model:organizations.organization.connection'
   ]
 });
 

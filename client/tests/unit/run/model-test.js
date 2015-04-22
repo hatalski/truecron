@@ -3,16 +3,9 @@ import {
   test
 } from 'ember-qunit';
 
-moduleForModel('task', {
+moduleForModel('run', {
   // Specify the other units that are required for this test.
-  needs: [
-    'model:user',
-    'model:email',
-    'model:job',
-    'model:history',
-    'model:run',
-    'model:workspace'
-  ]
+  needs: []
 });
 
 test('it exists', function(assert) {
