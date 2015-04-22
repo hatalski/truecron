@@ -136,22 +136,9 @@
                                           <tbody>
                                               {{#each run in selectedJob.runs}}
                                                   {{run-list-item item=run}}
+                                              {{else}}
+                                                  <td colspan="3"><span class="truecron-sidebar-padding">Job's never been run</span></td>
                                               {{/each}}
-                                              <tr>
-                                                  <td class="hidden-sm hidden-xs hidden-md"><span class="truecron-sidebar-padding">Schedule</span></td>
-                                                  <td>Jul 10 10:43 PM</td>
-                                                  <td>2.34s</td>
-                                              </tr>
-                                              <tr class="danger truecron-active-border">
-                                                  <td class="hidden-sm hidden-xs hidden-md"><span class="truecron-sidebar-padding">Lev Kurts</span></td>
-                                                  <td>Jul 5 12:32 PM</td>
-                                                  <td>0.68s</td>
-                                              </tr>
-                                              <tr>
-                                                  <td class="hidden-sm hidden-xs hidden-md"><span class="truecron-sidebar-padding">Schedule</span></td>
-                                                  <td>Jul 10 10:43 PM</td>
-                                                  <td>2.34s</td>
-                                              </tr>
                                           </tbody>
                                       </table>
                                   </div>
@@ -228,7 +215,7 @@
                                           {{#each history in selectedJob.history}}
                                               {{history-list-item item=history}}
                                           {{else}}
-                                              <td colspan="3"><span class="truecron-sidebar-padding">Job's never been run</span></td>
+                                              <td colspan="3"><span class="truecron-sidebar-padding">Job has not been created yet</span></td>
                                           {{/each}}
                                           </tbody>
                                       </table>
@@ -286,8 +273,6 @@
               <div class="list-group">
                 {{#each job in model.workspace.jobs}}
                     {{job-list-item job=job linkTo='jobs.job' selected=selectedJob action='selectJob'}}
-                {{else}}
-                    <td colspan="3"><span class="truecron-sidebar-padding">Job has no audit records</span></td>
                 {{/each}}
               </div>
           {{/if}}
