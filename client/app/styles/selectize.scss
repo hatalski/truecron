@@ -1,3 +1,31 @@
 .selectize-control.multi .selectize-input, .selectize-control.multi .selectize-input.input-active {
   border: 1px solid #78909C;
+  padding: 2px 0;
+}
+
+.selectize-control.plugin-remove_button [data-value] .remove {
+  padding: 0;
+}
+.selectize-control.single .selectize-input > div, .selectize-control.multi .selectize-input > div, .selectize-control.single .selectize-input.input-active > div, .selectize-control.multi .selectize-input.input-active > div, .selectize-control.single .selectize-input > .item, .selectize-control.multi .selectize-input > .item, .selectize-control.single .selectize-input.input-active > .item, .selectize-control.multi .selectize-input.input-active > .item {
+  padding: 0 12px;
+  margin: 0 4px 0 0;
+}
+.selectize-control.multi .selectize-input [data-value] {
+  background-color: #6c939e !important;
+  background-image: none;
+  border-radius: 0px;
+}
+.selectize-control.plugin-remove_button [data-value] .remove {
+   border-left: solid 1px #abc0c7;
+ }
+.selectize-control.plugin-remove_button [data-value].active .remove {
+  border-left: solid 1px #abc0c7;
+}
+.selectize-control.multi .selectize-input.has-items {
+  padding: 2px 8px;
+}
+
+.selectize-control.multi .selectize-input [data-value].active {
+  background-color: #78909c;
+  background-image: none;
 }

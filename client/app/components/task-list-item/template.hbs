@@ -25,13 +25,13 @@
         <div class="navbar navbar-material-blue-grey-200 sidebar-table">
             <div class="navbar-collapse collapse navbar-material-blue-grey-collapse">
                 <ul class="nav navbar-nav">
-                    <li class="active"><a href="#output" aria-controls="output" role="tab" data-toggle="tab">Output</a></li>
-                    <li><a href="#settings" aria-controls="settings" role="tab" data-toggle="tab">Settings</a></li>
+                    <li class="active"><a href="#output{{task.id}}" aria-controls="output{{task.id}}" role="tab" data-toggle="tab">Output</a></li>
+                    <li><a href="#settings{{task.id}}" aria-controls="settings{{task.id}}" role="tab" data-toggle="tab">Settings</a></li>
                 </ul>
             </div>
         </div>
       <div class="tab-content">
-        <div role="tabpanel" class="panel-body truecron-panel-body tab-pane active" id="output{{task.id}}" >
+        <div role="tabpanel" class="panel-body truecron-panel-body tab-pane active" id="output{{task.id}}"  >
             <p>rm myFile.txt myFile1.txt myFile2.txt …etc…</p>
             <p>rm myFile*.txt</p>
             <p>rm -rf foldername</p>
