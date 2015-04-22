@@ -5,7 +5,9 @@ import {
 
 moduleForModel('workspace', 'Workspace', {
   // Specify the other units that are required for this test.
-  needs: ['model:user',
+  needs: [
+    'model:user',
+    'model:email',
     'model:organization',
     'model:job-tag',
     'model:job',
