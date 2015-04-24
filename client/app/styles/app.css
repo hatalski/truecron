@@ -27,6 +27,34 @@
   background-color: #78909c;
   background-image: none; }
 
+.spin {
+  background: url("logo_loader.png") no-repeat;
+  width: 29px;
+  height: 29px;
+  margin: 24px 0 0 24px;
+  -webkit-animation: spin 1s linear infinite;
+  -moz-animation: spin 1s linear infinite;
+  animation: spin 1s linear infinite; }
+
+@-moz-keyframes spin {
+  100% {
+    -moz-transform: rotate(360deg); } }
+@-webkit-keyframes spin {
+  100% {
+    -webkit-transform: rotate(360deg); } }
+@keyframes spin {
+  100% {
+    -webkit-transform: rotate(360deg);
+    transform: rotate(360deg); } }
+.loading {
+  padding-left: 10px; }
+
+.loading-group {
+  border: 0 !important; }
+
+.loading-position {
+  padding-top: 200px; }
+
 /*main */
 body {
   background-color: #eceff1;
