@@ -200,8 +200,9 @@ describe('JOBS API',
                         'schedule': {
                             'dtStart': '2014-08-21T10:00:11Z',
                             'rrule': 'updatedFREQ=DAILY;INTERVAL=1;BYDAY=MO;BYHOUR=12;BYMINUTE=0;BYSECOND=0'
-                        },
-                        'tags': ["updated edi"]
+                        }
+                        //,
+                        //'tags': ["updated edi"]
                     }
                 })
                 .authenticate(accessToken)
