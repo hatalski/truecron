@@ -1,13 +1,13 @@
 #!/usr/bin/env node
-
-console.log('dirname', __dirname);
-
 var https = require('https');
 var http = require('http');
 var fs = require('fs');
 var log = require('./server/lib/logger');
 var app = require('./server/app');
 var config = require('./server/lib/config');
+
+//var db = require('mongoose');
+var mongodb = require('./server/lib/mongodb');
 
 var server = http.createServer(app).listen(config.get('PORT'), function() {
 	log.info('Express http server listening on port ' + this.address().port);

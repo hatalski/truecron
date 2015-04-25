@@ -24,6 +24,7 @@ nconf.defaults({
     'REDIS_HOST': 'localhost',
     'REDIS_PORT': 6379,
     'REDIS_PASSWORD': undefined,
+    'MONGODB_URL': 'mongodb://localhost/truecron',
     'API_HOST': 'https://dev.truecron.com/api/v1',
     'AWS_ACCESS_KEY_ID': 'AKIAI7RMY3PYD6L6RRVA',
     'AWS_SECRET_ACCESS_KEY': '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',
