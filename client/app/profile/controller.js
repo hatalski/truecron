@@ -6,10 +6,9 @@ export default Ember.Controller.extend({
     isNotEditPassword: true,
     isEditPassword: false,
     oldName: "",
-    actions:
-    {
+    actions: {
         editNameAndEmail: function(){
-            var oldName = this.get('userName');
+            this.set('oldName', this.get('userName'));
             this.set('isNotEditName', false);
             this.set('isEditNAme', true);
         },
@@ -18,7 +17,7 @@ export default Ember.Controller.extend({
             this.set('isEditNAme', false);
         },
         cancelNameAndEmail: function(){
-            this.set('userName', oldName);
+            this.set('userName', this.get('oldName'));
         },
         editPassword: function(){
             this.set('isNotEditPassword', false);
