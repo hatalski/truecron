@@ -44,4 +44,10 @@ net.createServer(function (client) {
         node.pipe(client);
     });
 }).listen(5859);
+net.createServer(function (client) {
+ var node = net.connect({ port: 27017 }, function () {
+  client.pipe(node);
+  node.pipe(client);
+ });
+}).listen(27018);
 console.log('Run the application with --debug or --debug-brk option and connect WebStorm to port 5859.');
