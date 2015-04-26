@@ -3,8 +3,23 @@ import Ember from 'ember';
 export default Ember.Mixin.create({
   weekdays: moment.weekdays(),
   months: moment.months(),
+  rrule: function(){
+    "use strict";
+    var self = this;
+    debugger;
+    var recRule = new RRule(
+      {
+        freq: self.get('repeatRules').indexOf(self.get('selectedRepeatRule')),
+        interval: 1,
+        byweekday: [RRule.MO, RRule.FR],
+        dtstart: new Date(2012, 1, 1, 10, 30),
+        until: new Date(2012, 12, 31)
+      }
+    );
+    console.log(recRule.toText());
+  }.observes('selectedRepeatRule'),
   selectedRepeatRule: 'Daily',
-  repeatRules: ['Minutely', 'Hourly', 'Daily', 'Weekly', 'Monthly', 'Yearly'],
+  repeatRules: ['Yearly', 'Monthly', 'Weekly', 'Daily', 'Hourly', 'Minutely'],
   selectedRepeatEvery: 1,
   repeatEvery: function() {
     switch (this.get('selectedRepeatRule')) {

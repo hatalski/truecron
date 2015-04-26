@@ -163,11 +163,7 @@
                                         <div class="col-sm-4">
                                             <div class="form-group-material-orange-700">
                                                 {{log repeatRules}}
-                                                <select class="form-control floating-label" placeholder="Rule">
-                                                    {{#each repeat in repeatRules}}
-                                                        <option value="{{repeat}}">{{repeat}}</option>
-                                                    {{/each}}
-                                                </select>
+                                              {{view "select" content=repeatRules value=selectedRepeatRule class="form-control floating-label" placeholder="Rule"}}
                                             </div>
                                         </div>
                                         <div class="col-sm-4">
@@ -186,10 +182,11 @@
                                         </div>
                                         <div class="col-sm-11">
                                             <div class="checkbox pull-left"></div>
+                                          {{checkbox-select elements=controller.weekdays}}
                                           {{#each weekday in controller.weekdays}}
                                               <div class="checkbox checkbox-material-orange-700 pull-left">
                                                   <label>
-                                                    {{input type="checkbox" checked=false}} {{weekday}}
+                                                    {{weekday}}
                                                   </label>
                                               </div>
                                           {{/each}}

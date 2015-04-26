@@ -1,0 +1,11 @@
+<script type="text/x-handlebars" data-template-name="components/checkbox-select">
+  {{#each elements itemController="checkboxItem"}}
+      <div class="checkbox checkbox-material-orange-700 pull-left">
+          <label>
+            {{view Ember.Checkbox checkedBinding="selected"}}
+            {{label}}
+          </label>
+      </div>
+  {{/each}}
+</script>
+
