@@ -1,3 +1,6 @@
+@import "selectize";
+@import "spin";
+
 $primary-bg-color: #eceff1;
 $primary-color: #464748;
 
@@ -20,6 +23,11 @@ $primary-color: #464748;
 body {
   background-color: $primary-bg-color;
   color: $primary-color;
+}
+
+// application loading div class
+.ember-application .no-ember {
+  display: none;
 }
 
 .navbar {
@@ -125,7 +133,7 @@ a {
 
 .navbar-brand-truecron {
   background: url("white-logo.png") no-repeat center;
-  width: 190px;
+  width: 70px;
 }
 
 .teaser .col-xs-3 {
@@ -366,7 +374,10 @@ tr:nth-child(odd) {
   margin-top: 11px;
 }
 .content-title-margin {
-  margin-top: 16px;
+  margin-top: 6px;
+}
+.content-tag-margin {
+  margin-top: 4px;
 }
 //.truecron-input-margin{
 //  margin: 25px 0;

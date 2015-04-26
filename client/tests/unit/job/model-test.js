@@ -7,11 +7,13 @@ moduleForModel('job', {
   // Specify the other units that are required for this test.
   needs: [
     'model:user',
+    'model:email',
     'model:workspace',
     'model:organization',
     'model:organizations.organization.connection',
     'model:job',
-    'model:job-tag',
+    'model:history',
+    'model:run',
     'model:task']
 });
 

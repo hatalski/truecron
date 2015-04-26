@@ -77,7 +77,7 @@ api.route('/history')
             offset: req.listParams.offset
         }).then(function (result) {
             res.json({
-                records: result.rows.map(formatRecord),
+                history: result.rows.map(formatRecord),
                 meta: {
                     total: result.count
                 }});
@@ -112,7 +112,7 @@ api.route('/history/:recordid')
     // Get a history record
     //
     .get(function (req, res, next) {
-        res.json({ record: formatRecord(req.record) });
+        res.json({ history: formatRecord(req.record) });
     });
 
 module.exports = api;

@@ -4,6 +4,9 @@ export default Ember.Controller.extend({
   needs: ['jobs'],
   jobs: Ember.computed.alias("controllers.jobs"),
 
+    // user is populated from a route afterModel
+  user: null,
+
   websocket: Ember.inject.service(),
 
   showNewTaskForm: false,
@@ -53,8 +56,30 @@ export default Ember.Controller.extend({
       job.save();
     },
     runJob: function() {
+        "use strict";
+        this.get('websocket').sendMessage('running job');
+        var job = this.get('model');
+        var user = this.get('user');
+        Ember.Logger.log('user in run job: ', user);
+        var newRun = this.store.createRecord('run', {
+            startedAt: moment().toDate(),
+            startedByPerson: user,
+            elapsed: 0,
+            status: 15,
+            job: job,
+            message: '',
+            workspace: job.get('workspace'),
+            organization: job.get('workspace.organization')
+        });
+        newRun.save().then(function(savedRun) {
+            job.get('runs').pushObject(savedRun);
+        });
+    },
+    removeJob: function(done) {
       "use strict";
-      this.get('websocket').sendMessage('running job');
+      var job = this.get('model');
+      job.deleteRecord();
+      job.save().then(done);
     }
   }
 });

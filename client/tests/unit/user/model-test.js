@@ -5,7 +5,10 @@ import {
 
 moduleForModel('user', 'User', {
   // Specify the other units that are required for this test.
-  needs: ['model:job']
+  needs: [
+    'model:job',
+    'model:email'
+  ]
 });
 
 test('it exists', function() {

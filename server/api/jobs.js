@@ -16,6 +16,7 @@ function formatJob(datajob) {
     job.links = {
         self:    selfUrl,
         tasks:   selfUrl + '/tasks',
+        runs:    selfUrl + '/runs',
         history: selfUrl + '/history'
     };
     common.formatApiOutput(job);

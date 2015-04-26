@@ -35,7 +35,7 @@ describe('HISTORY API',
                 .then(function (res) {
                     expect(res.status).to.eql(200);
                     expect(res.body.meta.total).to.be.a('number');
-                    res.body.records.forEach(function (rec) {
+                    res.body.history.forEach(function (rec) {
                         expect(rec.entity).to.eql('job');
                         expect(rec.jobId).to.eql(testdata.MyWorkspaceTestJob.id);
                         expect(rec.taskId).to.eql(null);
@@ -54,11 +54,11 @@ describe('HISTORY API',
                 .then(function (res) {
                     expect(res.status).to.eql(200);
                     expect(res.body.meta.total).to.be.a('number');
-                    res.body.records.forEach(function (rec) {
+                    res.body.history.forEach(function (rec) {
                         expect(['task', 'job']).to.contain(rec.entity);
                         expect(rec.jobId).to.eql(testdata.MyWorkspaceTestJob.id);
                     });
-                    var taskRecords = _.reduce(res.body.records,
+                    var taskRecords = _.reduce(res.body.history,
                                                function (sum, rec) { return 'task' === rec.entity ? sum + 1 : sum; }, 0);
                     expect(taskRecords).to.be.above(0);
                     done();

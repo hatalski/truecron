@@ -7,49 +7,28 @@
                 </div>
             </div>
             <div class="col-md-6">
-                {{job-tags job=model action="addJobTag"}}
+                <div class="content-tag-margin">
+                    {{job-tags job=model action="addJobTag"}}
+                </div>
             </div>
-            <div class="col-md-1">
-                <span class="btn btn-sm btn-material-blue-grey-400"><i class="fa fa-trash fa-lg"></i></span>
+            <div class="col-md-1 text-right">
+                {{button-alert action="removeJob"}}
             </div>
         </div>
         <div class="row">
-            <div class="col-md-1">
-                <h4 class="truecron-grey">Run:</h4>
+            <div class="col-xs-6 text-left">
+                <a class="btn btn-raised btn-material-orange-800" {{action 'runJob'}}>Run Job</a>
             </div>
-            <div class="col-md-5">
-                <h4 class="truecron-orange">Weekly on Sunday, Monday, Tuesday, Wednesday, Friday at 12:32:00 PM</h4>
-            </div>
-            <div class="col-md-1">
-                <h4 class="truecron-grey">Exclude:</h4>
-            </div>
-            <div class="col-md-5">
-                <h4 class="truecron-orange">Sunday 8 March 2015</h4>
-            </div>
-        </div>
-        <div class="row hidden-xs hidden-sm">
-            <div class="col-md-1">
-                <h4 class="truecron-grey">Last run:</h4>
-            </div>
-            <div class="col-md-5">
-                <h4>July 6 12:32:00 PM</h4>
-            </div>
-            <div class="col-md-1">
-                <h4 class="truecron-grey">Next run:</h4>
-            </div>
-            <div class="col-md-5">
-                <h4>July 8 12:32:00 PM</h4>
+            <div class="col-xs-6 text-right">
+                <a class="btn btn-raised btn-material-orange-800" {{action 'addTask'}}>New Task</a>
             </div>
         </div>
     </div>
 </header>
 <div class="container-fluid">
     <div class="row">
-        <div class="col-xs-6 text-left">
-            <a class="btn btn-material-blue-grey-400" {{action 'runJob'}}>Run Job</a>
-        </div>
-        <div class="col-xs-6 text-right">
-            <a class="btn btn-material-orange-800" {{action 'addTask'}}>New Task</a>
+        <div class="col-xs-12 text-center">
+            <a class="btn btn-flat btn-raised btn-material-orange-800" {{action 'editSchedule'}}>Weekly <span style="color:#000">on</span> Sunday, Monday, Tuesday, Wednesday, Friday <span style="color:#000">at</span> 12:32:00 PM <span style="color:#000">excluding</span> Sunday 8 March 2015</a>
         </div>
     </div>
     {{#if showNewTaskForm}}
