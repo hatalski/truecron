@@ -8,6 +8,7 @@ var config = require('./server/lib/config');
 
 //var db = require('mongoose');
 var mongodb = require('./server/lib/mongodb');
+var schema = require('./server/storage/mongodb/schema');
 
 var server = http.createServer(app).listen(config.get('PORT'), function() {
 	log.info('Express http server listening on port ' + this.address().port);

@@ -1,4 +1,5 @@
-var mongoose = require('mongoose');
+var mongoose           = require('mongoose');
+var creationInfoPlugin = require('./creationInfoPlugin');
 
 var task_types = 'default ftp http zip s3 file execute'.split(' ');
 
@@ -19,15 +20,16 @@ var scheduleSchema = new mongoose.Schema({
     exdate: String
 });
 
-module.exports = jobSchema = new mongoose.Schema({
+var jobSchema = new mongoose.Schema({
     name: { type: String, index: true },
     active: String,
     archived: { type: Boolean },
     schedules: [scheduleSchema],
     tags: [String],
     tasks: [taskSchema],
-    createdAt: { type: Date, default: Date.now },
-    updatedAt: { type: Date },
-    updatedBy: { type: mongoose.Schema.Types.ObjectId, ref: 'User' },
     workspace: { type: mongoose.Schema.Types.ObjectId, ref: 'Workspace' }
 });
+
+jobSchema.plugin(creationInfoPlugin);
+
+module.exports = mongoose.model('Job', jobSchema);

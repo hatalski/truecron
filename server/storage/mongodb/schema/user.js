@@ -1,21 +1,23 @@
 var mongoose = require('mongoose');
+var creationInfoPlugin = require('./creationInfoPlugin');
 
 var emailSchema = new mongoose.Schema({
     email: String,
-    status: Boolean,
+    status: String,
     verified: Boolean
 });
 
-module.exports = userSchema = new mongoose.Schema({
+var userSchema = new mongoose.Schema({
     emails: [emailSchema],
     name: { type: String, index: true },
     passwordHash: String,
     avatarUrl: { type: String },
     extensionData: {},
-    deleted: { type: Boolean },
+    deleted: { type: Boolean, 'default': false },
     lastLoginAt: { type: Date },
-    createdAt: { type: Date, default: Date.now },
-    updatedAt: { type: Date },
-    updatedBy: { type: mongoose.Schema.Types.ObjectId, ref: 'User' },
     organizations: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Organization' }]
 });
+
+userSchema.plugin(creationInfoPlugin);
+
+module.exports = mongoose.model('User', userSchema);

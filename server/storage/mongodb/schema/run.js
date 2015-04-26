@@ -1,4 +1,5 @@
 var mongoose = require('mongoose');
+var creationInfoPlugin = require('./creationInfoPlugin');
 
 var run_status = 'succeeded failed running'.split(' ');
 
@@ -7,7 +8,7 @@ var output = new mongoose.Schema({
     message: String
 });
 
-module.exports = runSchema = new mongoose.Schema({
+var runSchema = new mongoose.Schema({
     status: { type: String, enum: run_status},
     duration: Number,
     message: String,
@@ -18,3 +19,5 @@ module.exports = runSchema = new mongoose.Schema({
     organization: { type: mongoose.Schema.Types.ObjectId, ref: 'Organization' },
     job: { type: mongoose.Schema.Types.ObjectId, ref: 'Job' }
 });
+
+module.exports = mongoose.model('Run', runSchema);
