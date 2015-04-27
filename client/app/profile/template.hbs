@@ -102,7 +102,15 @@
                         <div class="col-md-10">
                             <div class="form-group-material-orange-700">
                                 <div class="form-control-wrapper">
-                                    <input id="repass" type="password" value="" class="form-control empty" data-hint="Confirm password">
+                                  {{input id="inputConfirmPassword"
+                                  data-hint="Enter password again"
+                                  type="password"
+                                  value=passwordConfirm
+                                  placeholder="Confirm password"
+                                  disabled=isNotEditPassword
+                                  class="form-control empty"
+                                  pattern="(?=^.{8,}$)(?=.*\d)(?![.\n])(?=.*[A-Z])(?=.*[a-z]).*$"
+                                  }}
                                 </div>
                             </div>
                         </div>
