@@ -164,9 +164,27 @@ var findById = module.exports.findById = Promise.method(function (context, id, w
             }
             return models.Job.find({ where: { id: id } }, { transaction: transaction })
                 .then(function (job) {
+                    locals.thisJob = job;
                     cache.put(getJobIdCacheKey(id), job);
                     return job;
-                });
+                })
+                .then(function(job){
+
+                    //console.log('!!!!jobid'+job.id);
+                        return models.JobTag.findAll({ where: { jobid: job.id }}, { transaction: transaction })
+                })
+            .then(function(allTags){
+                    if(allTags.length>0) {
+                        if(!locals.thisJob.dataValues.tags) {
+                            locals.thisJob.dataValues.tags = [];
+                        }
+                        for (var i = 0; i < allTags.length; i++) {
+                            locals.thisJob.dataValues.tags.push(allTags[i].dataValues.tag);
+                        }
+                        console.log('!!!!!thisJob:'+JSON.stringify(locals.thisJob));
+                    }
+                    return locals.thisJob;
+                })
         })
         .then(function (job) {
             if (job === null) {
