@@ -107,21 +107,21 @@
                                         </div>
                                         <div class="col-sm-3">
                                             <div class="form-group-material-orange-700">
-                                              {{input id="startsOn" value=currentDate class="form-control floating-label" placeholder="Date" type="date"}}
+                                              {{input id="startsOn" value=controller.currentDate class="form-control floating-label" placeholder="Date" type="date"}}
                                             </div>
                                         </div>
                                         <div class="col-sm-3">
                                             <div class="form-group-material-orange-700">
-                                              {{input id="startsAt" value=currentTime class="form-control floating-label" placeholder="Time" type="time"}}
+                                              {{input id="startsAt" value=controller.currentTime class="form-control floating-label" placeholder="Time" type="time"}}
                                             </div>
                                         </div>
                                         <div class="col-sm-4">
                                             <div class="form-group-material-orange-700">
-                                                <select class="form-control floating-label" placeholder="Timezone">
-                                                  {{#each timezone in controller.zones}}
-                                                      <option {{bind-attr value=timezone.name}}>{{timezone.name}} - {{timezone.abbr}} - {{timezone.offset}}</option>
-                                                  {{/each}}
-                                                </select>
+                                              {{view "select" content=controller.zones class="form-control floating-label"
+                                              optionLabelPath="content.fullName"
+                                              optionValuePath="content.name"
+                                              prompt="Timezone:"
+                                              selection=controller.currentZone}}
                                             </div>
                                             <br>
                                         </div>
@@ -189,14 +189,7 @@
                                         </div>
                                         <div class="col-sm-11">
                                             <div class="checkbox pull-left"></div>
-                                          {{checkbox-select elements=controller.weekdays}}
-                                          {{#each weekday in controller.weekdays}}
-                                              <div class="checkbox checkbox-material-orange-700 pull-left">
-                                                  <label>
-                                                    {{weekday}}
-                                                  </label>
-                                              </div>
-                                          {{/each}}
+                                          {{checkbox-select model=controller propertyPath="selectedDays" labelPath="Name" elements=controller.weekdays}}
                                         </div>
                                     </div>
                                 </div>

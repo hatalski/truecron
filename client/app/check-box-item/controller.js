@@ -7,8 +7,13 @@ export default Ember.ObjectController.extend({
     return children.contains(activity);
   }.property(),
   label: function() {
-    debugger;
-    return this.get('model.' + this.get('parentController.labelPath'));
+    if(this.get('parentController.labelPath')) {
+      return this.get('model.' + this.get('parentController.labelPath'));
+    }
+    else
+    {
+      return this.get('model');
+    }
   }.property(),
   selectedChanged: function() {
     var activity = this.get('content');

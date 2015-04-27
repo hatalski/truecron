@@ -4,9 +4,7 @@ import RRuleParser from 'true-cron/mixins/rrule-parser';
 export default Ember.Controller.extend(RRuleParser, {
   needs: ['jobs'],
   name: '',
-  currentDate: moment().format('YYYY-MM-DD'),
-  currentTime: moment().format('HH:mm'),
-  currentZone: moment().zone(),
+
   //current: function() {
   //  "use strict";
   //  var value = this.get('currentDate') + this.get('currentTime');
@@ -22,10 +20,15 @@ export default Ember.Controller.extend(RRuleParser, {
     var result = [];
     for (var i = 0; i < length; i ++) {
       var zone = zones[i];
+      var name = zone;
+      var offset = moment.tz.zone(zone).offset(now);
+      var abbr = moment.tz.zone(zone).abbr(now);
+      var fullName = name + ' - ' + abbr + ' - ' + offset;
       result.push({
-        name:   zone,
-        offset: moment.tz.zone(zone).offset(now),
-        abbr:   moment.tz.zone(zone).abbr(now)
+        name:   name,
+        offset: offset,
+        abbr:   abbr,
+        fullName: fullName
       });
     }
     return result;
@@ -39,7 +42,8 @@ export default Ember.Controller.extend(RRuleParser, {
       "use strict";
       var self = this;
       var newJob = self.get('model');
-      debugger;
+      var schedule = newJob.get('schedule');
+      schedule.rrule = self.rrule();
       Ember.Logger.log('new job is about to save: ', newJob);
       newJob.save().then(function() {
         Ember.Logger.log('Job has been saved');

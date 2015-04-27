@@ -1,5 +1,4 @@
-<script type="text/x-handlebars" data-template-name="components/checkbox-select">
-  {{#each elements itemController="checkboxItem"}}
+ {{#each elements itemController="check-box-item"}}
       <div class="checkbox checkbox-material-orange-700 pull-left">
           <label>
             {{view Ember.Checkbox checkedBinding="selected"}}
@@ -7,5 +6,3 @@
           </label>
       </div>
   {{/each}}
-</script>
-

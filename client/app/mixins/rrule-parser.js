@@ -1,23 +1,69 @@
 import Ember from 'ember';
 
 export default Ember.Mixin.create({
-  weekdays: moment.weekdays(),
+  weekdays: [{
+      Name:"Monday",
+      Value: RRule.MO
+    },
+    {
+      Name:"Tuesday",
+      Value: RRule.TU
+    },
+    {
+      Name:"Wednesday",
+      Value: RRule.WE
+    },
+    {
+      Name:"Thursday",
+      Value: RRule.TH
+    },
+    {
+      Name:"Friday",
+      Value: RRule.FR
+    },
+    {
+      Name:"Saturday",
+      Value: RRule.SA
+    },
+    {
+      Name:"Sunday",
+      Value: RRule.SU
+    }],
   months: moment.months(),
+  currentDate: moment().format('YYYY-MM-DD'),
+  currentTime: moment().format('HH:mm'),
+  currentZone: moment().zone(),
+  dtStart: function()
+  {
+    var returnDate = moment(this.get('currentDate') + ' ' + (this.get('currentTime')?this.get('currentTime'):''));//.tz(this.get('currentZone'));
+debugger;
+    return returnDate.toDate();
+  }.property('currentDate', 'currentTime', 'currentZone'),
+  until: null,
+  selectedDays: [],
   rrule: function(){
     "use strict";
     var self = this;
-    debugger;
+
+    var weekDays = [];
+
+    for(var i=0; i<self.selectedDays.length; i++)
+    {
+      weekDays.push(self.selectedDays[i].Value);
+    }
+
     var recRule = new RRule(
       {
         freq: self.get('repeatRules').indexOf(self.get('selectedRepeatRule')),
         interval: 1,
-        byweekday: [RRule.MO, RRule.FR],
-        dtstart: new Date(2012, 1, 1, 10, 30),
-        until: new Date(2012, 12, 31)
+        byweekday: weekDays,
+        dtstart: self.get('dtStart'),
+        until: self.until
       }
     );
     console.log(recRule.toText());
-  }.observes('selectedRepeatRule'),
+    return recRule.toString();
+  }.observes('selectedRepeatRule', 'selectedDays.@each', 'currentDate' ),
   selectedRepeatRule: 'Daily',
   repeatRules: ['Yearly', 'Monthly', 'Weekly', 'Daily', 'Hourly', 'Minutely'],
   selectedRepeatEvery: 1,
@@ -31,28 +77,6 @@ export default Ember.Mixin.create({
         return [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30];
     }
   }.property('selectedRepeatRule'),
-  getDayName: function(day) {
-    "use strict";
-    switch(day)
-    {
-      case "MO":
-        return "Monday";
-      case "TU":
-        return "Tuesday";
-      case "WE":
-        return "Wednesday";
-      case "TH":
-        return "Thursday";
-      case "FR":
-        return "Friday";
-      case "SA":
-        return "Saturday";
-      case "SU":
-        return "Sunday";
-      default:
-        return "";
-    }
-  },
   getFrequencyText: function(freq) {
     "use strict";
     switch(freq) {
