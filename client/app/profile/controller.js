@@ -12,8 +12,6 @@ export default Ember.Controller.extend({
       editNameAndEmail: function(){
         var self = this;
         self.set('oldName', self.get('model.name'));
-        //console.log('!!!!!model.name: '+self.get('model.name'));
-        //console.log('!!!!!oldNAme: '+this.get('oldNAme'));
         this.set('isNotEditName', false);
         this.set('isEditNAme', true);
         },
