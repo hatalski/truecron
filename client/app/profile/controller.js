@@ -48,14 +48,9 @@ export default Ember.Controller.extend({
           var isPasswordSame = password === this.get('passwordConfirm');
           if (isPasswordValid && isPasswordSame) {
             self.get('model').save()
-              .then(function(savedPassword){
+              .then(function(){
                 self.set('isNotEditPassword', true);
                 self.set('isEditPassword', false);
-                console.log('Saved Password: ', savedPassword);//!!!!!!!!
-
-              //this.set('model.password', this.get('model.password'));
-              //this.set('isNotEditPassword', true);
-              //this.set('isEditPassword', false);
               });
           }
           else{
