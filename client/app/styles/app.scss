@@ -1,4 +1,5 @@
 @import "selectize";
+@import "spin";
 
 $primary-bg-color: #eceff1;
 $primary-color: #464748;
@@ -804,6 +805,17 @@ a.list-group-item:hover, a.list-group-item:active, a.list-group-item:focus {
 }
 .truecron-panel-heading{
   border-radius: 0px;
+}
+.truecron-task-panel-heading {
+  border-radius: 0px;
+  padding: 23px 15px;
+}
+.sidebar-table .navbar-collapse .truecron-tasks-nav li > a{
+  padding-top: 11px;
+  padding-bottom: 11px;
+}
+.truecron-navbar {
+  min-height: 42px;
 }
 .truecron-p-padding{
   padding-left: 20px;

@@ -259,6 +259,7 @@ describe('JOBS API',
                     //expect(res.body.job.scheduleId).not.eql(null);
                     //expect(validator.isDate(res.body.job.startsAt)).to.be.ok();
                     expect(res.status).to.eql(200);
+                    expect(res.body.job.tags).to.eql(['updated', 'edi']);
                     done();
                 });
         });
