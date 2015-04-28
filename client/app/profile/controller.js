@@ -5,6 +5,8 @@ export default Ember.Controller.extend({
   isEditNAme: false,
   isNotEditPassword: true,
   isEditPassword: false,
+  oldName:"",
+  oldPassword: "",
     actions:
     {
       editNameAndEmail: function(){
@@ -40,13 +42,21 @@ export default Ember.Controller.extend({
           this.set('isEditPassword', false);
         },
         savePassword: function(){
+          var self = this;
           var password = this.get('model.password');
           var isPasswordValid = password.length > 7;
           var isPasswordSame = password === this.get('passwordConfirm');
           if (isPasswordValid && isPasswordSame) {
-            this.set('model.password', this.get('model.password'));
-            this.set('isNotEditPassword', true);
-            this.set('isEditPassword', false);
+            self.get('model').save()
+              .then(function(savedPassword){
+                self.set('isNotEditPassword', true);
+                self.set('isEditPassword', false);
+                console.log('Saved Password: ', savedPassword);//!!!!!!!!
+
+              //this.set('model.password', this.get('model.password'));
+              //this.set('isNotEditPassword', true);
+              //this.set('isEditPassword', false);
+              });
           }
           else{
             Ember.$('#inputConfirmPassword').popover({
