@@ -392,6 +392,15 @@ if not HasSchemaVersion(17) then
 end if;
 end $$;
 
+
+do $$
+begin
+if not HasSchemaVersion(18) then
+     alter table tc."JobConters" rename to "JobCounters";
+     perform CommitSchemaVersion(18, 'Renamed JobConters to JobCounters.');
+end if;
+end $$;
+
 -- Use the snippet as a template:
 --
 -- do $$
