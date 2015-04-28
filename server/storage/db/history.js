@@ -15,7 +15,7 @@ module.exports = function(sequelize, DataTypes) {
         oldValue:       { type: DataTypes.STRING(8192) }
     }, {
         schema: 'tc',
-        tableName: 'history',
+        tableName: 'History',
         timestamps: true,
         updatedAt: false,
         freezeTableName: true,

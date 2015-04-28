@@ -68,7 +68,7 @@ describe('JOBS API',
                     'name': 'TestName3',
                     'active': 1,
                     'archived': 0,
-                    'tags': ["edi", "production"],
+                    'tags': ["tag1", "tag2"],
                     'schedule': {
                         'dtStart': '2014-08-21T10:00:11Z',
                         'rrule': 'FREQ=DAILY;INTERVAL=1;BYDAY=MO;BYHOUR=12;BYMINUTE=0;BYSECOND=0'
@@ -83,7 +83,7 @@ describe('JOBS API',
                     expect(res.body.job.name).to.eql('TestName3');
                     expect(res.body.job.active).to.eql(1);
                     expect(res.body.job.archived).to.eql(0);
-                    expect(res.body.job.tags).to.eql(["edi", "production"]);
+                    expect(res.body.job.tags).to.eql(["tag1", "tag2"]);
                     expect(res.body.job.scheduleId == undefined);
                     expect(res.body.job.schedule).not.eql(null);
                     expect(validator.isDate(res.body.job.createdAt)).to.be.ok();
@@ -114,7 +114,8 @@ describe('JOBS API',
                     expect(res.body.job.name).to.eql('TestName1');
                     expect(res.body.job.active).to.eql(1);
                     expect(res.body.job.archived).to.eql(0);
-                    expect(res.body.job.scheduleId == undefined);
+                    expect(res.body.job.tags).to.eql(undefined);
+                    expect(res.body.job.scheduleId).to.eql(undefined);
                     expect(res.body.job.schedule).not.eql(null);
                     expect(validator.isDate(res.body.job.createdAt)).to.be.ok();
                     expect(validator.isDate(res.body.job.updatedAt)).to.be.ok();
@@ -161,6 +162,39 @@ describe('JOBS API',
                 });
         });
 
+        it('get jobs by non-existent tag', function (done) {
+            superagent.get(prefix + '/organizations/' + testdata.AcmeCorp.id + '/workspaces/' + testdata.MyWorkspace.id + '/jobs')
+                .set('Content-Type', 'application/json')
+                .query({ tag: 'NON-EXISTENT-TAG-NON-EXISTENT-TAG-NON-EXISTENT-TAG' })
+                .send()
+                .authenticate(accessToken)
+                .end(function (e, res) {
+                    expect(e).to.eql(null);
+                    expect(res.header['content-type']).to.eql('application/json; charset=utf-8');
+                    expect(res.status).to.eql(200);
+                    expect(res.body.meta.total).to.eql(0);
+                    done();
+                });
+        });
+
+        it('get jobs by tag', function (done) {
+            superagent.get(prefix + '/organizations/' + testdata.AcmeCorp.id + '/workspaces/' + testdata.MyWorkspace.id + '/jobs')
+                .set('Content-Type', 'application/json')
+                .query({ tag: 'tag2' })
+                .send()
+                .authenticate(accessToken)
+                .end(function (e, res) {
+                    expect(e).to.eql(null);
+                    expect(res.header['content-type']).to.eql('application/json; charset=utf-8');
+                    expect(res.status).to.eql(200);
+                    expect(res.body.meta.total).to.be.above(0);
+                    res.body.jobs.forEach(function (job) {
+                        expect(job.tags).to.contain('tag2');
+                    });
+                    done();
+                });
+        });
+
         it('get job by organization, workspace and id', function (done) {
             superagent.get(prefix + '/organizations/' + testdata.AcmeCorp.id + '/workspaces/' + testdata.MyWorkspace.id + '/jobs/' + id_to_delete)
                 .send()
@@ -192,6 +226,19 @@ describe('JOBS API',
                     done();
                 });
         });
+        it('get job by id with tags', function (done) {
+            superagent.get(prefix + '/jobs/' + testdata.MyWorkspaceTestJob.id)
+                .send()
+                .authenticate(accessToken)
+                .end(function (e, res) {
+                    expect(e).to.eql(null);
+                    expect(res.status).to.eql(200);
+                    expect(res.body.error).to.eql(undefined);
+                    expect(res.body.job.id).to.eql(testdata.MyWorkspaceTestJob.id);
+                    expect(res.body.job.tags).to.eql(['tag1', 'tag2']);
+                    done();
+                });
+        });
         it('update job with tags', function (done) {
             superagent.put(prefix + '/organizations/' + testdata.AcmeCorp.id + '/workspaces/' + testdata.MyWorkspace.id + '/jobs/' + id_to_delete)
                 .set('Content-Type', 'application/json')
@@ -201,7 +248,7 @@ describe('JOBS API',
                             'dtStart': '2014-08-21T10:00:11Z',
                             'rrule': 'updatedFREQ=DAILY;INTERVAL=1;BYDAY=MO;BYHOUR=12;BYMINUTE=0;BYSECOND=0'
                         },
-                        'tags': ["updated edi"]
+                        'tags': ['updated', 'edi']
                     }
                 })
                 .authenticate(accessToken)
