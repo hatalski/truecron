@@ -51,11 +51,6 @@ export default Ember.Controller.extend({
               .then(function(savedPassword){
                 self.set('isNotEditPassword', true);
                 self.set('isEditPassword', false);
-                console.log('Saved Password: ', savedPassword);//!!!!!!!!
-
-              //this.set('model.password', this.get('model.password'));
-              //this.set('isNotEditPassword', true);
-              //this.set('isEditPassword', false);
               });
           }
           else{
