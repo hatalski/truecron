@@ -1,4 +1,5 @@
 import Ember from 'ember';
+import ENV from 'true-cron/config/environment';
 
 export default Ember.Controller.extend({
   isNotEditName: true,
@@ -16,9 +17,43 @@ export default Ember.Controller.extend({
         this.set('isEditNAme', true);
         },
         saveNameAndEmail: function(){
+          var self = this;
+          var requestData = {'profile':{}};
+          var emails = self.get('model.emails');
+          var email;
+          for (var i = 0; i < emails.length; i++) {
+            email = emails[0];
+          }
+          var test = self.get('#test');
+          console.log('!!!!!email: ' + email);
+          console.log('!!!!!test: ' + test);
+          console.log('!!!!!emails: ' + emails);
+          console.log('!!!!!userEmail.email: ' + self.get('model.email'));
           this.set('model.name', this.get('model.name'));
           this.set('isNotEditName', true);
           this.set('isEditNAme', false);
+          requestData.profile = {
+            email: this.get('userEmail.email'),
+            name: this.get('model.name')
+          };
+//send to db new name
+          var result = Ember.$.ajax({
+            url: ENV.APP.UPDATE_USER_NAME_HOST,
+            type: 'POST',
+            contentType: 'application/json',
+            dataType: 'json',
+            data: JSON.stringify(requestData),
+            crossDomain: true
+          });
+          result.done(function(response) {
+
+            console.log(response.message);
+          });
+          result.fail(function(error) {
+            console.log(error);
+          });
+
+
         },
         cancelNameAndEmail: function(){
           this.set('model.name', this.get('oldName'));

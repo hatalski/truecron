@@ -16,13 +16,15 @@ module.exports = function(environment) {
     APP: {
       // Here you can pass flags/options to your application instance
       // when it is created
-      HOST:               'http://localhost:4200',
-      SERVER_HOST:        'https://dev.truecron.com',
-      API_HOST:           'https://dev.truecron.com/api/v1',
-      SIGNUP_HOST:        'https://dev.truecron.com/auth/signup',
-      BETA_SIGNUP_HOST:   'https://dev.truecron.com/beta/signup',
-      RESET_PASSWORD_HOST:'https://dev.truecron.com/auth/resetpassword',
-      GOOGLE_API_KEY:     '182911798819-t360tlk839gij3m46pgo4noticrqi4s3.apps.googleusercontent.com',
+      HOST:                 'http://localhost:4200',
+      SERVER_HOST:          'https://dev.truecron.com',
+      API_HOST:             'https://dev.truecron.com/api/v1',
+      SIGNUP_HOST:          'https://dev.truecron.com/auth/signup',
+      BETA_SIGNUP_HOST:     'https://dev.truecron.com/beta/signup',
+      RESET_PASSWORD_HOST:  'https://dev.truecron.com/auth/resetpassword',
+      UPDATE_USER_NAME_HOST:'https://dev.truecron.com/auth/updateusernaname',
+      UPDATE_PASSWORD_HOST:'https://dev.truecron.com/auth/updatepassword',
+      GOOGLE_API_KEY:       '182911798819-t360tlk839gij3m46pgo4noticrqi4s3.apps.googleusercontent.com',
       HIDE_SIGNUP:        false
     }
   };
@@ -34,11 +36,13 @@ module.exports = function(environment) {
     // ENV.APP.LOG_TRANSITIONS_INTERNAL = true;
     ENV.APP.LOG_VIEW_LOOKUPS = true;
 
-    ENV.APP.SERVER_HOST      = 'https://dev.truecron.com';
-    ENV.APP.API_HOST         = ENV.APP.SERVER_HOST + '/api/v1';
-    ENV.APP.SIGNUP_HOST      = ENV.APP.SERVER_HOST + '/auth/signup';
-    ENV.APP.BETA_SIGNUP_HOST = ENV.APP.SERVER_HOST + '/beta/signup';
-    ENV.RESET_PASSWORD_HOST  = ENV.APP.SERVER_HOST + '/auth/resetpassword';
+    ENV.APP.SERVER_HOST           = 'https://dev.truecron.com';
+    ENV.APP.API_HOST              = ENV.APP.SERVER_HOST + '/api/v1';
+    ENV.APP.SIGNUP_HOST           = ENV.APP.SERVER_HOST + '/auth/signup';
+    ENV.APP.BETA_SIGNUP_HOST      = ENV.APP.SERVER_HOST + '/beta/signup';
+    ENV.APP.RESET_PASSWORD_HOST   = ENV.APP.SERVER_HOST + '/auth/resetpassword';
+    ENV.APP.UPDATE_USER_NAME_HOST = ENV.APP.SERVER_HOST + '/auth/updateusernaname';
+    ENV.APP.UPDATE_PASSWORD_HOST  = ENV.APP.SERVER_HOST + '/auth/updatepassword';
 
     ENV.contentSecurityPolicy = {
       'default-src': "'none'",
@@ -56,12 +60,13 @@ module.exports = function(environment) {
     ENV.baseURL = '/';
     ENV.locationType = 'none';
 
-    ENV.APP.SERVER_HOST      = 'https://localhost';
-    ENV.APP.API_HOST         = ENV.APP.SERVER_HOST + '/api/v1';
-    ENV.APP.SIGNUP_HOST      = ENV.APP.SERVER_HOST + '/auth/signup';
-    ENV.APP.BETA_SIGNUP_HOST = ENV.APP.SERVER_HOST + '/beta/signup';
-    ENV.RESET_PASSWORD_HOST  = ENV.APP.SERVER_HOST + '/auth/resetpassword';
-    ENV.APP.GOOGLE_API_KEY   = '411638818068-g7l3kh9pifo0jbsauepb5sa9tt855a0s.apps.googleusercontent.com';
+    ENV.APP.SERVER_HOST            = 'https://localhost';
+    ENV.APP.API_HOST               = ENV.APP.SERVER_HOST + '/api/v1';
+    ENV.APP.SIGNUP_HOST            = ENV.APP.SERVER_HOST + '/auth/signup';
+    ENV.APP.BETA_SIGNUP_HOST       = ENV.APP.SERVER_HOST + '/beta/signup';
+    ENV.APP.RESET_PASSWORD_HOST    = ENV.APP.SERVER_HOST + '/auth/resetpassword';
+    ENV.APP.UPDATE_USER_NAME_HOST  = ENV.APP.SERVER_HOST + '/auth/updateusernaname';
+    ENV.APP.GOOGLE_API_KEY         = '411638818068-g7l3kh9pifo0jbsauepb5sa9tt855a0s.apps.googleusercontent.com';
 
     // keep test console output quieter
     ENV.APP.LOG_ACTIVE_GENERATION = false;
@@ -71,13 +76,15 @@ module.exports = function(environment) {
   }
 
   if (environment === 'staging') {
-    ENV.APP.HOST                 = 'https://appstaging.truecron.com';
-    ENV.APP.SERVER_HOST          = 'https://staging.truecron.com';
-    ENV.APP.API_HOST             = ENV.APP.SERVER_HOST + '/api/v1';
-    ENV.APP.SIGNUP_HOST          = ENV.APP.SERVER_HOST + '/auth/signup';
-    ENV.APP.BETA_SIGNUP_HOST     = ENV.APP.SERVER_HOST + '/beta/signup';
-    ENV.APP.RESET_PASSWORD_HOST  = ENV.APP.SERVER_HOST + '/auth/resetpassword';
-    ENV.APP.GOOGLE_API_KEY       = '640877791996-juctck3aimf9f2i99vf3aa3lo9597dbq.apps.googleusercontent.com';
+    ENV.APP.HOST                   = 'https://appstaging.truecron.com';
+    ENV.APP.SERVER_HOST            = 'https://staging.truecron.com';
+    ENV.APP.API_HOST               = ENV.APP.SERVER_HOST + '/api/v1';
+    ENV.APP.SIGNUP_HOST            = ENV.APP.SERVER_HOST + '/auth/signup';
+    ENV.APP.BETA_SIGNUP_HOST       = ENV.APP.SERVER_HOST + '/beta/signup';
+    ENV.APP.RESET_PASSWORD_HOST    = ENV.APP.SERVER_HOST + '/auth/resetpassword';
+    ENV.APP.UPDATE_USER_NAME_HOST  = ENV.APP.SERVER_HOST + '/auth/updateusernaname';
+    ENV.APP.UPDATE_PASSWORD_HOST   = ENV.APP.SERVER_HOST + '/auth/updatepassword';
+    ENV.APP.GOOGLE_API_KEY         = '640877791996-juctck3aimf9f2i99vf3aa3lo9597dbq.apps.googleusercontent.com';
 
     ENV.contentSecurityPolicy = {
       'default-src': "'none'",
@@ -90,14 +97,16 @@ module.exports = function(environment) {
     }
   }
   if (environment === 'production') {
-    ENV.APP.HOST                = 'https://app.truecron.com';
-    ENV.APP.SERVER_HOST         = 'https://www.truecron.com';
-    ENV.APP.API_HOST            = ENV.APP.SERVER_HOST + '/api/v1';
-    ENV.APP.SIGNUP_HOST         = ENV.APP.SERVER_HOST + '/auth/signup';
-    ENV.APP.BETA_SIGNUP_HOST    = ENV.APP.SERVER_HOST + '/beta/signup';
-    ENV.APP.RESET_PASSWORD_HOST = ENV.APP.SERVER_HOST + '/auth/resetpassword';
-    ENV.APP.GOOGLE_API_KEY      = '584720647348-sfa16c6nriakjntd90qh05togeigs6co.apps.googleusercontent.com';
-    ENV.APP.HIDE_SIGNUP         = true;
+    ENV.APP.HOST                    = 'https://app.truecron.com';
+    ENV.APP.SERVER_HOST             = 'https://www.truecron.com';
+    ENV.APP.API_HOST                = ENV.APP.SERVER_HOST + '/api/v1';
+    ENV.APP.SIGNUP_HOST             = ENV.APP.SERVER_HOST + '/auth/signup';
+    ENV.APP.BETA_SIGNUP_HOST        = ENV.APP.SERVER_HOST + '/beta/signup';
+    ENV.APP.RESET_PASSWORD_HOST     = ENV.APP.SERVER_HOST + '/auth/resetpassword';
+    ENV.APP.UPDATE_USER_NAME_HOST   = ENV.APP.SERVER_HOST + '/auth/updateusernaname';
+    ENV.APP.UPDATE_PASSWORD_HOST    = ENV.APP.SERVER_HOST + '/auth/updatepassword';
+    ENV.APP.GOOGLE_API_KEY          = '584720647348-sfa16c6nriakjntd90qh05togeigs6co.apps.googleusercontent.com';
+    ENV.APP.HIDE_SIGNUP             = true;
 
     ENV.contentSecurityPolicy = {
       'default-src': "'none'",

@@ -348,6 +348,18 @@ router.post('/resetpasswordconfirmnewpassword', function(req, res, next) {
         });
 });
 
+/*
+/ Profile update name and password
+*/
+
+router.post('/updateusernaname', function(req, res, next) {
+    req.context = context.newSystemContext();
+    var email = req.body.profile.email;
+    var name = req.body.profile.name;
+    res.status(201).json({profile: name, message: 'All good, name: '+ name+' email: '+ email});
+
+});
+
 router.use(function(err, req, res, next) {
     logger.error(util.inspect(err));
     // Make sure the err has an appropriate status and a message
