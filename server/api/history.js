@@ -26,7 +26,7 @@ function formatRecord(historyRecord) {
 api.route('/history')
     .get(common.parseListParams, function (req, res, next) {
         var where = {};
-        var withChildren = !!req.param('children');
+        var withChildren = !!req.query.children;
 
         if (req.task) {
             where.taskId = req.task.id;
@@ -67,7 +67,7 @@ api.route('/history')
         if (req.listParams.sort) {
             order = req.listParams.sort + ' ' + req.listParams.direction;
         } else {
-            order = 'createdAt desc';
+            order = '"createdAt" desc';
         }
 
         storage.History.findAndCountAll(req.context, {

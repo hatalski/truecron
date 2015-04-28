@@ -30,7 +30,7 @@ module.exports.issue = function(context, req, res, next) {
             token_type: 'bearer',
             expires_in: settings.expiresInMinutes * 60,
             scope: settings.scope,
-            state: req.param('state')
+            state: req.body.state
         }
     );
 };

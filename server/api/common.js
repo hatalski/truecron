@@ -20,13 +20,13 @@ module.exports.parseListParams  = function (req, res, next) {
     req.sanitize('direction').trim();
 
     req.listParams = req.listParams || {};
-    if (req.param('q')) {
-        req.listParams.searchTerm = '%' + req.param('q').replace(/%/g, '%%') + '%';
+    if (req.query.q) {
+        req.listParams.searchTerm = '%' + req.query.q.replace(/%/g, '%%') + '%';
     }
-    req.listParams.offset = req.param('offset') || 0;
-    req.listParams.limit = req.param('limit') || 30;
-    req.listParams.sort = req.param('sort');
-    req.listParams.direction = req.param('direction') || 'asc';
+    req.listParams.offset = req.query.offset || 0;
+    req.listParams.limit = req.query.limit || 30;
+    req.listParams.sort = req.query.sort;
+    req.listParams.direction = req.query.direction || 'asc';
     return next();
 };
 

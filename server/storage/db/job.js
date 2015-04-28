@@ -26,7 +26,7 @@ module.exports = function(sequelize, DataTypes) {
         scheduleId: { type: DataTypes.BIGINT, allowNull: true}
     }, {
         schema: 'tc',
-        tableName: 'job',
+        tableName: 'Job',
         timestamps: true,
         freezeTableName: true,
         classMethods: {
@@ -34,6 +34,7 @@ module.exports = function(sequelize, DataTypes) {
                 Job.belongsTo(models.Organization, { as: 'organization', foreignKey: 'organizationId' });
                 Job.belongsTo(models.Workspace, { as: 'workspace', foreignKey: 'workspaceId' });
                 Job.belongsTo(models.Person, { as: 'updatedBy', foreignKey: 'updatedByPersonId' });
+                Job.hasMany(models.JobTag, { as: 'tags', foreignKey: 'jobId'});
                 //Job.hasOne(models.Schedules, { as: 'schedule', foreignKey: 'scheduleId' });
             }
         }

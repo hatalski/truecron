@@ -13,7 +13,7 @@ module.exports = function(sequelize, DataTypes) {
         resetpasswordcode:   { type: DataTypes.STRING(1024), primaryKey: true, allowNull: false }
     }, {
         schema: 'tc',
-        tableName: 'resetpassword',
+        tableName: 'ResetPassword',
         timestamps: true,
         updatedAt: false,
         freezeTableName: true,

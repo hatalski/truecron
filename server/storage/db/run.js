@@ -16,7 +16,7 @@ module.exports = function(sequelize, DataTypes) {
         message: {type: DataTypes.TEXT}
         }, {
         schema: 'tc',
-        tableName: 'run',
+        tableName: 'Run',
         timestamps: false,
         freezeTableName: true,
         classMethods: {
