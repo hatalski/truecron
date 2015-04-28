@@ -4,19 +4,19 @@
         <div class="col-md-12">
             <div class="panel panel-material-blue-grey-200">
                 <div class="panel-heading truecron-panel-heading">
-                    <h3 class="panel-title">My Profile</h3>
-                    <!--Check this button styles-->
                     <div class="row">
-                        <div class="col-xs-12 text-right">
-                            <div class="btn-group">
-
-                                {{#if isEditNAme}}
-                                    <a class="btn btn-flat btn-success" {{action 'cancelNameAndEmail'}}>cancel</a>
-                                    <a class="btn btn-flat btn-success" {{action 'saveNameAndEmail'}}>Save</a>
-                                    {{else}}
-                                    <a class="btn btn-flat btn-success" {{action 'editNameAndEmail'}}>EDIT</a>
-                                {{/if}}
-                            </div>
+                        <div class="col-md-9">
+                            <h3 class="panel-title truecron-panel-title">My Profile</h3>
+                        </div>
+                        <div class="col-md-3 text-right">
+                            <h3 class="panel-title">
+                              {{#if isEditNAme}}
+                                  <a class="btn btn-material-orange-800 text-right truecron-panel-btn" {{action 'saveNameAndEmail'}}>Save</a>
+                                  <a class="btn btn-material-blue-grey-400 text-right truecron-panel-btn" {{action 'cancelNameAndEmail'}}>cancel</a>
+                              {{else}}
+                                  <a class="btn btn-material-blue-grey-400 text-right truecron-panel-btn" {{action 'editNameAndEmail'}}>EDIT</a>
+                              {{/if}}
+                            </h3>
                         </div>
                     </div>
                 </div>
@@ -60,18 +60,19 @@
             </div>
             <div class="panel panel-material-blue-grey-200">
                 <div class="panel-heading truecron-panel-heading">
-                    <h3 class="panel-title">Password</h3>
-                    <!--Check this button styles-->
                     <div class="row">
-                        <div class="col-xs-12 text-right">
-                            <div class="btn-group">
-                                {{#if isEditPassword}}
-                                    <a class="btn btn-flat btn-success" {{action 'cancelEditPassword'}}>cancel</a>
-                                    <a class="btn btn-flat btn-success" {{action 'savePassword'}}>Save</a>
-                                {{else}}
-                                    <a class="btn btn-flat btn-success" {{action 'editPassword'}}>EDIT</a>
-                                {{/if}}
-                            </div>
+                        <div class="col-md-9">
+                            <h3 class="panel-title truecron-panel-title">Password</h3>
+                        </div>
+                        <div class="col-md-3 text-right">
+                            <h3 class="panel-title">
+                              {{#if isEditPassword}}
+                                  <a class="btn btn-material-orange-800 text-right truecron-panel-btn" {{action 'savePassword'}}>Save</a>
+                                  <a class="btn btn-material-blue-grey-400 text-right truecron-panel-btn" {{action 'cancelEditPassword'}}>cancel</a>
+                              {{else}}
+                                  <a class="btn btn-material-blue-grey-400 text-right truecron-panel-btn" {{action 'editPassword'}}>EDIT</a>
+                              {{/if}}
+                            </h3>
                         </div>
                     </div>
                 </div>
