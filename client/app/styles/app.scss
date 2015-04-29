@@ -795,7 +795,10 @@ a.list-group-item:hover, a.list-group-item:active, a.list-group-item:focus {
   background: url("icon-cog-blue.png") no-repeat 20px 30px;
   height: 81px;
 }
-
+/*Organization*/
+.organization-panel-body {
+  padding: 0;
+}
 /*add new job */
 
 .truecron-checkbox-margin .radio + .radio, .checkbox + .checkbox {
