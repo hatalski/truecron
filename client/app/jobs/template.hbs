@@ -5,31 +5,6 @@
             <div class="panel-heading">
                 <div class="container-fluid">
                     <div class="row">
-                        <div class="col-xs-9 no-padding">
-                            <div class="dropdown dropdown-truecron">
-                                <div class="dropdown-toggle" data-toggle="dropdown" aria-expanded="true">
-                                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                                      <h3 class="sidebar-title-margin">{{model.workspace.name}} <span class="caret"></span></h3>
-                                    </a>
-                                    <ul class="dropdown-menu" role="menu">
-                                      {{#each organization in model.organizations}}
-                                          <li class="dropdown-header">{{organization.name}}</li>
-                                        {{#each workspace in organization.workspaces}}
-                                            <li role="presentation"><a {{action "changeWorkspace" workspace}} role="menuitem" tabindex="-1" href="#">{{workspace.name}}</a></li>
-                                        {{/each}}
-                                      {{/each}}
-                                        <li role="presentation" class="divider"><hr/></li>
-                                        <li role="presentation">{{#link-to 'workspaces'}}Dashboard{{/link-to}}</li>
-                                    </ul>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-xs-3 text-right no-padding">
-                            {{#link-to 'workspaces.workspace.settings' model.workspace class="btn btn-flat btn-sm btn-material-blue-grey-400"}}<i class="fa fa-cog fa-lg"></i>{{/link-to}}
-                        </div>
-                    </div>
-                {{#unless newJob}}
-                    <div class="row">
                         <div class="col-xs-6 col-sm-6 text-left no-padding">
                         {{#if showJobDetails}}
                             {{!--<h4 class="btn-back-padding">--}}
@@ -38,11 +13,12 @@
                             {{!--</h4>--}}
                         {{/if}}
                         </div>
+                        {{#unless newJob}}
                         <div class="col-xs-6 col-sm-6 text-right no-padding">
                             <a href="#" class="btn btn-raised btn-material-orange-800 btn-new-job" {{action 'newJobClicked'}}>New Job</a>
                         </div>
+                        {{/unless}}
                     </div>
-                {{/unless}}
                 </div>
             </div>
           {{#if showJobDetails}}

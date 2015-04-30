@@ -39,5 +39,10 @@ export default Ember.Route.extend(AuthenticatedRouteMixin, {
     //    tags: [{name: 'staging'}, {name: 'edi'}]
     //  }]
     //};
+  },
+  afterModel: function(model) {
+    "use strict";
+    Ember.Logger.log('setting application model to', model.workspace);
+    this.controllerFor('application').set('model', model.workspace);
   }
 });
