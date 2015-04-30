@@ -30,12 +30,12 @@ var redis = require('socket.io-redis');
 io.adapter(redis({ host: config.get('REDIS_HOST'), port: config.get('REDIS_PORT') }));
 
 io.on('connection', function(socket) {
-    console.log('socket.io client has been connected');
+    log.debug('socket.io client has been connected');
     socket.on('disconnect', function(){
-        console.info('socket client disconnected');
+        log.debug('socket client disconnected');
     });
     socket.on('ping', function(message) {
-        console.info('ping received', message);
+        log.debug('ping received', message);
         io.emit('pong');
     });
 });
