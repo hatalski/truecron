@@ -1,7 +1,5 @@
-FROM truecron/nvm
+FROM node:latest
 MAINTAINER Vitali Hatalski <vhatalski@naviam.com>
-
-RUN curl -sL https://deb.nodesource.com/setup_0.12 | bash -
 
 RUN npm install -g bower && \
     npm install -g mocha && \

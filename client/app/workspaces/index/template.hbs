@@ -6,7 +6,7 @@
                    <h4>Your Organizations</h4>
                 </div>
                 <div class="col-md-4 text-right">
-                    <a class="btn btn-signup btn-material-orange-800"><i class="fa fa-plus"></i> Create Organization</a>
+                    <a class="btn btn-signup btn-material-orange-800" {{action "addOrganization"}}><i class="fa fa-plus"></i>Create Organization</a>
                 </div>
             </div>
         </div>
@@ -26,7 +26,7 @@
                       <p>8 users</p>
                   </div>
                   <div class="col-md-3 text-right">
-                      <a href="#"><i class="fa fa-plus"></i> New Workspace</a>
+                      <a href="#" {{action "addWorkspace"}}><i class="fa fa-plus"></i>Add Workspace</a>
                   </div>
               </div>
           </div>
