@@ -17,7 +17,9 @@ export default Ember.Component.extend({
             inputPlaceholder: "Please type name here",
             closeOnConfirm: false
         }, function(inputValue) {
-            if (inputValue === false) return false;
+            if (inputValue === false) {
+                return false;
+            }
             if (inputValue === "") {
                 swal.showInputError("This field is required.");
                 return false;
