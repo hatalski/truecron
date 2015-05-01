@@ -5,9 +5,9 @@
 module.exports = function(sequelize, DataTypes) {
 
     var JobCounters = sequelize.define('JobCounters', {
-        organizationId: { type: DataTypes.BIGINT, allowNull: false },
-        workspaceId:    { type: DataTypes.BIGINT, allowNull: false},
-        jobId:          { type: DataTypes.BIGINT, primaryKey: true, allowNull: false},
+        organizationId: { type: DataTypes.BIGINT, allowNull: true },
+        workspaceId:    { type: DataTypes.BIGINT, allowNull: true},
+        jobId:          { type: DataTypes.BIGINT, primaryKey: true, allowNull: true},
         nextRunAt:      { type: DataTypes.DATE },
         lastRunId:      { type: DataTypes.BIGINT }
         }, {

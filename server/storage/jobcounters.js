@@ -23,6 +23,8 @@ var using = Promise.using;
  * Create a new jobcounter.
  */
 var create = module.exports.create = Promise.method(function (context, attributes) {
+    console.log('!!!!!in jobcounter attributes: '+JSON.stringify(attributes));
+    console.log('!!!!!!create jobcounters in stor jobCounters');
     attributes = tools.sanitizeAttributesForCreate(context, attributes);
     if (!attributes.jobId) {
         throw new errors.InvalidParams('Job ID is not specified.');
@@ -35,7 +37,8 @@ var create = module.exports.create = Promise.method(function (context, attribute
     }
     var locals = { attrs: attributes };
     return using (models.transaction(), function (tx) {
-        return models.JobConters.create(locals.attrs, { transaction: tx })
+        console.log('!!!!! in jobcounter1: '+JSON.stringify(locals.attrs));
+        return models.JobCounters.create(locals.attrs, { transaction: tx })
             .then(function(jobcounter) {
                 return jobcounter;
             });
