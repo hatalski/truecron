@@ -12,7 +12,7 @@ module.exports = function(sequelize, DataTypes) {
         status:   { type: DataTypes.ENUM, values: ['pending', 'active'], allowNull: false }
     }, {
         schema: 'tc',
-        tableName: 'personemail',
+        tableName: 'PersonEmail',
         timestamps: false,
         freezeTableName: true,
         classMethods: {

@@ -33,7 +33,7 @@ export default Ember.Controller.extend(LoginControllerMixin, {
           Ember.$('#inputformrecovery').hide();
           self.set('isSuccess',true);
         });
-        result.error(function(error) {
+        result.fail(function(error) {
           self.set('isWaiting', false);
           self.set('isResultFalse', true);
           console.log(error);

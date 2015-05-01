@@ -21,7 +21,7 @@ module.exports = function(sequelize, DataTypes) {
         timeout:        { type: DataTypes.BIGINT, allowNull:false}
     }, {
         schema: 'tc',
-        tableName: 'task',
+        tableName: 'Task',
         timestamps: true,
         freezeTableName: true,
         classMethods: {

@@ -20,6 +20,9 @@ function formatJob(datajob) {
         history: selfUrl + '/history'
     };
     common.formatApiOutput(job);
+    if (datajob.tags) {
+        job.tags = datajob.tags.map(function (jobTag) { return jobTag.tag; });
+    }
     delete job['scheduleid'];
     delete job['scheduleId'];
     return job;
@@ -36,6 +39,9 @@ api.route('/jobs')
         var where = { };
         if (req.listParams.searchTerm) {
             where = _.merge(where, { name: { like: req.listParams.searchTerm } });
+        }
+        if (req.query.tag) {
+            where = _.merge(where, { tag: req.query.tag });
         }
         var sort = req.listParams.sort || 'name';
 
@@ -103,7 +109,7 @@ api.route('/jobs')
         storage.Workspace.findById(req.context, workspaceId)
             .then(function (workSpace){
                 if(!workSpace){
-                    res.status(400).json({});
+                    return next(new apiErrors.InvalidParams('Invalid workspace specified.'));
                 }
                 req.body.job.organizationId = workSpace.organizationId;
                 var organizationId = req.organization ? req.organization.id : req.body.job.organizationId;

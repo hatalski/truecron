@@ -24,7 +24,7 @@ module.exports = function(sequelize, DataTypes) {
         updatedByPersonId:{ type: DataTypes.BIGINT }
     }, {
         schema: 'tc',
-        tableName: 'person',
+        tableName: 'Person',
         timestamps: true,
         freezeTableName: true,
         classMethods: {

@@ -76,7 +76,7 @@ var getAccessibleOrganizations = module.exports.getAccessibleOrganizations = Pro
             }
             return models.OrganizationToPerson.findAll({
                 where: { personId: context.personId },
-                order: 'organizationId'
+                order: '"organizationId"'
             }, { transaction: transaction })
                 .then(function (records) {
                     var accessEntries = records.reduce(function (result, entry) {

@@ -50,7 +50,7 @@ api.use(function(req, res, next) {
 //if (app.get('env') === 'development') {
 //    api.use(function(err, req, res, next) {
 //        res.status(err.status || 500);
-//        res.send({
+//        res."send({"
 //                status: err.status,
 //                message: err.message,
 //                errors: [ err ]
@@ -60,7 +60,7 @@ api.use(function(req, res, next) {
 
 
 api.use(function(err, req, res, next) {
-    logger.error(util.inspect(err));
+    logger.error(util.inspect(err) + " " + err.stack);
     // Make sure the err has an appropriate status and a message
     err = apiErrors.normalizeError(err);
     res.status(err.status);

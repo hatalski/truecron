@@ -3,6 +3,10 @@ import ENV from 'true-cron/config/environment';
 import ApplicationRouteMixin from 'simple-auth/mixins/application-route-mixin';
 
 export default Ember.Route.extend(ApplicationRouteMixin, {
+  model: function() {
+    "use strict";
+    return this.modelFor('workspaces.workspace');
+  },
   actions: {
     googleLogin: function() {
       Ember.Logger.log('google login initiated');

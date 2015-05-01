@@ -10,7 +10,7 @@ module.exports = function(sequelize, DataTypes) {
         tag:    { type: DataTypes.STRING}
     }, {
         schema: 'tc',
-        tableName: 'jobtag',
+        tableName: 'JobTag',
         timestamps: false,
         freezeTableName: true,
         classMethods: {

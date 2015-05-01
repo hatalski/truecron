@@ -25,30 +25,25 @@ var getJobIdCacheKey = function(jobId) {
 //
 // Jobs
 //
-var allFindedJobs;
 var findAndCountAll = module.exports.findAndCountAll = Promise.method(function (context, workspace, options) {
     return workspaceAccess.ensureHasAccess(context, tools.getId(workspace), workspaceAccess.WorkspaceRoles.Viewer)
         .then(function () {
-            options = _.merge(options || {}, { where: { workspaceId: tools.getId(workspace) } });
+            options = _.merge(options || {}, {
+                where: { workspaceId: tools.getId(workspace) }
+            });
+            if (options.where.tag) {
+                options = _.merge(options || {}, {
+                    where: { workspaceId: tools.getId(workspace) },
+                    include: [ { model: models.JobTag, as: 'tags', where: { tag: options.where.tag }} ]
+                });
+                delete options.where.tag;
+            } else {
+                options = _.merge(options || {}, {
+                    include: [ { model: models.JobTag, as: 'tags' } ]
+                });
+            }
             return models.Job.findAndCountAll(options);
         })
-        .then (function(allJobs){
-        allFindedJobs = allJobs;
-        return models.JobTag.findAll();
-    })
-        .then (function(allTags){
-        for (var i = 0; i < allFindedJobs.rows.length; i++){
-            for (var j = 0; j < allTags.length; j++) {
-                if (allTags[j].dataValues.jobId == allFindedJobs.rows[i].dataValues.id){
-                    if(!allFindedJobs.rows[i].dataValues.tags){
-                        allFindedJobs.rows[i].dataValues.tags = [];
-                    }
-                    allFindedJobs.rows[i].dataValues.tags.push(allTags[j].dataValues.tag);
-                }
-            }
-        }
-        return allFindedJobs;
-    })
         .then(function (result) {
             result.rows.forEach(function(job) { cache.put(getJobIdCacheKey(job.id), job); });
             return result;
@@ -58,37 +53,6 @@ var findAndCountAll = module.exports.findAndCountAll = Promise.method(function (
             throw err;
         });
 });
-
-////////
-//models.JobTag.belongsTo(models.Job)
-//models.Job.hasMany(models.JobTag);
-//var JT = models.JobTag;
-
-//var findAndCountAll = module.exports.findAndCountAll = Promise.method(function (context, workspace, options) {
-//    return workspaceAccess.ensureHasAccess(context, tools.getId(workspace), workspaceAccess.WorkspaceRoles.Viewer)
-//        .then(function () {
-//            console.log('!!!!!!!!0');
-//            options = _.merge(options || {}, { include: [{
-//                model: models.JobTag }]
-//            });
-//            //options = _.merge(options || {}, { where: { workspaceId: tools.getId(workspace) } });
-//            console.log('!!!!!!!!1');
-//            return models.Job.findAndCountAll(options);
-//        })
-//        .then(function (result) {
-//            console.log('!!!!!!!!2');
-//            result.rows.forEach(function(job) { cache.put(getJobIdCacheKey(job.id), job); });
-//            console.log('!!!!!!!!3');
-//            console.log('!!!!!result:'+JSON.stringify(result));
-//            return result;
-//        })
-//        .catch(function (err) {
-//            logger.error('Failed to list jobs, %s.', err.toString());
-//            throw err;
-//        });
-//});
-
-
 
 /**
  * Create a new job.
@@ -104,50 +68,40 @@ var create = module.exports.create = Promise.method(function (context, attribute
     if (!attributes.workspaceId) {
         throw new errors.InvalidParams('Workspace ID is not specified.');
     }
-
     var locals = { attrs: attributes };
-
     return using (models.transaction(), function (tx) {
-
-        return workspaceAccess.ensureHasAccess(context, attributes.workspaceId,
-            workspaceAccess.WorkspaceRoles.Editor, tx)
+        return workspaceAccess.ensureHasAccess(context, attributes.workspaceId, workspaceAccess.WorkspaceRoles.Editor, tx)
             .then(function() {
                 return models.Job.create(locals.attrs, { transaction: tx });
             })
             .then(function (job) {
                 locals.job = job;
+                if (!locals.attrs.tags) {
+                    return job;
+                }
+                locals.job.tags = locals.attrs.tags.map(function (t) { return { jobId: locals.job.id, tag: t }; });
+                return models.JobTag.bulkCreate(
+                    locals.job.tags,
+                    { validate: true, transaction: tx }
+                );
+            })
+            .then(function () {
                 return Promise.join(
                     history.logCreated(context.personId, {
-                        organizationId: job.organizationId,
-                        workspaceId: job.workspaceId,
-                        jobId: job.id
-                    }, job, tx),
-                    cache.put(getJobIdCacheKey(job.id), job));
-            })
-            .then(function() {
-                if (locals.attrs.tags) {
-                    var tags;
-                    locals.job.dataValues.tags = [];
-                    var arrayData = locals.attrs.tags;
-                    // TODO: replace with promises (sequential foreach)
-                    arrayData.forEach(function (tag) {
-                        tags = {
-                            jobId: locals.job.id,
-                            tag: tag.toString()
-                        };
-                        locals.job.dataValues.tags.push(tag);
-                        models.JobTag.create(tags);
-                    });
-                }
+                        organizationId: locals.job.organizationId,
+                        workspaceId: locals.job.workspaceId,
+                        jobId: locals.job.id
+                    }, locals.job, tx),
+                    cache.put(getJobIdCacheKey(locals.job.id), locals.job));
             })
             .then(function() {
                 return locals.job;
             });
     })
-        .catch(function (err) {
-            logger.error('Failed to create a job, %s.', err.toString());
-            throw err;
-        });
+    .catch(function (err) {
+        logger.error('Failed to create a job, %s.', err.toString());
+        throw err;
+    });
 });
 
 /**
@@ -162,29 +116,15 @@ var findById = module.exports.findById = Promise.method(function (context, id, w
             if (result.found) {
                 return result.value;
             }
-            return models.Job.find({ where: { id: id } }, { transaction: transaction })
+            return models.Job.find({
+                    where: { id: id },
+                    include: [ { model: models.JobTag, as: 'tags'} ] }, {
+                    transaction: transaction
+                })
                 .then(function (job) {
-                    locals.thisJob = job;
                     cache.put(getJobIdCacheKey(id), job);
                     return job;
-                })
-                .then(function(job){
-
-                    //console.log('!!!!jobid'+job.id);
-                        return models.JobTag.findAll({ where: { jobid: job.id }}, { transaction: transaction })
-                })
-            .then(function(allTags){
-                    if(allTags.length>0) {
-                        if(!locals.thisJob.dataValues.tags) {
-                            locals.thisJob.dataValues.tags = [];
-                        }
-                        for (var i = 0; i < allTags.length; i++) {
-                            locals.thisJob.dataValues.tags.push(allTags[i].dataValues.tag);
-                        }
-                        console.log('!!!!!thisJob:'+JSON.stringify(locals.thisJob));
-                    }
-                    return locals.thisJob;
-                })
+                });
         })
         .then(function (job) {
             if (job === null) {
@@ -217,6 +157,10 @@ var ensureCanEdit = module.exports.ensureCanEdit = function (context, job) {
 var update = module.exports.update = Promise.method(function (context, id, attributes) {
     attributes = tools.sanitizeAttributesForUpdate(context, attributes);
     var locals = { attrs: attributes };
+    if (locals.attrs.tags) {
+        locals.tags = locals.attrs.tags;
+        delete locals.attrs.tags;
+    }
     return using (models.transaction(), function (tx) {
         return module.exports.findById(context, id, workspaceAccess.WorkspaceRoles.Editor, tx)
             .then(function (job) {
@@ -227,46 +171,40 @@ var update = module.exports.update = Promise.method(function (context, id, attri
                 return job.updateAttributes(locals.attrs, { transaction: tx });
             })
             .then(function (job) {
+                // Process tags
                 locals.job = job;
+                if (!locals.tags) {
+                    return job;
+                }
+                locals.job.tags = locals.tags.map(function (t) { return { jobId: locals.job.id, tag: t }; });
+                return models.JobTag.destroy({ where: { jobId: locals.job.id }, transaction: tx })
+                    .then(function () {
+                        return models.JobTag.bulkCreate(
+                            locals.job.tags,
+                            { validate: true, transaction: tx }
+                        );
+                    });
+            })
+            .then(function () {
+                // Logging and caching
                 return Promise.join(
                     history.logUpdated(context.personId, {
-                        organizationId: job.organizationId,
-                        workspaceId: job.workspaceId,
-                        jobId: job.id
-                    }, job, locals.oldJob, tx),
-                    cache.put(getJobIdCacheKey(job.id), job),
+                        organizationId: locals.job.organizationId,
+                        workspaceId: locals.job.workspaceId,
+                        jobId: locals.job.id
+                    }, locals.job, locals.oldJob, tx),
+                    cache.put(getJobIdCacheKey(locals.job.id), locals.job),
                     function () {
                         return locals.job;
                     });
-            })
-            .then(function() {
-                if (locals.attrs.tags) {
-                    return models.JobTag.destroy({where: {jobId: locals.job.id}, transaction: tx});
-                }
-            })
-            .then(function(){
-                if (locals.attrs.tags) {
-                    var tags;
-                    var arrayData = locals.attrs.tags;
-                    // TODO: replace with promises (sequential foreach)
-                    arrayData.forEach(function (tag) {
-                        tags = {
-                            jobId: locals.job.id,
-                            tag: tag.toString()
-                        };
-                        models.JobTag.create(tags);
-                    });
-                }
-            })
-            .then (function() {
-            return locals.job;
-        });
+            });
     })
     .catch(function (err) {
         logger.error('Failed to update the job %d, %s.', id, err.toString());
         throw err;
     });
 });
+
 /**
  * Remove a job.
  */
