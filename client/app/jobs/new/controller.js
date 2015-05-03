@@ -5,12 +5,6 @@ export default Ember.Controller.extend(RRuleParser, {
   needs: ['jobs'],
   name: '',
 
-  //current: function() {
-  //  "use strict";
-  //  var value = this.get('currentDate') + this.get('currentTime');
-  //  Ember.Logger.log(value);
-  //  return value;
-  //}.property('currentDate', 'currentTime'),
   timezoneArray: function() {
     "use strict";
     var zones = moment.tz.names();
@@ -44,6 +38,7 @@ export default Ember.Controller.extend(RRuleParser, {
       var newJob = self.get('model');
       var schedule = newJob.get('schedule');
       schedule.rrule = self.rrule();
+      schedule.dtStart = self.get('dtStart');
       Ember.Logger.log('new job is about to save: ', newJob);
       newJob.save().then(function() {
         Ember.Logger.log('Job has been saved');

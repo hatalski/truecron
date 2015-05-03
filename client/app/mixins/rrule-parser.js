@@ -33,15 +33,21 @@ export default Ember.Mixin.create({
   currentDate: moment().format('YYYY-MM-DD'),
   currentTime: moment().format('HH:mm'),
   currentZone: moment().zone(),
+  endsOn: 'never',
+  endsOnDate: moment().format('YYYY-MM-DD'),
+  endsAfter: 1,
   dtStart: function()
   {
     var returnDate = moment(this.get('currentDate') + ' ' + (this.get('currentTime')?this.get('currentTime'):''));//.tz(this.get('currentZone'));
-debugger;
     return returnDate.toDate();
   }.property('currentDate', 'currentTime', 'currentZone'),
-  until: null,
   selectedDays: [],
-  rrule: function(){
+  rrule: function(sender){
+    if(!sender.model)
+    {
+      return;
+    }
+    console.log(sender);
     "use strict";
     var self = this;
 
@@ -51,19 +57,30 @@ debugger;
     {
       weekDays.push(self.selectedDays[i].Value);
     }
+    var rruleOptions = {
+      freq: self.get('repeatRules').indexOf(self.get('selectedRepeatRule')),
+      interval: 1,
+      byweekday: weekDays,
+      dtstart: self.get('dtStart')
+    };
+
+    console.log(this.get("endsOn"));
+
+    if(this.get("endsOn") == 'on')
+    {
+      rruleOptions.until = moment(this.get('endsOnDate'));
+    }
+    else if(this.get("endsOn") == 'after')
+    {
+      rruleOptions.count = this.get('endsAfter');
+    }
 
     var recRule = new RRule(
-      {
-        freq: self.get('repeatRules').indexOf(self.get('selectedRepeatRule')),
-        interval: 1,
-        byweekday: weekDays,
-        dtstart: self.get('dtStart'),
-        until: self.until
-      }
+      rruleOptions
     );
-    console.log(recRule.toText());
+    
     return recRule.toString();
-  }.observes('selectedRepeatRule', 'selectedDays.@each', 'currentDate' ),
+  }.observes('selectedRepeatRule', 'selectedDays.@each', 'currentDate', 'currentTime', 'endsOn', 'endsAfter', 'endsOnDate', 'selectedRepeatEvery'),
   selectedRepeatRule: 'Daily',
   repeatRules: ['Yearly', 'Monthly', 'Weekly', 'Daily', 'Hourly', 'Minutely'],
   selectedRepeatEvery: 1,

@@ -132,33 +132,33 @@
                                         </div>
                                         <div class="col-sm-2">
                                             <div class="radio radio-material-orange-700">
-                                                <label for="radioNever">
-                                                  {{input id="radioNever" type="radio" name="endsOn" value="never" checked="checked"}} Never
+                                                <label>
+                                                  {{radio-button value="never" name="endsOn" selection=controller.endsOn }} Never
                                                 </label>
                                             </div>
                                         </div>
                                         <div class="col-sm-2">
                                             <div class="radio radio-material-orange-700">
                                                 <label>
-                                                  {{input type="radio" name="endsOn" value="after"}} After
+                                                  {{radio-button value="after" name="endsOn" selection=controller.endsOn}} After
                                                 </label>
                                             </div>
                                         </div>
                                         <div class="col-sm-2">
                                             <div class="form-group-material-orange-700">
-                                              {{input id="endsAfter" type="number" value=endsAfter class="form-control form-control floating-label" placeholder="occurences"}}
+                                              {{input id="endsAfter" type="number" value=controller.endsAfter class="form-control form-control floating-label" placeholder="occurences"}}
                                             </div>
                                         </div>
                                         <div class="col-sm-2">
                                             <div class="radio radio-material-orange-700">
                                                 <label>
-                                                  {{input type="radio" name="endsOn" value="on"}} On
+                                                  {{radio-button value="on" name="endsOn" selection=controller.endsOn}} On
                                                 </label>
                                             </div>
                                         </div>
                                         <div class="col-sm-3">
                                             <div class="form-group-material-orange-700">
-                                              {{input id="endsOnDate" type="date" value=endsOnDate class="form-control"}}
+                                              {{input id="endsOnDate" type="date" value=controller.endsOnDate class="form-control"}}
                                             </div>
                                         </div>
                                     </div>
@@ -175,10 +175,7 @@
                                         </div>
                                         <div class="col-sm-4">
                                             <div class="form-group-material-orange-700">
-                                                <select class="form-control floating-label" placeholder="Every">
-                                                    <option value="1">1</option>
-                                                    <option value="2">2</option>
-                                                </select>
+                                              {{view "select" content=repeatEvery value=selectedRepeatEvery class="form-control floating-label" placeholder="Every" }}
                                             </div>
                                         </div>
                                     </div>
