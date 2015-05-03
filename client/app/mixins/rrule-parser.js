@@ -47,8 +47,7 @@ export default Ember.Mixin.create({
     {
       return;
     }
-    console.log(sender);
-    "use strict";
+
     var self = this;
 
     var weekDays = [];
@@ -66,11 +65,11 @@ export default Ember.Mixin.create({
 
     console.log(this.get("endsOn"));
 
-    if(this.get("endsOn") == 'on')
+    if(this.get("endsOn") === 'on')
     {
       rruleOptions.until = moment(this.get('endsOnDate'));
     }
-    else if(this.get("endsOn") == 'after')
+    else if(this.get("endsOn") === 'after')
     {
       rruleOptions.count = this.get('endsAfter');
     }
@@ -78,7 +77,7 @@ export default Ember.Mixin.create({
     var recRule = new RRule(
       rruleOptions
     );
-    
+
     return recRule.toString();
   }.observes('selectedRepeatRule', 'selectedDays.@each', 'currentDate', 'currentTime', 'endsOn', 'endsAfter', 'endsOnDate', 'selectedRepeatEvery'),
   selectedRepeatRule: 'Daily',
@@ -111,6 +110,28 @@ export default Ember.Mixin.create({
         return 'month';
       case 'YEARLY':
         return 'year';
+    }
+  },
+  getDayName: function(day) {
+    "use strict";
+    switch(day)
+    {
+      case "MO":
+        return "Monday";
+      case "TU":
+        return "Tuesday";
+      case "WE":
+        return "Wednesday";
+      case "TH":
+        return "Thursday";
+      case "FR":
+        return "Friday";
+      case "SA":
+        return "Saturday";
+      case "SU":
+        return "Sunday";
+      default:
+        return "";
     }
   },
   // timezone is optional
