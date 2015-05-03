@@ -29,21 +29,27 @@ export default Ember.Mixin.create({
       Name:"Sunday",
       Value: RRule.SU
     }],
+  rruleText: '',
   months: moment.months(),
   currentDate: moment().format('YYYY-MM-DD'),
   currentTime: moment().format('HH:mm'),
-  currentZone: moment().zone(),
+  currentZone: moment.tz(),
   endsOn: 'never',
   endsOnDate: moment().format('YYYY-MM-DD'),
   endsAfter: 1,
   dtStart: function()
   {
-    var returnDate = moment(this.get('currentDate') + ' ' + (this.get('currentTime')?this.get('currentTime'):''));//.tz(this.get('currentZone'));
+    var returnDate = moment(this.get('currentDate') + ' ' + (this.get('currentTime')?this.get('currentTime'):''));
+    var timezone = this.get('currentZone');
+    if(timezone.name)
+    {
+      returnDate = returnDate.tz(timezone.name);
+    }
     return returnDate.toDate();
   }.property('currentDate', 'currentTime', 'currentZone'),
   selectedDays: [],
   rrule: function(sender){
-    if(!sender.model)
+    if(sender && !sender.model)
     {
       return;
     }
@@ -58,12 +64,10 @@ export default Ember.Mixin.create({
     }
     var rruleOptions = {
       freq: self.get('repeatRules').indexOf(self.get('selectedRepeatRule')),
-      interval: 1,
+      interval: self.get('selectedRepeatEvery'),
       byweekday: weekDays,
       dtstart: self.get('dtStart')
     };
-
-    console.log(this.get("endsOn"));
 
     if(this.get("endsOn") === 'on')
     {
@@ -77,9 +81,9 @@ export default Ember.Mixin.create({
     var recRule = new RRule(
       rruleOptions
     );
-
+    this.set('rruleText', recRule.toText());
     return recRule.toString();
-  }.observes('selectedRepeatRule', 'selectedDays.@each', 'currentDate', 'currentTime', 'endsOn', 'endsAfter', 'endsOnDate', 'selectedRepeatEvery'),
+  }.observes('selectedRepeatRule', 'selectedDays.@each', 'currentDate', 'currentTime', 'endsOn', 'endsAfter', 'endsOnDate', 'selectedRepeatEvery').on('init'),
   selectedRepeatRule: 'Daily',
   repeatRules: ['Yearly', 'Monthly', 'Weekly', 'Daily', 'Hourly', 'Minutely'],
   selectedRepeatEvery: 1,
