@@ -2,32 +2,39 @@ import Ember from 'ember';
 
 export default Ember.Mixin.create({
   weekdays: [{
-      Name:"Monday",
-      Value: RRule.MO
+      name:"Monday",
+      value: RRule.MO,
+      selected: false
     },
     {
-      Name:"Tuesday",
-      Value: RRule.TU
+      name:"Tuesday",
+      value: RRule.TU,
+      selected: false
     },
     {
-      Name:"Wednesday",
-      Value: RRule.WE
+      name:"Wednesday",
+      value: RRule.WE,
+      selected: false
     },
     {
-      Name:"Thursday",
-      Value: RRule.TH
+      name:"Thursday",
+      value: RRule.TH,
+      selected: false
     },
     {
-      Name:"Friday",
-      Value: RRule.FR
+      name:"Friday",
+      value: RRule.FR,
+      selected: false
     },
     {
-      Name:"Saturday",
-      Value: RRule.SA
+      name:"Saturday",
+      value: RRule.SA,
+      selected: false
     },
     {
-      Name:"Sunday",
-      Value: RRule.SU
+      name:"Sunday",
+      value: RRule.SU,
+      selected: false
     }],
   rruleText: '',
   months: moment.months(),
@@ -47,7 +54,6 @@ export default Ember.Mixin.create({
     }
     return returnDate.toDate();
   }.property('currentDate', 'currentTime', 'currentZone'),
-  selectedDays: [],
   rrule: function(sender){
     if(sender && !sender.model)
     {
@@ -56,12 +62,8 @@ export default Ember.Mixin.create({
 
     var self = this;
 
-    var weekDays = [];
-
-    for(var i=0; i<self.selectedDays.length; i++)
-    {
-      weekDays.push(self.selectedDays[i].Value);
-    }
+    var weekDays = this.get('weekdays').filterBy('selected', true).mapBy('value');
+    Ember.Logger.log('WeekDays in rrule method', weekDays);
     var rruleOptions = {
       freq: self.get('repeatRules').indexOf(self.get('selectedRepeatRule')),
       interval: self.get('selectedRepeatEvery'),
@@ -83,7 +85,7 @@ export default Ember.Mixin.create({
     );
     this.set('rruleText', recRule.toText());
     return recRule.toString();
-  }.observes('selectedRepeatRule', 'selectedDays.@each', 'currentDate', 'currentTime', 'endsOn', 'endsAfter', 'endsOnDate', 'selectedRepeatEvery').on('init'),
+  }.observes('selectedRepeatRule', 'weekdays.@each.selected', 'currentDate', 'currentTime', 'endsOn', 'endsAfter', 'endsOnDate', 'selectedRepeatEvery').on('init'),
   selectedRepeatRule: 'Daily',
   repeatRules: ['Yearly', 'Monthly', 'Weekly', 'Daily', 'Hourly', 'Minutely'],
   selectedRepeatEvery: 1,

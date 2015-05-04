@@ -1,31 +1,3 @@
-{{!--<header class="job-details-header">--}}
-    {{!--<div class="container-fluid">--}}
-        {{!--<div class="row">--}}
-            {{!--<div class="col-sm-6">--}}
-                {{!--<div class="form-group-material-orange-700">--}}
-                    {{!--<h3 class="content-title-margin">{{input id="jobName" type="text" value=model.name class="form-control input-xl" placeholder="Name of the job"}}</h3>--}}
-                {{!--</div>--}}
-            {{!--</div>--}}
-            {{!--<div class="col-sm-1">--}}
-                {{!--<span class="btn btn-sm btn-material-blue-grey-400"><i class="fa fa-trash fa-lg"></i></span>--}}
-            {{!--</div>--}}
-            {{!--<div class="col-sm-6">--}}
-                {{!--<h4>Weekly on Monday, Friday, Thuesday, Sunday, Wensday at 12:32:00 PM</h4>--}}
-            {{!--</div>--}}
-        {{!--</div>--}}
-        {{!--<div class="row">--}}
-            {{!--<div class="col-md-6">--}}
-                {{!--{{input id="jobTags" type="text" value=model.tags class="form-control input-lg" placeholder="Tags"}}--}}
-            {{!--</div>--}}
-            {{!--<div class="col-md-3">--}}
-                {{!--<h5>Last run: <span class="truecron-grey">July 6 12:32:00 PM</span></h5>--}}
-            {{!--</div>--}}
-            {{!--<div class="col-md-3">--}}
-                {{!--<h5>Next run: <span class="truecron-grey">July 8 12:32:00 PM</span></h5>--}}
-            {{!--</div>--}}
-        {{!--</div>--}}
-    {{!--</div>--}}
-{{!--</header>--}}
 <header class="job-details-header">
     <div class="container-fluid">
         <div class="row">
@@ -34,50 +6,22 @@
                     <h3 class="content-title-margin">{{input id="jobName" type="text" value=model.name class="form-control input-xl" placeholder="Name of the job"}}</h3>
                 </div>
             </div>
-            <div class="col-md-6">
+            <div class="col-md-6 text-right">
+                <div class="btn-group">
+                    <a class="btn btn-material-green-400" {{action 'createNewJob'}}>Save job</a>
+                </div>
+                <div class="btn-group">
+                    <a class="btn btn-material-blue-grey-400" {{action 'cancelNewJob'}}>Cancel</a>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-xs-12">
                 <h3 class="content-title-margin">
                     {{job-tags job=model action="addJobTag"}}
                 </h3>
             </div>
         </div>
-        <div class="row">
-            <div class="col-xs-12 text-right">
-                <div class="btn-group">
-                    <a class="btn btn-flat btn-success" {{action 'createNewJob'}}>Save job</a>
-                </div>
-                <div class="btn-group">
-                    <a class="btn btn-flat btn-material-blue-grey-400" {{action 'cancelNewJob'}}>Cancel</a>
-                </div>
-            </div>
-        </div>
-        {{!--<div class="row">--}}
-            {{!--<div class="col-md-1">--}}
-                {{!--<h4 class="truecron-grey">Run:</h4>--}}
-            {{!--</div>--}}
-            {{!--<div class="col-md-5">--}}
-                {{!--<h4 class="truecron-orange">Weekly on Sunday, Monday, Tuesday, Wednesday, Friday at 12:32:00 PM</h4>--}}
-            {{!--</div>--}}
-            {{!--<div class="col-md-1">--}}
-                {{!--<h4 class="truecron-grey">Exclude:</h4>--}}
-            {{!--</div>--}}
-            {{!--<div class="col-md-5">--}}
-                {{!--<h4 class="truecron-orange">Sunday 8 March 2015</h4>--}}
-            {{!--</div>--}}
-        {{!--</div>--}}
-        {{!--<div class="row hidden-xs hidden-sm">--}}
-            {{!--<div class="col-md-1">--}}
-                {{!--<h4 class="truecron-grey">Last run:</h4>--}}
-            {{!--</div>--}}
-            {{!--<div class="col-md-5">--}}
-                {{!--<h4>July 6 12:32:00 PM</h4>--}}
-            {{!--</div>--}}
-            {{!--<div class="col-md-1">--}}
-                {{!--<h4 class="truecron-grey">Next run:</h4>--}}
-            {{!--</div>--}}
-            {{!--<div class="col-md-5">--}}
-                {{!--<h4>July 8 12:32:00 PM</h4>--}}
-            {{!--</div>--}}
-        {{!--</div>--}}
     </div>
 </header>
 <div class="container-fluid">
@@ -189,7 +133,13 @@
                                         </div>
                                         <div class="col-sm-11">
                                             <div class="checkbox pull-left"></div>
-                                          {{checkbox-select model=controller propertyPath="selectedDays" labelPath="Name" elements=controller.weekdays}}
+                                            {{#each day in controller.weekdays}}
+                                                <div class="checkbox checkbox-material-orange-700 pull-left">
+                                                    <label>
+                                                        {{input type="checkbox" checked=day.selected name=day.name}} {{day.name}}
+                                                    </label>
+                                                </div>
+                                            {{/each}}
                                         </div>
                                     </div>
                                 </div>
@@ -244,16 +194,6 @@
                                     </div>
                                 </div>
                             </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-xs-12 text-right">
-                        <div class="btn-group">
-                            <a class="btn btn-raised btn-success" {{action 'createNewJob'}}>Save job</a>
-                        </div>
-                        <div class="btn-group">
-                            <a class="btn btn-raised btn-material-blue-grey-400" {{action 'cancelNewJob'}}>Cancel</a>
                         </div>
                     </div>
                 </div>

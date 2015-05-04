@@ -3,7 +3,7 @@ import {
   test
 } from 'ember-qunit';
 
-moduleForComponent('checkbox-select', {
+moduleForComponent('loading-default', {
   // Specify the other units that are required for this test
   // needs: ['component:foo', 'helper:bar']
 });

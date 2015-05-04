@@ -28,15 +28,15 @@ export default Ember.Controller.extend({
       var self = this;
       var jobs = self.get('model.workspace.jobs');
       Ember.Logger.log(jobs);
-      var newJob = self.store.createRecord('job', {
-        name: '',
-        workspaceId: self.get('model.workspace.id'),
-        workspace: self.get('model.workspace')
-      });
-      Ember.Logger.log('new job: ', newJob);
-      self.set('selectedJob', false);
-      self.set('newJob', newJob);
-      self.set('showJobDetails', true);
+      //var newJob = self.store.createRecord('job', {
+      //  name: '',
+      //  workspaceId: self.get('model.workspace.id'),
+      //  workspace: self.get('model.workspace')
+      //});
+      //Ember.Logger.log('new job: ', newJob);
+      // self.set('selectedJob', false);
+      //self.set('newJob', newJob);
+      // self.set('showJobDetails', true);
       // jobs.pushObject(newJob);
       self.transitionToRoute('jobs.new');
     }

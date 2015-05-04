@@ -1,26 +1,28 @@
 <header class="job-details-header">
     <div class="container-fluid">
         <div class="row">
-            <div class="col-md-5">
+            <div class="col-md-6">
                 <div class="form-group-material-orange-700">
                     <h3 class="content-title-margin">{{input id="jobName" type="text" value=model.name class="form-control input-xl" placeholder="Name of the job"}}</h3>
                 </div>
             </div>
-            <div class="col-md-6">
-                <div class="content-tag-margin">
-                    {{job-tags job=model action="addJobTag"}}
+            <div class="col-md-6 text-right">
+                <div class="btn-group">
+                    <a class="btn btn-raised btn-material-green-400" {{action 'runJob'}}>Run Job</a>
                 </div>
-            </div>
-            <div class="col-md-1 text-right">
-                {{button-alert action="removeJob"}}
+                <div class="btn-group">
+                    <a class="btn btn-raised btn-material-orange-800" {{action 'addTask'}}>New Task</a>
+                </div>
+                <div class="btn-group">
+                    {{button-alert action="removeJob"}}
+                </div>
             </div>
         </div>
         <div class="row">
-            <div class="col-xs-6 text-left">
-                <a class="btn btn-raised btn-material-orange-800" {{action 'runJob'}}>Run Job</a>
-            </div>
-            <div class="col-xs-6 text-right">
-                <a class="btn btn-raised btn-material-orange-800" {{action 'addTask'}}>New Task</a>
+            <div class="col-xs-12">
+                <h3 class="content-tag-margin">
+                    {{job-tags job=model action="addJobTag"}}
+                </h3>
             </div>
         </div>
     </div>
@@ -28,7 +30,10 @@
 <div class="container-fluid">
     <div class="row">
         <div class="col-xs-12 text-center">
-            <a class="btn btn-flat btn-raised btn-material-orange-800" {{action 'editSchedule'}}>Weekly <span style="color:#000">on</span> Sunday, Monday, Tuesday, Wednesday, Friday <span style="color:#000">at</span> 12:32:00 PM <span style="color:#000">excluding</span> Sunday 8 March 2015</a>
+            <a class="btn btn-flat btn-raised btn-material-orange-800" {{action 'editSchedule'}}>
+                {{controller.rruleText}}
+                {{!--Weekly <span style="color:#000">on</span> Sunday, Monday, Tuesday, Wednesday, Friday <span style="color:#000">at</span> 12:32:00 PM <span style="color:#000">excluding</span> Sunday 8 March 2015--}}
+            </a>
         </div>
     </div>
     {{#if showNewTaskForm}}

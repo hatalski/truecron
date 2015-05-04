@@ -1,6 +1,7 @@
 import Ember from 'ember';
+import RRuleParser from 'true-cron/mixins/rrule-parser';
 
-export default Ember.Controller.extend({
+export default Ember.Controller.extend(RRuleParser, {
   needs: ['jobs'],
   jobs: Ember.computed.alias("controllers.jobs"),
 
