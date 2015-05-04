@@ -11,7 +11,8 @@ var Promise = require("bluebird"),
     validator = require('../lib/validator'),
     errors = require('../lib/errors'),
     tools = require('./tools'),
-    jobs = require('./jobs');
+    jobs = require('./jobs'),
+    jobCounters = require('./jobcounters');
 
 var using = Promise.using;
 
@@ -28,6 +29,7 @@ var getRunIdCacheKey = function(runId) {
 
 var create = module.exports.create = Promise.method(function (context, attributes) {
     attributes = tools.sanitizeAttributesForCreate(context, attributes);
+    var locals = attributes;
     if (!attributes.organizationId) {
         throw new errors.InvalidParams('Organization ID is not specified.');
     }
@@ -40,10 +42,24 @@ var create = module.exports.create = Promise.method(function (context, attribute
     return using(models.transaction(), function (tx) {
         return models.Run.create(attributes, { transaction: tx });
     })
-        .catch(function (err) {
-            logger.error('Failed create run on the job %d .', attributes.jobId, err.toString());
-            throw err;
-        });
+    .then(function(runCreated) {
+        locals.run = runCreated;
+        locals.jobcounter = {};
+        locals.jobcounter.jobId = locals.jobId;
+        locals.jobcounter.workspaceId = locals.workspaceId;
+        locals.jobcounter.organizationId = locals.organizationId;
+        locals.jobcounter.lastRunId = runCreated.id;
+
+        return jobCounters.update(context, locals.jobId, locals.jobcounter);
+    })
+        .then(function(){
+            return locals.run;
+        })
+
+    .catch(function (err) {
+        logger.error('Failed create run on the job %d .', attributes.jobId, err.toString());
+        throw err;
+    });
 });
 
 //
