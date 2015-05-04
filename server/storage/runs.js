@@ -44,12 +44,13 @@ var create = module.exports.create = Promise.method(function (context, attribute
     })
     .then(function(runCreated) {
         locals.run = runCreated;
-        locals.jobcounter = {};
-        locals.jobcounter.jobId = locals.jobId;
-        locals.jobcounter.workspaceId = locals.workspaceId;
-        locals.jobcounter.organizationId = locals.organizationId;
-        locals.jobcounter.lastRunId = runCreated.id;
-        return jobCounters.update(context, locals.jobId, locals.jobcounter);
+            jobcounter = {
+                jobId : locals.job.id,
+                workspaceId : locals.job.workspaceId,
+                organizationId : locals.job.organizationId,
+                lastRunId : runCreated.id
+            };
+        return jobCounters.update(context, locals.jobId, jobcounter);
     })
         .then(function(jobcounter){
             locals.run.dataValues.jobcounter = jobcounter;
