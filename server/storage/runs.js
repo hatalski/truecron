@@ -52,7 +52,8 @@ var create = module.exports.create = Promise.method(function (context, attribute
 
         return jobCounters.update(context, locals.jobId, locals.jobcounter);
     })
-        .then(function(){
+        .then(function(jobcounter){
+            locals.run.jobcounter = locals.run.jobcounter;
             return locals.run;
         })
 

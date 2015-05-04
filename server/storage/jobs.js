@@ -103,7 +103,8 @@ var create = module.exports.create = Promise.method(function (context, attribute
         locals.jobcounter.organizationId = locals.job.organizationId;
         return jobCounters.create(context, locals.jobcounter);
     })
-        .then(function() {
+        .then(function(jobcounter) {
+            locals.job.dataValues.jobcounter = jobcounter;
             return locals.job;
         })
     .catch(function (err) {
