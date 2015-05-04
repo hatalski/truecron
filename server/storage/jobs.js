@@ -97,12 +97,11 @@ var create = module.exports.create = Promise.method(function (context, attribute
             })
     })
         .then(function(){
-        jobcounter = {
-            jobId : locals.job.id,
-            workspaceId : locals.job.workspaceId,
-            organizationId : locals.job.organizationId
-        };
-        return jobCounters.create(context, jobcounter);
+        return jobCounters.create(context, jobcounter = {
+                                jobId           : locals.job.id,
+                                workspaceId     : locals.job.workspaceId,
+                                organizationId  : locals.job.organizationId
+                                });
     })
         .then(function(jobcounter) {
             locals.job.dataValues.jobcounter = jobcounter;
