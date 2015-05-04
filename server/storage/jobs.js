@@ -14,7 +14,6 @@ var Promise = require("bluebird"),
     workspaceAccess = require('./workspace-access'),
     jobCounters = require('./jobcounters');
 
-console.dir('!!!! jobCounters: '+JSON.stringify(jobCounters));
 var using = Promise.using;
 
 /**
@@ -87,18 +86,6 @@ var create = module.exports.create = Promise.method(function (context, attribute
                     { validate: true, transaction: tx }
                 );
             })
-            .then(function(){
-                //console.log('!!!!!!create jobcounters in stor job');
-                locals.jobcounter = {};
-                locals.jobcounter.jobId = locals.job.id;
-                locals.jobcounter.workspaceId = locals.job.workspaceId;
-                locals.jobcounter.organizationId = locals.job.organizationId;
-                //console.log('!!!!!3: ');
-                console.log('!!!!!attributes: '+JSON.stringify(locals.jobcounter));
-                //console.log('!!!!!context: '+JSON.stringify(context));
-                return jobCounters.create(context, locals.jobcounter);
-            })
-
             .then(function () {
                 return Promise.join(
                     history.logCreated(context.personId, {
@@ -108,19 +95,21 @@ var create = module.exports.create = Promise.method(function (context, attribute
                     }, locals.job, tx),
                     cache.put(getJobIdCacheKey(locals.job.id), locals.job));
             })
-
-            .then(function() {
-                return locals.job;
-            });
     })
+        .then(function(){
+        locals.jobcounter = {};
+        locals.jobcounter.jobId = locals.job.id;
+        locals.jobcounter.workspaceId = locals.job.workspaceId;
+        locals.jobcounter.organizationId = locals.job.organizationId;
+        return jobCounters.create(context, locals.jobcounter);
+    })
+        .then(function() {
+            return locals.job;
+        })
     .catch(function (err) {
         logger.error('Failed to create a job, %s.', err.toString());
         throw err;
     })
-    .then(function(jobcounter){
-            return jobcounter;
-    })
-
 });
 
 /**

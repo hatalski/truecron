@@ -61,7 +61,7 @@ describe('JOBS API',
         });
 
 
-        it.only('create a new job without organizations id', function (done) {
+        it('create a new job without organizations id', function (done) {
             superagent.post(prefix + '/workspaces/' + testdata.MyWorkspace.id + '/jobs')
                 .set('Content-Type', 'application/json')
                 .send({ 'job': {
