@@ -34,9 +34,9 @@ export default Ember.Controller.extend({
       //  workspace: self.get('model.workspace')
       //});
       //Ember.Logger.log('new job: ', newJob);
-      self.set('selectedJob', false);
+      // self.set('selectedJob', false);
       //self.set('newJob', newJob);
-      self.set('showJobDetails', true);
+      // self.set('showJobDetails', true);
       // jobs.pushObject(newJob);
       self.transitionToRoute('jobs.new');
     }

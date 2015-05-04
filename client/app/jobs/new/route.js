@@ -2,13 +2,15 @@ import Ember from 'ember';
 
 export default Ember.Route.extend({
   model: function() {
-    "use strict";
+      "use strict";
 
-    var selectedJob = this.store.createRecord('job', {
-      name: ''
-    }); //this.controllerFor('jobs').get('newJob');
-    Ember.Logger.log('new job on new route: ', selectedJob);
-    return selectedJob;
+      var newJob = this.store.createRecord('job', {
+          name: ''
+      }); //this.controllerFor('jobs').get('newJob');
+      this.controllerFor('jobs').set('selectedJob', newJob);
+      this.controllerFor('jobs').set('showJobDetails', true);
+      Ember.Logger.log('new job on new route: ', newJob);
+      return newJob;
   },
   afterModel: function(model) {
     "use strict";
