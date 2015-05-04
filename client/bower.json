@@ -27,6 +27,7 @@
     "hammerjs": "2.0.4",
     "arrive": "2.1.0",
     "selectize": "0.12.0",
-    "sweetalert": "0.5.0"
+    "sweetalert": "0.5.0",
+    "ember-data.model-fragments": "0.3.2"
   }
 }

@@ -123,14 +123,15 @@ api.route('/jobs')
                 {
                     storage.Jobs.create(context, job)
                         .then(function (job) {
-                            if(schedule)
-                            {
-                                var formatedJob = formatJob(job);
+                            var formatedJob = formatJob(job);
+
+                            if(schedule) {
                                 formatedJob.schedule = schedule.toJSON();
-                                res.status(201).json({ job: formatedJob });
                             }
-                            else
-                                res.status(201).json({ job: formatJob(job) });
+                            else {
+                                formatedJob.schedule = null;
+                            }
+                            res.status(201).json({ job: formatedJob });
                         })
                         .catch(function (err) {
                             logger.error(err.toString());

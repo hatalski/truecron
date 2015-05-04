@@ -1,10 +1,91 @@
 import Ember from 'ember';
 
 export default Ember.Mixin.create({
-  weekdays: moment.weekdays(),
+  weekdays: [{
+      Name:"Monday",
+      Value: RRule.MO
+    },
+    {
+      Name:"Tuesday",
+      Value: RRule.TU
+    },
+    {
+      Name:"Wednesday",
+      Value: RRule.WE
+    },
+    {
+      Name:"Thursday",
+      Value: RRule.TH
+    },
+    {
+      Name:"Friday",
+      Value: RRule.FR
+    },
+    {
+      Name:"Saturday",
+      Value: RRule.SA
+    },
+    {
+      Name:"Sunday",
+      Value: RRule.SU
+    }],
+  rruleText: '',
   months: moment.months(),
+  currentDate: moment().format('YYYY-MM-DD'),
+  currentTime: moment().format('HH:mm'),
+  currentZone: moment.tz(),
+  endsOn: 'never',
+  endsOnDate: moment().format('YYYY-MM-DD'),
+  endsAfter: 1,
+  dtStart: function()
+  {
+    var returnDate = moment(this.get('currentDate') + ' ' + (this.get('currentTime')?this.get('currentTime'):''));
+    var timezone = this.get('currentZone');
+    if(timezone.name)
+    {
+      returnDate = returnDate.tz(timezone.name);
+    }
+    return returnDate.toDate();
+  }.property('currentDate', 'currentTime', 'currentZone'),
+  selectedDays: [],
+  rrule: function(sender){
+    if(sender && !sender.model)
+    {
+      return;
+    }
+
+    var self = this;
+
+    var weekDays = [];
+
+    for(var i=0; i<self.selectedDays.length; i++)
+    {
+      weekDays.push(self.selectedDays[i].Value);
+    }
+    var rruleOptions = {
+      freq: self.get('repeatRules').indexOf(self.get('selectedRepeatRule')),
+      interval: self.get('selectedRepeatEvery'),
+      byweekday: weekDays,
+      dtstart: self.get('dtStart')
+    };
+
+    if(this.get("endsOn") === 'on')
+    {
+      rruleOptions.until = moment(this.get('endsOnDate'));
+    }
+    else if(this.get("endsOn") === 'after')
+    {
+      rruleOptions.count = this.get('endsAfter');
+    }
+
+    var recRule = new RRule(
+      rruleOptions
+    );
+    this.set('rruleText', recRule.toText());
+    return recRule.toString();
+  }.observes('selectedRepeatRule', 'selectedDays.@each', 'currentDate', 'currentTime', 'endsOn', 'endsAfter', 'endsOnDate', 'selectedRepeatEvery').on('init'),
   selectedRepeatRule: 'Daily',
-  repeatRules: ['Minutely', 'Hourly', 'Daily', 'Weekly', 'Monthly', 'Yearly'],
+  repeatRules: ['Yearly', 'Monthly', 'Weekly', 'Daily', 'Hourly', 'Minutely'],
   selectedRepeatEvery: 1,
   repeatEvery: function() {
     switch (this.get('selectedRepeatRule')) {
@@ -16,6 +97,25 @@ export default Ember.Mixin.create({
         return [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30];
     }
   }.property('selectedRepeatRule'),
+  getFrequencyText: function(freq) {
+    "use strict";
+    switch(freq) {
+      case 'SECONDLY':
+        return 'second';
+      case 'MINUTELY':
+        return 'minute';
+      case 'HOURLY':
+        return 'hour';
+      case 'DAILY':
+        return 'day';
+      case 'WEEKLY':
+        return 'week';
+      case 'MONTHLY':
+        return 'month';
+      case 'YEARLY':
+        return 'year';
+    }
+  },
   getDayName: function(day) {
     "use strict";
     switch(day)
@@ -36,25 +136,6 @@ export default Ember.Mixin.create({
         return "Sunday";
       default:
         return "";
-    }
-  },
-  getFrequencyText: function(freq) {
-    "use strict";
-    switch(freq) {
-      case 'SECONDLY':
-        return 'second';
-      case 'MINUTELY':
-        return 'minute';
-      case 'HOURLY':
-        return 'hour';
-      case 'DAILY':
-        return 'day';
-      case 'WEEKLY':
-        return 'week';
-      case 'MONTHLY':
-        return 'month';
-      case 'YEARLY':
-        return 'year';
     }
   },
   // timezone is optional
