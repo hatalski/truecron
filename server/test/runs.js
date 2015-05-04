@@ -86,6 +86,7 @@ describe('RUNS API',
                     expect(res.body.error).to.eql(undefined);
                     id_run_to_delete = res.body.run.id;
                     expect(res.body.run.id).to.be.a('string');
+                    expect(res.status).to.eql(201);
                     done();
                 });
         });

@@ -11,7 +11,8 @@ var Promise = require("bluebird"),
     validator = require('../lib/validator'),
     errors = require('../lib/errors'),
     tools = require('./tools'),
-    workspaceAccess = require('./workspace-access');
+    workspaceAccess = require('./workspace-access'),
+    jobCounters = require('./jobcounters');
 
 var using = Promise.using;
 
@@ -94,14 +95,22 @@ var create = module.exports.create = Promise.method(function (context, attribute
                     }, locals.job, tx),
                     cache.put(getJobIdCacheKey(locals.job.id), locals.job));
             })
-            .then(function() {
-                return locals.job;
-            });
     })
+        .then(function(){
+        return jobCounters.create(context, jobcounter = {
+                                jobId           : locals.job.id,
+                                workspaceId     : locals.job.workspaceId,
+                                organizationId  : locals.job.organizationId
+                                });
+    })
+        .then(function(jobcounter) {
+            locals.job.dataValues.jobcounter = jobcounter;
+            return locals.job;
+        })
     .catch(function (err) {
         logger.error('Failed to create a job, %s.', err.toString());
         throw err;
-    });
+    })
 });
 
 /**
