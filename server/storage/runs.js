@@ -45,9 +45,9 @@ var create = module.exports.create = Promise.method(function (context, attribute
     .then(function(runCreated) {
         locals.run = runCreated;
             jobcounter = {
-                jobId : locals.job.id,
-                workspaceId : locals.job.workspaceId,
-                organizationId : locals.job.organizationId,
+                jobId : locals.jobId,
+                workspaceId : locals.workspaceId,
+                organizationId : locals.organizationId,
                 lastRunId : runCreated.id
             };
         return jobCounters.update(context, locals.jobId, jobcounter);
