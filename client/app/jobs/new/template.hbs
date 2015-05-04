@@ -83,7 +83,10 @@
 <div class="container-fluid">
     <div class="row">
         <div class="col-xs-12 text-center">
-            <a class="btn btn-flat btn-material-orange-800" {{action 'editSchedule'}}>Weekly <span style="color:#000">on</span> Sunday, Monday, Tuesday, Wednesday, Friday <span style="color:#000">at</span> 12:32:00 PM <span style="color:#000">excluding</span> Sunday 8 March 2015</a>
+            <a class="btn btn-flat btn-material-orange-800" {{action 'editSchedule'}}>
+                <!--Weekly <span style="color:#000">on</span> Sunday, Monday, Tuesday, Wednesday, Friday <span style="color:#000">at</span> 12:32:00 PM <span style="color:#000">excluding</span> Sunday 8 March 2015-->
+                {{controller.rruleText}}
+            </a>
         </div>
     </div>
     <div class="row">
@@ -107,21 +110,21 @@
                                         </div>
                                         <div class="col-sm-3">
                                             <div class="form-group-material-orange-700">
-                                              {{input id="startsOn" value=currentDate class="form-control floating-label" placeholder="Date" type="date"}}
+                                              {{input id="startsOn" value=controller.currentDate class="form-control floating-label" placeholder="Date" type="date"}}
                                             </div>
                                         </div>
                                         <div class="col-sm-3">
                                             <div class="form-group-material-orange-700">
-                                              {{input id="startsAt" value=currentTime class="form-control floating-label" placeholder="Time" type="time"}}
+                                              {{input id="startsAt" value=controller.currentTime class="form-control floating-label" placeholder="Time" type="time"}}
                                             </div>
                                         </div>
                                         <div class="col-sm-4">
                                             <div class="form-group-material-orange-700">
-                                                <select class="form-control floating-label" placeholder="Timezone">
-                                                  {{#each timezone in controller.zones}}
-                                                      <option {{bind-attr value=timezone.name}}>{{timezone.name}} - {{timezone.abbr}} - {{timezone.offset}}</option>
-                                                  {{/each}}
-                                                </select>
+                                              {{view "select" content=controller.zones class="form-control floating-label"
+                                              optionLabelPath="content.fullName"
+                                              optionValuePath="content.name"
+                                              placeholder="Timezone"
+                                              selection=controller.currentZone}}
                                             </div>
                                             <br>
                                         </div>
@@ -132,33 +135,33 @@
                                         </div>
                                         <div class="col-sm-2">
                                             <div class="radio radio-material-orange-700">
-                                                <label for="radioNever">
-                                                  {{input id="radioNever" type="radio" name="endsOn" value="never" checked="checked"}} Never
+                                                <label>
+                                                  {{radio-button value="never" name="endsOn" selection=controller.endsOn }} Never
                                                 </label>
                                             </div>
                                         </div>
                                         <div class="col-sm-2">
                                             <div class="radio radio-material-orange-700">
                                                 <label>
-                                                  {{input type="radio" name="endsOn" value="after"}} After
+                                                  {{radio-button value="after" name="endsOn" selection=controller.endsOn}} After
                                                 </label>
                                             </div>
                                         </div>
                                         <div class="col-sm-2">
                                             <div class="form-group-material-orange-700">
-                                              {{input id="endsAfter" type="number" value=endsAfter class="form-control form-control floating-label" placeholder="occurences"}}
+                                              {{input id="endsAfter" type="number" value=controller.endsAfter class="form-control form-control floating-label" placeholder="occurences"}}
                                             </div>
                                         </div>
                                         <div class="col-sm-2">
                                             <div class="radio radio-material-orange-700">
                                                 <label>
-                                                  {{input type="radio" name="endsOn" value="on"}} On
+                                                  {{radio-button value="on" name="endsOn" selection=controller.endsOn}} On
                                                 </label>
                                             </div>
                                         </div>
                                         <div class="col-sm-3">
                                             <div class="form-group-material-orange-700">
-                                              {{input id="endsOnDate" type="date" value=endsOnDate class="form-control"}}
+                                              {{input id="endsOnDate" type="date" value=controller.endsOnDate class="form-control"}}
                                             </div>
                                         </div>
                                     </div>
@@ -170,19 +173,12 @@
                                         <div class="col-sm-4">
                                             <div class="form-group-material-orange-700">
                                                 {{log repeatRules}}
-                                                <select class="form-control floating-label" placeholder="Rule">
-                                                    {{#each repeat in repeatRules}}
-                                                        <option value="{{repeat}}">{{repeat}}</option>
-                                                    {{/each}}
-                                                </select>
+                                              {{view "select" content=repeatRules value=selectedRepeatRule class="form-control floating-label" placeholder="Rule"}}
                                             </div>
                                         </div>
                                         <div class="col-sm-4">
                                             <div class="form-group-material-orange-700">
-                                                <select class="form-control floating-label" placeholder="Every">
-                                                    <option value="1">1</option>
-                                                    <option value="2">2</option>
-                                                </select>
+                                              {{view "select" content=repeatEvery value=selectedRepeatEvery class="form-control floating-label" placeholder="Every" }}
                                             </div>
                                         </div>
                                     </div>
@@ -193,13 +189,7 @@
                                         </div>
                                         <div class="col-sm-11">
                                             <div class="checkbox pull-left"></div>
-                                          {{#each weekday in controller.weekdays}}
-                                              <div class="checkbox checkbox-material-orange-700 pull-left">
-                                                  <label>
-                                                    {{input type="checkbox" checked=false}} {{weekday}}
-                                                  </label>
-                                              </div>
-                                          {{/each}}
+                                          {{checkbox-select model=controller propertyPath="selectedDays" labelPath="Name" elements=controller.weekdays}}
                                         </div>
                                     </div>
                                 </div>
