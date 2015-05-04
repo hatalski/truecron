@@ -47,7 +47,8 @@
     -webkit-transform: rotate(360deg);
     transform: rotate(360deg); } }
 .loading {
-  padding-left: 10px; }
+  padding-left: 10px;
+  color: #44707c; }
 
 .loading-group {
   border: 0 !important; }
@@ -759,5 +760,13 @@ a.list-group-item:hover, a.list-group-item:active, a.list-group-item:focus {
 
 .truecron_checkbox {
   margin-top: 5px; }
+
+/*Organization page*/
+.truecron-navbar .truecron-org-tabs > .active > a, .truecron-navbar .truecron-org-tabs > .active > a:hover, .truecron-navbar .truecron-org-tabs > .active > a:focus,
+.truecron-navbar .truecron-org-tabs > li > a, .truecron-navbar .truecron-org-tabs > li > a:hover, .truecron-navbar .truecron-org-tabs > li > a:focus {
+  color: #ffffff; }
+
+.truecron-well-active {
+  color: #ffffff; }
 
 /*# sourceMappingURL=app.css.map */
