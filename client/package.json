@@ -45,6 +45,6 @@
     "express": "4.12.3",
     "glob": "5.0.5",
     "liquid-fire": "0.19.3",
-    "torii": "git+https://github.com/PerksLab/torii.git"
+    "torii": "0.3.4"
   }
 }
