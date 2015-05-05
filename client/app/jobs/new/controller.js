@@ -1,10 +1,12 @@
 import Ember from 'ember';
 import RRuleParser from 'true-cron/mixins/rrule-parser';
+import exDate from 'true-cron/ex-date/model';
 
 export default Ember.Controller.extend(RRuleParser, {
   needs: ['jobs'],
   name: '',
-
+  excludeFromDate: '',
+  excludeToDate: '',
   timezoneArray: function() {
     "use strict";
     var zones = moment.tz.names();
@@ -27,6 +29,10 @@ export default Ember.Controller.extend(RRuleParser, {
     }
     return result;
   },
+  getDayOfWeek: function(date)
+  {
+    return moment(date).day();
+  },
   zone: 'GMT',
   zones: function() {
     return this.timezoneArray();
@@ -39,6 +45,8 @@ export default Ember.Controller.extend(RRuleParser, {
       var schedule = newJob.get('schedule');
       schedule.rrule = self.rrule();
       schedule.dtStart = self.get('dtStart');
+      schedule.exDate = JSON.stringify(self.exDates);
+      console.log(schedule.exDate);
       Ember.Logger.log('new job is about to save: ', newJob);
       newJob.save().then(function() {
         Ember.Logger.log('Job has been saved');
@@ -56,10 +64,27 @@ export default Ember.Controller.extend(RRuleParser, {
       this.get('controllers.jobs').set('newJob', null);
       this.transitionToRoute('jobs', job.get('workspaceId'));
     },
-    schedule: function()
+    addExDate: function()
     {
-      "use strict";
+      if(!moment(this.get('excludeFromDate')).isValid())
+      {
+        return;
+      }
 
+      var toDate = (this.get('excludeToDate') === '') ? null : moment(this.get('excludeToDate'));
+
+      var date = exDate.create({
+          fromDate: moment(this.get('excludeFromDate')),
+          toDate: toDate
+        });
+
+      this.exDates.addObject(date);
+      this.set('excludeFromDate', '');
+      this.set('excludeToDate', '');
+    },
+    removeExDate: function(exDate)
+    {
+      this.exDates.removeObject(exDate);
     }
   }
 });
