@@ -769,4 +769,20 @@ a.list-group-item:hover, a.list-group-item:active, a.list-group-item:focus {
 .truecron-well-active {
   color: #ffffff; }
 
+.truecron-well-inactive h4, .truecron-well-inactive h3 {
+  color: #44707c; }
+
+.truecron-well-inactive h1 {
+  color: #6c939e; }
+
+.truecron-well-inactive h2 {
+  color: #ff5c00; }
+
+.free-pan-container {
+  padding: 55px 0; }
+
+.truecron-your-plan {
+  margin: 10px 0;
+  padding: 8px 0; }
+
 /*# sourceMappingURL=app.css.map */
