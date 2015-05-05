@@ -63,7 +63,6 @@ export default Ember.Mixin.create({
     var self = this;
 
     var weekDays = this.get('weekdays').filterBy('selected', true).mapBy('value');
-    Ember.Logger.log('WeekDays in rrule method', weekDays);
     var rruleOptions = {
       freq: self.get('repeatRules').indexOf(self.get('selectedRepeatRule')),
       interval: self.get('selectedRepeatEvery'),
