@@ -86,6 +86,7 @@ export default Ember.Mixin.create({
     this.set('rruleText', recRule.toText());
     return recRule.toString();
   }.observes('selectedRepeatRule', 'weekdays.@each.selected', 'currentDate', 'currentTime', 'endsOn', 'endsAfter', 'endsOnDate', 'selectedRepeatEvery').on('init'),
+  exDates: Ember.A([]),
   selectedRepeatRule: 'Daily',
   repeatRules: ['Yearly', 'Monthly', 'Weekly', 'Daily', 'Hourly', 'Minutely'],
   selectedRepeatEvery: 1,
