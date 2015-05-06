@@ -49,3 +49,5 @@ api.route('/resetpassword/:resetcode')
                 res.status(204).json({});
             })
     });
+
+module.exports = api;

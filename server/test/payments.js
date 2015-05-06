@@ -27,6 +27,8 @@ describe('PAYMENTs API',
         var id_to_delete;
         //
         //it('create a new payment', function (done) {
+        //    console.log("!!!!testdata.AcmeCorp.id: "+ testdata.AcmeCorp.id);
+        //    console.log("!!!!testdata.MyWorkspace.id: "+ testdata.MyWorkspace.id);
         //    superagent.post(prefix + '/organizations/' + testdata.AcmeCorp.id + '/workspaces/' + testdata.MyWorkspace.id + '/payments')
         //        .set('Content-Type', 'application/json')
         //        .send({ 'payment': {
@@ -39,18 +41,19 @@ describe('PAYMENTs API',
         //        })
         //        .authenticate(accessToken)
         //        .end(function (e, res) {
+        //            //console.log('!!!!!res.body.payment.id: '+res.body.payment.id);
         //            expect(e).to.eql(null);
         //            expect(res.header['content-type']).to.eql('application/json; charset=utf-8');
-        //            id_to_delete = res.body.payment.id;
-        //            expect(res.body.payment.amount).to.eql(100000);
-        //            expect(res.body.payment.description).to.eql('for good job');
-        //            expect(res.body.payment.paymentMethod).to.eql('VISA');
-        //            expect(res.body.payment.receipt).to.eql('test receipt');
+        //            //id_to_delete = res.body.payment.id;
+        //            //expect(res.body.payment.amount).to.eql(100000);
+        //            //expect(res.body.payment.description).to.eql('for good job');
+        //            //expect(res.body.payment.paymentMethod).to.eql('VISA');
+        //            //expect(res.body.payment.receipt).to.eql('test receipt');
         //            expect(res.status).to.eql(201);
         //            done();
         //        });
         //});
-        //
+
         //it('get all payments', function (done) {
         //    superagent.get(prefix + '/organizations/' + testdata.AcmeCorp.id + '/workspaces/' + testdata.MyWorkspace.id + '/payments')
         //        .set('Content-Type', 'application/json')

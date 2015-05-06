@@ -69,22 +69,27 @@ api.route('/payments')
     //
 
     .post(function (req, res, next) {
+        console.log('!!!!!1');
         if (!req.body || !req.body.payment) {
-            return next(new apiErrors.InvalidParams('payment is not specified.'));
+            return next(new apiErrors.InvalidParams('Payment is not specified.'));
         }
         var organizationId = req.organization ? req.organization.id : req.body.payment.organizationId;
+        console.log('!!!!!2');
         if (!organizationId) {
+            console.log('!!!!!3');
             return next(new apiErrors.InvalidParams('Organization is not specified.'));
         }
         storage.Organization.findById(req.context, organizationId)
             .then(function (organization){
                 if(!organization){
+                    console.log('!!!!!4');
                     return next(new apiErrors.InvalidParams('Invalid organization specified.'));
                 }
                 req.body.payment.organizationId = organization.organizationId;
-
+                console.log('!!!!!5');
                 storage.Payments.create(req.context, req.payment)
                     .then(function (payment) {
+                        console.log('!!!!!6');
                         res.status(201).json({ payment: payment });
                     })
                     .catch(function (err) {
@@ -93,3 +98,5 @@ api.route('/payments')
                     });
             })
     });
+
+module.exports = api;
