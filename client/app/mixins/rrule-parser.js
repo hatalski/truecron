@@ -1,4 +1,5 @@
 import Ember from 'ember';
+import OccurenceDate from 'true-cron/occurrence-date/model';
 
 export default Ember.Mixin.create({
   weekdays: [{
@@ -73,7 +74,7 @@ export default Ember.Mixin.create({
 
     if(this.get("endsOn") === 'on')
     {
-      rruleOptions.until = moment(this.get('endsOnDate'));
+      rruleOptions.until = moment(this.get('endsOnDate')).toDate();
     }
     else if(this.get("endsOn") === 'after')
     {
@@ -84,9 +85,42 @@ export default Ember.Mixin.create({
       rruleOptions
     );
     this.set('rruleText', recRule.toText());
+
+    self.occurrenceDates.clear();
+
+    recRule.all(function (date, i){return i < 10;}).forEach(function(o, i)
+    {
+      var occurence = OccurenceDate.create({occDateText:o});
+      occurence.number = i + 1;
+      self.occurrenceDates.addObject(occurence);
+    });
+    self.updateExDate();
     return recRule.toString();
   }.observes('selectedRepeatRule', 'weekdays.@each.selected', 'currentDate', 'currentTime', 'endsOn', 'endsAfter', 'endsOnDate', 'selectedRepeatEvery').on('init'),
+  updateExDate: function()
+  {
+    var self = this;
+    var ranges = [];
+    for(var i=0; i< self.exDates.length; i++)
+    {
+      var o = self.exDates[i];
+      ranges.push(moment().range(o.fromDate, (o.toDate == null ? o.fromDate : o.toDate)));
+    }
+
+    self.occurrenceDates.forEach(function(o) {
+      for(var i=0; i<ranges.length; i++)
+      {
+        o.set('excluded', ranges[i].contains(o.occDate));
+        if(o.get('excluded'))
+        {
+          break;
+        }
+      }
+    });
+
+  }.observes('exDates.@each'),
   exDates: Ember.A([]),
+  occurrenceDates: Ember.A([]),
   selectedRepeatRule: 'Daily',
   repeatRules: ['Yearly', 'Monthly', 'Weekly', 'Daily', 'Hourly', 'Minutely'],
   selectedRepeatEvery: 1,
