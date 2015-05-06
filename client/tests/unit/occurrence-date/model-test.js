@@ -11,7 +11,7 @@ module('occurrence-date', {
 });
 
 test('it exists', function(assert) {
-  var model = occurrenceDate.create({ exDateText: '2015-05-05T16:59:26.210Z'});
+  var model = occurrenceDate.create({ occDateText: '2015-05-05T16:59:26.210Z'});
   // var store = this.store();
   assert.ok(!!model);
 });
