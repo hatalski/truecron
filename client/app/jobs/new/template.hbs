@@ -209,51 +209,19 @@
                                 <th>Weekday</th>
                                 <th>Date</th>
                                 <th>Time</th>
-                                <th>Timezone</th>
                                 <th>Excluded</th>
                             </tr>
                             </thead>
                             <tbody>
-                            <tr>
-                                <td>1</td>
-                                <td>Monday</td>
-                                <td>2015-01-01</td>
-                                <td>10:00 AM</td>
-                                <td>GMT+0300</td>
-                                <td>no</td>
-                            </tr>
-                            <tr>
-                                <td>2</td>
-                                <td>Friday</td>
-                                <td>2016-02-02</td>
-                                <td>11:00 PM</td>
-                                <td>GMT+0300</td>
-                                <td>no</td>
-                            </tr>
-                            <tr>
-                                <td>3</td>
-                                <td>Friday</td>
-                                <td>2016-02-02</td>
-                                <td>11:00 PM</td>
-                                <td>GMT+0300</td>
-                                <td>no</td>
-                            </tr>
-                            <tr class="danger">
-                                <td>4</td>
-                                <td>Friday</td>
-                                <td>2016-02-02</td>
-                                <td>11:00 PM</td>
-                                <td>GMT+0300</td>
-                                <td>yes</td>
-                            </tr>
-                            <tr>
-                                <td>5</td>
-                                <td>Friday</td>
-                                <td>2016-02-02</td>
-                                <td>11:00 PM</td>
-                                <td>GMT+0300</td>
-                                <td>no</td>
-                            </tr>
+                            {{#each date in controller.occurrenceDates}}
+                                <tr {{bind-attr class="date.excluded:danger"}}>
+                                    <td>{{date.number}}</td>
+                                    <td>{{date.weekday}}</td>
+                                    <td>{{date.date}}</td>
+                                    <td>{{date.time}}</td>
+                                    <td>{{date.excludedText}}</td>
+                                </tr>
+                            {{/each}}
                             </tbody>
                         </table>
                     </div>

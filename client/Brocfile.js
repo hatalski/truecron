@@ -70,7 +70,8 @@ app.import('bower_components/moment-timezone/builds/moment-timezone-with-data.js
 app.import('bower_components/validator-js/validator.min.js');
 app.import('bower_components/sweetalert/lib/sweet-alert.js');
 app.import('bower_components/ember-data.model-fragments/dist/ember-data.model-fragments.js');
-
+app.import('bower_components/moment-range/lib/moment-range.bare.min.js');
+app.import('bower_components/moment-range/lib/moment-range.min.js');
 
 // Use `app.import` to add additional libraries to the generated
 // output files.

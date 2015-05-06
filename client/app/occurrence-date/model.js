@@ -7,12 +7,17 @@ export default Ember.Object.extend({
   time: '',
   timezone: '',
   excluded : false,
-  exDateText: '',
-  exDate: new Date(),
+  excludedText: function()
+  {
+    return this.get('excluded') ? 'yes' : 'no';
+  }.property('excluded'),
+  occDateText: '',
+  occDate: new Date(),
   init: function() {
-    var date = moment(this.get('exDateText'));
-    this.set('exDate', date);
-    this.set('weekday', date.weekday());
-    this.set('date', date.format('YYYY-mm-dd'));
+    var date = moment(this.get('occDateText'));
+    this.set('occDate', date.toDate());
+    this.set('weekday', date.format('dddd'));
+    this.set('date', date.format('MM/DD/YYYY'));
+    this.set('time', date.format('HH:mm:ss'));
   }
 });
