@@ -1,0 +1,164 @@
+{{yield}}
+  <div class="panel-body truecron-panel-body">
+      <div class="row">
+          <br>
+          <div class="col-md-2 text-right">
+              <h5><strong>End Point:</strong></h5>
+          </div>
+          <div class="col-xs-3">
+              <div class="form-group-material-orange-700">
+                  <select class="form-control">
+                      <option>POST</option>
+                      <option>GET</option>
+                      <option>Don't know</option>
+                  </select>
+              </div>
+          </div>
+          <div class="col-md-3">
+              <div class="form-group-material-orange-700">
+                  <input id="domain" type="text" value="" class="form-control floating-label" placeholder="yourdomain.com">
+              </div>
+          </div>
+      </div>
+      <div class="row">
+          <br>
+          <div class="col-md-2 text-right">
+              <h5><strong>URL parameters:</strong></h5>
+          </div>
+          <div class="col-xs-3">
+              <div class="form-group-material-orange-700">
+                  <div class="form-group-material-orange-700">
+                      <input id="parameter_name" type="text" value="" class="form-control floating-label" placeholder="Name">
+                  </div>
+              </div>
+          </div>
+          <div class="col-xs-3">
+              <div class="form-group-material-orange-700">
+                  <div class="form-group-material-orange-700">
+                      <input id="parameter_value" type="text" value="" class="form-control floating-label" placeholder="Value">
+                  </div>
+              </div>
+          </div>
+          <div class="col-xs-3">
+              <a class="btn btn-sm btn-material-blue-grey-400 truecron-task-btn">CLEAR PARAMETERS</a>
+          </div>
+      </div>
+      <div class="row">
+          <div class="col-md-3 col-md-offset-2">
+              <a class="btn btn-sm btn-material-orange-700">ADD URL PARAMETERS</a>
+          </div>
+      </div>
+      <div class="row">
+          <div class="col-md-2 text-right">
+              <h5><strong>Authentication:</strong></h5>
+          </div>
+          <div class="col-md-3">
+              <div class="form-group-material-orange-700">
+                  <select class="form-control">
+                      <option>Basic</option>
+                      <option>Advanced</option>
+                      <option>Don't know</option>
+                  </select>
+              </div>
+          </div>
+      </div>
+    <div class="row">
+        <br>
+        <div class="col-xs-3 col-xs-offset-2">
+            <div class="form-group-material-orange-700">
+                <div class="form-group-material-orange-700">
+                    <input id="auth_name" type="text" value="" class="form-control floating-label" placeholder="User Name">
+                </div>
+            </div>
+        </div>
+        <div class="col-xs-3">
+            <div class="form-group-material-orange-700">
+                <div class="form-group-material-orange-700">
+                    <input id="auth_pass" type="text" value="" class="form-control floating-label" placeholder="Password">
+                </div>
+            </div>
+        </div>
+        <div class="col-xs-3">
+            <a class="btn btn-sm btn-material-blue-grey-400 truecron-task-btn">CLEAR AUTH</a>
+        </div>
+    </div>
+    <div class="row">
+        <br>
+        <div class="col-md-2 text-right">
+            <h5><strong>Headers:</strong></h5>
+        </div>
+        <div class="col-xs-3">
+            <div class="form-group-material-orange-700">
+                <div class="form-group-material-orange-700">
+                    <input id="headers_name" type="text" value="" class="form-control floating-label" placeholder="Name">
+                </div>
+            </div>
+        </div>
+        <div class="col-xs-3">
+            <div class="form-group-material-orange-700">
+                <div class="form-group-material-orange-700">
+                    <input id="headers_value" type="text" value="" class="form-control floating-label" placeholder="Value">
+                </div>
+            </div>
+        </div>
+    </div>
+      <div class="row">
+          <br>
+          <div class="col-xs-3 col-xs-offset-2">
+              <div class="form-group-material-orange-700">
+                  <div class="form-group-material-orange-700">
+                      <input id="content_type" type="text" value="" class="form-control floating-label" placeholder="Content Type">
+                  </div>
+              </div>
+          </div>
+          <div class="col-xs-3">
+              <div class="form-group-material-orange-700">
+                  <div class="form-group-material-orange-700">
+                      <input id="app_json" type="text" value="" class="form-control floating-label" placeholder="application/json">
+                  </div>
+              </div>
+          </div>
+          <div class="col-xs-3">
+              <a class="btn btn-sm btn-material-blue-grey-400 truecron-task-btn">CLEAR HEADERS</a>
+          </div>
+      </div>
+      <div class="row">
+          <div class="col-md-3 col-md-offset-2">
+              <a class="btn btn-sm btn-material-orange-700">ADD HEADER</a>
+          </div>
+      </div>
+      <div class="row">
+          <br>
+          <div class="col-md-2 text-right">
+              <h5><strong>Request Data:</strong></h5>
+          </div>
+          <div class="col-md-10">
+              <div class="btn-group truecron-task-btn">
+                  <a class="btn btn-sm btn-material-orange-700">ADD PARAMETERS</a>
+              </div>
+              <div class="btn-group truecron-task-btn">
+                  <a class="btn btn-sm btn-material-orange-700">ADD JSON</a>
+              </div>
+              <div class="btn-group truecron-task-btn">
+                  <a class="btn btn-sm btn-material-orange-700">ADD BODY</a>
+              </div>
+          </div>
+      </div>
+      <div class="row">
+          <div class="col-md-6 col-md-offset-2">
+              <div class="form-group form-group-material-orange-700">
+                  <textarea class="form-control" rows="5"></textarea>
+              </div>
+          </div>
+          <div class="col-md-3">
+              <a class="btn btn-sm btn-material-blue-grey-400">CLEAR BODY</a>
+          </div>
+      </div>
+      <div class="row">
+          <div class="col-md-10 col-md-offset-2">
+              <a class="btn btn-material-green-400">Save Request</a>
+          </div>
+      </div>
+      <hr>
+  </div>
+
