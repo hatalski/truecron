@@ -33,6 +33,8 @@ module.exports.initialize = function(sequelize) {
         'resetpassword',
         'schedule',
         'jobcounters'
+        //,
+        //'payments'
     ];
 
     daos.forEach(function (dao) {
