@@ -16,6 +16,7 @@ api.route('/payments')
     // List of payments
     //
     .get(common.parseListParams, function (req, res, next) {
+        console.log('!!!!!111');
         if (!req.organizationId) {
             return next(new apiErrors.InvalidParams('Organization ID is not specified.'));
         }
