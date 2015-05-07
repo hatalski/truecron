@@ -42,11 +42,11 @@ app.import('bower_components/bootstrap-material-design/dist/fonts/RobotoDraftBol
 app.import('bower_components/bootstrap-material-design/dist/fonts/RobotoDraftRegular.woff', { destDir: "fonts"});
 app.import('bower_components/bootstrap-material-design/dist/fonts/RobotoDraftRegular.woff2', { destDir: "fonts"});
 app.import('bower_components/font-awesome/css/font-awesome.min.css');
-//app.import('bower_components/font-awesome/fonts/fontawesome-webfont.eot', { destDir: "fonts"});
-//app.import('bower_components/font-awesome/fonts/fontawesome-webfont.svg', { destDir: "fonts"});
-//app.import('bower_components/font-awesome/fonts/fontawesome-webfont.ttf', { destDir: "fonts"});
-//app.import('bower_components/font-awesome/fonts/fontawesome-webfont.woff', { destDir: "fonts"});
-//app.import('bower_components/font-awesome/fonts/fontawesome-webfont.woff2', { destDir: "fonts"});
+app.import('bower_components/font-awesome/fonts/fontawesome-webfont.eot', { destDir: "fonts"});
+app.import('bower_components/font-awesome/fonts/fontawesome-webfont.svg', { destDir: "fonts"});
+app.import('bower_components/font-awesome/fonts/fontawesome-webfont.ttf', { destDir: "fonts"});
+app.import('bower_components/font-awesome/fonts/fontawesome-webfont.woff', { destDir: "fonts"});
+app.import('bower_components/font-awesome/fonts/fontawesome-webfont.woff2', { destDir: "fonts"});
 app.import('bower_components/selectize/dist/css/selectize.css');
 app.import('bower_components/selectize/dist/css/selectize.default.css');
 //app.import('bower_components/selectize/dist/css/selectize.bootstrap3.css');
