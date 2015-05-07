@@ -44,10 +44,10 @@ module.exports = function(environment) {
 
     ENV.contentSecurityPolicy = {
       'default-src': "'none'",
-      'script-src': "'self' 'unsafe-inline' 'unsafe-eval' use.typekit.net connect.facebook.net maps.googleapis.com maps.gstatic.com",
+      'script-src': "'self' 'unsafe-inline' 'unsafe-eval' use.typekit.net connect.facebook.net maps.googleapis.com maps.gstatic.com www.google-analytics.com https://stats.g.doubleclick.net",
       'font-src': "'self' data: use.typekit.net https://fonts.gstatic.com",
-      'connect-src': "'self' https://192.168.3.10 wss://192.168.3.10/ https://dev.truecron.com wss://dev.truecron.com/ www.googleapis.com",
-      'img-src': "'self' www.gravatar.com www.facebook.com p.typekit.net data:",
+      'connect-src': "'self' https://192.168.3.10 wss://192.168.3.10/ https://dev.truecron.com wss://dev.truecron.com/ www.googleapis.com www.google-analytics.com",
+      'img-src': "'self' www.google-analytics.com www.gravatar.com www.facebook.com p.typekit.net data:",
       'style-src': "'self' 'unsafe-inline' use.typekit.net",
       'frame-src': "s-static.ak.facebook.com static.ak.facebook.com www.facebook.com"
     }
@@ -83,10 +83,10 @@ module.exports = function(environment) {
 
     ENV.contentSecurityPolicy = {
       'default-src': "'none'",
-      'script-src': "'self' 'unsafe-inline' 'unsafe-eval' use.typekit.net connect.facebook.net maps.googleapis.com maps.gstatic.com",
+      'script-src': "'self' 'unsafe-inline' 'unsafe-eval' use.typekit.net connect.facebook.net maps.googleapis.com maps.gstatic.com www.google-analytics.com https://stats.g.doubleclick.net",
       'font-src': "'self' data: use.typekit.net https://fonts.gstatic.com",
-      'connect-src': "'self' https://staging.truecron.com ws://staging.truecron.com wss://staging.truecron.com www.googleapis.com",
-      'img-src': "'self' www.gravatar.com www.facebook.com p.typekit.net data:",
+      'connect-src': "'self' https://staging.truecron.com ws://staging.truecron.com wss://staging.truecron.com www.googleapis.com www.google-analytics.com",
+      'img-src': "'self' www.google-analytics.com www.gravatar.com www.facebook.com p.typekit.net data:",
       'style-src': "'self' 'unsafe-inline' use.typekit.net",
       'frame-src': "s-static.ak.facebook.com static.ak.facebook.com www.facebook.com"
     }
@@ -103,10 +103,10 @@ module.exports = function(environment) {
 
     ENV.contentSecurityPolicy = {
       'default-src': "'none'",
-      'script-src': "'self' 'unsafe-inline' 'unsafe-eval' use.typekit.net connect.facebook.net maps.googleapis.com maps.gstatic.com",
+      'script-src': "'self' 'unsafe-inline' 'unsafe-eval' use.typekit.net connect.facebook.net maps.googleapis.com maps.gstatic.com www.google-analytics.com https://stats.g.doubleclick.net",
       'font-src': "'self' data: use.typekit.net http://fonts.gstatic.com",
-      'connect-src': "'self' https://www.truecron.com ws://www.truecron.com wss://www.truecron.com www.googleapis.com",
-      'img-src': "'self' www.gravatar.com www.facebook.com p.typekit.net data:",
+      'connect-src': "'self' https://www.truecron.com ws://www.truecron.com wss://www.truecron.com www.googleapis.com www.google-analytics.com",
+      'img-src': "'self' www.google-analytics.com www.gravatar.com www.facebook.com p.typekit.net data:",
       'style-src': "'self' 'unsafe-inline' use.typekit.net",
       'frame-src': "s-static.ak.facebook.com static.ak.facebook.com www.facebook.com"
     }
