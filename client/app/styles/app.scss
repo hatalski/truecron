@@ -24,7 +24,13 @@ body {
   background-color: $primary-bg-color;
   color: $primary-color;
 }
-
+// dropdowns
+.dropdown-menu .divider {
+  background-color: #cfd8dc;
+}
+.dropdown-menu li a:hover {
+  background-color: #eceff1;
+}
 // application loading div class
 .ember-application .no-ember {
   display: none;
@@ -36,6 +42,7 @@ body {
 .navbar {
   min-height: 60px;
 }
+
 .btn {
   padding: 8px 20px;
 }
@@ -72,22 +79,6 @@ a {
 .truecron-bottom-border {
   border-bottom: solid 1px #cccccc;
 }
-.navbar-truecron .dropdown .dropdown-menu > li > a:hover {
-  @include grad(#f3f3f3, #e9e9e9);
-}
-
-.navbar-truecron .nav .open > a, .navbar-truecron .nav .open > a:hover, .navbar-truecron .nav .open > a:focus {
-  background-color: #35617e;
-}
-
-.navbar-truecron .dropdown a:hover, .navbar-truecron .dropdown a:active, .navbar-truecron .dropdown a:focus, .navbar-truecron .dropdown li:visited {
-  background-color: #35617e;
-  background-image: none;
-}
-
-.navbar-truecron .dropdown .caret {
-  color: #ff5800;
-}
 
 /* teaser page styles */
 .teaser {
@@ -103,14 +94,9 @@ a {
   background: black url("teaser_bg.jpg") no-repeat center top;
 }
 
-
 .navbar .navbar-form {
   margin-top: 0;
   margin-bottom: 0;
-}
-
-.navbar-truecron {
-  background-color: rgba(53, 97, 126, 1);
 }
 
 .teaser .jumbotron {
@@ -406,20 +392,6 @@ tr:nth-child(odd) {
   background-color: #cfd8dc;
 }
 
-.dropdown-truecron li {
-  list-style: none;
-}
-
-.dropdown-truecron {
-//  font-size: 20px;
-  color: #464646;
-}
-
-.dropdown-truecron a, a:hover, .dropdown-truecron a:active {
-  text-decoration: none;
-  color: #464646;
-}
-
 .btn.btn-sm {
   padding: 6px 12px;
 }
@@ -550,11 +522,6 @@ a.list-group-item:hover, a.list-group-item:active, a.list-group-item:focus {
   background-image: none;
 }
 
-.truecron-dropdown {
-  width: 100%;
-  text-align: left;
-}
-
 .caret-right {
   float: right;
   margin-top: 8px;
@@ -566,10 +533,6 @@ a.list-group-item:hover, a.list-group-item:active, a.list-group-item:focus {
 }
 
 /*workspaces */
-
-.dashed {
-  border-bottom: 1px dashed #cccccc;
-}
 
 .job-details-header {
   background-color: white;
@@ -583,16 +546,6 @@ a.list-group-item:hover, a.list-group-item:active, a.list-group-item:focus {
 .job-title {
   color: #ee6820;
 }
-
-.orange-dashed {
-  @extend .dashed;
-  border-color: #ee6820;
-}
-
-//.blue-dashed {
-//  @extend .dashed;
-//  border-color: #3399ff;
-//}
 
 .trucron-tasks-header {
   text-align: center;
@@ -739,7 +692,7 @@ a.list-group-item:hover, a.list-group-item:active, a.list-group-item:focus {
   background: #fff9e6;
   border: 1px solid #fee798;
   text-align: center;
-  margin-top: 69px;
+  margin-top: 21px;
   margin-bottom: 18px;
 }
 
@@ -863,4 +816,21 @@ a.list-group-item:hover, a.list-group-item:active, a.list-group-item:focus {
 }
 .truecron-well-active {
   color: #ffffff;
+}
+.truecron-well-inactive h4, .truecron-well-inactive h3 {
+  color: #44707c;
+}
+
+.truecron-well-inactive h1 {
+  color: #6c939e;
+}
+.truecron-well-inactive h2 {
+  color: #ff5c00;
+}
+.free-pan-container {
+  padding: 55px 0;
+}
+.truecron-your-plan {
+  margin: 10px 0;
+  padding: 8px 0;
 }

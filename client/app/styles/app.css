@@ -61,6 +61,12 @@ body {
   background-color: #eceff1;
   color: #464748; }
 
+.dropdown-menu .divider {
+  background-color: #cfd8dc; }
+
+.dropdown-menu li a:hover {
+  background-color: #eceff1; }
+
 .ember-application .no-ember {
   display: none; }
 
@@ -117,22 +123,6 @@ a {
 .truecron-bottom-border {
   border-bottom: solid 1px #cccccc; }
 
-.navbar-truecron .dropdown .dropdown-menu > li > a:hover {
-  background: -webkit-linear-gradient(#f3f3f3, #e9e9e9);
-  background: -o-linear-gradient(#f3f3f3, #e9e9e9);
-  background: -moz-linear-gradient(#f3f3f3, #e9e9e9);
-  background: linear-gradient(#f3f3f3, #e9e9e9); }
-
-.navbar-truecron .nav .open > a, .navbar-truecron .nav .open > a:hover, .navbar-truecron .nav .open > a:focus {
-  background-color: #35617e; }
-
-.navbar-truecron .dropdown a:hover, .navbar-truecron .dropdown a:active, .navbar-truecron .dropdown a:focus, .navbar-truecron .dropdown li:visited {
-  background-color: #35617e;
-  background-image: none; }
-
-.navbar-truecron .dropdown .caret {
-  color: #ff5800; }
-
 /* teaser page styles */
 .teaser {
   font-family: "Trebuchet MS";
@@ -147,9 +137,6 @@ a {
 .navbar .navbar-form {
   margin-top: 0;
   margin-bottom: 0; }
-
-.navbar-truecron {
-  background-color: #35617e; }
 
 .teaser .jumbotron {
   background-color: transparent;
@@ -393,16 +380,6 @@ tr:nth-child(odd) {
   height: 100%;
   background-color: #cfd8dc; }
 
-.dropdown-truecron li {
-  list-style: none; }
-
-.dropdown-truecron {
-  color: #464646; }
-
-.dropdown-truecron a, a:hover, .dropdown-truecron a:active {
-  text-decoration: none;
-  color: #464646; }
-
 .btn.btn-sm {
   padding: 6px 12px; }
 
@@ -518,10 +495,6 @@ a.list-group-item:hover, a.list-group-item:active, a.list-group-item:focus {
   background-color: #f6f6f6;
   background-image: none; }
 
-.truecron-dropdown {
-  width: 100%;
-  text-align: left; }
-
 .caret-right {
   float: right;
   margin-top: 8px;
@@ -531,9 +504,6 @@ a.list-group-item:hover, a.list-group-item:active, a.list-group-item:focus {
   border-radius: 0px; }
 
 /*workspaces */
-.dashed, .orange-dashed {
-  border-bottom: 1px dashed #cccccc; }
-
 .job-details-header {
   background-color: white;
   padding-top: 10px; }
@@ -543,9 +513,6 @@ a.list-group-item:hover, a.list-group-item:active, a.list-group-item:focus {
 
 .job-title {
   color: #ee6820; }
-
-.orange-dashed {
-  border-color: #ee6820; }
 
 .trucron-tasks-header {
   text-align: center; }
@@ -654,7 +621,7 @@ a.list-group-item:hover, a.list-group-item:active, a.list-group-item:focus {
   background: #fff9e6;
   border: 1px solid #fee798;
   text-align: center;
-  margin-top: 69px;
+  margin-top: 21px;
   margin-bottom: 18px; }
 
 .arrow_box-left h3 {
@@ -768,5 +735,21 @@ a.list-group-item:hover, a.list-group-item:active, a.list-group-item:focus {
 
 .truecron-well-active {
   color: #ffffff; }
+
+.truecron-well-inactive h4, .truecron-well-inactive h3 {
+  color: #44707c; }
+
+.truecron-well-inactive h1 {
+  color: #6c939e; }
+
+.truecron-well-inactive h2 {
+  color: #ff5c00; }
+
+.free-pan-container {
+  padding: 55px 0; }
+
+.truecron-your-plan {
+  margin: 10px 0;
+  padding: 8px 0; }
 
 /*# sourceMappingURL=app.css.map */
