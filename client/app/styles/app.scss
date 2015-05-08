@@ -638,7 +638,7 @@ a.list-group-item:hover, a.list-group-item:active, a.list-group-item:focus {
 
 /* workspaces accordion */
 .truecron-accordion .truecron-panel-body {
-  background-color: #cfd8dc;
+  background-color: $primary-bg-color;
   color: $primary-color;
 }
 
@@ -805,7 +805,9 @@ a.list-group-item:hover, a.list-group-item:active, a.list-group-item:focus {
   background-color: #b0bec5;
   padding: 5px;
 }
-
+.truecron-task-btn {
+  margin: 0 1px 10px;
+}
 .truecron_checkbox {
   margin-top: 5px;
 }
