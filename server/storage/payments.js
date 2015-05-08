@@ -39,8 +39,7 @@ var findAndCountAll = module.exports.findAndCountAll = Promise.method(function (
  * Create a new payment.
  */
 var create = module.exports.create = Promise.method(function (context, attributes) {
-    console.log('!!!!11');
-    attributes = tools.sanitizeAttributesForCreate(context, attributes);
+
     if (!attributes.amount) {
         throw new errors.InvalidParams('Payment amount is not specified.');
     }
@@ -54,7 +53,6 @@ var create = module.exports.create = Promise.method(function (context, attribute
         attributes.receipt = 'TEST';
         //throw new errors.InvalidParams('Payment receipt is not specified.');//!!!!!!!
     }
-    console.log('!!!!22');
 
     var locals = { attrs: attributes };
     return using (models.transaction(), function (tx) {
@@ -62,14 +60,6 @@ var create = module.exports.create = Promise.method(function (context, attribute
             .then(function (payment) {
                 locals.payment = payment;
                     return payment;
-            })
-            .then(function () {
-                return Promise.join(
-                    history.logCreated(context.personId, {
-                        organizationId: locals.payment.organizationId,
-                        paymentId: locals.payment.id
-                    }, locals.payment, tx),
-                    cache.put(getPaymentIdCacheKey(locals.payment.id), locals.payment));
             })
     })
         .catch(function (err) {

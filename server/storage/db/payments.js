@@ -2,9 +2,9 @@
  * Created by Andrew on 05.05.2015.
  */
 
-exports = function(sequelize, DataTypes) {
+module.exports = function(sequelize, DataTypes) {
 
-    var Payments = sequelize.define('Paymens', {
+    var Payments = sequelize.define('Payments', {
         id:             { type: DataTypes.BIGINT, primaryKey: true, allowNull: false, autoIncrement: true },
         organizationId: { type: DataTypes.BIGINT, allowNull: false },
         date:           { type: DataTypes.DATE },
