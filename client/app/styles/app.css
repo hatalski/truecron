@@ -125,8 +125,12 @@ a {
 
 /* teaser page styles */
 .teaser {
-  font-family: "Trebuchet MS";
+  font-family: "RobotoRegular, Trebuchet MS";
   font-size: 16pt; }
+
+.teaser-logo {
+  background: url(teaser_logo.png) no-repeat left center;
+  height: 78px; }
 
 .teaser .container-fluid {
   max-width: 1200px; }
@@ -247,16 +251,17 @@ h2.pitch {
   background: url("teaser_ballet.jpg") no-repeat top;
   height: 477px; }
 
-.hands {
-  background: url("teaser_hands.jpg") no-repeat;
-  height: 286px; }
+.secure {
+  background: url("teaser_secure.jpg") no-repeat;
+  height: 242px; }
 
 .grow {
   background: url("teaser_grow.jpg") no-repeat;
   height: 320px; }
 
 .middle_grey {
-  background-color: #d7d7d7; }
+  background-color: #eceff1;
+  color: #78909c; }
 
 .middle_white {
   background-color: #ffffff; }
@@ -281,8 +286,8 @@ h2.pitch {
   border-radius: 0px; }
 
 .teaser footer {
-  background-color: black;
-  color: white;
+  background-color: #ffffff;
+  color: #000000;
   text-align: center; }
 
 .teaser footer .jumbotron p {

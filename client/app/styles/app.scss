@@ -82,8 +82,12 @@ a {
 
 /* teaser page styles */
 .teaser {
-  font-family: "Trebuchet MS";
+  font-family: "RobotoRegular, Trebuchet MS";
   font-size: 16pt;
+}
+.teaser-logo {
+  background: url(teaser_logo.png) no-repeat left center;
+  height: 78px;
 }
 
 .teaser .container-fluid {
@@ -234,9 +238,9 @@ h2.pitch {
   height: 477px;
 }
 
-.hands {
-  background: url("teaser_hands.jpg") no-repeat;
-  height: 286px;
+.secure {
+  background: url("teaser_secure.jpg") no-repeat;
+  height: 242px;
 }
 
 .grow {
@@ -245,7 +249,8 @@ h2.pitch {
 }
 
 .middle_grey {
-  background-color: #d7d7d7;
+  background-color: #eceff1;
+  color: #78909c;
 }
 
 .middle_white {
@@ -277,8 +282,8 @@ h2.pitch {
 }
 
 .teaser footer {
-  background-color: black;
-  color: white;
+  background-color: #ffffff;
+  color: #000000;
   text-align: center;
 }
 

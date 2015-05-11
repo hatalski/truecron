@@ -52,29 +52,6 @@
         </div>
     </div>
 </div>
-{{else}}
-<div class="navbar navbar-fixed-top navbar-material-blue-grey-700" role="navigation">
-    <div class="container teaser">
-        <div class="navbar-header">
-            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-                <span class="sr-only">Toggle navigation</span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-            </button>
-            <a class="navbar-brand navbar-brand-teaser" href="#"></a>
-        </div>
-        <div class="navbar-collapse collapse">
-          {{#unless hideSignUpButton}}
-            <form class="navbar-form navbar-right teaser-form" style="border-left: solid 1px #ff4e00">
-                <input type="button" {{action "redirectToSignup"}} class="btn btn-material-orange-800" value="SIGN UP">
-            </form>
-            <form class="navbar-form navbar-right teaser-form">
-                <input type="button" {{action "redirectToSignin"}} class="btn btn-signin btn-white" value="SIGN IN">
-            </form>
-          {{/unless}}
-        </div>
-    </div>
-</div>
+
 {{/if}}
 {{outlet}}
