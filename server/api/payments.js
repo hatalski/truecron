@@ -11,6 +11,38 @@ var express = require('express'),
     common = require('./common');
 
 var api = express.Router();
+
+api.route('/payments')
+    //
+    // Create a new payment
+    //
+
+    .post(function (req, res, next) {
+        if (!req.body || !req.body.payment) {
+            return next(new apiErrors.InvalidParams('Payment is not specified.'));
+        }
+        var organizationId = req.organization ? req.organization.id : req.body.payment.organizationId;
+        if (!organizationId) {
+            return next(new apiErrors.InvalidParams('Organization is not specified.'));
+        }
+        storage.Organization.findById(req.context, organizationId)
+            .then(function (organization){
+                if(!organization){
+                    return next(new apiErrors.InvalidParams('Invalid organization specified.'));
+                }
+                //req.body.payment.organizationId = organization.organizationId;
+                storage.Payments.create(req.context, req.body.payment)
+                    .then(function (payment) {
+                        res.status(201).json({ payment: payment });
+                    })
+                    .catch(function (err) {
+                        logger.error(err.toString());
+                        return next(err);
+                    });
+            })
+    });
+
+
 api.route('/payments/organizationid')
     //
     // List of payments
@@ -67,35 +99,6 @@ api.route('/payments/organizationid')
 
             processNextItem(0);
         });
-    })
-
-    //
-    // Create a new payment
-    //
-
-    .post(function (req, res, next) {
-        if (!req.body || !req.body.payment) {
-            return next(new apiErrors.InvalidParams('Payment is not specified.'));
-        }
-        var organizationId = req.organization ? req.organization.id : req.body.payment.organizationId;
-        if (!organizationId) {
-            return next(new apiErrors.InvalidParams('Organization is not specified.'));
-        }
-        storage.Organization.findById(req.context, organizationId)
-            .then(function (organization){
-                if(!organization){
-                    return next(new apiErrors.InvalidParams('Invalid organization specified.'));
-                }
-                //req.body.payment.organizationId = organization.organizationId;
-                storage.Payments.create(req.context, req.body.payment)
-                    .then(function (payment) {
-                        res.status(201).json({ payment: payment });
-                    })
-                    .catch(function (err) {
-                        logger.error(err.toString());
-                        return next(err);
-                    });
-            })
     });
 
 module.exports = api;
