@@ -51,18 +51,18 @@ describe('PAYMENTs API',
         });
 
 
-        //it.only('get all payments', function (done) {
-        //        superagent.post(prefix + '/payments')
-        //        .set('Content-Type', 'application/json')
-        //        .send()
-        //        .authenticate(accessToken)
-        //        .end(function (e, res) {
-        //            expect(e).to.eql(null);
-        //            expect(res.header['content-type']).to.eql('application/json; charset=utf-8');
-        //            expect(res.status).to.eql(200);
-        //            done();
-        //        });
-        //});
+        it('get all payments', function (done) {
+                superagent.get(prefix + '/payments/'+ testdata.AcmeCorp.id)
+            .set('Content-Type', 'application/json')
+                .send()
+                .authenticate(accessToken)
+                .end(function (e, res) {
+                    expect(e).to.eql(null);
+                    expect(res.header['content-type']).to.eql('application/json; charset=utf-8');
+                    expect(res.status).to.eql(200);
+                    done();
+                });
+        });
 
     }
 );

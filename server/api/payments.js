@@ -11,13 +11,18 @@ var express = require('express'),
     common = require('./common');
 
 var api = express.Router();
-api.route('/payments')
+api.route('/payments/organizationid')
     //
     // List of payments
     //
     .get(common.parseListParams, function (req, res, next) {
-        if (!req.organizationId) {
-            return next(new apiErrors.InvalidParams('Organization ID is not specified.'));
+        console.log('!!!!!1:');
+        var organizationId = null;
+        console.log('!!!!!orgId:' + req.params.organizationId());
+        if (validator.isInt(req.params.organizationId())) {
+            organizationId = req.params.organizationId();
+        } else {
+            return next(new apiErrors.InvalidParams());
         }
         var where = { };
         if (req.listParams.searchTerm) {
@@ -25,7 +30,7 @@ api.route('/payments')
         }
         var sort = req.listParams.sort || 'date';
 
-        storage.Payments.findAndCountAll(req.context, req.organizationId, {
+        storage.Payments.findAndCountAll(req.context, organizationId, {
             where: where,
             order: sort + ' ' + req.listParams.direction,
             limit: req.listParams.limit,
