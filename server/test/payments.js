@@ -51,7 +51,7 @@ describe('PAYMENTs API',
         });
 
 
-        it.only('get all payments', function (done) {
+        it('get all payments', function (done) {
                 superagent.get(prefix + '/payments/'+ testdata.AcmeCorp.id)
             .set('Content-Type', 'application/json')
                 .send()
