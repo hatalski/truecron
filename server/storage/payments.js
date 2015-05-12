@@ -20,13 +20,15 @@ var using = Promise.using;
 var findAndCountAll = module.exports.findAndCountAll = Promise.method(function (context, organizationId, options) {
     return workspaceAccess.ensureHasAccess(context, tools.getId(organizationId), workspaceAccess.WorkspaceRoles.Viewer)
         .then(function () {
+            console.log('!!!!11');
             options = _.merge(options || {}, {
                 where: { organizationId: tools.getId(organizationId) }
             });
-            return models.Job.findAndCountAll(options);
+            return models.Payments.findAndCountAll(options);
         })
         .then(function (result) {
-            result.rows.forEach(function(payment) { cache.put(getPaymentIdCacheKey(payment.id), payment); });
+            console.log('!!!!22');
+            //result.rows.forEach(function(payment) { cache.put(getPaymentIdCacheKey(payment.id), payment); });
             return result;
         })
         .catch(function (err) {
