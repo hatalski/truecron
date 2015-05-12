@@ -1,5 +1,6 @@
 import Ember from 'ember';
 import OccurenceDate from 'true-cron/occurrence-date/model';
+import Schedule from 'true-cron/schedule/model';
 
 export default Ember.Mixin.create({
   weekdays: [{
@@ -48,6 +49,7 @@ export default Ember.Mixin.create({
   dtStart: function()
   {
     var returnDate = moment(this.get('currentDate') + ' ' + (this.get('currentTime')?this.get('currentTime'):''));
+    console.log(returnDate);
     var timezone = this.get('currentZone');
     if(timezone.name)
     {
@@ -66,9 +68,9 @@ export default Ember.Mixin.create({
     var weekDays = this.get('weekdays').filterBy('selected', true).mapBy('value');
     var rruleOptions = {
       freq: self.get('repeatRules').indexOf(self.get('selectedRepeatRule')),
-      interval: self.get('selectedRepeatEvery'),
-      byweekday: weekDays,
-      dtstart: self.get('dtStart')
+      interval: 1,
+      dtstart: self.get('dtStart'),
+      byweekday: weekDays
     };
 
     if(this.get("endsOn") === 'on')
@@ -80,21 +82,52 @@ export default Ember.Mixin.create({
       rruleOptions.count = this.get('endsAfter');
     }
 
+    switch(self.get('selectedRepeatRule'))
+    {
+      case 'Yearly':
+        rruleOptions.byyearday = self.get('selectedRepeatEvery');
+        break;
+      case 'Monthly':
+        rruleOptions.bymonthday = [self.get('selectedRepeatEvery')];
+      case 'Weekly':
+        rruleOptions.byweekno = [self.get('selectedRepeatEvery')];
+        break;
+      case 'Daily':
+        rruleOptions.byweekday = weekDays;
+        break;
+      case 'Hourly':
+        rruleOptions.byhour = self.get('selectedRepeatEvery');
+        break;
+      case 'Minutely':
+        rruleOptions.byminute = self.get('selectedRepeatEvery');
+        break;
+      default:
+        break;
+    }
+
     var recRule = new RRule(
       rruleOptions
     );
-    this.set('rruleText', recRule.toText());
 
+    var scheduleModel = Schedule.create({rrule : recRule});
+    console.log(recRule.toText());
+    this.set('rruleText', scheduleModel.toText());
+
+
+    recRule.options.count = 10;
+    var occurances = recRule.all();
     self.occurrenceDates.clear();
-
-    recRule.all(function (date, i){return i < 10;}).forEach(function(o, i)
+    for(var i = 0; i<= occurances.length; i++)
     {
+      var o = occurances[i];
       var occurence = OccurenceDate.create({occDateText:o});
       occurence.number = i + 1;
       self.occurrenceDates.addObject(occurence);
-    });
+    }
     self.updateExDate();
-    return recRule.toString();
+
+    console.log(recRule.toString());
+    return scheduleModel.toText();
   }.observes('selectedRepeatRule', 'weekdays.@each.selected', 'currentDate', 'currentTime', 'endsOn', 'endsAfter', 'endsOnDate', 'selectedRepeatEvery').on('init'),
   updateExDate: function()
   {
