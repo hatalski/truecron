@@ -401,6 +401,27 @@ if not HasSchemaVersion(18) then
 end if;
 end $$;
 
+
+do $$
+begin
+if not HasSchemaVersion(19) then
+     create table tc."Payments"
+         (
+             "id"                bigserial,
+             "organizationId"    bigint not null,
+             "date"              timestamp(2) with time zone,
+             "amount"            bigint not null,
+             "description"       text,
+             "paymentMethod"     text not null,
+             "receipt"           varchar (256) not null,
+             constraint          Payments_Pk primary key ("id"),
+             constraint          Payments_Organization_Fk foreign key ("organizationId")
+                                 references tc."Organization" ("id")
+         );
+     perform CommitSchemaVersion(19, 'Added table Payments');
+end if;
+end $$;
+
 -- Use the snippet as a template:
 --
 -- do $$
