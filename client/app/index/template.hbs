@@ -8,14 +8,14 @@
                 </div>
             </div>
             <div class="jumbotron">
-                <div class="row">
-                    <div class="col-lg-4 col-lg-offset-2">
+                <div class="row teaser_align">
+                    <div class="col-lg-5 col-lg-offset-1 col-md-4 col-sm-5 teaser_align_bottom">
                         <div class="pitch-ext text-right">
                             <h3 class="pitch">{{format-message (intl-get "messages.landing.pitch")}}</h3>
                             <h2>{{format-message (intl-get "messages.landing.moto1")}}</h2>
                         </div>
                     </div>
-                    <div class="col-lg-6">
+                    <div class="col-lg-6 col-md-8 col-sm-7 teaser_align_img">
                         <div class="top_mac"></div>
                     </div>
                 </div>
@@ -24,16 +24,16 @@
         <div class="interested_box">
             <div class="container-fluid">
                 <div class="row">
-                    <div class="col-lg-6">
+                    <div class="col-lg-6 col-md-4 col-sm-5">
                         <h4 class=" text-center">{{format-message (intl-get "messages.landing.beta_invite.description")}}</h4>
-                        <form class="form-inline">
-                            <div class="form-group-white">
-                                <input type="email" class="form-control" placeholder="Enter email">
-                                <input type="submit" class="btn btn-white" value="SIGN UP">
+                        <form class="form-inline" {{action "invite" on="submit"}}>
+                            <div class="form-group-white isInvitationEmailError:has-error">
+                                {{input class="form-control" value=invitationEmail type="email" placeholder="Email" required="required"}}
+                                <button type="submit" class="btn btn-white">SIGN UP</button>
                             </div>
                         </form>
                     </div>
-                    <div class="col-lg-6">
+                    <div class="col-lg-6 col-md-8 col-sm-7">
                         <div class="bottom_mac"></div>
                     </div>
                 </div>
@@ -42,19 +42,19 @@
         <div class="topper_icons">
             <div class="container-fluid">
                 <div class="row">
-                    <div class="col-lg-3">
+                    <div class="col-lg-3 col-md-3 col-sm-3">
                         <div class="server_icon"></div>
                         <h4 class="text-center">It turns your servers so you do not have to worry about infrastructure.</h4>
                     </div>
-                    <div class="col-lg-3">
+                    <div class="col-lg-3 col-md-3 col-sm-3">
                         <div class="teaser_git_icon"></div>
                         <h4 class="text-center">It knows that developers actually test the code before releasing it into Production.</h4>
                     </div>
-                    <div class="col-lg-3">
+                    <div class="col-lg-3 col-md-3 col-sm-3">
                         <div class="teaser_calendar_icon"></div>
                         <h4 class="text-center">It knows that fiscal calendar does not end in December.</h4>
                     </div>
-                    <div class="col-lg-3">
+                    <div class="col-lg-3 col-md-3 col-sm-3">
                         <div class="teaser_copy_icon"></div>
                         <h4 class="text-center">It does not make you write a Powershell script to copy a file.</h4>
                     </div>
