@@ -145,10 +145,22 @@ h2.pitch {
   color: #ffffff;
   padding: 30px 0 5px;
 }
-
+.teaser_align {
+  display: table;
+}
+.teaser_align_bottom {
+  float: none;
+  display: table-cell;
+  vertical-align: bottom;
+}
+.teaser_align_img {
+  float: right;
+  display: table-cell;
+  height:336px;
+  width: 100%
+}
 .pitch-ext {
   color: white;
-  margin-top: 95px;
 }
 .pitch-ext h3 {
   line-height: 1.5;
@@ -161,13 +173,12 @@ h2.pitch {
 
 .bottom_mac {
   background: url("bottom_mac.png") no-repeat top right;
-  height: 301px;
+  height: 110px;
 }
 
 .interested_box {
   background-color: #ef6c00;
   color: white;
-  height: 100px;
 }
 .orange_box {
   background-color: #ef6c00;
@@ -175,7 +186,7 @@ h2.pitch {
   padding: 10px 0 20px;;
 }
 .teaser .form-inline .form-control {
-  width: 80%;
+  width: 73%;
 }
 .problem-definition-header {
   color: #ff9719;
