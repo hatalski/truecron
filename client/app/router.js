@@ -1,14 +1,9 @@
 import Ember from 'ember';
 import config from './config/environment';
+import googlePageview from './mixins/google-pageview';
 
-var Router = Ember.Router.extend({
-    location: config.locationType//,
-    //notifyGoogleAnalytics: function() {
-    //    return ga('send', 'pageview', {
-    //        'page': this.get('url'),
-    //        'title': this.get('url')
-    //    });
-    //}.on('didTransition')
+var Router = Ember.Router.extend(googlePageview, {
+    location: config.locationType
 });
 
 Router.map(function() {

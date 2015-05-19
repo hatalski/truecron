@@ -39,6 +39,10 @@ module.exports = function(environment) {
     ENV.APP.BETA_SIGNUP_HOST      = ENV.APP.SERVER_HOST + '/beta/signup';
     ENV.APP.RESET_PASSWORD_HOST   = ENV.APP.SERVER_HOST + '/auth/resetpassword';
 
+    ENV.googleAnalytics = {
+      webPropertyId: 'UA-XXXX-Y'
+    };
+
     ENV.contentSecurityPolicy = {
       'default-src': "'none'",
       'script-src': "'self' 'unsafe-inline' 'unsafe-eval' use.typekit.net connect.facebook.net maps.googleapis.com maps.gstatic.com www.google-analytics.com stats.g.doubleclick.net",
@@ -78,6 +82,10 @@ module.exports = function(environment) {
     ENV.APP.RESET_PASSWORD_HOST    = ENV.APP.SERVER_HOST + '/auth/resetpassword';
     ENV.APP.GOOGLE_API_KEY         = '640877791996-juctck3aimf9f2i99vf3aa3lo9597dbq.apps.googleusercontent.com';
 
+    ENV.googleAnalytics = {
+      webPropertyId: 'UA-XXXX-Y'
+    };
+
     ENV.contentSecurityPolicy = {
       'default-src': "'none'",
       'script-src': "'self' 'unsafe-inline' 'unsafe-eval' use.typekit.net connect.facebook.net maps.googleapis.com maps.gstatic.com www.google-analytics.com https://stats.g.doubleclick.net",
@@ -97,6 +105,10 @@ module.exports = function(environment) {
     ENV.APP.RESET_PASSWORD_HOST     = ENV.APP.SERVER_HOST + '/auth/resetpassword';
     ENV.APP.GOOGLE_API_KEY          = '584720647348-sfa16c6nriakjntd90qh05togeigs6co.apps.googleusercontent.com';
     ENV.APP.HIDE_SIGNUP             = true;
+
+    ENV.googleAnalytics = {
+      webPropertyId: 'UA-XXXX-Y'
+    };
 
     ENV.contentSecurityPolicy = {
       'default-src': "'none'",
