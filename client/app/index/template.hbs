@@ -146,8 +146,20 @@
     </div>
     <div class="orange_box">
         <div class="container-fluid">
-            <h3 class="text-center"><strong>Simply put, TrueCron is a scheduler that allows you to create a complex tasks in several clicks, peer review it, test and release to production and be sure it will run properly.</strong></h3>
-            <h3 class="text-center">Moreover, when we are going live you will get 100 jobs to execute for free during first 3 months.</h3>
+            <div class="row">
+                <h3 class="text-center"><strong>Simply put, TrueCron is a scheduler that allows you to create a complex tasks in several clicks, peer review it, test and release to production and be sure it will run properly.</strong></h3>
+                <div class="col-lg-12 text-center">
+                    <br>
+                    <form class="form-inline" {{action "invite" on="submit"}}>
+                        <div class="form-group-white isInvitationEmailError:has-error">
+                          {{input class="form-control" value=invitationEmail type="email" placeholder="Email" required="required"}}
+                            <button type="submit" class="btn btn-white">SIGN UP</button>
+                        </div>
+                    </form>
+                    <br>
+                </div>
+                <h3 class="text-center">Moreover, when we are going live you will get 100 jobs to execute for free during first 3 months.</h3>
+            </div>
         </div>
     </div>
     <footer>
