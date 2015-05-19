@@ -5,10 +5,10 @@ export default Ember.Component.extend(RRuleParser, {
   tagName: 'div',
   classNames: ['list-group-item', 'truecron-group-item'],
   classNameBindings: ['active:truecron-tab-active', 'active:truecron-active-border'],
-  active: Ember.computed('selected',function() {
+  active: function() {
     "use strict";
     return this.get('selected.id') === this.get('job.id');
-  }),
+  }.property('selected'),
   click: function() {
     "use strict";
     this.sendAction('action', this.get('job'));
