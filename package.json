@@ -18,6 +18,7 @@
     "express": "4.12.3",
     "express-validator": "2.9.0",
     "express-winston": "0.2.12",
+    "jade": "^1.9.2",
     "jsonwebtoken": "4.2.2",
     "lodash": "3.6.0",
     "morgan": "1.5.2",
