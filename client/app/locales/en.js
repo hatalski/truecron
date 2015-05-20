@@ -73,9 +73,8 @@ export default Locale.extend({
       }
     },
     landing: {
-      pitch: 'Enterprise Strength Scheduling for your Growing Business',
-      moto1: 'Do your job.',
-      moto2: 'We will do the scheduling.',
+      pitch: 'TrueCron is the scheduler you have been waiting for. It is the way the scheduler should have been built, but was not',
+      moto1: 'Interested?',
       footer: '© {current-year} TrueCron. All rights reserved. TrueCron is an registered trademarks of Naviam, Inc. Terms, conditions, features, availability, pricing, fees, service and support options subject to change without notice.',
       beta_invite: {
         header: 'Interested?',

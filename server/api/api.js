@@ -36,6 +36,7 @@ api.use(require('./task-types'));
 api.use(require('./runs'));
 api.use(require('./history'));
 //api.use(require('./resetpassword'));
+api.use(require('./payments'));
 
 //
 // Errors and logging

@@ -125,14 +125,21 @@ a {
 
 /* teaser page styles */
 .teaser {
-  font-family: "Trebuchet MS";
-  font-size: 16pt; }
+  font-family: "RobotoRegular, Trebuchet MS";
+  font-size: 16pt;
+  color: #78909c; }
+
+.teaser-logo {
+  background: url(teaser_logo.png) no-repeat left bottom;
+  height: 90px; }
 
 .teaser .container-fluid {
   max-width: 1200px; }
 
 .topper {
-  background: black url("teaser_bg.jpg") no-repeat center top; }
+  background: url("top_banner.png") no-repeat center top;
+  max-width: 100%;
+  height: auto; }
 
 .navbar .navbar-form {
   margin-top: 0;
@@ -171,27 +178,25 @@ h2.pitch {
   color: #ffffff;
   padding: 30px 0 5px; }
 
+.teaser_align {
+  display: table; }
+
+.teaser_align_bottom {
+  float: none;
+  display: table-cell;
+  vertical-align: bottom; }
+
+.teaser_align_img {
+  float: right;
+  display: table-cell;
+  height: 336px;
+  width: 100%; }
+
 .pitch-ext {
-  text-align: left;
-  color: white;
-  font-size: 24px;
-  padding-top: 20px; }
+  color: white; }
 
-.teaser .pitch-ext p {
-  margin: 3px 0;
-  font-size: 25px; }
-
-.interested_box p {
-  font-size: 16px; }
-
-.teaser .interested_box .btn-signup {
-  background-image: none;
-  background-color: white;
-  color: #ff9719;
-  text-shadow: none; }
-
-.interested_box .btn:hover, .btn:focus {
-  color: #333333; }
+.pitch-ext h3 {
+  line-height: 1.5; }
 
 .top_mac {
   background: url("top_mac.png") no-repeat top right;
@@ -199,18 +204,45 @@ h2.pitch {
 
 .bottom_mac {
   background: url("bottom_mac.png") no-repeat top right;
-  height: 301px; }
+  height: 110px; }
 
 .interested_box {
-  background-color: #ff9719;
+  background-color: #ef6c00;
+  color: white; }
+
+.orange_box {
+  background-color: #ef6c00;
   color: white;
-  margin-top: 20px; }
+  padding: 10px 0 20px; }
+
+.teaser .form-inline .form-control {
+  width: 73%; }
 
 .problem-definition-header {
-  color: #ff9719;
+  color: #ef6c00;
   text-align: center;
   font-size: 58px;
   font-weight: bold; }
+
+.topper_icons {
+  padding: 20px 0;
+  color: #ffffff; }
+
+.server_icon {
+  background: url("teaser_server_icon.png") no-repeat top center;
+  height: 68px; }
+
+.teaser_git_icon {
+  background: url("teaser_git_icon.png") no-repeat top center;
+  height: 68px; }
+
+.teaser_calendar_icon {
+  background: url("teaser_calendar_icon.png") no-repeat top center;
+  height: 68px; }
+
+.teaser_copy_icon {
+  background: url("teaser_copy_icon.png") no-repeat top center;
+  height: 68px; }
 
 .airbag {
   background: url("airbag.jpg") no-repeat left top;
@@ -220,7 +252,7 @@ h2.pitch {
   background-color: white; }
 
 .footer_grey {
-  background-color: #e3e3e3; }
+  background-color: #eceff1; }
 
 .footer_white .problem-definition-header,
 .footer_grey .problem-definition-header {
@@ -247,16 +279,17 @@ h2.pitch {
   background: url("teaser_ballet.jpg") no-repeat top;
   height: 477px; }
 
-.hands {
-  background: url("teaser_hands.jpg") no-repeat;
-  height: 286px; }
+.secure {
+  background: url("teaser_secure.jpg") no-repeat;
+  height: 242px; }
 
 .grow {
-  background: url("teaser_grow.jpg") no-repeat;
-  height: 320px; }
+  background: url("teaser_grow.png") no-repeat;
+  height: 227px; }
 
 .middle_grey {
-  background-color: #d7d7d7; }
+  background-color: #eceff1;
+  color: #78909c; }
 
 .middle_white {
   background-color: #ffffff; }
@@ -276,13 +309,9 @@ h2.pitch {
 .teaser li {
   padding-bottom: 15px; }
 
-.teaser .interested_box .form-control {
-  border-color: #ff9818;
-  border-radius: 0px; }
-
 .teaser footer {
-  background-color: black;
-  color: white;
+  background-color: #ffffff;
+  color: #000000;
   text-align: center; }
 
 .teaser footer .jumbotron p {
@@ -578,7 +607,7 @@ a.list-group-item:hover, a.list-group-item:active, a.list-group-item:focus {
 
 /* workspaces accordion */
 .truecron-accordion .truecron-panel-body {
-  background-color: #cfd8dc;
+  background-color: #eceff1;
   color: #464748; }
 
 .truecron-accordion .truecron-first-heading {
@@ -724,6 +753,9 @@ a.list-group-item:hover, a.list-group-item:active, a.list-group-item:focus {
 .panel-footer-material-blue-grey-200 {
   background-color: #b0bec5;
   padding: 5px; }
+
+.truecron-task-btn {
+  margin: 0 1px 10px; }
 
 .truecron_checkbox {
   margin-top: 5px; }

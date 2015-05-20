@@ -32,7 +32,8 @@ module.exports.initialize = function(sequelize) {
         'connection',
         'resetpassword',
         'schedule',
-        'jobcounters'
+        'jobcounters',
+        'payments'
     ];
 
     daos.forEach(function (dao) {

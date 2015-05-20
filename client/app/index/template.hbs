@@ -1,71 +1,62 @@
 <div class="teaser">
     <div class="topper">
         <div class="container-fluid">
-            <div class="jumbotron">
-                <h2 class="pitch">{{format-message (intl-get "messages.landing.pitch")}}</h2>
+            <div class="header">
                 <div class="row">
-                    <div class="col-xs-3">
-                        <div class="pitch-ext">
-                            <p>{{format-message (intl-get "messages.landing.moto1")}}</p>
-                            <p>{{format-message (intl-get "messages.landing.moto2")}}</p>
+                    <div class="col-md-5 teaser-logo">
+                    </div>
+                </div>
+            </div>
+            <div class="jumbotron">
+                <div class="row teaser_align">
+                    <div class="col-lg-5 col-lg-offset-1 col-md-4 col-sm-5 teaser_align_bottom">
+                        <div class="pitch-ext text-right">
+                            <h3 class="pitch">{{format-message (intl-get "messages.landing.pitch")}}</h3>
+                            <h2>{{format-message (intl-get "messages.landing.moto1")}}</h2>
                         </div>
                     </div>
-                    <div class="col-xs-9">
+                    <div class="col-lg-6 col-md-8 col-sm-7 teaser_align_img">
                         <div class="top_mac"></div>
                     </div>
                 </div>
             </div>
         </div>
-    </div>
-    <div class="middle">
-        <div class="container-fluid">
-            <div class="jumbotron">
+        <div class="interested_box">
+            <div class="container-fluid">
                 <div class="row">
-                    <div class="col-xs-3">
-                        <div class="interested_box">
-                            <form {{action "invite" on="submit"}}>
-                                <div class="container">
-                                    <h2>{{format-message (intl-get "messages.landing.beta_invite.header")}}</h2>
-                                    <p>{{format-message (intl-get "messages.landing.beta_invite.description")}}</p>
-                                    <div {{bind-attr class=":form-group-white isInvitationEmailError:has-error"}}>
-                                      {{input class="form-control" value=invitationEmail
-                                      type="email" placeholder="Email" required="required"}}
-                                    </div>
-                                    <p><input type="submit" class="btn btn-white" value="SIGN UP"></p>
-                                </div>
-                            </form>
-                        </div>
+                    <div class="col-lg-6 col-md-4 col-sm-5">
+                        <h4 class=" text-center">{{format-message (intl-get "messages.landing.beta_invite.description")}}</h4>
+                        <form class="form-inline" {{action "invite" on="submit"}}>
+                            <div class="form-group-white isInvitationEmailError:has-error">
+                                {{input class="form-control" value=invitationEmail type="email" placeholder="Email" required="required"}}
+                                <button type="submit" class="btn btn-white">SIGN UP</button>
+                            </div>
+                        </form>
                     </div>
-                    <div class="col-xs-9">
+                    <div class="col-lg-6 col-md-8 col-sm-7">
                         <div class="bottom_mac"></div>
                     </div>
                 </div>
             </div>
-            <h2 class="problem-definition-header">{{format-message (intl-get "messages.landing.what.header")}}</h2>
         </div>
-    </div>
-    <div class="middle_grey">
-        <div class="container-fluid">
-            <div class="jumbotron">
-                <p>{{format-message (intl-get "messages.landing.what.description1")}}</p>
-                <p>{{format-message (intl-get "messages.landing.what.description2")}}</p>
-            </div>
-        </div>
-    </div>
-    <div class="middle_white">
-        <div class="container-fluid">
-            <div class="jumbotron">
+        <div class="topper_icons">
+            <div class="container-fluid">
                 <div class="row">
-                    <div class="col-xs-5">
-                        <ul>
-                            <li>{{format-message (intl-get "messages.landing.what.list.item1")}}</li>
-                            <li>{{format-message (intl-get "messages.landing.what.list.item2")}}</li>
-                            <li>{{format-message (intl-get "messages.landing.what.list.item3")}}</li>
-                            <li>{{format-message (intl-get "messages.landing.what.list.item4")}}</li>
-                        </ul>
+                    <div class="col-lg-3 col-md-3 col-sm-3">
+                        <div class="server_icon"></div>
+                        <h4 class="text-center">It turns your servers so you do not have to worry about infrastructure.</h4>
                     </div>
-                    <div class="col-xs-7">
-                        <div class="words"></div>
+                    <div class="col-lg-3 col-md-3 col-sm-3">
+                        <div class="teaser_git_icon"></div>
+                        <h4 class="text-center">It knows that developers actually test the code before releasing it into Production.</h4>
+                    </div>
+                    <div class="col-lg-3 col-md-3 col-sm-3">
+                        <div class="teaser_calendar_icon"></div>
+                        <h4 class="text-center">It knows that fiscal calendar does not end in December.</h4>
+                    </div>
+                    <div class="col-lg-3 col-md-3 col-sm-3">
+                        <div class="teaser_copy_icon"></div>
+                        <h4 class="text-center">It does not make you write a Powershell script to copy a file.</h4>
                     </div>
                 </div>
             </div>
@@ -74,7 +65,7 @@
     <div class="middle_grey">
         <div class="container-fluid">
             <div class="jumbotron">
-                <p>{{format-message (intl-get "messages.landing.features.header")}}</p>
+                <p><strong>{{format-message (intl-get "messages.landing.features.header")}}</strong></p>
             </div>
         </div>
     </div>
@@ -133,7 +124,7 @@
                     </p>
                 </div>
                 <div class="col-xs-6">
-                    <div class="hands"></div>
+                    <div class="secure"></div>
                 </div>
             </div>
         </div>
@@ -150,6 +141,24 @@
                       {{format-message (intl-get "messages.landing.features.feature5.description")}}
                     </p>
                 </div>
+            </div>
+        </div>
+    </div>
+    <div class="orange_box">
+        <div class="container-fluid">
+            <div class="row">
+                <h3 class="text-center"><strong>Simply put, TrueCron is a scheduler that allows you to create a complex tasks in several clicks, peer review it, test and release to production and be sure it will run properly.</strong></h3>
+                <div class="col-lg-12 text-center">
+                    <br>
+                    <form class="form-inline" {{action "invite" on="submit"}}>
+                        <div class="form-group-white isInvitationEmailError:has-error">
+                          {{input class="form-control" value=invitationEmail type="email" placeholder="Email" required="required"}}
+                            <button type="submit" class="btn btn-white">SIGN UP</button>
+                        </div>
+                    </form>
+                    <br>
+                </div>
+                <h3 class="text-center">Moreover, when we are going live you will get 100 jobs to execute for free during first 3 months.</h3>
             </div>
         </div>
     </div>
