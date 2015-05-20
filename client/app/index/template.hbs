@@ -8,14 +8,14 @@
                 </div>
             </div>
             <div class="jumbotron">
-                <div class="row teaser_align">
-                    <div class="col-lg-5 col-lg-offset-1 col-md-4 col-sm-5 teaser_align_bottom">
+                <div class="row">
+                    <div class="col-lg-6 col-md-4 col-sm-12">
                         <div class="pitch-ext text-right">
                             <h3 class="pitch">{{format-message (intl-get "messages.landing.pitch")}}</h3>
                             <h2>{{format-message (intl-get "messages.landing.moto1")}}</h2>
                         </div>
                     </div>
-                    <div class="col-lg-6 col-md-8 col-sm-7 teaser_align_img">
+                    <div class="col-lg-6 col-md-8 hidden-sm hidden-xs">
                         <div class="top_mac"></div>
                     </div>
                 </div>
@@ -24,7 +24,7 @@
         <div class="interested_box">
             <div class="container-fluid">
                 <div class="row">
-                    <div class="col-lg-6 col-md-4 col-sm-5">
+                    <div class="col-lg-6 col-md-4 col-sm-12 col-xs-12">
                         <h4 class=" text-center">{{format-message (intl-get "messages.landing.beta_invite.description")}}</h4>
                         <form class="form-inline" {{action "invite" on="submit"}}>
                             <div class="form-group-white isInvitationEmailError:has-error">
@@ -33,7 +33,7 @@
                             </div>
                         </form>
                     </div>
-                    <div class="col-lg-6 col-md-8 col-sm-7">
+                    <div class="col-lg-6 col-md-8 hidden-sm hidden-xs">
                         <div class="bottom_mac"></div>
                     </div>
                 </div>
@@ -42,19 +42,19 @@
         <div class="topper_icons">
             <div class="container-fluid">
                 <div class="row">
-                    <div class="col-lg-3 col-md-3 col-sm-3">
+                    <div class="col-lg-3 col-md-3 col-sm-3 col-xs-6">
                         <div class="server_icon"></div>
                         <h4 class="text-center">It turns your servers so you do not have to worry about infrastructure.</h4>
                     </div>
-                    <div class="col-lg-3 col-md-3 col-sm-3">
+                    <div class="col-lg-3 col-md-3 col-sm-3 col-xs-6">
                         <div class="teaser_git_icon"></div>
                         <h4 class="text-center">It knows that developers actually test the code before releasing it into Production.</h4>
                     </div>
-                    <div class="col-lg-3 col-md-3 col-sm-3">
+                    <div class="col-lg-3 col-md-3 col-sm-3 col-xs-6">
                         <div class="teaser_calendar_icon"></div>
                         <h4 class="text-center">It knows that fiscal calendar does not end in December.</h4>
                     </div>
-                    <div class="col-lg-3 col-md-3 col-sm-3">
+                    <div class="col-lg-3 col-md-3 col-sm-3 col-xs-6">
                         <div class="teaser_copy_icon"></div>
                         <h4 class="text-center">It does not make you write a Powershell script to copy a file.</h4>
                     </div>
@@ -72,10 +72,10 @@
     <div class="footer_white">
         <div class="container-fluid">
             <div class="row">
-                <div class="col-xs-6">
+                <div class="col-sm-6 hidden-xs">
                     <div class="airbag"></div>
                 </div>
-                <div class="col-xs-6">
+                <div class="col-sm-6 col-xs-12">
                     <h2 class="problem-definition-header">{{format-message (intl-get "messages.landing.features.feature1.header")}}</h2>
                     <p>
                       {{format-message (intl-get "messages.landing.features.feature1.description")}}
@@ -87,13 +87,13 @@
     <div class="footer_grey">
         <div class="container-fluid">
             <div class="row">
-                <div class="col-xs-6">
+                <div class="col-sm-6 col-xs-12">
                     <h2 class="problem-definition-header">{{format-message (intl-get "messages.landing.features.feature2.header")}}</h2>
                     <p>
                       {{format-message (intl-get "messages.landing.features.feature2.description")}}
                     </p>
                 </div>
-                <div class="col-xs-6">
+                <div class="col-sm-6 hidden-xs">
                     <div class="library"></div>
                 </div>
             </div>
@@ -102,10 +102,10 @@
     <div class="footer_white">
         <div class="container-fluid">
             <div class="row">
-                <div class="col-xs-6">
+                <div class="col-sm-6 hidden-xs">
                     <div class="ballet"></div>
                 </div>
-                <div class="col-xs-6">
+                <div class="col-sm-6 col-xs-12">
                     <h2 class="problem-definition-header">{{format-message (intl-get "messages.landing.features.feature3.header")}}</h2>
                     <p>
                       {{format-message (intl-get "messages.landing.features.feature3.description")}}
@@ -117,13 +117,13 @@
     <div class="footer_grey">
         <div class="container-fluid">
             <div class="row">
-                <div class="col-xs-6">
+                <div class="col-sm-6 col-xs-12">
                     <h2 class="problem-definition-header">{{format-message (intl-get "messages.landing.features.feature4.header")}}</h2>
                     <p>
                       {{format-message (intl-get "messages.landing.features.feature4.description")}}
                     </p>
                 </div>
-                <div class="col-xs-6">
+                <div class="col-sm-6 hidden-xs">
                     <div class="secure"></div>
                 </div>
             </div>
@@ -132,10 +132,10 @@
     <div class="footer_white">
         <div class="container-fluid">
             <div class="row">
-                <div class="col-xs-6">
+                <div class="col-sm-6 hidden-xs">
                     <div class="grow"></div>
                 </div>
-                <div class="col-xs-6">
+                <div class="col-sm-6 col-xs-12">
                     <h2 class="problem-definition-header">{{format-message (intl-get "messages.landing.features.feature5.header")}}</h2>
                     <p>
                       {{format-message (intl-get "messages.landing.features.feature5.description")}}
@@ -147,8 +147,10 @@
     <div class="orange_box">
         <div class="container-fluid">
             <div class="row">
-                <h3 class="text-center"><strong>Simply put, TrueCron is a scheduler that allows you to create a complex tasks in several clicks, peer review it, test and release to production and be sure it will run properly.</strong></h3>
-                <div class="col-lg-12 text-center">
+                <div class="col-xs-12 text-center">
+                    <h3 class="text-center">
+                        <strong>Simply put, TrueCron is a scheduler that allows you to create a complex tasks in several clicks, peer review it, test and release to production and be sure it will run properly.</strong>
+                    </h3>
                     <br>
                     <form class="form-inline" {{action "invite" on="submit"}}>
                         <div class="form-group-white isInvitationEmailError:has-error">
@@ -157,8 +159,8 @@
                         </div>
                     </form>
                     <br>
+                    <h3 class="text-center">Moreover, when we are going live you will get 100 jobs to execute for free during first 3 months.</h3>
                 </div>
-                <h3 class="text-center">Moreover, when we are going live you will get 100 jobs to execute for free during first 3 months.</h3>
             </div>
         </div>
     </div>

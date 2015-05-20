@@ -199,11 +199,11 @@ h2.pitch {
   line-height: 1.5; }
 
 .top_mac {
-  background: url("top_mac.png") no-repeat top right;
+  background: url("top_mac.png") no-repeat top center;
   height: 336px; }
 
 .bottom_mac {
-  background: url("bottom_mac.png") no-repeat top right;
+  background: url("bottom_mac.png") no-repeat top center;
   height: 110px; }
 
 .interested_box {
