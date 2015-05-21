@@ -24,18 +24,18 @@
         <div class="interested_box">
             <div class="container-fluid">
                 <div class="row">
-                    <div class="col-lg-6 col-md-4 col-sm-12 col-xs-12">
-                        <h4 class=" text-center">{{format-message (intl-get "messages.landing.beta_invite.description")}}</h4>
-                        <form class="form-inline" {{action "invite" on="submit"}}>
-                            <div class="form-group-white isInvitationEmailError:has-error">
+                    <form class="form-inline" {{action "invite" on="submit"}}>
+                        <div class="col-lg-6 col-md-4 col-sm-12 col-xs-12">
+                            <h4 class="text-center">{{format-message (intl-get "messages.landing.beta_invite.description")}}</h4>
+                            <div class="form-group-white text-center isInvitationEmailError:has-error">
                                 {{input class="form-control" value=invitationEmail type="email" placeholder="Email" required="required"}}
                                 <button type="submit" class="btn btn-white">SIGN UP</button>
                             </div>
-                        </form>
-                    </div>
-                    <div class="col-lg-6 col-md-8 hidden-sm hidden-xs">
-                        <div class="bottom_mac"></div>
-                    </div>
+                        </div>
+                        <div class="col-lg-6 col-md-8 hidden-sm hidden-xs">
+                            <div class="bottom_mac"></div>
+                        </div>
+                    </form>
                 </div>
             </div>
         </div>
