@@ -89,6 +89,7 @@ export default Ember.Mixin.create({
         break;
       case 'Monthly':
         rruleOptions.bymonthday = [self.get('selectedRepeatEvery')];
+        break;
       case 'Weekly':
         rruleOptions.byweekno = [self.get('selectedRepeatEvery')];
         break;

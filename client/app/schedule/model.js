@@ -7,12 +7,15 @@ export default Ember.Object.extend({
     var self = this;
     var rrule = this.get('rrule');
     var repeatRules = ['Yearly', 'Monthly', 'Weekly', 'Daily', 'Hourly', 'Minutely'];
+
     var recText = '';
 
     var dtStart = moment(rrule.options.dtStart);
     var dtEnd = null;
-    if(rrule.options.until)
+    if(rrule.options.until) {
       dtEnd = moment(rrule.options.until);
+    }
+
     var tsEnd = Math.abs(dtStart - dtEnd);
     var calType = '';
     recText = 'Occurs ' + repeatRules[rrule.options.freq];
@@ -33,51 +36,55 @@ export default Ember.Object.extend({
         break;
       case 2:
         calType = "weeks";
-        if(dtEnd)
+        if(dtEnd) {
           dtEnd.add(timeToAdd * 7, 'days');
+        }
         days = rrule.options.byweekday;
         recText += self.getDateNames(days);
         break;
       case 1:
         calType = "months";
-        if(dtEnd)
+        if(dtEnd) {
           dtEnd.add(timeToAdd, 'month');
+        }
 
         if(rrule.options.bysetpos && rrule.options.bysetpos.length > 0)
         {
-          var bsp = self.getDayEnding(rrule.options.bysetpos);
-          recText += " on the " + bsp + " " + self.getDateNames(rrule.options.byweekday).replace(" every ", "");
+          var bspDay = self.getDayEnding(rrule.options.bysetpos);
+          recText += " on the " + bspDay + " " + self.getDateNames(rrule.options.byweekday).replace(" every ", "");
         }
         else
         {
           //Ok, no BYSETPOS, let's go for BYMONTHDAY
-          var bsp = self.getDayEnding('' + rrule.options.bymonthday[0]);
-          recText += " on the " + bsp + " day of each month";
+          var bspMonth = self.getDayEnding('' + rrule.options.bymonthday[0]);
+          recText += " on the " + bspMonth + " day of each month";
         }
         break;
       case 0:
         calType = "years";
-        if(dtEnd)
+        if(dtEnd) {
           dtEnd.add(timeToAdd, 'year');
+        }
         //looks a lot like monthly....
         var mName = rrule.options.bymonth;
         //see if it's positional
         if(rrule.options.bysetpos && rrule.options.bysetpos.length > 0)
         {
-          var bsp = self.getDayEnding(rrule.options.bysetpos);
-          recText += " on the " + bsp + " " + self.getDateNames(rrule.options.byweekday).replace(" every ", "") + " of " + mName;
+          var bspYears = self.getDayEnding(rrule.options.bysetpos);
+          recText += " on the " + bspYears + " " + self.getDateNames(rrule.options.byweekday).replace(" every ", "") + " of " + mName;
         }
         else
         {
           //Ok, no BYSETPOS, let's go for BYMONTHDAY
-          var bsp = self.getDayEnding('' + rrule.options.bymonthday[0]);
-          recText += " on the " + bsp + " day of " + mName;
+          var bspForMonth = self.getDayEnding('' + rrule.options.bymonthday[0]);
+          recText += " on the " + bspForMonth + " day of " + mName;
         }
         break;
       case 4:
         calType = "hours";
-        if(dtEnd)
+        if(dtEnd) {
           dtEnd.add(timeToAdd, 'hour');
+        }
         break;
       default:
         break;
@@ -88,8 +95,9 @@ export default Ember.Object.extend({
 
     if (timeToAdd > 0) {
       recText += " for the next " + rrule.options.count + " " + calType;
-      if (dtEnd)
+      if (dtEnd) {
         recText += " ending on " + dtEnd.format('DD/MM/YYYY') + " at " + dtStart.add(tsEnd).format('HH:mm');
+      }
     }
 
     return recText;
@@ -148,15 +156,15 @@ export default Ember.Object.extend({
   },
   getDayEnding: function(d)
   {
-    if (d.endsWith("1") && d != "11")
+    if (d.endsWith("1") && d !== "11")
     {
       d += "st";
     }
-    if (d.endsWith("2") && d != "12")
+    if (d.endsWith("2") && d !== "12")
     {
       d += "nd";
     }
-    if (d.endsWith("3") && d != "13")
+    if (d.endsWith("3") && d !== "13")
     {
       d += "rd";
     }
