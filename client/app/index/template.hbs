@@ -9,13 +9,13 @@
             </div>
             <div class="jumbotron">
                 <div class="row teaser_align">
-                    <div class="col-lg-5 col-lg-offset-1 col-md-4 col-sm-5 teaser_align_bottom">
+                    <div class="col-lg-5 col-lg-offset-1 col-md-4 col-sm-12 col-xs-12 teaser_align_bottom">
                         <div class="pitch-ext text-right">
                             <h3 class="pitch">{{format-message (intl-get "messages.landing.pitch")}}</h3>
                             <h2>{{format-message (intl-get "messages.landing.moto1")}}</h2>
                         </div>
                     </div>
-                    <div class="col-lg-6 col-md-8 col-sm-7 teaser_align_img">
+                    <div class="col-lg-6 col-md-8 hidden-xs hidden-sm teaser_align_img">
                         <div class="top_mac"></div>
                     </div>
                 </div>
@@ -24,7 +24,7 @@
         <div class="interested_box">
             <div class="container-fluid">
                 <div class="row">
-                    <div class="col-lg-6 col-md-4 col-sm-5">
+                    <div class="col-lg-6 col-md-4 col-sm-12 text-center">
                         <h4 class=" text-center">{{format-message (intl-get "messages.landing.beta_invite.description")}}</h4>
                         <form class="form-inline" {{action "invite" on="submit"}}>
                             <div class="form-group-white isInvitationEmailError:has-error">
@@ -33,7 +33,7 @@
                             </div>
                         </form>
                     </div>
-                    <div class="col-lg-6 col-md-8 col-sm-7">
+                    <div class="col-lg-6 col-md-8 hidden-sm hidden-xs">
                         <div class="bottom_mac"></div>
                     </div>
                 </div>
@@ -72,10 +72,10 @@
     <div class="footer_white">
         <div class="container-fluid">
             <div class="row">
-                <div class="col-xs-6">
+                <div class="col-sm-6 hidden-xs">
                     <div class="airbag"></div>
                 </div>
-                <div class="col-xs-6">
+                <div class="col-sm-6 col-xs-12">
                     <h2 class="problem-definition-header">{{format-message (intl-get "messages.landing.features.feature1.header")}}</h2>
                     <p>
                       {{format-message (intl-get "messages.landing.features.feature1.description")}}
@@ -87,13 +87,13 @@
     <div class="footer_grey">
         <div class="container-fluid">
             <div class="row">
-                <div class="col-xs-6">
+                <div class="col-sm-6 col-xs-12">
                     <h2 class="problem-definition-header">{{format-message (intl-get "messages.landing.features.feature2.header")}}</h2>
                     <p>
                       {{format-message (intl-get "messages.landing.features.feature2.description")}}
                     </p>
                 </div>
-                <div class="col-xs-6">
+                <div class="col-sm-6 hidden-xs">
                     <div class="library"></div>
                 </div>
             </div>
@@ -102,10 +102,10 @@
     <div class="footer_white">
         <div class="container-fluid">
             <div class="row">
-                <div class="col-xs-6">
+                <div class="col-sm-6 hidden-xs">
                     <div class="ballet"></div>
                 </div>
-                <div class="col-xs-6">
+                <div class="col-sm-6 col-xs-12">
                     <h2 class="problem-definition-header">{{format-message (intl-get "messages.landing.features.feature3.header")}}</h2>
                     <p>
                       {{format-message (intl-get "messages.landing.features.feature3.description")}}
@@ -117,13 +117,13 @@
     <div class="footer_grey">
         <div class="container-fluid">
             <div class="row">
-                <div class="col-xs-6">
+                <div class="col-sm-6 col-xs-12">
                     <h2 class="problem-definition-header">{{format-message (intl-get "messages.landing.features.feature4.header")}}</h2>
                     <p>
                       {{format-message (intl-get "messages.landing.features.feature4.description")}}
                     </p>
                 </div>
-                <div class="col-xs-6">
+                <div class="col-sm-6 hidden-xs">
                     <div class="secure"></div>
                 </div>
             </div>
@@ -132,10 +132,10 @@
     <div class="footer_white">
         <div class="container-fluid">
             <div class="row">
-                <div class="col-xs-6">
+                <div class="col-sm-6 hidden-xs">
                     <div class="grow"></div>
                 </div>
-                <div class="col-xs-6">
+                <div class="col-sm-6 col-xs-12">
                     <h2 class="problem-definition-header">{{format-message (intl-get "messages.landing.features.feature5.header")}}</h2>
                     <p>
                       {{format-message (intl-get "messages.landing.features.feature5.description")}}

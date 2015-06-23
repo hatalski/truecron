@@ -125,7 +125,7 @@ a {
 
 /* teaser page styles */
 .teaser {
-  font-family: "RobotoRegular, Trebuchet MS";
+  font-family: "RobotoRegular";
   font-size: 16pt;
   color: #78909c; }
 
@@ -137,7 +137,7 @@ a {
   max-width: 1200px; }
 
 .topper {
-  background: url("top_banner.png") no-repeat center top;
+  background: url("top_banner.jpg") no-repeat center top;
   max-width: 100%;
   height: auto; }
 
@@ -215,9 +215,9 @@ h2.pitch {
   color: white;
   padding: 10px 0 20px; }
 
-.teaser .form-inline .form-control {
-  width: 73%; }
-
+/*.teaser .form-inline .form-control {
+  width: 73%;
+}*/
 .problem-definition-header {
   color: #ef6c00;
   text-align: center;
