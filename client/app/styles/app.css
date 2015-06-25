@@ -133,6 +133,9 @@ a {
   background: url(teaser_logo.png) no-repeat left bottom;
   height: 90px; }
 
+.teaser h1, .teaser h2, .teaser h3, .teaser h4, .teaser h5, .teaser h6 {
+  font-family: "RobotoRegular"; }
+
 .teaser .container-fluid {
   max-width: 1200px; }
 
@@ -221,8 +224,7 @@ h2.pitch {
 .problem-definition-header {
   color: #ef6c00;
   text-align: center;
-  font-size: 58px;
-  font-weight: bold; }
+  font-size: 58px; }
 
 .topper_icons {
   padding: 20px 0;
