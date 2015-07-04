@@ -20,17 +20,17 @@ var storage = require('./storage/index');
 var app = express();
 
 // redirect to https if accessing over http
-app.use(function(req, res, next) {
-    if((config.https) && (!req.secure) && (req.protocol !== 'https')) {
-        // For people accessing the instance directly
-        res.redirect('https://' + req.get('Host') + req.url);
-    } else if((!req.secure) && (req.get('X-Forwarded-Proto') !== 'https')) {
-        // For people accessing instances via an ELB (load balancer)
-        res.redirect('https://' + req.get('Host') + req.url);
-    } else {
-        next();
-    }
-});
+//app.use(function(req, res, next) {
+//    if((config.https) && (!req.secure) && (req.protocol !== 'https')) {
+//        // For people accessing the instance directly
+//        res.redirect('https://' + req.get('Host') + req.url);
+//    } else if((!req.secure) && (req.get('X-Forwarded-Proto') !== 'https')) {
+//        // For people accessing instances via an ELB (load balancer)
+//        res.redirect('https://' + req.get('Host') + req.url);
+//    } else {
+//        next();
+//    }
+//});
 
 app.use(logger.requestLogger);
 app.use(favicon(__dirname + '/public/favicon.ico'));
