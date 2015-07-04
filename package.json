@@ -1,10 +1,14 @@
 {
   "name": "TrueCron",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "private": true,
   "scripts": {
     "start": "supervisor -i public --debug server.js",
     "test": "mocha server/test -R spec --timeout 10000"
+  },
+  "engines": {
+    "node": "0.12.x",
+    "npm" : "2.5.x"
   },
   "dependencies": {
     "archiver": "0.14.3",
