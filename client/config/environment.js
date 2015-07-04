@@ -93,7 +93,7 @@ module.exports = function(environment) {
   }
   if (environment === 'production') {
     ENV.APP.HOST                    = 'https://app.truecron.com';
-    ENV.APP.SERVER_HOST             = 'https://www.truecron.com';
+    ENV.APP.SERVER_HOST             = 'http://www.truecron.com';
     ENV.APP.API_HOST                = ENV.APP.SERVER_HOST + '/api/v1';
     ENV.APP.SIGNUP_HOST             = ENV.APP.SERVER_HOST + '/auth/signup';
     ENV.APP.BETA_SIGNUP_HOST        = ENV.APP.SERVER_HOST + '/beta/signup';
