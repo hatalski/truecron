@@ -58,7 +58,7 @@ module.exports = function(environment) {
     ENV.baseURL = '/';
     ENV.locationType = 'none';
 
-    ENV.APP.SERVER_HOST            = 'https://localhost';
+    ENV.APP.SERVER_HOST            = 'http://localhost:3000';
     ENV.APP.API_HOST               = ENV.APP.SERVER_HOST + '/api/v1';
     ENV.APP.SIGNUP_HOST            = ENV.APP.SERVER_HOST + '/auth/signup';
     ENV.APP.BETA_SIGNUP_HOST       = ENV.APP.SERVER_HOST + '/beta/signup';
