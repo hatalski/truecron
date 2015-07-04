@@ -92,13 +92,13 @@ module.exports = function(environment) {
     }
   }
   if (environment === 'production') {
-    ENV.APP.HOST                    = 'https://app.truecron.com';
+    ENV.APP.HOST                    = 'http://app.truecron.com';
     ENV.APP.SERVER_HOST             = 'http://www.truecron.com';
     ENV.APP.API_HOST                = ENV.APP.SERVER_HOST + '/api/v1';
     ENV.APP.SIGNUP_HOST             = ENV.APP.SERVER_HOST + '/auth/signup';
     ENV.APP.BETA_SIGNUP_HOST        = ENV.APP.SERVER_HOST + '/beta/signup';
     ENV.APP.RESET_PASSWORD_HOST     = ENV.APP.SERVER_HOST + '/auth/resetpassword';
-    ENV.APP.GOOGLE_API_KEY          = '584720647348-sfa16c6nriakjntd90qh05togeigs6co.apps.googleusercontent.com';
+    ENV.APP.GOOGLE_API_KEY          = '411638818068-g7l3kh9pifo0jbsauepb5sa9tt855a0s.apps.googleusercontent.com';
     ENV.APP.HIDE_SIGNUP             = true;
 
     ENV.contentSecurityPolicy = {
