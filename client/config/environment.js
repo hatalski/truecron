@@ -105,7 +105,7 @@ module.exports = function(environment) {
       'default-src': "'none'",
       'script-src': "'self' 'unsafe-inline' 'unsafe-eval' use.typekit.net connect.facebook.net maps.googleapis.com maps.gstatic.com",
       'font-src': "'self' data: use.typekit.net http://fonts.gstatic.com",
-      'connect-src': "'self' https://www.truecron.com ws://www.truecron.com wss://www.truecron.com www.googleapis.com",
+      'connect-src': "'self' https://www.truecron.com http://www.truecron.com ws://www.truecron.com wss://www.truecron.com www.googleapis.com",
       'img-src': "'self' www.gravatar.com www.facebook.com p.typekit.net data:",
       'style-src': "'self' 'unsafe-inline' use.typekit.net",
       'frame-src': "s-static.ak.facebook.com static.ak.facebook.com www.facebook.com"
