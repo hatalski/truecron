@@ -13,18 +13,18 @@ var server = http.createServer(app).listen(config.get('PORT'), function() {
 	log.info('Express http server listening on port ' + this.address().port);
 });
 
-var certExists = fs.existsSync(config.get('CERTIFICATE_PATH'));
-log.info(config.get('CERTIFICATE_PATH') + ' : ' + certExists);
+//var certExists = fs.existsSync(config.get('CERTIFICATE_PATH'));
+//log.info(config.get('CERTIFICATE_PATH') + ' : ' + certExists);
 
-var options = {
-	key: fs.readFileSync(config.get('PRIVATE_KEY_PATH')),
-	cert: fs.readFileSync(config.get('CERTIFICATE_PATH'))
-};
-var secureServer = https.createServer(options, app).listen(config.get('SECURE_PORT'), function() {
-	log.info('Express https server listening on port ' + this.address().port);
-});
+//var options = {
+//	key: fs.readFileSync(config.get('PRIVATE_KEY_PATH')),
+//	cert: fs.readFileSync(config.get('CERTIFICATE_PATH'))
+//};
+//var secureServer = https.createServer(options, app).listen(config.get('SECURE_PORT'), function() {
+//	log.info('Express https server listening on port ' + this.address().port);
+//});
 
-var io = require('socket.io')(secureServer);
+var io = require('socket.io')(server);
 var redis = require('socket.io-redis');
 
 io.adapter(redis({ host: config.get('REDIS_HOST'), port: config.get('REDIS_PORT') }));
@@ -43,4 +43,4 @@ io.on('connection', function(socket) {
 //var sockets = require('./server/lib/sockets');
 // app.registerSockets(secureServer);
 
-module.exports = secureServer;
+module.exports = server;
