@@ -1,5 +1,5 @@
 {
-    "BASE_URL": "https://dev.truecron.com",
+    "BASE_URL": "http://dev.truecron.com:3000",
     "PORT": 3000,
     "SESSION_SECRET": "dev-truecron-Hhe34Jls0J04",
     "POSTGRE_HOST": "192.168.3.10",
@@ -8,9 +8,9 @@
     "REDIS_HOST": "localhost",
     "REDIS_PORT": 6379,
     "COOKIE_DOMAIN": "dev.truecron.com",
-    "GOOGLE_SSO_CLIENT_ID": "182911798819-t360tlk839gij3m46pgo4noticrqi4s3.apps.googleusercontent.com",
-    "GOOGLE_SSO_CLIENT_SECRET": "1gcqd1YRgD-Ui3vYyYu7z926",
-    "GOOGLE_SSO_CALLBACK_URL": "https://dev.truecron.com/auth/google/callback",
+    "GOOGLE_SSO_CLIENT_ID": "411638818068-g7l3kh9pifo0jbsauepb5sa9tt855a0s.apps.googleusercontent.com",
+    "GOOGLE_SSO_CLIENT_SECRET": "Ph_X-rEiT97owfe9wjArs7Y4",
+    "GOOGLE_SSO_CALLBACK_URL": "http://dev.truecron.com:3000/auth/google/callback",
     "GOOGLE_ANALYTICS_TRACKING_ID": "",
-    "API_HOST": "https://dev.truecron.com/api/v1"
+    "API_HOST": "http://dev.truecron.com:3000/api/v1"
 }

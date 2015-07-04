@@ -19,11 +19,11 @@ module.exports = function(environment) {
       // Here you can pass flags/options to your application instance
       // when it is created
       HOST:                 'http://localhost:4200',
-      SERVER_HOST:          'https://dev.truecron.com',
-      API_HOST:             'https://dev.truecron.com/api/v1',
-      SIGNUP_HOST:          'https://dev.truecron.com/auth/signup',
-      BETA_SIGNUP_HOST:     'https://dev.truecron.com/beta/signup',
-      RESET_PASSWORD_HOST:  'https://dev.truecron.com/auth/resetpassword',
+      SERVER_HOST:          'http://dev.truecron.com:3000',
+      API_HOST:             'http://dev.truecron.com:3000/api/v1',
+      SIGNUP_HOST:          'http://dev.truecron.com:3000/auth/signup',
+      BETA_SIGNUP_HOST:     'http://dev.truecron.com:3000/beta/signup',
+      RESET_PASSWORD_HOST:  'http://dev.truecron.com:3000/auth/resetpassword',
       GOOGLE_API_KEY:       '182911798819-t360tlk839gij3m46pgo4noticrqi4s3.apps.googleusercontent.com',
       HIDE_SIGNUP:        false
     }
@@ -36,7 +36,7 @@ module.exports = function(environment) {
     // ENV.APP.LOG_TRANSITIONS_INTERNAL = true;
     ENV.APP.LOG_VIEW_LOOKUPS = true;
 
-    ENV.APP.SERVER_HOST           = 'https://dev.truecron.com';
+    ENV.APP.SERVER_HOST           = 'http://dev.truecron.com:3000';
     ENV.APP.API_HOST              = ENV.APP.SERVER_HOST + '/api/v1';
     ENV.APP.SIGNUP_HOST           = ENV.APP.SERVER_HOST + '/auth/signup';
     ENV.APP.BETA_SIGNUP_HOST      = ENV.APP.SERVER_HOST + '/beta/signup';
@@ -46,9 +46,9 @@ module.exports = function(environment) {
       'default-src': "'none'",
       'script-src': "'self' 'unsafe-inline' 'unsafe-eval' use.typekit.net connect.facebook.net maps.googleapis.com maps.gstatic.com",
       'font-src': "'self' data: use.typekit.net https://fonts.gstatic.com",
-      'connect-src': "'self' https://192.168.3.10 wss://192.168.3.10/ https://dev.truecron.com wss://dev.truecron.com/ www.googleapis.com",
+      'connect-src': "'self' https://192.168.3.10 wss://192.168.3.10/ https://dev.truecron.com http://dev.truecron.com:3000 wss://dev.truecron.com/ www.googleapis.com",
       'img-src': "'self' www.gravatar.com www.facebook.com p.typekit.net data:",
-      'style-src': "'self' 'unsafe-inline' use.typekit.net",
+      'style-src': "'self' 'unsafe-inline' use.typekit.net https://fonts.googleapis.com",
       'frame-src': "s-static.ak.facebook.com static.ak.facebook.com www.facebook.com"
     }
   }
