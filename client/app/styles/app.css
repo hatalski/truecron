@@ -125,7 +125,7 @@ a {
 
 /* teaser page styles */
 .teaser {
-  font-family: "RobotoRegular";
+  font-family: "Roboto Condensed";
   font-size: 16pt;
   color: #78909c; }
 
@@ -134,7 +134,7 @@ a {
   height: 90px; }
 
 .teaser h1, .teaser h2, .teaser h3, .teaser h4, .teaser h5, .teaser h6 {
-  font-family: "RobotoRegular"; }
+  font-family: "Roboto Condensed"; }
 
 .teaser .container-fluid {
   max-width: 1200px; }
@@ -175,6 +175,9 @@ a {
 .teaser .col-xs-9 {
   width: 70%; }
 
+.teaser-content, .teaser-content h2 {
+  font-family: "Roboto"; }
+
 h2.pitch {
   text-align: center;
   font-size: 32pt;
@@ -200,6 +203,12 @@ h2.pitch {
 
 .pitch-ext h3 {
   line-height: 1.5; }
+
+.pitch-ext h2 {
+  font-weight: 500; }
+
+.invite-title {
+  font-weight: 500; }
 
 .top_mac {
   background: url("top_mac.png") no-repeat top right;
@@ -250,6 +259,21 @@ h2.pitch {
   background: url("airbag.jpg") no-repeat left top;
   height: 569px; }
 
+@media (min-width: 992px) and (max-width: 1170px) {
+  .airbag {
+    height: 481px; }
+
+  .library {
+    height: 395px; } }
+@media (min-width: 1200px) {
+  .airbag {
+    height: 455px; }
+
+  .col-sm-6 .library {
+    height: 325px; }
+
+  .col-sm-6 .ballet {
+    height: 375px; } }
 .footer_white {
   background-color: white; }
 
@@ -278,15 +302,15 @@ h2.pitch {
   height: 466px; }
 
 .ballet {
-  background: url("teaser_ballet.jpg") no-repeat top;
+  background: url("teaser_ballet.jpg") no-repeat top center;
   height: 477px; }
 
 .secure {
-  background: url("teaser_secure.jpg") no-repeat;
+  background: url("teaser_secure.png") no-repeat;
   height: 242px; }
 
 .grow {
-  background: url("teaser_grow.png") no-repeat;
+  background: url("grows.png") no-repeat;
   height: 227px; }
 
 .middle_grey {
