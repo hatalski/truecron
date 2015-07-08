@@ -4,11 +4,13 @@ export default Ember.Route.extend({
   model: function() {
       "use strict";
       var workspace = this.modelFor('workspaces/workspace');
-      //var user = this.modelFor('profile');
+      var userId = this.get('session.userId');
+      Ember.Logger.log('session user id: ', userId);
       var newJob = this.store.createRecord('job', {
           name: '',
           workspace: workspace,
-          workspaceId: workspace.get('id')
+          workspaceId: workspace.get('id'),
+          updatedBy: userId
       }); //this.controllerFor('jobs').get('newJob');
       this.controllerFor('jobs').set('selectedJob', newJob);
       this.controllerFor('jobs').set('showJobDetails', true);
