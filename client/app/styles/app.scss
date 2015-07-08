@@ -39,9 +39,9 @@ body {
   color: #fa5b00;
   margin-top: 3px;
 }
-.navbar {
-  min-height: 60px;
-}
+//.navbar {
+//  min-height: 60px;
+//}
 
 .btn {
   padding: 8px 20px;
@@ -134,7 +134,13 @@ a {
   background: url("white-logo.png") no-repeat center;
   width: 70px;
 }
-
+.navbar .navbar-brand {
+  height: 50px;
+}
+.navbar .navbar-nav > li > a {
+  padding-top: 15px;
+  padding-bottom: 15px;
+}
 .teaser .col-xs-3 {
   width: 30%;
 }
@@ -349,7 +355,7 @@ h2.pitch {
 
 /* sign-in sign-up */
 .container-truecron {
-  margin-top: 60px;
+  margin-top: 50px;
 }
 
 .g_sign {
@@ -433,7 +439,7 @@ tr:nth-child(odd) {
   padding-left: 0;
   padding-right: 0;
   position: fixed;
-  top: 60px;
+  top: 50px;
   left: 0px;
   z-index: 1000;
   display: block;
@@ -588,6 +594,8 @@ a.list-group-item:hover, a.list-group-item:active, a.list-group-item:focus {
 .job-details-header {
   background-color: white;
   padding-top: 10px;
+  /*temporary padding-bottom for hidden tags*/
+  padding-bottom: 10px;
 }
 
 .btn-truecron-icon .fa-trash {
@@ -854,7 +862,7 @@ a.list-group-item:hover, a.list-group-item:active, a.list-group-item:focus {
 }
 .panel-footer-material-blue-grey-200{
   background-color: #b0bec5;
-  padding: 5px;
+  padding: 0px 5px;
 }
 .truecron-task-btn {
   margin: 0 1px 10px;
@@ -866,6 +874,13 @@ a.list-group-item:hover, a.list-group-item:active, a.list-group-item:focus {
 .truecron-navbar .truecron-org-tabs > .active > a, .truecron-navbar .truecron-org-tabs > .active > a:hover, .truecron-navbar .truecron-org-tabs > .active > a:focus,
 .truecron-navbar .truecron-org-tabs > li > a, .truecron-navbar .truecron-org-tabs > li > a:hover, .truecron-navbar .truecron-org-tabs > li > a:focus{
   color: #ffffff;
+}
+.navbar-right .dropdown-menu p {
+  color: #333333;
+  margin: 0;
+}
+.dropdown-container {
+  padding: 10px 5px;
 }
 .truecron-well-active {
   color: #ffffff;
