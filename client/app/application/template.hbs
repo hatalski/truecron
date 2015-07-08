@@ -1,5 +1,5 @@
 {{#if session.isAuthenticated}}
-<div class="navbar navbar-fixed-top navbar-material-blue-grey-800" role="navigation">
+<nav class="navbar navbar-fixed-top navbar-material-blue-grey-800">
     <div class="container-fluid">
         <div class="navbar-header">
             <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
@@ -32,9 +32,11 @@
                         <i class="fa fa-bell truecron-nav-icon"></i>
                     </a>
                     <ul class="dropdown-menu" role="menu">
-                        <li><a href="#">Action</a></li>
-                        <li class="divider"></li>
-                        <li><a href="#">Another action</a></li>
+                        <li>
+                            <div class="dropdown-container text-center">
+                                <p>You have no unread notifications</p>
+                            </div>
+                        </li>
                     </ul>
                 </li>
                 <li class="dropdown">
@@ -51,7 +53,7 @@
             </ul>
         </div>
     </div>
-</div>
+</nav>
 
 {{/if}}
 {{outlet}}
