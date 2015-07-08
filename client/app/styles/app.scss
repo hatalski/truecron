@@ -18,6 +18,9 @@ $primary-color: #464748;
   background: linear-gradient($gradient1, $gradient2);
 }
 
+.truecron-title-margin {
+  margin-top: 18px;
+}
 /*main */
 
 body {
@@ -718,14 +721,14 @@ a.list-group-item:hover, a.list-group-item:active, a.list-group-item:focus {
 /* Organizations */
 
 .truecron-org-header {
-  background-color: #d4dcdf;
+  background-color: #CFD8DC;
   margin-top: 10px;
   padding-top: 3px;
   padding-bottom: 3px;
 }
 
 .truecron-org-title {
-  background-color: #dbf2fa;
+  background-color: #F5F5F5;
   padding-top: 6px;
 }
 
@@ -733,10 +736,14 @@ a.list-group-item:hover, a.list-group-item:active, a.list-group-item:focus {
   color: #ff7e44;
   font-weight: bold;
 }
-
+.org-title:hover, .org-title:active {
+  color: #ff7e44;
+  font-weight: bold;
+}
 .truecron-org-content {
+  background-color: #fafafa;
   padding-top: 6px;
-  border-bottom: 1px solid #c4c8d1;
+  border-bottom: 1px solid #CFD8DC;
 }
 
 /*index page */

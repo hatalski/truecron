@@ -1,50 +1,50 @@
 <div class="container-fluid">
     <div class="row">
-        <div class="col-md-8 col-md-offset-2 truecron-org-header">
+        <div class="col-xs-12 col-md-10 col-md-offset-1 truecron-org-header">
             <div class="row">
-                <div class="col-md-8 truecron-title-margin">
-                   <h4>Your Organizations</h4>
+                <div class="col-xs-7">
+                   <h4 class="truecron-title-margin text-uppercase">Your Accounts</h4>
                 </div>
-                <div class="col-md-4 text-right">
-                    {{button-popup-form buttonTitle="Create Organization" alertTitle="Create New Organization" alertText="Organization name" action="addOrganization"}}
+                <div class="col-xs-5 text-right">
+                    {{button-popup-form buttonTitle="Create Account" alertTitle="Create New Account" alertText="Account name" action="addOrganization"}}
                     {{!--<a class="btn btn-signup btn-material-orange-800" {{action "addOrganization"}}><i class="fa fa-plus"></i>Create Organization</a>--}}
                 </div>
             </div>
         </div>
       {{#each organization in model}}
-          <div class="col-md-8 col-md-offset-2 truecron-org-title">
+          <div class="col-xs-12 col-md-10 col-md-offset-1 truecron-org-title">
               <div class="row">
-                  <div class="col-md-3">
-                      <p class="org-title">{{organization.name}}</p>
-                  </div>
-                  <div class="col-md-2">
+                  <div class="col-xs-4 col-sm-5">
+                      <p>{{#link-to 'organizations' class="org-title"}}{{organization.name}}{{/link-to}}</p>
                       <p>{{organization.workspaces.length}} workspace(s)</p>
                   </div>
-                  <div class="col-md-2">
-                      <p>633 jobs</p>
+                  <div class="col-xs-2 col-sm-2">
+                      <p>&nbsp;</p>
+                      <p>no jobs</p>
                   </div>
-                  <div class="col-md-2">
-                      <p>8 users</p>
+                  <div class="col-xs-2 col-sm-2">
+                      <p>&nbsp;</p>
+                      <p>1 user</p>
                   </div>
-                  <div class="col-md-3 text-right">
-                      {{button-popup-form buttonTitle="Add Workspace" alertTitle="Add New Workspace" alertText="Workspace name" action="addWorkspace" parent=organization}}
+                  <div class="col-xs-4 col-sm-3 text-right">
+                      {{button-popup-form buttonTitle="Add Workspace" alertTitle="Add Workspace to Account" alertText="Workspace name" action="addWorkspace" parent=organization}}
                       {{!--<a href="#" {{action "addWorkspace"}}><i class="fa fa-plus"></i>Add Workspace</a>--}}
                   </div>
               </div>
           </div>
-          <div class="col-md-8 col-md-offset-2 truecron-org-content">
+          <div class="col-xs-12 col-md-10 col-md-offset-1 truecron-org-content">
             {{#each workspace in organization.workspaces}}
             <div class="row">
-                <div class="col-md-2 col-md-offset-3">
+                <div class="col-xs-4 col-sm-5">
                     <p>{{#link-to 'jobs' workspace}}{{workspace.name}}{{/link-to}}</p>
                 </div>
-                <div class="col-md-2">
+                <div class="col-xs-2 col-sm-2">
                     <p>{{workspace.jobs.length}} job(s)</p>
                 </div>
-                <div class="col-md-2">
+                <div class="col-xs-2 col-sm-2">
                     <p>1 user</p>
                 </div>
-                <div class="col-md-3">
+                <div class="col-xs-4 col-sm-3 text-center">
                     {{#link-to 'workspaces.workspace.settings' workspace}}Settings{{/link-to}}
                 </div>
             </div>

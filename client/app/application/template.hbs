@@ -13,16 +13,16 @@
         <div class="navbar-collapse collapse">
             <ul class="nav navbar-nav">
                 <li class="dropdown">
-                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">{{currentChoice}} <span class="caret truecron-caret"></span></a>
+                    <a href="#" class="dropdown-toggle text-uppercase" data-toggle="dropdown" role="button" aria-expanded="false">{{currentChoice}} <span class="caret truecron-caret"></span></a>
                     <ul class="dropdown-menu" role="menu">
                         {{#each organization in organizations}}
-                            <li class="dropdown-header">{{organization.name}}</li>
+                            <li class="dropdown-header text-uppercase">{{organization.name}}</li>
                             {{#each workspace in organization.workspaces}}
-                                <li role="presentation"><a {{action "changeWorkspace" workspace}} role="menuitem" tabindex="-1" href="#">{{workspace.name}}</a></li>
+                                <li role="presentation"><a class="text-uppercase" {{action "changeWorkspace" workspace}} role="menuitem" tabindex="-1" href="#">{{workspace.name}}</a></li>
                             {{/each}}
                         {{/each}}
                         <li role="presentation" class="divider"><hr/></li>
-                        <li role="presentation">{{#link-to 'workspaces'}}Dashboard{{/link-to}}</li>
+                        <li role="presentation">{{#link-to 'workspaces' class="text-uppercase"}}Dashboard{{/link-to}}</li>
                     </ul>
                 </li>
             </ul>
@@ -44,10 +44,10 @@
                       <i class="fa fa-user fa-lg fa-border"></i>
                         <span class="caret truecron-caret"></span></a>
                     <ul class="dropdown-menu" role="menu">
-                        <li>{{#link-to "profile"}}<i class="fa fa-user"></i> My Profile{{/link-to}}</li>
-                        <li>{{#link-to "organizations"}}<i class="fa fa-cog"></i> Settings{{/link-to}}</li>
+                        <li>{{#link-to "profile" class="text-uppercase"}}<i class="fa fa-user"></i> My Profile{{/link-to}}</li>
+                        <li>{{#link-to "organizations" class="text-uppercase"}}<i class="fa fa-cog"></i> Settings{{/link-to}}</li>
                         <li class="divider"></li>
-                        <li><a href="#" {{action "invalidateSession"}}><i class="fa fa-sign-out"></i> Sign out</a></li>
+                        <li><a href="#" class="text-uppercase" {{action "invalidateSession"}}><i class="fa fa-sign-out"></i> Sign out</a></li>
                     </ul>
                 </li>
             </ul>
