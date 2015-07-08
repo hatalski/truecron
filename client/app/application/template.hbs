@@ -18,7 +18,7 @@
                         {{#each organization in organizations}}
                             <li class="dropdown-header text-uppercase">{{organization.name}}</li>
                             {{#each workspace in organization.workspaces}}
-                                <li role="presentation"><a class="text-uppercase" {{action "changeWorkspace" workspace}} role="menuitem" tabindex="-1" href="#">{{workspace.name}}</a></li>
+                                <li role="presentation"><a class="text-lowercase" {{action "changeWorkspace" workspace}} role="menuitem" tabindex="-1" href="#">{{workspace.name}}</a></li>
                             {{/each}}
                         {{/each}}
                         <li role="presentation" class="divider"><hr/></li>

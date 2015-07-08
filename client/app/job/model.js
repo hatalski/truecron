@@ -14,8 +14,6 @@ var Job = DS.Model.extend({
   updatedBy:   DS.belongsTo('user', { async: true }),
   workspace:   DS.belongsTo('workspace', { async: true }),
   schedule:    DS.attr({ defaultValue: { dtStart: new Date(), rrule: '' }}),
-  // tags will be sent as an array to the server-side,
-  // no need to have a job-tags model, since there is no API for tags
   runs:        DS.hasMany('run', { async: true }),
   history:     DS.hasMany('history', { async: true }),
   tasks:       DS.hasMany('task', { async: true }),

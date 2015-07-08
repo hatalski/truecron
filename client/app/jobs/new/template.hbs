@@ -64,7 +64,7 @@
                                         </div>
                                         <div class="col-sm-4">
                                             <div class="form-group-material-orange-700">
-                                              {{view "select" content=controller.zones class="form-control floating-label"
+                                              {{view "select" content=controller.zones class="form-control"
                                               optionLabelPath="content.fullName"
                                               optionValuePath="content.name"
                                               placeholder="Timezone"
@@ -117,12 +117,12 @@
                                         <div class="col-sm-3">
                                             <div class="form-group-material-orange-700">
                                                 {{log repeatRules}}
-                                              {{view "select" content=repeatRules value=selectedRepeatRule class="form-control floating-label" placeholder="Rule"}}
+                                              {{view "select" content=repeatRules value=selectedRepeatRule class="form-control" placeholder="Rule"}}
                                             </div>
                                         </div>
                                         <div class="col-sm-2">
                                             <div class="form-group-material-orange-700">
-                                              {{view "select" content=repeatEvery value=selectedRepeatEvery class="form-control floating-label" placeholder="Every" }}
+                                              {{view "select" content=repeatEvery value=selectedRepeatEvery class="form-control" placeholder="Every" }}
                                             </div>
                                         </div>
                                     </div>

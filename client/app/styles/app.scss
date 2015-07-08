@@ -3,6 +3,7 @@
 
 $primary-bg-color: #eceff1;
 $primary-color: #464748;
+$bg-color-light: #F5F5F5;
 
 @mixin border-radius($radius) {
   -webkit-border-radius: $radius;
@@ -426,7 +427,7 @@ tr:nth-child(odd) {
   margin-top: 11px;
 }
 .content-title-margin {
-  margin-top: 6px;
+  margin-top: 11px;
 }
 .content-tag-margin {
   margin-top: 4px;
@@ -598,7 +599,8 @@ a.list-group-item:hover, a.list-group-item:active, a.list-group-item:focus {
   background-color: white;
   padding-top: 10px;
   /*temporary padding-bottom for hidden tags*/
-  padding-bottom: 10px;
+  padding-bottom: 11px;
+  border-bottom: 1px solid #CFD8DC;
 }
 
 .btn-truecron-icon .fa-trash {
@@ -611,10 +613,6 @@ a.list-group-item:hover, a.list-group-item:active, a.list-group-item:focus {
 
 .trucron-tasks-header {
   text-align: center;
-}
-
-.job-details-header {
-  background-color: white;
 }
 
 //.trucron-top-tasks {
@@ -824,7 +822,7 @@ a.list-group-item:hover, a.list-group-item:active, a.list-group-item:focus {
   margin: 10px 20px 10px 0;
 }
 .truecron-panel-body{
-  background-color: $primary-bg-color;
+  background-color: $bg-color-light;
   background-image: none;
   border: none;
 }
