@@ -5,7 +5,7 @@ import Ember from 'ember';
 export default Ember.Service.extend({
   _setup: function() {
     "use strict";
-    let socket = this.socket = io('https://dev.truecron.com/');
+    let socket = this.socket = io('http://dev.truecron.com:3000/');
 
     this.subscribers = [];
     socket.on('pong', function (data) {
