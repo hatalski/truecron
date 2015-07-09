@@ -18,7 +18,7 @@ export default Ember.Route.extend({
       Ember.Logger.log('new job on new route: ', newJob);
       return newJob;
   },
-    beforeModel: function(t) {
+    beforeModel: function() {
         // set user for job controller
         var jobController = this.controllerFor('jobs.new');
         var userId = this.get('session.userId');

@@ -17,6 +17,7 @@ export default Ember.Component.extend(RRuleParser, {
     "use strict";
     switch (this.get('job.status')) {
       case 'never':
+        return 'neverrun-job';
       default:
         return 'neverrun-job';
       case 'failed':
@@ -40,6 +41,7 @@ export default Ember.Component.extend(RRuleParser, {
     "use strict";
     switch (this.get('job.status')) {
       case 'never':
+        return 'Job was never run';
       default:
         return 'Job was never run';
       case 'failed':
