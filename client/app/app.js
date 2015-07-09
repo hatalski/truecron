@@ -1,3 +1,4 @@
+/* global swal */
 import Ember from 'ember';
 import Resolver from 'ember/resolver';
 import loadInitializers from 'ember/load-initializers';
@@ -13,6 +14,7 @@ var App = Ember.Application.extend({
     var language = navigator.language || navigator.browserLanguage;
     this.intl.set('locales', [language, 'en']);
     Ember.$.material.init();
+    swal.setDefaults({ confirmButtonColor: '#66bb6a' });
   }
 });
 

@@ -18,6 +18,8 @@ export default Ember.Component.extend(RRuleParser, {
     switch (this.get('job.status')) {
       case 'never':
         return 'neverrun-job';
+      default:
+        return 'neverrun-job';
       case 'failed':
         return 'failed-job';
       case 'success':
@@ -33,6 +35,21 @@ export default Ember.Component.extend(RRuleParser, {
         return 'fa-spinner fa-pulse';
       default:
         return 'fa-square';
+    }
+  }.property(),
+  jobStateIconTitle: function() {
+    "use strict";
+    switch (this.get('job.status')) {
+      case 'never':
+        return 'Job was never run';
+      default:
+        return 'Job was never run';
+      case 'failed':
+        return 'Job failed';
+      case 'success':
+        return 'Job has run successfully';
+      case 'running':
+        return 'Job is running';
     }
   }.property(),
   recurrence: function() {
