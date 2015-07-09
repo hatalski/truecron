@@ -729,14 +729,14 @@ a.list-group-item:hover, a.list-group-item:active, a.list-group-item:focus {
   background-color: #F5F5F5;
   padding-top: 6px;
 }
-
 .org-title {
   color: #ff7e44;
-  font-weight: bold;
 }
-.org-title:hover, .org-title:active {
+.org-title:hover, .org-title:active, .org-title:focus {
   color: #ff7e44;
-  font-weight: bold;
+}
+.org_links, .org_links:hover, .org_links:focus, .org_links:active {
+  color: #607d8b;
 }
 .truecron-org-content {
   background-color: #fafafa;
@@ -826,6 +826,12 @@ a.list-group-item:hover, a.list-group-item:active, a.list-group-item:focus {
   background-image: none;
   border: none;
 }
+.truecron-settings-panel-body {
+  padding-top: 0px;
+}
+.truecron-settings-panel-body h4 {
+  padding-top: 10px;
+}
 .truecron-panel {
   box-shadow: none;
 }
@@ -839,6 +845,9 @@ a.list-group-item:hover, a.list-group-item:active, a.list-group-item:focus {
 .sidebar-table .navbar-collapse .truecron-tasks-nav li > a{
   padding-top: 11px;
   padding-bottom: 11px;
+}
+.sidebar-panel-title a:hover, .sidebar-panel-title a:focus, .sidebar-panel-title a:active {
+  color: #464748;
 }
 .truecron-navbar {
   min-height: 42px;

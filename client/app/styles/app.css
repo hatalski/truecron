@@ -56,6 +56,9 @@
 .loading-position {
   padding-top: 200px; }
 
+.truecron-title-margin {
+  margin-top: 18px; }
+
 /*main */
 body {
   background-color: #eceff1;
@@ -418,7 +421,7 @@ tr:nth-child(odd) {
   margin-top: 11px; }
 
 .content-title-margin {
-  margin-top: 6px; }
+  margin-top: 11px; }
 
 .content-tag-margin {
   margin-top: 4px; }
@@ -567,7 +570,8 @@ a.list-group-item:hover, a.list-group-item:active, a.list-group-item:focus {
   background-color: white;
   padding-top: 10px;
   /*temporary padding-bottom for hidden tags*/
-  padding-bottom: 10px; }
+  padding-bottom: 11px;
+  border-bottom: 1px solid #CFD8DC; }
 
 .btn-truecron-icon .fa-trash {
   color: #ee6820; }
@@ -577,9 +581,6 @@ a.list-group-item:hover, a.list-group-item:active, a.list-group-item:focus {
 
 .trucron-tasks-header {
   text-align: center; }
-
-.job-details-header {
-  background-color: white; }
 
 .run-history-info {
   background-color: #eceff1; }
@@ -655,22 +656,28 @@ a.list-group-item:hover, a.list-group-item:active, a.list-group-item:focus {
 
 /* Organizations */
 .truecron-org-header {
-  background-color: #d4dcdf;
+  background-color: #CFD8DC;
   margin-top: 10px;
   padding-top: 3px;
   padding-bottom: 3px; }
 
 .truecron-org-title {
-  background-color: #dbf2fa;
+  background-color: #F5F5F5;
   padding-top: 6px; }
 
 .org-title {
-  color: #ff7e44;
-  font-weight: bold; }
+  color: #ff7e44; }
+
+.org-title:hover, .org-title:active, .org-title:focus {
+  color: #ff7e44; }
+
+.org_links, .org_links:hover, .org_links:focus, .org_links:active {
+  color: #607d8b; }
 
 .truecron-org-content {
+  background-color: #fafafa;
   padding-top: 6px;
-  border-bottom: 1px solid #c4c8d1; }
+  border-bottom: 1px solid #CFD8DC; }
 
 /*index page */
 .truecron-index-header {
@@ -739,9 +746,15 @@ a.list-group-item:hover, a.list-group-item:active, a.list-group-item:focus {
   margin: 10px 20px 10px 0; }
 
 .truecron-panel-body {
-  background-color: #eceff1;
+  background-color: #F5F5F5;
   background-image: none;
   border: none; }
+
+.truecron-settings-panel-body {
+  padding-top: 0px; }
+
+.truecron-settings-panel-body h4 {
+  padding-top: 10px; }
 
 .truecron-panel {
   box-shadow: none; }
@@ -756,6 +769,9 @@ a.list-group-item:hover, a.list-group-item:active, a.list-group-item:focus {
 .sidebar-table .navbar-collapse .truecron-tasks-nav li > a {
   padding-top: 11px;
   padding-bottom: 11px; }
+
+.sidebar-panel-title a:hover, .sidebar-panel-title a:focus, .sidebar-panel-title a:active {
+  color: #464748; }
 
 .truecron-navbar {
   min-height: 42px; }
