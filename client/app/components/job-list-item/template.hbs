@@ -3,7 +3,7 @@
         <h5 class="list-group-item-heading">{{job.name}}</h5>
     </div>
     <div {{bind-attr class=":col-xs-2 :text-right jobStateColorClass"}}>
-        <span><i {{bind-attr class=":fa jobStateIconClass"}}></i></span>
+        <span><i {{bind-attr class=":fa jobStateIconClass" title="jobStateIconTitle"}}></i></span>
     </div>
 </div>
 <p class="list-group-item-text truecron-job-item-p">schedule: <span class="truecron-job-item-span">{{recurrence.text}}</span></p>
