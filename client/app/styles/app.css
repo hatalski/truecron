@@ -462,6 +462,9 @@ tr:nth-child(odd) {
 .truecron-sidebar-padding {
   padding-left: 7px; }
 
+.truecron-sidebar-table-element-padding {
+  padding: 5px 0 5px 15px; }
+
 .no-padding {
   padding-left: 0px;
   padding-right: 0px; }
@@ -640,13 +643,12 @@ a.list-group-item:hover, a.list-group-item:active, a.list-group-item:focus {
 
 /* workspaces accordion */
 .truecron-accordion .truecron-panel-body {
-  background-color: #eceff1;
+  background-color: #FAFAFA;
   color: #464748; }
 
 .truecron-accordion .truecron-first-heading {
   color: #464748;
-  border-top: solid 1px #cccccc;
-  border-bottom: solid 1px #cccccc; }
+  border-top: solid 1px #FAFAFA; }
 
 .truecron-accordion p {
   margin: 0; }
@@ -764,11 +766,14 @@ a.list-group-item:hover, a.list-group-item:active, a.list-group-item:focus {
 
 .truecron-task-panel-heading {
   border-radius: 0px;
-  padding: 23px 15px; }
+  padding: 15px 15px; }
 
 .sidebar-table .navbar-collapse .truecron-tasks-nav li > a {
   padding-top: 11px;
   padding-bottom: 11px; }
+
+.truecron-navbar .truecron-tasks-nav .active {
+  background-color: #eeeeee; }
 
 .sidebar-panel-title a:hover, .sidebar-panel-title a:focus, .sidebar-panel-title a:active {
   color: #464748; }
