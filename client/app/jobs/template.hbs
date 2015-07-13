@@ -120,7 +120,7 @@
                                               {{#each run in selectedJob.runs}}
                                                   {{run-list-item item=run}}
                                               {{else}}
-                                                  <td colspan="3"><span class="truecron-sidebar-padding">Job's never been run</span></td>
+                                                  <td colspan="3"><h5 class="truecron-sidebar-table-element-padding">Job's never been run</h5></td>
                                               {{/each}}
                                           </tbody>
                                       </table>
@@ -199,7 +199,7 @@
                                           {{#each history in selectedJob.history}}
                                               {{history-list-item item=history}}
                                           {{else}}
-                                              <td colspan="3"><span class="truecron-sidebar-padding">Job has not been created yet</span></td>
+                                              <td colspan="3"><h5 class="truecron-sidebar-table-element-padding">Job has not been created yet</h5></td>
                                           {{/each}}
                                           </tbody>
                                       </table>

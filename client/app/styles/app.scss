@@ -479,6 +479,9 @@ tr:nth-child(odd) {
 .truecron-sidebar-padding {
   padding-left: 7px;
 }
+.truecron-sidebar-table-element-padding {
+  padding: 5px 0 5px 15px;
+}
 .no-padding {
   padding-left: 0px;
   padding-right: 0px;
@@ -847,6 +850,9 @@ a.list-group-item:hover, a.list-group-item:active, a.list-group-item:focus {
 .sidebar-table .navbar-collapse .truecron-tasks-nav li > a{
   padding-top: 11px;
   padding-bottom: 11px;
+}
+.truecron-navbar .truecron-tasks-nav .active {
+  background-color: #eeeeee;
 }
 .sidebar-panel-title a:hover, .sidebar-panel-title a:focus, .sidebar-panel-title a:active {
   color: #464748;
