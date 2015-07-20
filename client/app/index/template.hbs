@@ -9,13 +9,13 @@
             </div>
             <div class="jumbotron">
                 <div class="row teaser_align">
-                    <div class="col-lg-6 col-md-4 col-sm-12 col-xs-12 teaser_align_bottom">
+                    <div class="col-lg-6 col-md-5 col-sm-12 col-xs-12 teaser_align_bottom">
                         <div class="pitch-ext text-right">
-                            <h3 class="pitch">{{format-message (intl-get "messages.landing.pitch")}}</h3>
+                            <h2 class="text-right">{{format-message (intl-get "messages.landing.pitch")}}</h2>
                             <h2>{{format-message (intl-get "messages.landing.moto1")}}</h2>
                         </div>
                     </div>
-                    <div class="col-lg-6 col-md-8 hidden-xs hidden-sm teaser_align_img">
+                    <div class="col-lg-6 col-md-7 hidden-xs hidden-sm teaser_align_img">
                         <div class="top_mac"></div>
                     </div>
                 </div>
@@ -24,16 +24,16 @@
         <div class="interested_box">
             <div class="container-fluid">
                 <div class="row">
-                    <div class="col-lg-6 col-md-4 col-sm-12 text-center">
+                    <div class="col-lg-6 col-md-offset-0 col-md-5 col-sm-offset-2 col-sm-8 col-xs-offset-0 col-xs-12 text-center">
                         <h4 class="invite-title text-center">{{format-message (intl-get "messages.landing.beta_invite.description")}}</h4>
-                        <form class="form-inline" {{action "invite" on="submit"}}>
+                        <form {{action "invite" on="submit"}}>
                             <div class="form-group-white isInvitationEmailError:has-error">
-                                {{input class="form-control" value=invitationEmail type="email" placeholder="Email" required="required"}}
+                                {{input class="form-control form-control-landing col-xs-12 text-center" value=invitationEmail type="email" placeholder="enter your e-mail" required="required"}}
                                 <button type="submit" class="btn btn-white">SIGN UP</button>
                             </div>
                         </form>
                     </div>
-                    <div class="col-lg-6 col-md-8 hidden-sm hidden-xs">
+                    <div class="col-lg-6 col-md-7 hidden-sm hidden-xs">
                         <div class="bottom_mac"></div>
                     </div>
                 </div>
@@ -42,19 +42,19 @@
         <div class="topper_icons">
             <div class="container-fluid">
                 <div class="row">
-                    <div class="col-lg-3 col-md-3 col-sm-3">
+                    <div class="col-lg-3 col-md-3 col-xs-6">
                         <div class="server_icon"></div>
                         <h4 class="text-center">It turns your servers so you do not have to worry about infrastructure.</h4>
                     </div>
-                    <div class="col-lg-3 col-md-3 col-sm-3">
+                    <div class="col-lg-3 col-md-3 col-xs-6">
                         <div class="teaser_git_icon"></div>
                         <h4 class="text-center">It knows that developers actually test the code before releasing it into Production.</h4>
                     </div>
-                    <div class="col-lg-3 col-md-3 col-sm-3">
+                    <div class="col-lg-3 col-md-3 col-xs-6">
                         <div class="teaser_calendar_icon"></div>
                         <h4 class="text-center">It knows that fiscal calendar does not end in December.</h4>
                     </div>
-                    <div class="col-lg-3 col-md-3 col-sm-3">
+                    <div class="col-lg-3 col-md-3 col-xs-6">
                         <div class="teaser_copy_icon"></div>
                         <h4 class="text-center">It does not make you write a Powershell script to copy a file.</h4>
                     </div>
@@ -147,18 +147,22 @@
     <div class="orange_box">
         <div class="container-fluid">
             <div class="row">
-                <h3 class="text-center"><strong>Simply put, TrueCron is a scheduler that allows you to create a complex tasks in several clicks, peer review it, test and release to production and be sure it will run properly.</strong></h3>
-                <div class="col-lg-12 text-center">
+                <div class="col-xs-12">
+                    <h3 class="text-center"><strong>Simply put, TrueCron is a scheduler that allows you to create a complex tasks in several clicks, peer review it, test and release to production and be sure it will run properly.</strong></h3>
+                </div>
+                <div class="col-sm-offset-2 col-sm-8 col-xs-offset-0 col-xs-12 text-center">
                     <br>
-                    <form class="form-inline" {{action "invite" on="submit"}}>
+                    <form {{action "invite" on="submit"}}>
                         <div class="form-group-white isInvitationEmailError:has-error">
-                          {{input class="form-control" value=invitationEmail type="email" placeholder="Email" required="required"}}
+                          {{input class="form-control form-control-landing text-center" value=invitationEmail type="email" placeholder="enter your e-mail" required="required"}}
                             <button type="submit" class="btn btn-white">SIGN UP</button>
                         </div>
                     </form>
                     <br>
                 </div>
-                <h3 class="text-center">Moreover, when we are going live you will get 100 jobs to execute for free during first 3 months.</h3>
+                <div class="col-xs-12">
+                    <h3 class="text-center">Moreover, when we are going live you will get 100 jobs to execute for free during first 3 months.</h3>
+                </div>
             </div>
         </div>
     </div>

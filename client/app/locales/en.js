@@ -73,9 +73,9 @@ export default Locale.extend({
       }
     },
     landing: {
-      pitch: 'TrueCron is the scheduler you have been waiting for. It is the way the scheduler should have been built, but was not',
+      pitch: 'TrueCron is the scheduler you have been waiting for. It is the way the scheduler should have been built, but was not.',
       moto1: 'Interested?',
-      footer: '© {current-year} TrueCron. All rights reserved. TrueCron is an registered trademarks of Naviam, Inc. Terms, conditions, features, availability, pricing, fees, service and support options subject to change without notice.',
+      footer: '© {current-year} TrueCron. All rights reserved. TrueCron is a registered trademark of Naviam, Inc. Terms, conditions, features, availability, pricing, fees, service and support options subject to change without notice.',
       beta_invite: {
         header: 'Interested?',
         description: 'Leave your e-mail address to get notified when we are live.',

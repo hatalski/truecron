@@ -105,7 +105,7 @@ a {
 }
 
 .topper {
-  background: url("top_banner.jpg") no-repeat center top;
+  background: url("manandthesea.jpg") no-repeat center top;
   max-width:100%;
   height: auto;
 }
@@ -214,6 +214,11 @@ h2.pitch {
 /*.teaser .form-inline .form-control {
   width: 73%;
 }*/
+
+.form-control-landing {
+  color: #ffffff;
+}
+
 .problem-definition-header {
   color: #ef6c00;
   text-align: center;
@@ -302,12 +307,12 @@ h2.pitch {
 }
 
 .secure {
-  background: url("teaser_secure.png") no-repeat;
+  background: url("servers.png") no-repeat;
   height: 242px;
 }
 
 .grow {
-  background: url("grows.png") no-repeat;
+  background: url("grow_with_us.png") no-repeat;
   height: 227px;
 }
 
@@ -340,8 +345,8 @@ h2.pitch {
 }
 
 .teaser footer {
-  background-color: #ffffff;
-  color: #000000;
+  background-color: #263238;
+  color: #ffffff;
   text-align: center;
 }
 
