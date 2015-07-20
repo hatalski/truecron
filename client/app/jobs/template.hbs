@@ -52,7 +52,7 @@
                     {{job-list-item job=selectedJob selected=selectedJob linkTo='jobs.job' action='selectJob'}}
                   {{/if}}
               </div>
-              <div class="panel panel-material-grey-100 panel-without-margin">
+              <div class="panel panel-material-blue-grey-100 panel-without-margin">
                   <div class="panel-heading truecron-panel-heading" role="tab" id="collapseRunHistoryHeading">
                       <div class="row">
                           <div class="col-xs-9">
@@ -120,7 +120,7 @@
                                               {{#each run in selectedJob.runs}}
                                                   {{run-list-item item=run}}
                                               {{else}}
-                                                  <td colspan="3"><h5 class="truecron-sidebar-table-element-padding">Job's never been run</h5></td>
+                                                  <td colspan="3"><h5 class="truecron-sidebar-table-element-padding text-center">job was never run</h5></td>
                                               {{/each}}
                                           </tbody>
                                       </table>
@@ -130,7 +130,7 @@
                       </ul>
                   </div>
               </div>
-              <div class="panel panel-material-grey-100 panel-without-margin">
+              <div class="panel panel-material-blue-grey-100 panel-without-margin">
                   <div class="panel-heading truecron-panel-heading truecron-panel-border" role="tab" id="collapseRevisionHeading">
                       <div class="row">
                           <div class="col-xs-9">
