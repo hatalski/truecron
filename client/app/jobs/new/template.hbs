@@ -27,8 +27,7 @@
 <div class="container-fluid">
     <div class="row">
         <div class="col-xs-12 text-center">
-            <a class="btn btn-flat btn-material-orange-800" {{action 'editSchedule'}}>
-                <!--Weekly <span style="color:#000">on</span> Sunday, Monday, Tuesday, Wednesday, Friday <span style="color:#000">at</span> 12:32:00 PM <span style="color:#000">excluding</span> Sunday 8 March 2015-->
+            <i class="fa fa-calendar-o"></i><a class="btn btn-flat btn-material-orange-800" title="EDIT JOB SCHEDULE" {{action 'editSchedule'}}>
                 {{controller.rruleText}}
             </a>
         </div>
